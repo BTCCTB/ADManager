@@ -1,4 +1,4 @@
-# How to deploy Damino ?
+# How to deploy ADManager ?
 For deployment we use [ansistrano-deploy](https://github.com/ansistrano/deploy)
 
 ## Add the target host
