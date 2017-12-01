@@ -14,9 +14,9 @@ A php application for Active Directory Manipulation.
 
 ## TODO
 - [X] Latest Symfony Standard
-- [ ] Configure AD Auth
-    - [ ] ADLdap2
-    - [ ] Guard Auth
+- [X] Configure AD Auth
+    - [X] ADLdap2
+    - [X] Guard Auth
 - [ ] EasyAdmin
 - [ ] Change password form
 - [ ] Reset password form ?
