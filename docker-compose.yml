@@ -5,9 +5,9 @@ mysql:
     - ./.db/log:/var/log/mysql/
     - ./.db/conf:/etc/mysql/conf.d/
   environment:
-    MYSQL_DATABASE: symfony
-    MYSQL_USER: symfony
-    MYSQL_PASSWORD: symfony
+    MYSQL_DATABASE: admanager
+    MYSQL_USER: admanager
+    MYSQL_PASSWORD: admanager
     MYSQL_ROOT_PASSWORD: toor
   ports:
     - 3306:3306

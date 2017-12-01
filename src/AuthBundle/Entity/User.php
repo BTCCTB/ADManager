@@ -204,7 +204,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword()
     {
         return $this->plainPassword;
     }
@@ -382,6 +382,6 @@ class User implements UserInterface
             ->setAccountName($adUser->getAccountName())
             ->setRoles(['ROLE_USER'])
             ->setCreatedAt(new \DateTime())
-            ->setIsActive($adUser->isActive());
+            ->setActive($adUser->isActive());
     }
 }

@@ -28,7 +28,7 @@
         ]
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.0",
         "adldap2/adldap2": "^8.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.3",
@@ -74,6 +74,14 @@
         ],
         "stop":[
             "docker-compose stop"
+        ],
+        "db-init":[
+            "bin/console doctrine:database:drop --if-exists --force",
+            "bin/console doctrine:database:create",
+            "bin/console doctrine:migrations:migrate"
+        ],
+        "db-migrate":[
+            "bin/console doctrine:migrations:migrate"
         ]
     },
     "config": {
@@ -95,7 +103,9 @@
         },
         "scripts-description":{
             "serve": "Start docker & internal php server",
-            "stop": "Stop docker"
+            "stop": "Stop docker",
+            "db-init": "Create database & schema",
+            "db-migrate": "Execute the last doctrine migration"
         }
 
     }

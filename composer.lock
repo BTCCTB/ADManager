@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0de2c4bde63a35903086b46fce9f6b02",
+    "content-hash": "c67f6f869001954c57a4661799df2c16",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3008,16 +3008,16 @@
     "packages-dev": [
         {
             "name": "composer/composer",
-            "version": "1.5.3",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "de0c4afd4aeb08171b54b64e63aa61a04b4510ee"
+                "reference": "73aa733d2a64afa4713814965e56ee70bf725829"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/de0c4afd4aeb08171b54b64e63aa61a04b4510ee",
-                "reference": "de0c4afd4aeb08171b54b64e63aa61a04b4510ee",
+                "url": "https://api.github.com/repos/composer/composer/zipball/73aa733d2a64afa4713814965e56ee70bf725829",
+                "reference": "73aa733d2a64afa4713814965e56ee70bf725829",
                 "shasum": ""
             },
             "require": {
@@ -3081,7 +3081,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2017-11-30T17:29:43+00:00"
+            "time": "2017-12-01T10:02:18+00:00"
         },
         {
             "name": "composer/semver",
@@ -4031,7 +4031,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9"
+        "php": ">=7.0"
     },
     "platform-dev": []
 }
