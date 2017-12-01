@@ -1,0 +1,41 @@
+mysql:
+  image: mysql
+  volumes:
+    - ./.db/data:/var/lib/mysql/
+    - ./.db/log:/var/log/mysql/
+    - ./.db/conf:/etc/mysql/conf.d/
+  environment:
+    MYSQL_DATABASE: symfony
+    MYSQL_USER: symfony
+    MYSQL_PASSWORD: symfony
+    MYSQL_ROOT_PASSWORD: toor
+  ports:
+    - 3306:3306
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  links: 
+    - mysql
+  environment:
+    PMA_HOST: 'mysql'
+    PMA_USER: root
+    PMA_PASSWORD: toor
+    MYSQL_ROOT_PASSWORD: toor
+  restart: always
+  ports:
+    - 8080:80
+
+bis:
+  image: mysql
+  volumes:
+    - ~/Projects/LocalDEV/BIS/.db/data:/var/lib/mysql/
+    - ~/Projects/LocalDEV/BIS/.db/log:/var/log/mysql/
+    - ~/Projects/LocalDEV/BIS/.db/conf:/etc/mysql/conf.d/
+  environment:
+    MYSQL_DATABASE: bis
+    MYSQL_USER: bisreader
+    MYSQL_PASSWORD: 'elephpant401'
+    MYSQL_ROOT_PASSWORD: 'toor'
+  command: mysqld --sql_mode=""
+  ports:
+    - 3307:3306

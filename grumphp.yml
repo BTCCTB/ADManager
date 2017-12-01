@@ -1,0 +1,27 @@
+parameters:
+    git_dir: .
+    bin_dir: vendor/bin
+    tasks:
+        composer:
+            file: ./composer.json
+            no_check_all: true
+        git_conflict: ~
+        securitychecker: ~
+        phpcs:
+            standard: "phpcs.xml"
+            ignore_patterns: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
+        phplint:
+            exclude: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
+        phpmd:
+            ruleset: ['codesize.xml']
+            exclude: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
+        phpparser:
+            kind: php7
+            ignore_patterns: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
+            visitors:
+                forbidden_function_calls:
+                    blacklist:
+                        - 'var_dump'
+                        - 'exit'
+        phpversion:
+            project: '7.0'
