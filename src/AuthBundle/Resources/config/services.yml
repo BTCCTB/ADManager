@@ -1,0 +1,34 @@
+services:
+    AuthBundle\Security\SHA1PasswordEncoder: ~
+    auth.ldap.password_encoder:
+        alias: AuthBundle\Security\SHA1PasswordEncoder
+        public: true
+
+    AuthBundle\Security\AdldapAuthenticator:
+        arguments: [ "@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder","@auth.active_directory"]
+        autowire: true
+        public: true
+
+    AuthBundle\Doctrine\HashPasswordListener:
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber}
+        public: true
+    auth.doctrine.hash_password_listener:
+        alias: AuthBundle\Doctrine\HashPasswordListener
+        public: true
+
+
+    AuthBundle\Service\ActiveDirectory:
+        arguments: [ '%domain_controllers%', '%base_dn%', '%admin_username%', '%admin_password%']
+        public: true
+    auth.active_directory:
+        alias: AuthBundle\Service\ActiveDirectory
+        public: true
+
+
+
+
+#    auth.example:
+#        class: AuthBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

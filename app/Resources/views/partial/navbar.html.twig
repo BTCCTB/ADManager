@@ -1,0 +1,29 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ path('homepage') }}">
+            <img alt="BTC-CTB ADManager" height="100%" src="{{ asset('bundles/app/img/logothumb.png') }}">
+            AD Manager
+        </a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarAdmin" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav mr-auto">
+                {% include ':partial:menu.html.twig' %}
+            </ul>
+            <ul class="navbar-nav">
+            {%  if is_granted('ROLE_USER') %}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> {{ app.user.username }} <span class="caret"></span></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a href="{{ path('security_logout') }}" class="dropdown-item"><i class="fa fa-unlock"></i> Logout</a>
+                    </div>
+                </li>
+            {%  else %}
+                <li class="nav-item"><a href="{{ path('security_login') }}" class="nav-link"><i class="fa fa-lock"></i></a></li>
+            {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Application for Active Directory Manipulation.">
+        <meta name="author" content="BTC-CTB">
+        <title>
+            {% block title %}ADManager{% endblock %}
+        </title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/main.css') }}" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    {% block content %}
+        {% include ':partial:navbar.html.twig' %}
+        <div class="container-fluid">
+        <div class="row">
+            {% include ':partial:sidebar.html.twig' %}
+            <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+                {% block body %}
+                {% endblock %}
+            </main>
+            </div>
+        </div>
+    {% endblock %}
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted love">Made with <i class="fa fa-heart"></i> in Belgium.</span>
+        </div>
+    </footer>
+    {% block javascripts %}
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <!-- Popper.js -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    {% endblock %}
+    </body>
+</html>
