@@ -1,6 +1,6 @@
 # ADManager
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/38e19d0f-6a7e-4472-93c4-80784083f02c/small.png)](https://insight.sensiolabs.com/projects/38e19d0f-6a7e-4472-93c4-80784083f02c)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/28e7482c-aac0-4fab-8b37-b07609fa8c83/big.png)](https://insight.sensiolabs.com/projects/28e7482c-aac0-4fab-8b37-b07609fa8c83)
 
 A php application for Active Directory Manipulation.
 
