@@ -64,6 +64,12 @@ $ composer db-init
 $ composer db-migrate
 ```
 
+### Testings
+* Execute the phpunit tests
+```bash
+$ composer test
+```
+
 ## TODO
 - [X] Latest Symfony Standard
 - [X] Configure AD Auth

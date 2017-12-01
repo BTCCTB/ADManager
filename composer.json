@@ -82,6 +82,9 @@
         ],
         "db-migrate":[
             "bin/console doctrine:migrations:migrate"
+        ],
+        "test":[
+            "vendor/bin/simple-phpunit"
         ]
     },
     "config": {
@@ -105,7 +108,8 @@
             "serve": "Start docker & internal php server",
             "stop": "Stop docker",
             "db-init": "Create database & schema",
-            "db-migrate": "Execute the last doctrine migration"
+            "db-migrate": "Execute the last doctrine migration",
+            "test": "Execute the phpunit test"
         }
 
     }

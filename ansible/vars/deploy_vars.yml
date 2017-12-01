@@ -1,0 +1,7 @@
+---
+database_host: "{{ vault_database_host }}"
+database_user: "{{ vault_database_user }}"
+database_password: "{{ vault_database_password }}"
+database_name: "damino"
+deploy_key_public: "{{ vault_deploy_key_public }}"
+deploy_key_private: "{{ vault_deploy_key_private }}"

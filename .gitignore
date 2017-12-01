@@ -17,4 +17,7 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/testAD/config.php
+.vagrant
+ansible/.ssh/*
+!ansible/.ssh/.gitkeep
+
