@@ -59,7 +59,7 @@ $ composer db-init
 ```
 
 ### Update the database schema
-* Execute th doctrine migration
+* Execute the doctrine migration
 ```bash
 $ composer db-migrate
 ```
