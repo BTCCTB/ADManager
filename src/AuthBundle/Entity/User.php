@@ -15,7 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package AuthBundle\Entity
  * @ORM\Entity(repositoryClass="UserRepository")
  * @ORM\Table(name="user")
- * @UniqueEntity(fields={"email"}, message="It looks this user has already an account") *
+ * @UniqueEntity(fields={"email"}, message="It looks this user has already an account")
+ * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  *
  * @author Damien Lagae <damienlagae@gmail.com>
  */
@@ -376,7 +377,7 @@ class User implements UserInterface
 
     public function createFromAD(AdUser $adUser)
     {
-        $this->setEmail($adUser->getEmail())
+        $this->setEmail($adUser->getUserPrincipalName())
             ->setFirstname($adUser->getFirstName())
             ->setLastname($adUser->getLastName())
             ->setAccountName($adUser->getAccountName())

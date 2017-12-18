@@ -10,8 +10,15 @@ parameters:
     # You should uncomment this if you want to use pdo_sqlite
     #database_path: '%kernel.project_dir%/var/data/data.sqlite'
 
+    bis_host:           bis.btcctb.net
+    bis_port:           ~
+    bis_name:           bis
+    bis_user:           bisreader
+    bis_password:       ~
+
     mailer_transport: smtp
     mailer_host: 127.0.0.1
+    mailer_port: 25
     mailer_user: ~
     mailer_password: ~
 
@@ -24,3 +31,4 @@ parameters:
     admin_username: ~
     admin_password: ~
     account_suffix: "ad4dev.local"
+    mail_domain: "enabel.be"

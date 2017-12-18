@@ -20,7 +20,7 @@ services:
 
 
     AuthBundle\Service\ActiveDirectory:
-        arguments: [ '%domain_controllers%', '%base_dn%', '%admin_username%', '%admin_password%']
+        arguments: [ "@doctrine.orm.bis_entity_manager", '%domain_controllers%', '%base_dn%', '%admin_username%', '%admin_password%']
         public: true
     auth.active_directory:
         alias: AuthBundle\Service\ActiveDirectory

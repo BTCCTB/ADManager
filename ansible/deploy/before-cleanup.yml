@@ -1,0 +1,74 @@
+---
+- name: getting selinux status
+  command: getenforce
+  register: selinux
+  when: ansible_distribution == 'CentOS'
+
+- name: Configure SELinux RO
+  action: "command semanage fcontext -a -t httpd_sys_content_t '{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}/(/.*)?'"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Exec restorecon RO
+  action: "command restorecon -Rv {{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Configure SELinux RW
+  action: "command semanage fcontext -a -t httpd_sys_rw_content_t '{{ release_var_path }}(/.*)?'"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Configure SELinux LOG
+  action: "command semanage fcontext -a -t httpd_log_t '{{ release_logs_path }}(/.*)?'"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Exec restorecon
+  action: "command restorecon -Rv {{ item }}"
+  with_items:
+    - "{{ release_var_path }}"
+    - "{{ release_logs_path }}"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Configure Apache so it is able to send email
+  seboolean:
+    name: "httpd_can_sendmail"
+    state: yes
+    persistent: yes
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Allow Apache to send mail on tcp port 2525
+  seport:
+    ports: 2525
+    proto: "tcp"
+    setype: "smtp_port_t"
+    state: present
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Configure Apache so it is able to connect to BIS
+  seboolean:
+    name: "httpd_can_network_connect_db"
+    state: yes
+    persistent: yes
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Configure Apache so it is able to connect to LDAP/AD
+  seboolean:
+    name: "httpd_can_connect_ldap"
+    state: yes
+    persistent: yes
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Reset owner/permissions
+  file:
+    path: "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}/"
+    owner: "apache"
+    group: "apache"
+    mode: "u=rx,g=rx,o=r"
+    recurse: yes
+
+- name: Add write permissions
+  file:
+    state: directory
+    path: "{{ release_var_path }}"
+    owner: "apache"
+    group: "apache"
+    recurse: yes
+    mode: "u=rxw,g=rxw,o=rw"

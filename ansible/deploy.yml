@@ -1,0 +1,40 @@
+- hosts: all
+
+  become: true
+
+  vars_files:
+    - ./vars/deploy_vault.yml
+    - ./vars/vars.yml
+    - ./vars/deploy_vars.yml
+
+  vars:
+    # Ansistrano vars
+    ansistrano_deploy_to: "{{ project_deploy_dir }}"
+    ansistrano_keep_releases: 3
+    ansistrano_shared_paths:
+    - var/logs
+    #  - node_modules
+    ansistrano_deploy_via: git
+
+    # Ansistrano - Variables used in the Git deployment strategy
+    ansistrano_git_repo: "git@github.com:btcctb/password.git"
+    ansistrano_git_branch: "{{ git_branch }}"
+    ansistrano_git_identity_key_path: "{{ playbook_dir }}/.ssh/id_rsa"
+
+    # Ansistrano - Hooks: custom tasks if you need them
+    ansistrano_after_setup_tasks_file: "{{ playbook_dir }}/deploy/after-setup.yml"
+    ansistrano_after_symlink_shared_tasks_file: "{{ playbook_dir }}/deploy/after-symlink-shared.yml"
+    ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/deploy/before-symlink.yml"
+    ansistrano_before_cleanup_tasks_file: "{{ playbook_dir }}/deploy/before-cleanup.yml"
+
+    # Symfony vars
+    release_console_path: "{{ php_path }} {{ ansistrano_release_path.stdout }}/bin/console"
+    release_var_path: "{{ ansistrano_release_path.stdout }}/var"
+    release_logs_path: "{{ ansistrano_shared_path }}/var/logs"
+    release_web_path: "{{ ansistrano_release_path.stdout }}/web"
+
+  environment:
+    SYMFONY_ENV: "{{ application_env }}"
+
+  roles:
+    - carlosbuenosvinos.ansistrano-deploy

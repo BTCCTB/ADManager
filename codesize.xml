@@ -8,7 +8,16 @@
         Custom ruleset for Symfony 3.x
     </description>
 
-    <rule ref="rulesets/codesize.xml" />
+    <rule ref="rulesets/codesize.xml" >
+        <!-- configured below -->
+        <exclude name="ExcessiveParameterList" />
+    </rule>
+    <!-- Increase maximum mumber of parameters for a new object -->
+    <rule ref="rulesets/codesize.xml/ExcessiveParameterList">
+        <properties>
+            <property name="minimum" value="15" description="Maximum number of acceptable parameters." />
+        </properties>
+    </rule>
 
     <rule ref="rulesets/design.xml">
         <!-- configured below -->
@@ -36,7 +45,7 @@
     <!-- Exclude $em, $id and $i from the short variables rule -->
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
-            <property name="exceptions" value="id,i,em" />
+            <property name="exceptions" value="id,i,em,ad,dn,ou" />
         </properties>
     </rule>
     <!-- Allow a longer length for long variables rule -->

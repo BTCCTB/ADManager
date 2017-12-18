@@ -14,6 +14,8 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -111,6 +113,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @param mixed                 $credentials  The credentials [return value from getCredentials()]
      * @param UserProviderInterface $userProvider The UserProvider
      *
+     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws AuthenticationException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -122,7 +125,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $username = $credentials['_username'];
 
         if (null === $username) {
-            return null;
+            throw new UsernameNotFoundException('Username can\'t be empty!');
         }
 
         $user = $this->em->getRepository('AuthBundle:User')
@@ -139,6 +142,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
         }
         $user = $this->em->getRepository('AuthBundle:User')
             ->findOneBy(['email' => $username]);
+
+        if ($user === null) {
+            throw new UsernameNotFoundException('User not found!');
+        }
 
         return $user;
     }
@@ -162,10 +169,14 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $password = $credentials['_password'];
         $username = $credentials['_username'];
 
-        if ($this->activeDirectory->checkUserExist($username)) {
+        if ($this->activeDirectory->checkUserExistByUsername($username) !== false) {
             return $this->activeDirectory->checkCredentials($username, $password);
         } else {
-            return $this->passwordEncoder->isPasswordValid($user, $password);
+            if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+                return true;
+            } else {
+                throw new BadCredentialsException('Invalid password');
+            }
         }
     }
 

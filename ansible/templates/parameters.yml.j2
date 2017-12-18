@@ -1,0 +1,25 @@
+# {{ ansible_managed }} - ANSISTRANO
+parameters:
+    database_host: "{{ database_host }}"
+    database_port: null
+    database_name: "{{ database_name }}"
+    database_user: "{{ database_user }}"
+    database_password: "{{ database_password }}"
+    bis_host: "{{ bis_host }}"
+    bis_port: null
+    bis_name: "{{ bis_database }}"
+    bis_user: "{{ bis_user }}"
+    bis_password: "{{ bis_password }}"
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_port: 25
+    mailer_user: null
+    mailer_password: null
+    secret: "{{ symfony_secret }}"
+    domain_controllers:
+        - "{{ ad_server }}"
+    base_dn: "{{ ad_base_dn }}"
+    admin_username: "{{ ad_user }}"
+    admin_password: "{{ ad_password }}"
+    account_suffix: "{{ ad_account_suffix }}"
+    mail_domain: "{{ ad_mail_domain }}"

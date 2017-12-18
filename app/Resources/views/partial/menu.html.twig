@@ -1,3 +1,9 @@
 <li class="nav-item {% if app.request.get('_route') == 'homepage' %}active{% endif %}">
     <a href="{{ path('homepage') }}" class="nav-link">Accueil</a>
 </li>
+
+{% if is_granted('ROLE_ADMIN') %}
+<li class="nav-item {% if app.request.get('_route') == 'account_ad_list' %}active{% endif %}">
+    <a href="{{ path('account_ad_list') }}" class="nav-link">AD Accounts</a>
+</li>
+{% endif %}

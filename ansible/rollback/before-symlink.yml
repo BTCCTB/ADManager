@@ -1,0 +1,4 @@
+---
+- name: Pause to run migrations manually down
+  pause:
+    prompt: "Please, run 'bin/console doctrine:migrations:execute YYYYMMDDHHMMSS --down' manually in '{{ ansistrano_release_path.stdout }}' if needed and press enter to continue"

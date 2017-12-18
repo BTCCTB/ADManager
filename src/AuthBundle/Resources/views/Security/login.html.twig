@@ -9,6 +9,12 @@
                 <div class="col-md-6">
                     <h2>Please Login</h2>
                     <hr>
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
                 </div>
             </div>
             <div class="row">

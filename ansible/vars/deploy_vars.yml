@@ -1,7 +1,23 @@
 ---
-database_host: "{{ vault_database_host }}"
-database_user: "{{ vault_database_user }}"
-database_password: "{{ vault_database_password }}"
-database_name: "admanager"
-deploy_key_public: "{{ vault_deploy_key_public }}"
-deploy_key_private: "{{ vault_deploy_key_private }}"
+# Database vars
+database_host: '{{ vault_database_host }}'
+database_user: '{{ vault_database_user }}'
+database_password: '{{ vault_database_password }}'
+database_name: 'password'
+
+# BIS vars
+bis_database: 'bis'
+bis_user: '{{ vault_bis_user }}'
+bis_password: '{{ vault_bis_password }}'
+
+# AD vars
+ad_base_dn: 'dc=ad4dev,dc=local'
+ad_user: '{{ vault_ad_user }}'
+ad_password: '{{ vault_ad_password }}'
+ad_account_suffix: 'ad4dev.local'
+ad_mail_domain: 'enabel.be'
+
+# GIT vars
+deploy_key_public: '{{ vault_deploy_key_public }}'
+deploy_key_private: '{{ vault_deploy_key_private }}'
+github_oauth_token: '{{ vault_github_oauth_token }}'

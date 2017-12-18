@@ -1,0 +1,10 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    Users in BIS - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ dump(users) }}
+{% endblock %}
+

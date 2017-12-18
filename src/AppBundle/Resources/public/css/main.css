@@ -12,8 +12,8 @@ body {
     padding-top: 3.5rem;
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    font-family: Aller;
 }
-
 
 /*
  * Typography
@@ -25,13 +25,17 @@ h1 {
     border-bottom: 1px solid #eee;
 }
 
+.navbar-brand, h1, h2, h3, h4, h5, h6, h7{
+    font-weight: inherit;
+}
+
 /*
  * Sidebar
  */
 
 .sidebar {
     position: fixed;
-    top: 51px;
+    top: 60px;
     bottom: 0;
     left: 0;
     z-index: 1000;

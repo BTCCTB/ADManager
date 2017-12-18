@@ -1,0 +1,25 @@
+---
+- hosts: all
+
+  become: true
+
+  vars_files:
+    - ./vars/deploy_vault.yml
+    - ./vars/vars.yml
+    - ./vars/deploy_vars.yml
+
+  vars_prompt:
+    - name: rollback_to_release
+      prompt: 'Enter a release version you want to rollback to (skip to rollback to the previous one)'
+      private: no
+
+  vars:
+    # Ansistrano vars
+    ansistrano_deploy_to: "{{ project_deploy_dir }}"
+    ansistrano_rollback_to_release: "{{ rollback_to_release }}"
+
+    # Hooks: custom tasks if you need them
+    ansistrano_before_symlink_tasks_file: '{{ playbook_dir }}/rollback/before-symlink.yml'
+
+  roles:
+    - carlosbuenosvinos.ansistrano-rollback

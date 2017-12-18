@@ -1,4 +1,4 @@
-# ADManager
+# PasswordManager
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/28e7482c-aac0-4fab-8b37-b07609fa8c83/big.png)](https://insight.sensiolabs.com/projects/28e7482c-aac0-4fab-8b37-b07609fa8c83)
 
@@ -6,7 +6,7 @@ A php application for Active Directory Manipulation.
 
 ## Requirement
 * You need PHP 7.0 or newer, with session support.
-* ADManager supports MySQL-compatible databases
+* PasswordManager supports MySQL-compatible databases
     * MySQL 5.5 or newer
     * MariaDB 5.5 or newer
 * LDAP PHP extension enabled
@@ -15,8 +15,8 @@ A php application for Active Directory Manipulation.
 ## Installation
 execute this command to clone this repository and initialize the project:
 ```bash
-$ git clone git@github.com:BTCCTB/ADManager.git
-$ cd ADManager/
+$ git clone git@github.com:BTCCTB/Password.git
+$ cd Password/
 $ composer install
 ```
 
@@ -32,7 +32,7 @@ $ composer db-init
 > **NOTE**
 >
 > If you want to use a fully-featured web server (like Nginx or Apache) to run
-> ADManager, configure it to point at the `web/` directory of the project.
+> PasswordManager, configure it to point at the `web/` directory of the project.
 > For more details, see:
 > [configure a fully-featured web server][2]
 
@@ -75,21 +75,20 @@ $ composer test
 - [X] Configure AD Auth
     - [X] ADLdap2
     - [X] Guard Auth
-- [ ] EasyAdmin
 - [ ] Change password form
 - [ ] Reset password form ?
 
 ## Contributing
 
-Thank you for considering contributing to the ADManager project! Please review an abide the [contribution guide](docs/CONTRIBUTING.md).
+Thank you for considering contributing to the PasswordManager project! Please review an abide the [contribution guide](docs/CONTRIBUTING.md).
 
 ## Code of Conduct
 
-In order to ensure that the ADManager community is welcoming to all, please review and abide by the [Code of Conduct](docs/CODE_OF_CONDUCT.md).
+In order to ensure that the PasswordManager community is welcoming to all, please review and abide by the [Code of Conduct](docs/CODE_OF_CONDUCT.md).
 
 ## License
 
-The ADManager project is open-sourced software licensed under the [GPL-2.0 License](LICENSE.md).
+The PasswordManager project is open-sourced software licensed under the [GPL-2.0 License](LICENSE.md).
 
 [1]: https://symfony.com/doc/current/reference/requirements.html
 [2]: https://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html

@@ -1,6 +1,6 @@
 ---
 - hosts: dev
-
+  become: true
   vars_files:
     - ./vars/provision_vault.yml
     - ./vars/provision_vars.yml
@@ -9,26 +9,7 @@
     - ./vars/vars.yml
 
   pre_tasks:
-    - name: Update APT package manager repositories cache
-      become: true
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-
-    - name: Install aptitude
-      become: true
-      apt:
-        name: aptitude
-        state: latest
-
-    - name: Install python-software-properties
-      become: true
-      apt:
-        name: python-software-properties
-        state: latest
-
     - name: Create project directory
-      become: true
       file:
         path: '{{ project_deploy_dir }}'
         state: directory
@@ -36,227 +17,248 @@
         group: '{{ ansible_user }}'
         mode: 0775
 
+    - name: Install Software Collections repo
+      yum:
+        name: centos-release-scl
+        state: present
+
+    - name: Add repository for SCLo (enabling Software Collections that are not in RHSCL, but are build by SCLo SIG group in CentOS)
+      yum_repository:
+        name: rhscl-centos-release-scl
+        description: CentOS SCLo
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+
   tasks:
     - name: Install low-level utilities
-      become: true
-      apt:
+      package:
         name: "{{ item }}"
       with_items:
         - zip
         - unzip
-        - python-mysqldb
+        - MySQL-python
         - curl
+        - git
 
-    - name: Install Git VCS
-      become: true
-      apt:
-        name: git
-        state: latest
-
-    - name: Specify MySQL root password before installing
-      debconf:
-        name: 'mysql-server'
-        question: 'mysql-server/root_password'
-        value: '{{database_root_password | quote}}'
-        vtype: 'password'
-      become: true
-
-    - name: Confirm MySQL root password before installing
-      debconf:
-        name: 'mysql-server'
-        question: 'mysql-server/root_password_again'
-        value: '{{database_root_password | quote}}'
-        vtype: 'password'
-      become: true
-
-    - name: Install MySQL DB server
-      become: true
-      apt:
-        name: mysql-server
-        state: latest
-
-    - name: MySQL | Ensure database exist
-      mysql_db:
-        name: "{{ database_name }}"
-        login_user: "{{ database_root }}"
-        login_password: "{{ database_root_password }}"
+    - name: MariaDB | Install
+      yum:
+        name: rh-mariadb101
         state: present
 
-    - name: MySQL | Ensure user exists
+    - name: MariaDB | Start and enable service
+      service:
+        name: rh-mariadb101-mariadb
+        state: started
+        enabled: yes
+
+    - name: MariaDB | update root password for localhost
+      mysql_user:
+        name: "{{ database_root }}"
+        host: localhost
+        password: "{{ database_root_password }}"
+        state: present
+
+    - name: MariaDB | Add client .my.cnf
+      template:
+        src: my-client.cnf.j2
+        dest: /root/.my.cnf
+        owner: root
+        group: root
+        mode: 0600
+
+    - name: MariaDB | update root password for local (but not localhost)
+      mysql_user:
+        name: "{{ database_root }}"
+        host: "%"
+        password: "{{ database_root_password }}"
+
+    - name: MariaDB | Ensure user exists
       mysql_user:
         name: "{{ database_user }}"
         password: "{{ database_password }}"
-        host: "{{ database_host }}"
+        host: "%"
         priv: "{{ database_name }}.*:ALL"
         login_user: "{{ database_root }}"
         login_password: "{{ database_root_password }}"
         state: present
 
-    - name: Install PHP packages
-      become: true
-      apt:
+    - name: PHP 7 | Install packages
+      package:
         name: "{{ item }}"
         state: latest
       with_items:
-        - php5
-        - php5-curl
-        - php5-gd
-        - php5-ldap
-        - php5-mysql
-        - php5-xdebug
-#        - php5-mbstring
-        - php-apc
+        - "rh-php70"
+        - "rh-php70-php"
+        - "rh-php70-php-gd"
+        - "rh-php70-php-intl"
+        - "rh-php70-php-ldap"
+        - "rh-php70-php-soap"
+        - "rh-php70-php-xmlrpc"
+        - "rh-php70-php-mysqlnd"
+        - "rh-php70-php-mbstring"
+        - "rh-php70-php-pdo"
+        - "rh-php70-php-opcache"
+        - "sclo-php70-php-pecl-apcu"
+        - "sclo-php70-php-pecl-memcached"
+        - libzip
 
-    - name: Install APACHE packages
-      become: true
-      apt:
-        name: "{{ item }}"
-        state: latest
-      with_items:
-        - apache2
-        - libapache2-mod-php5
-
-    - name: Set date.timezone for CLI
-      become: true
-      ini_file:
-        path: /etc/php5/cli/php.ini
-        section: Date
-        option: date.timezone
-        value: Europe/Brussels
-
-    - name: Set date.timezone for Apache
-      become: true
-      ini_file:
-        path: /etc/php5/apache2/php.ini
-        section: Date
-        option: date.timezone
-        value: Europe/Brussels
-      notify: Restart Apache
-
-    - name: Set upload_max_filesize for Apache
-      become: true
-      ini_file:
-        path: /etc/php5/apache2/php.ini
-        section: PHP
-        option: upload_max_filesize
-        value: 20M
-      notify: Restart Apache
-
-    - name: Set post_max_size for Apache
-      become: true
-      ini_file:
-        path: /etc/php5/apache2/php.ini
-        section: PHP
-        option: post_max_size
-        value: 80M
-      notify: Restart Apache
-
-    - name: Increase OPcache limit of accelerated files
-      become: true
-      ini_file:
-        path: /etc/php5/apache2/php.ini
-        section: opcache
-        option: opcache.max_accelerated_files
-        value: 20000
-      notify: Restart Apache
-
-    - name: Configure the PHP realpath cache
-      become: true
-      ini_file:
-        path: /etc/php5/apache2/php.ini
-        section: PHP
-        option: '{{ item.option }}'
-        value: '{{ item.value }}'
-      notify: Restart Apache
-      with_items:
-        - { option: 'realpath_cache_size', value: '4096K' }
-        - { option: 'realpath_cache_ttl', value: '600' }
-
-    - name: Configure APACHE vhost
-      become: true
-      template:
-        src: "templates/default.conf.j2"
-        dest: "{{ host_server_vhost_file }}"
-        mode: "u=rx,g=rx,o=r"
-      notify: Restart Apache
-
-    - name: Check for Composer
-      stat:
-        path: /usr/local/bin/composer
-      register: composer_stat
-
-    - name: Download Composer
-      script: scripts/install_composer.sh
-      when: not composer_stat.stat.exists
-
-    - name: Move Composer globally
-      become: true
-      command: mv composer.phar /usr/local/bin/composer
-      when: not composer_stat.stat.exists
-
-    - name: Set permissions on Composer
-      become: true
-      file:
-        path: /usr/local/bin/composer
-        mode: "a+x"
-
-    - name: Make sure Composer is at its latest version
-      composer:
-        working_dir: "/home/{{ ansible_user }}"
-        command: self-update
-      register: composer_self_update
-      changed_when: "not composer_self_update.stdout|search('You are already using composer version')"
-
-    - name: Set GitHub OAuth token for Composer
-      composer:
-        command: config
-        arguments: '-g github-oauth.github.com "{{ github_oauth_token }}"'
-        working_dir: "/home/{{ ansible_user }}"
-      tags:
-        - github_oauth
-
-    - name: Ensure phpMyAdmin is installed
-      become: true
-      apt:
-        name: phpmyadmin
-        state: latest
-
-    - name: Add default username and password for MySQL connection.
-      become: true
-      lineinfile: >
-        dest={{ phpmyadmin_config_file }}
-        state=present
-        regexp="^.+\['{{ item.key }}'\].+$"
-        line="$cfg['Servers'][$i]['{{ item.key }}'] = '{{ item.value }}';"
-        insertbefore="^\?>"
-      with_items:
-      - { key: host, value: "{{ phpmyadmin_mysql_host }}" }
-      - { key: port, value: "{{ phpmyadmin_mysql_port }}" }
-      - { key: socket, value: "{{ phpmyadmin_mysql_socket }}" }
-      - { key: connect_type, value: "{{ phpmyadmin_mysql_connect_type }}" }
-      - { key: user, value: "{{ phpmyadmin_mysql_user }}" }
-      - { key: password, value: "{{ phpmyadmin_mysql_password }}"}
-
-
-    - name: Ensure phpMyAdmin config file is included in Apache config.
-      become: true
-      lineinfile:
-        dest: /etc/apache2/apache2.conf
-        state: present
-        regexp: "^Include.+phpmyadmin.+$"
-        line: "Include /etc/phpmyadmin/apache.conf"
-        insertafter: "EOF"
-      notify: Restart Apache
-
+#    - name: Install APACHE packages
+#      become: true
+#      package:
+#        name: "{{ item }}"
+#        state: latest
+#      with_items:
+#        - apache2
+#        - libapache2-mod-php5
+#
+#    - name: Set date.timezone for CLI
+#      become: true
+#      ini_file:
+#        path: /etc/php5/cli/php.ini
+#        section: Date
+#        option: date.timezone
+#        value: Europe/Brussels
+#
+#    - name: Set date.timezone for Apache
+#      become: true
+#      ini_file:
+#        path: /etc/php5/apache2/php.ini
+#        section: Date
+#        option: date.timezone
+#        value: Europe/Brussels
+#      notify: Restart Apache
+#
+#    - name: Set upload_max_filesize for Apache
+#      become: true
+#      ini_file:
+#        path: /etc/php5/apache2/php.ini
+#        section: PHP
+#        option: upload_max_filesize
+#        value: 20M
+#      notify: Restart Apache
+#
+#    - name: Set post_max_size for Apache
+#      become: true
+#      ini_file:
+#        path: /etc/php5/apache2/php.ini
+#        section: PHP
+#        option: post_max_size
+#        value: 80M
+#      notify: Restart Apache
+#
+#    - name: Increase OPcache limit of accelerated files
+#      become: true
+#      ini_file:
+#        path: /etc/php5/apache2/php.ini
+#        section: opcache
+#        option: opcache.max_accelerated_files
+#        value: 20000
+#      notify: Restart Apache
+#
+#    - name: Configure the PHP realpath cache
+#      become: true
+#      ini_file:
+#        path: /etc/php5/apache2/php.ini
+#        section: PHP
+#        option: '{{ item.option }}'
+#        value: '{{ item.value }}'
+#      notify: Restart Apache
+#      with_items:
+#        - { option: 'realpath_cache_size', value: '4096K' }
+#        - { option: 'realpath_cache_ttl', value: '600' }
+#
+#    - name: Configure APACHE vhost
+#      become: true
+#      template:
+#        src: "templates/default.conf.j2"
+#        dest: "{{ host_server_vhost_file }}"
+#        mode: "u=rx,g=rx,o=r"
+#      notify: Restart Apache
+#
+#    - name: Check for Composer
+#      stat:
+#        path: /usr/local/bin/composer
+#      register: composer_stat
+#
+#    - name: Download Composer
+#      script: scripts/install_composer.sh
+#      when: not composer_stat.stat.exists
+#
+#    - name: Move Composer globally
+#      become: true
+#      command: mv composer.phar /usr/local/bin/composer
+#      when: not composer_stat.stat.exists
+#
+#    - name: Set permissions on Composer
+#      become: true
+#      file:
+#        path: /usr/local/bin/composer
+#        mode: "a+x"
+#
+#    - name: Make sure Composer is at its latest version
+#      composer:
+#        working_dir: "/home/{{ ansible_user }}"
+#        command: self-update
+#      register: composer_self_update
+#      changed_when: "not composer_self_update.stdout|search('You are already using composer version')"
+#
+#    - name: Set GitHub OAuth token for Composer
+#      composer:
+#        command: config
+#        arguments: '-g github-oauth.github.com "{{ github_oauth_token }}"'
+#        working_dir: "/home/{{ ansible_user }}"
+#      tags:
+#        - github_oauth
+#
+#    - name: Ensure phpMyAdmin is installed
+#      become: true
+#      package:
+#        name: phpmyadmin
+#        state: latest
+#
+#    - name: Add default username and password for MySQL connection.
+#      become: true
+#      lineinfile: >
+#        dest={{ phpmyadmin_config_file }}
+#        state=present
+#        regexp="^.+\['{{ item.key }}'\].+$"
+#        line="$cfg['Servers'][$i]['{{ item.key }}'] = '{{ item.value }}';"
+#        insertbefore="^\?>"
+#      with_items:
+#      - { key: host, value: "{{ phpmyadmin_mysql_host }}" }
+#      - { key: port, value: "{{ phpmyadmin_mysql_port }}" }
+#      - { key: socket, value: "{{ phpmyadmin_mysql_socket }}" }
+#      - { key: connect_type, value: "{{ phpmyadmin_mysql_connect_type }}" }
+#      - { key: user, value: "{{ phpmyadmin_mysql_user }}" }
+#      - { key: password, value: "{{ phpmyadmin_mysql_password }}"}
+#
+#
+#    - name: Ensure phpMyAdmin config file is included in Apache config.
+#      become: true
+#      lineinfile:
+#        dest: /etc/apache2/apache2.conf
+#        state: present
+#        regexp: "^Include.+phpmyadmin.+$"
+#        line: "Include /etc/phpmyadmin/apache.conf"
+#        insertafter: "EOF"
+#      notify: Restart Apache
+#
   post_tasks:
     - name: Upgrade installed packages
       become: true
-      apt:
-        upgrade: safe
+      yum:
+        name: '*'
+        state: latest
 
   handlers:
     - name: Restart Apache
       become: true
       service:
         name: apache2
+        state: restarted
+
+    - name: Restart MariaDB
+      become: true
+      service:
+        name: rh-mariadb101-mariadb
         state: restarted

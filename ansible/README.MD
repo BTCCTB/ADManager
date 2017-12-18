@@ -1,8 +1,8 @@
-# How to deploy ADManager ?
+# How to deploy PasswordManager ?
 For deployment we use [ansistrano-deploy](https://github.com/ansistrano/deploy)
 
 ## Add the target host
-One host by group in the hostsfile (`./ansible/hosts.ini`)
+One CentOS based host by group in the hostsfile (`./ansible/hosts.ini`)
 
 ```ini
 [sample]
@@ -36,7 +36,7 @@ git_branch: "dev"
 ```
 
 ## Deploy !
-To deploy on your new target, you must run this simple command:
+To deploy on your new target, you must run this simple command on your new CentOS based host:
 
 ```bash
 ansible-playbook ansible/deploy.yml --limit sample

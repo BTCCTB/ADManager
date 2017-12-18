@@ -1,11 +1,16 @@
 ---
-ansible_user: "vagrant"
-ansible_ssh_private_key_file: "./.vagrant/machines/default/virtualbox/private_key"
-project_deploy_dir: "/var/www/html"
-host_server_name: "damino.local"
-application_url: "http://{{ host_server_name }}/"
-application_env: "DEV"
-host_server_vhost_file: "/etc/apache2/sites-enabled/000-default.conf"
-database_root: "{{ vault_database_root }}"
-database_root_password: "{{ vault_database_root_password }}"
-git_branch: "dev"
+ansible_user: 'vagrant'
+ansible_ssh_private_key_file: './.vagrant/machines/default/virtualbox/private_key'
+project_deploy_dir: '/var/www/html'
+host_server_name: 'password.local'
+application_url: 'http://{{ host_server_name }}/'
+application_env: 'dev'
+host_server_vhost_file: '/etc/apache2/sites-enabled/000-default.conf'
+database_root: '{{ vault_database_root }}'
+database_root_password: '{{ vault_database_root_password }}'
+git_branch: 'dev'
+bis_host: 'bis.btcctb.net'
+ad_server: '10.1.20.69'
+symfony_secret: '{{ vault_symfony_secret }}'
+
+php_path: '/usr/bin/php'

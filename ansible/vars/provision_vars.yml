@@ -1,9 +1,8 @@
 ---
-github_oauth_token: "{{ vault_github_oauth_token }}"
-phpmyadmin_config_file: "/etc/phpmyadmin/config.inc.php"
-phpmyadmin_mysql_host: "localhost"
-phpmyadmin_mysql_port: ""
-phpmyadmin_mysql_socket: ""
-phpmyadmin_mysql_connect_type: "tcp"
-phpmyadmin_mysql_user: "{{ database_root }}"
-phpmyadmin_mysql_password: "{{ database_root_password }}"
+phpmyadmin_config_file: '/etc/phpmyadmin/config.inc.php'
+phpmyadmin_mysql_host: 'localhost'
+phpmyadmin_mysql_port: ''
+phpmyadmin_mysql_socket: ''
+phpmyadmin_mysql_connect_type: 'tcp'
+phpmyadmin_mysql_user: '{{ database_root }}'
+phpmyadmin_mysql_password: '{{ database_root_password }}'

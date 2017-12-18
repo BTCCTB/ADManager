@@ -16,8 +16,12 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
+            new BTC\FlagIconBundle\BTCFlagIconBundle(),
             new AppBundle\AppBundle(),
             new AuthBundle\AuthBundle(),
+            new BisBundle\BisBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

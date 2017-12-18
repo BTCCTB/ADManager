@@ -1,0 +1,74 @@
+---
+- name: GIT | deploy key ?
+  stat: 'path={{ ansistrano_deploy_to }}/.ssh/id_rsa'
+  register: deploy_key
+
+- name: GIT | Create directory
+  file:
+    path: '{{ ansistrano_deploy_to }}/.ssh/'
+    state: directory
+  when: not deploy_key.stat.exists
+
+- name: GIT | Remove old deploy key
+  file:
+    path: '{{ ansistrano_deploy_to }}/.ssh/id_rsa'
+    state: absent
+  when: deploy_key.stat.exists
+
+- name: GIT | Add deploy key
+  blockinfile:
+    dest: '{{ ansistrano_deploy_to }}/.ssh/id_rsa'
+    block: '{{ deploy_key_private }}'
+    marker: '-----{mark} RSA PRIVATE KEY-----'
+    create: yes
+
+- name: GIT | Protect deploy key
+  file:
+    path: '{{ ansistrano_deploy_to }}/.ssh/id_rsa'
+    mode: 0600
+    state: file
+
+- name: GIT | Fetch deploy key
+  fetch:
+    src: '{{ ansistrano_deploy_to }}/.ssh/id_rsa'
+    dest: '{{ playbook_dir }}/.ssh/id_rsa'
+    flat: yes
+
+- name: Composer | Check
+  stat:
+    path: /usr/local/bin/composer
+  register: composer_stat
+
+- name: Composer | Download
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/installer
+  when: not composer_stat.stat.exists
+
+- name: Composer | Install
+  shell: cat /tmp/installer | {{ php_path }} --  --filename=composer --install-dir=/usr/local/bin
+  args:
+    creates: /usr/local/bin/composer
+  when: not composer_stat.stat.exists
+
+- name: Composer | Set permissions
+  become: true
+  file:
+    path: /usr/local/bin/composer
+    mode: "a+x"
+  when: not composer_stat.stat.exists
+
+- name: Composer | Make sure is at its latest version
+  composer:
+    working_dir: "{{ ansistrano_deploy_to }}"
+    command: self-update
+    executable: '{{ php_path }}'
+  register: composer_self_update
+  changed_when: "not composer_self_update.stdout|search('You are already using composer version')"
+
+- name: Composer | Set GitHub OAuth token
+  composer:
+    command: config
+    arguments: '-g github-oauth.github.com "{{ github_oauth_token }}"'
+    working_dir: "{{ ansistrano_deploy_to }}"
+    executable: '{{ php_path }}'
