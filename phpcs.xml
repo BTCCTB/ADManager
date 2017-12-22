@@ -8,6 +8,7 @@
 
     <!-- There should not be any code in the bundle Resources directory. -->
     <exclude-pattern>*/Resources/*</exclude-pattern>
+    <exclude-pattern>app/DoctrineMigrations/*</exclude-pattern>
 
     <!-- Symfony follows the standards defined in the PSR-0, PSR-1 and PSR-2 documents. -->
     <!-- Include the whole PSR-1 standard -->
