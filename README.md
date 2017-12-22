@@ -1,6 +1,6 @@
 # PasswordManager
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/28e7482c-aac0-4fab-8b37-b07609fa8c83/big.png)](https://insight.sensiolabs.com/projects/28e7482c-aac0-4fab-8b37-b07609fa8c83)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/335ca539-4188-4da6-89c2-678910806b15/big.png)](https://insight.sensiolabs.com/projects/335ca539-4188-4da6-89c2-678910806b15)
 
 A php application for Active Directory Manipulation.
 
@@ -75,8 +75,12 @@ $ composer test
 - [X] Configure AD Auth
     - [X] ADLdap2
     - [X] Guard Auth
+- [X] Import user in ldap
+- [X] Password generator
 - [ ] Change password form
 - [ ] Reset password form ?
+- [ ] List latest in/out
+- [ ] Mail notification
 
 ## Contributing
 
