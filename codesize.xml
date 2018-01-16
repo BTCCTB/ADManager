@@ -45,7 +45,7 @@
     <!-- Exclude $em, $id and $i from the short variables rule -->
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
-            <property name="exceptions" value="id,i,em,ad,dn,ou" />
+            <property name="exceptions" value="id,i,em,ad,dn,ou,to" />
         </properties>
     </rule>
     <!-- Allow a longer length for long variables rule -->

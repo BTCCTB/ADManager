@@ -2,6 +2,7 @@
 
 namespace BisBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -20,7 +21,6 @@ class BisCountry
     /**
      * @var integer
      * @ORM\Column(name="cou_id", type="bigint")
-     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $couId;
@@ -38,7 +38,8 @@ class BisCountry
     private $couIsocode2letters;
 
     /**
-     * @ORM\Column(name="cou_isocode_3letters", type="string")
+     * @ORM\Column(name="cou_isocode_3letters", type="string", unique=true)
+     * @ORM\Id
      */
     private $couIsocode3letters;
 
@@ -121,6 +122,16 @@ class BisCountry
      * @ORM\Column(name="cou_partner", type="boolean")
      */
     private $couPartner;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisPersonView", mappedBy="perCountryWorkplace")
+     */
+    private $bisPersons;
+
+    public function __construct()
+    {
+        $this->bisPersons = new ArrayCollection();
+    }
 
     public function getCouId()
     {

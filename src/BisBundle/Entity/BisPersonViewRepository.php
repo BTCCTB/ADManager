@@ -2,7 +2,9 @@
 
 namespace BisBundle\Entity;
 
+use Adldap\Models\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * Class BisPersonViewRepository
@@ -21,19 +23,44 @@ class BisPersonViewRepository extends EntityRepository
             ->setParameter('email', $username . '@%')
             ->getQuery();
 
-        return $query->getOneOrNullResult();
+        try {
+            return $query->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 
-    public function getUserByEmail($email)
+    /**
+     * Get a user by Email
+     *
+     * @param string $email The email of the user
+     *
+     * @return BisPersonView|null The User or null if not found
+     */
+    public function getUserByEmail(string $email)
     {
         $repository = $this->_em->getRepository(BisPersonView::class);
 
-        $query = $repository->createQueryBuilder('bpv')
-            ->where('bpv.perEmail LIKE :email')
-            ->setParameter('email', $email)
-            ->getQuery();
+        $email2 = $email;
 
-        return $query->getOneOrNullResult();
+        $query = $repository->createQueryBuilder('bpv')
+            ->where('bpv.perEmail LIKE :email or bpv.perEmail LIKE :email2')
+            ->setParameter('email', $email);
+
+        // Test enabel.be
+        if (strpos($email2, '@enabel.be')) {
+            $email2 = str_replace('@enabel.be', '@btcctb.org', $email2);
+        } elseif (strpos($email2, '@btcctb.org')) {
+            $email2 = str_replace('@btcctb.org', '@enabel.be', $email2);
+        }
+        $query->setParameter('email2', $email2);
+
+        try {
+            return $query->getQuery()->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+
     }
 
     public function findAllFieldUser()
@@ -42,6 +69,7 @@ class BisPersonViewRepository extends EntityRepository
 
         $query = $repository->createQueryBuilder('bpv')
             ->where('bpv.perCountryWorkplace != :country')
+            ->andWhere("bpv.perCountryWorkplace != ''")
             ->setParameter('country', 'BEL')
             ->getQuery();
 

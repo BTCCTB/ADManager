@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
+  <file id="validators.en">
+    <unit id="XVwEJtj">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Entity/User.php:0</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>It looks this user has already an account</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="SXQeT1_">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:27</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>The new password fields must match.</source>
+        <target></target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

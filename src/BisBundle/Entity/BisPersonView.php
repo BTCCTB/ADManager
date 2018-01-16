@@ -2,6 +2,7 @@
 
 namespace BisBundle\Entity;
 
+use AuthBundle\Service\ActiveDirectoryHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -18,6 +19,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class BisPersonView
 {
     const MAIN_DOMAIN = '@enabel.be';
+    const COMPANY = 'Enabel';
+
     /**
      * @var integer
      *
@@ -91,9 +94,10 @@ class BisPersonView
     private $perMobile;
 
     /**
-     * @var string
+     * @var BisCountry
      *
-     * @ORM\Column(name="per_country_workplace", type="string", length=3, nullable=false)
+     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisCountry")
+     * @ORM\JoinColumn(name="per_country_workplace", referencedColumnName="cou_isocode_3letters", nullable=true)
      */
     private $perCountryWorkplace;
 
@@ -194,6 +198,15 @@ class BisPersonView
         return $this->perSex;
     }
 
+    public function getInitials()
+    {
+        if (!empty($this->getSex())) {
+            return $this->getSex();
+        }
+
+        return null;
+    }
+
     public function setSex($perSex)
     {
         $this->perSex = $perSex;
@@ -236,6 +249,22 @@ class BisPersonView
     public function getCountryWorkplace()
     {
         return $this->perCountryWorkplace;
+    }
+
+    public function getDepartment()
+    {
+        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+            return $this->getCountryWorkplace()->getCouName();
+        }
+        return null;
+    }
+
+    public function getCountry()
+    {
+        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+            return $this->getCountryWorkplace()->getCouIsocode3letters();
+        }
+        return null;
     }
 
     public function setCountryWorkplace($perCountryWorkplace)
@@ -303,6 +332,11 @@ class BisPersonView
         return false;
     }
 
+    public function getAccountName()
+    {
+        return $this->getLogin();
+    }
+
     public function getDomainAccount()
     {
         if ($this->getUsername() !== false) {
@@ -321,6 +355,105 @@ class BisPersonView
 
     public function getDisplayName()
     {
-        return $this->getFirstname() . ', ' . strtoupper($this->getLastname());
+        return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
+    }
+
+    public function getCommonName()
+    {
+        return ucfirst(strtolower($this->getFirstname())) . ' ' . strtoupper($this->getLastname());
+    }
+
+    public function getPrettyDateContractStop()
+    {
+        if (!empty($this->getDateContractStop())) {
+            return $this->getDateContractStop()->format("Y-m-d");
+        }
+        return null;
+    }
+
+    public function getPrettyDateContractStart()
+    {
+        if (!empty($this->getDateContractStart())) {
+            return $this->getDateContractStart()->format("Y-m-d");
+        }
+        return null;
+    }
+
+    public function getInfo()
+    {
+        $info = [];
+        if (null !== $this->getPrettyDateContractStart()) {
+            $info['startDate'] = $this->getPrettyDateContractStart();
+        }
+        if (null !== $this->getPrettyDateContractStop()) {
+            $info['endDate'] = $this->getPrettyDateContractStop();
+        }
+        if (!empty($info)) {
+            return json_encode($info);
+        }
+
+        return null;
+    }
+
+    public function getCompany()
+    {
+        return self::COMPANY;
+    }
+
+    public function getAttribute($key)
+    {
+        switch ($key) {
+            case 'c':
+                if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+                    return $this->getCountryWorkplace()->getCouIsocode2letters();
+                }
+                break;
+            case 'co':
+                if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+                    return $this->getCountryWorkplace()->getCouName();
+                }
+                break;
+        }
+
+        return null;
+    }
+
+    public function getTitle()
+    {
+        if (!empty($this->getFunction())) {
+            return substr($this->getFunction(), 0, 60);
+        }
+
+        return null;
+    }
+
+    public function getDescription()
+    {
+        if (!empty($this->getFunction())) {
+            return substr($this->getFunction(), 0, 60);
+        }
+
+        return null;
+    }
+
+    public function getProxyAddresses()
+    {
+        return [
+            'SMTP:' . $this->getUsername() . self::MAIN_DOMAIN,
+        ];
+    }
+
+    public function getUserPrincipalName()
+    {
+        return $this->getDomainAccount();
+    }
+
+    public function getOrganizationalUnit()
+    {
+        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+            return ActiveDirectoryHelper::createCountryDistinguishedName($this->getCountryWorkplace()->getCouIsocode3letters());
+        }
+
+        return null;
     }
 }

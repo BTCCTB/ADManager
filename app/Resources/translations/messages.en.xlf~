@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
+  <file id="messages.en">
+    <unit id="cu0r12f">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:18</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Current password</source>
+        <target>Current password</target>
+      </segment>
+    </unit>
+    <unit id="XohImNo">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:24</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="PdnfREH">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:34</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>New password</source>
+        <target>New password</target>
+      </segment>
+    </unit>
+    <unit id="DInsk4R">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:37</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Repeat new password</source>
+        <target>Repeat new password</target>
+      </segment>
+    </unit>
+    <unit id="47ienTP">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:25</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Username</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="4KZ8dE1">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:28</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>lastname.firstname@enabel.be</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="588_9PF">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:35</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="gJanvZo">
+      <notes>
+        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:42</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Remember</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="LyrbXfQ">
+      <notes>
+        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:60</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Password successfully changed !</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="JjgOAvY">
+      <notes>
+        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:63</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Password cannot be changed !</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Jly4PdM">
+      <notes>
+        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:66</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Current password don't match !</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="TrlfUem">
+      <notes>
+        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:106</note>
+        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:129</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Can't do this action!</source>
+        <target></target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

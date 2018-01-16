@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
+            new Translation\Bundle\TranslationBundle(),
+            new Translation\PlatformAdapter\Loco\Bridge\Symfony\TranslationAdapterLocoBundle(),
             new BTC\FlagIconBundle\BTCFlagIconBundle(),
             new AppBundle\AppBundle(),
             new AuthBundle\AuthBundle(),

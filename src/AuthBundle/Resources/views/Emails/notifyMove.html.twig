@@ -1,0 +1,46 @@
+{%  extends 'AuthBundle:Emails:layout.html.twig' %}
+{% block title %}{{ subject }}{% endblock %}
+{% block body %}
+<h3>List of users with Organizational Unit changes</h3>
+
+<p>Hi ICT Team!</p>
+
+<p>
+    a series of accounts have just been moved in your Active Directory.
+    <br>Check the list below.
+</p>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Country workplace</th>
+            <th>Organizational Unit</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Log</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.FirstName|default('unknow') }}</td>
+            <td>{{ user.LastName|default('unknow') }}</td>
+            <td>{{ user.Email|default('unknow') }}</td>
+            <td>{{ user.Department|default('unknow') }} [{{ user.Country|default('unknow') }}]</td>
+            <td>{{ user.OrganizationalUnit|default('unknow') }}</td>
+            <td>{{ user.from|default('unknow') }}</td>
+            <td>{{ user.to|default('unknow') }}</td>
+            <td>{{ user.log }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8" style="text-align: right;">{{ users|length }} user(s)</td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

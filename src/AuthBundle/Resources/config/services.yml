@@ -26,9 +26,9 @@ services:
         alias: AuthBundle\Service\ActiveDirectory
         public: true
 
-
-
-
-#    auth.example:
-#        class: AuthBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    AuthBundle\Service\BisDir:
+        arguments: [ "@doctrine.orm.bis_entity_manager", '@auth.ldap.password_encoder','%bis_dir_hosts%', '%bis_dir_base_dn%', '%bis_dir_admin_username%', '%bis_dir_admin_password%']
+        public: true
+    auth.bis_dir:
+        alias: AuthBundle\Service\BisDir
+        public: true

@@ -32,3 +32,10 @@ parameters:
     admin_password: ~
     account_suffix: "ad4dev.local"
     mail_domain: "enabel.be"
+
+    # Bis Dir (ldap)
+    bis_dir_hosts:
+        - bisdir.btcctb.net
+    bis_dir_base_dn: ''
+    bis_dir_admin_username: adldap
+    bis_dir_admin_password: adld@p2018

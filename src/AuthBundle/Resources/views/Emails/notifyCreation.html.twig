@@ -1,0 +1,48 @@
+{%  extends 'AuthBundle:Emails:layout.html.twig' %}
+{% block title %}{{ subject }}{% endblock %}
+{% block body %}
+<h3>List of new active directory users</h3>
+
+<p>Hi ICT Team!</p>
+
+<p>
+    a series of accounts have just been created for your new users.
+    <br>After verification, all that remains is to assign the O365 licenses.
+</p>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Country workplace</th>
+            <th>Organizational Unit</th>
+            <th>Generated password</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Log</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.FirstName|default('unknow') }}</td>
+            <td>{{ user.LastName|default('unknow') }}</td>
+            <td>{{ user.Email }}</td>
+            <td>{{ user.Department|default('unknow') }} [{{ user.Country|default('unknow') }}]</td>
+            <td>{{ user.OrganizationalUnit|default('unknow') }}</td>
+            <td>{{ user.password|default('not generated') }}</td>
+            <td>{{ user.StartDate|default('unknow') }}</td>
+            <td>{{ user.EndDate|default('unknow') }}</td>
+            <td>{{ user.log }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="9" style="text-align: right;">{{ users|length }} user(s)</td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

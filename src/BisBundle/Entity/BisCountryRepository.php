@@ -38,4 +38,31 @@ class BisCountryRepository extends EntityRepository
         }
         return false;
     }
+
+    /**
+     * Retrieve iso code 3 letters for a country with iso code 2 letters
+     *
+     * @param string $isoCode2 The iso code 2 letter of the country
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getIso3Code($isoCode2)
+    {
+        $repository = $this->_em->getRepository(BisCountry::class);
+
+        $query = $repository->createQueryBuilder('cou')
+            ->where('cou.couIsocode2letters LIKE :code2')
+            ->setParameter('code2', $isoCode2)
+            ->getQuery();
+
+        /**
+         * @var BisCountry $country
+         */
+        $country = $query->getOneOrNullResult();
+        if (null !== $country) {
+            return $country->getCouIsocode3letters();
+        }
+        return false;
+    }
 }

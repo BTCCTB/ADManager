@@ -12,6 +12,7 @@ use Adldap\Models\UserPasswordPolicyException;
 use BisBundle\Entity\BisPersonView;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Collection;
+use Symfony\Component\Debug\Exception\ContextErrorException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
@@ -101,6 +102,26 @@ class ActiveDirectory
     }
 
     /**
+     * Change user password
+     *
+     * @param string $email    His email
+     * @param string $password His password
+     *
+     * @return bool Returns true if the password is updated.
+     * @throws \Adldap\AdldapException
+     */
+    public function changePassword(string $email, string $password): bool
+    {
+        $user = $this->getUser($email);
+
+        if (ActiveDirectoryHelper::checkPasswordComplexity($password) === true) {
+            $user->setPassword($password);
+            return $user->save();
+        }
+        return false;
+    }
+
+    /**
      * Check if user exist in AD
      *
      * @param String $username The username [firstname.lastname]
@@ -162,7 +183,7 @@ class ActiveDirectory
      *
      * @param string $sortField The specified field to sort
      * @param string $sortDirection The specified direction to sort
-     * @return array|Collection
+     * @return User[]|Collection<User>
      */
     public function getAllUsers($sortField, $sortDirection = 'ASC')
     {
@@ -179,7 +200,7 @@ class ActiveDirectory
      *
      * @param string $sortField The specified field to sort
      * @param string $sortDirection The specified direction to sort
-     * @return array|Collection
+     * @return User[]|Collection<User>
      */
     public function getFieldUsers($sortField = 'cn', $sortDirection = 'ASC')
     {
@@ -201,7 +222,7 @@ class ActiveDirectory
      *
      * @param string $sortField The specified field to sort
      * @param string $sortDirection The specified direction to sort
-     * @return array|Collection
+     * @return User[]|Collection<User>
      */
     public function getHqUsers($sortField = 'cn', $sortDirection = 'ASC')
     {
@@ -266,156 +287,6 @@ class ActiveDirectory
     }
 
     /**
-     * Move a existing user into a new OU
-     *
-     * @param User $user  The user
-     * @param String $newOU The new OU
-     *
-     * @return bool
-     */
-    public function moveUser(User $user, String $newOU): bool
-    {
-        $rdn = $user->getDnBuilder()->assembleCns();
-        $countryOu = $this->checkOuExistByName($newOU, true);
-
-        return $user->move($rdn, $countryOu->getDn());
-    }
-
-    /**
-     * Add or update a account in Active Directory
-     *
-     * @param String $username The username [firstname.lastname@company.domain]
-     *
-     * @return bool
-     */
-    public function syncAdUser(String $username): bool
-    {
-        /**
-         * @var BisPersonView $bisPersonView
-         */
-        $bisPersonView = $this->em->getRepository('BisBundle:BisPersonView')->getUserByUsername($username);
-
-        if ($bisPersonView !== false && $bisPersonView->getDomainAccount() !== false) {
-            // Check if user already exist in AD
-            $user = $this->checkUserExistByUsername($bisPersonView->getDomainAccount());
-            /**
-             * @var User $user
-             */
-            if ($user === false) {
-                $user = $this->activeDirectory->make()->user();
-            } else {
-                $this->updateOu($user, $bisPersonView);
-            }
-            // Set the user profile details.
-            $user->setCommonName($bisPersonView->getUsername());
-
-            // 1+7 login
-            $login = $bisPersonView->getLogin();
-            $user->setAccountName(strtolower($login));
-
-            $user->setDisplayName($bisPersonView->getDisplayName());
-            $user->setFirstName($bisPersonView->getFirstname());
-            $user->setLastName($bisPersonView->getLastname());
-            $user->setInitials($bisPersonView->getSex());
-            $user->setDepartment($bisPersonView->getCountryWorkplace());
-            $user->setCompany('Enabel');
-            if (!empty($bisPersonView->getFunction())) {
-                $function = substr($bisPersonView->getFunction(), 0, 60);
-                $user->setTitle($function);
-                $user->setDescription($function);
-            }
-
-            // nom.prenom
-            $user->setUserPrincipalName($bisPersonView->getDomainAccount());
-
-            // Email
-            $user->setEmail($bisPersonView->getEmail());
-            $user->setProxyAddresses([
-                'SMTP:' . $bisPersonView->getUsername() . '@enabel.be',
-                'smtp:' . $bisPersonView->getUsername() . '@btcctb.org',
-            ]);
-
-            $dn = new DistinguishedName();
-
-            // Get or create the country OU
-            $ou = $this->checkOuExistByName($bisPersonView->getCountryWorkplace(), true);
-            if ($ou !== false) {
-                $dn->setBase($ou->getDn());
-            }
-            $dn->addCn($user->getCommonName());
-
-            $user->setDn($dn);
-
-            // Save the user.
-            if ($user->save()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function checkPasswordComplexity(string $password)
-    {
-        if (\strlen($password) < 8) {
-            return 'Error E103 - Your password is too short.<br/>Your password must be at least 8 characters long.';
-        }
-        if (!preg_match('/[\d]/', $password)) {
-            return 'Error E104 - Your password must contain at least one number.';
-        }
-        if (!preg_match('/[a-zA-Z]/', $password)) {
-            return 'Error E105 - Your password must contain at least one letter.';
-        }
-        if (!preg_match('/[A-Z]/', $password)) {
-            return 'Error E106 - Your password must contain at least one uppercase letter.';
-        }
-        if (!preg_match('/[a-z]/', $password)) {
-            return 'Error E107 - Your password must contain at least one lowercase letter.';
-        }
-
-        return true;
-    }
-
-    /**
-     * Generates a password of N length containing at least
-     * one lower case letter, one uppercase letter, one digit, and one special character.
-     * The remaining characters in the password are chosen at random from those four sets.
-     * The available characters in each set are user friendly - there are no ambiguous characters
-     * such as i, l, 1, o, 0, -, _, etc.
-     *
-     * @return string The random generated password
-     */
-    public function generatePassword(): string
-    {
-        //Configuration
-        $length = 8;
-        $sets = array();
-        // Lowercase letter
-        $sets[] = 'abcdefghjkmnpqrstuvwxyz';
-        // Uppercase letter
-        $sets[] = 'ABCDEFGHJKMNPQRSTUVWXYZ';
-        // Number
-        $sets[] = '23456789';
-        // Special chars
-        $sets[] = '!@#$%&*?';
-
-        $all = '';
-        $password = '';
-        foreach ($sets as $set) {
-            $password .= $set[array_rand(str_split($set))];
-            $all .= $set;
-        }
-        $all = str_split($all);
-        for ($i = 0; $i < $length - count($sets); $i++) {
-            $password .= $all[array_rand($all)];
-        }
-
-        $password = str_shuffle($password);
-
-        return trim($password);
-    }
-
-    /**
      * Set default password & define account as normal
      *
      * @param String      $username The username [firstname.lastname@company.domain]
@@ -425,6 +296,7 @@ class ActiveDirectory
      * @return bool
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      * @throws UserPasswordPolicyException
+     * TODO: Change return type to ActiveDirectoryResponse
      */
     public function resetAccount(String $username, String $password): bool
     {
@@ -433,7 +305,7 @@ class ActiveDirectory
             // Set account active
             $user->setUserAccountControl(512);
             if ($password !== null) {
-                if ($this->checkPasswordComplexity($password) === true) {
+                if (ActiveDirectoryHelper::checkPasswordComplexity($password) === true) {
                     $user->setPassword($password);
                     return $user->save();
                 } else {
@@ -450,7 +322,7 @@ class ActiveDirectory
      * @param String $name The name of the OU
      * @param bool   $autoCreate Create the OU if not exist
      *
-     * @return bool|mixed
+     * @return OrganizationalUnit|false
      */
     public function checkOuExistByName($name, $autoCreate = false)
     {
@@ -458,14 +330,34 @@ class ActiveDirectory
             $name = 'Users';
         }
 
-        $ou = $this->activeDirectory->search()->ous()->findBy('name', $name);
+        $organizationalUnit = $this->activeDirectory->search()->ous()->findBy('name', $name);
 
-        if ($ou instanceof OrganizationalUnit) {
-            return $ou;
+        if ($organizationalUnit instanceof OrganizationalUnit) {
+            return $organizationalUnit;
         }
         if ($autoCreate) {
             $this->createCountryOu($name);
             return $this->checkOuExistByName($name);
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if user is member of a specific organizational unit
+     *
+     * @param User               $user The user
+     * @param OrganizationalUnit $ou The organizational unit
+     *
+     * @return bool
+     */
+    public function isUserMemberOf(User $user, OrganizationalUnit $ou): bool
+    {
+        $members = $this->activeDirectory->search()->users()->setDn($ou->getDn())->get();
+        foreach ($members as $member) {
+            if ($user->getDn() === $member->getDn()) {
+                return true;
+            }
         }
 
         return false;
@@ -495,14 +387,695 @@ class ActiveDirectory
         return false;
     }
 
-    protected function updateOu(User $user, BisPersonView $bisPersonView): bool
+    /**
+     * Update DisplayName in AD with GO4HR data
+     * TODO: Change return type to ActiveDirectoryResponse
+     */
+    public function fixDisplayName()
     {
-        if (!strpos($user->getDepartment(), $bisPersonView->getCountryWorkplace())) {
-            //            if ($this->moveUser($user, $bisPersonView->getCountryWorkplace()) === true) {
-            //                return true;
-            //            }
+        // Set no limit time & memory
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
+        // Error Log
+        $logs = [];
+
+        // Get BisPersonView Repository
+        $bisPersonView = $this->em->getRepository('BisBundle:BisPersonView');
+
+        $users = $this->getAllUsers('userprincipalname');
+        foreach ($users as $user) {
+            $email = $user->getEmail();
+            $state = '<comment>OK</comment>';
+            $bisUser = null;
+            if (!empty($email)) {
+                $bisUser = $bisPersonView->getUserByEmail($email);
+            }
+            if (!empty($bisUser)) {
+                if (strcmp($user->getDisplayName(), $bisUser->getDisplayName()) !== 0) {
+                    $user->setDisplayName($bisUser->getDisplayName());
+                    $user->setFirstName($bisUser->getFirstname());
+                    $user->setLastName($bisUser->getLastname());
+                    if (!$user->save()) {
+                        $state = '<error>FAILED</error>';
+                    }
+                    $logs[] = [
+                        'user' => $user->getUserPrincipalName(),
+                        'current' => $user->getDisplayName(),
+                        'new' => $bisUser->getDisplayName(),
+                        'state' => $state,
+                    ];
+                }
+            } else {
+                if (strtolower($user->getLastName()) === 'desk') {
+                    $newDn = strtoupper($user->getLastName()) . ', ' . ucfirst(strtolower($user->getFirstName()));
+                    $user->setDisplayName($newDn);
+                    if (!$user->save()) {
+                        $state = '<error>FAILED</error>';
+                    }
+                    $logs[] = [
+                        'user' => $user->getUserPrincipalName(),
+                        'current' => $user->getDisplayName(),
+                        'new' => $newDn,
+                        'state' => $state,
+
+                    ];
+                } elseif (strtolower($user->getFirstName()) === 'desk') {
+                    $newDn = strtoupper($user->getFirstName()) . ', ' . ucfirst(strtolower($user->getLastName()));
+                    $user->setDisplayName($newDn);
+                    if (!$user->save()) {
+                        $state = '<error>FAILED</error>';
+                    }
+                    $logs[] = [
+                        'user' => $user->getUserPrincipalName(),
+                        'current' => $user->getDisplayName(),
+                        'new' => $newDn,
+                        'state' => $state,
+
+                    ];
+                } elseif (!empty($user->getLastName()) && !empty($user->getFirstName())) {
+                    $newDn = strtoupper($user->getLastName()) . ', ' . ucfirst(strtolower($user->getFirstName()));
+                    $user->setDisplayName($newDn);
+                    if (!$user->save()) {
+                        $state = '<error>FAILED</error>';
+                    }
+                    $logs[] = [
+                        'user' => $user->getUserPrincipalName(),
+                        'current' => $user->getDisplayName(),
+                        'new' => $newDn,
+                        'state' => $state,
+
+                    ];
+                }
+            }
         }
 
-        return false;
+        return $logs;
     }
+
+    /**
+     * @return array
+     * TODO: Change return type to ActiveDirectoryResponse
+     */
+    public function fixProxyAddresses()
+    {
+        // Set no limit time & memory
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
+        // Error Log
+        $logs = [];
+
+        /**
+         * @var User[] $users
+         */
+        $users = $this->getAllUsers('userprincipalname');
+        foreach ($users as $user) {
+            $email = strtolower($user->getEmail());
+            $state = '<comment>OK</comment>';
+            if (!empty($email)) {
+                $emailPart = explode('@', $email);
+                $proxyAddresses = [
+                    'SMTP:' . $emailPart[0] . '@enabel.be',
+                ];
+                $user->setProxyAddresses($proxyAddresses);
+                if (!$user->save()) {
+                    $state = '<error>FAILED</error>';
+                }
+                $logs[] = [
+                    'user' => $user->getUserPrincipalName(),
+                    'current' => json_encode($user->getProxyAddresses()),
+                    'new' => json_encode($proxyAddresses),
+                    'state' => $state,
+
+                ];
+            }
+        }
+
+        return $logs;
+    }
+
+    /**
+     * @return array
+     * TODO: Change return type to ActiveDirectoryResponse
+     */
+    public function fixUserPrincipalName()
+    {
+        // Set no limit time & memory
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
+        // Error Log
+        $logs = [];
+
+        /**
+         * @var User[] $users
+         */
+        $users = $this->getAllUsers('userprincipalname');
+        foreach ($users as $user) {
+            $email = strtolower($user->getEmail());
+            $state = '<comment>OK</comment>';
+            if (!empty($email)) {
+                $emailPart = explode('@', $email);
+                if ($user->getUserPrincipalName() !== $emailPart[0] . '@enabel.be') {
+                    $user->setUserPrincipalName($emailPart[0] . '@enabel.be');
+                    if (!$user->save()) {
+                        $state = '<error>FAILED</error>';
+                    }
+                    $logs[] = [
+                        'user' => $user->getUserPrincipalName(),
+                        'current' => $user->getUserPrincipalName(),
+                        'new' => $emailPart[0] . '@enabel.be',
+                        'state' => $state,
+                    ];
+                }
+            }
+        }
+
+        return $logs;
+    }
+
+    /**
+     * @param null $country
+     *
+     * @return ActiveDirectoryResponse[]
+     * @throws \Adldap\AdldapException
+     */
+    public function cronTaskSynchronize($country = null)
+    {
+        // Set no limit time & memory
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
+        // ActiveDirectoryResponse Logs
+        $logs = [];
+
+        // Get BisPersonView Repository
+        $bisPersonView = $this->em->getRepository('BisBundle:BisPersonView');
+
+        // Get active users in GO4HR
+        if (!empty($country)) {
+            $bisUsers = $bisPersonView->findBy(['perCountryWorkplace' => $country]);
+        } else {
+            $bisUsers = $bisPersonView->findAllFieldUser();
+        }
+
+        /**
+         * @var BisPersonView[] $bisUsers
+         */
+        foreach ($bisUsers as $bisUser) {
+            $adAccount = $this->checkUserExistByUsername($bisUser->getDomainAccount());
+
+            if ($adAccount instanceof User) {
+                // User is active?
+                $logs[] = $this->enableExistingAccount($adAccount);
+                $logs[] = $this->updateAccount($bisUser->getDomainAccount());
+                // Move this user in correct OU
+                $moved = $this->userNeedToMove($bisUser, $adAccount);
+                $logs[] = $moved;
+                if (ActiveDirectoryResponseStatus::ACTION_NEEDED === $moved->getStatus()) {
+                    $logs[] = $this->moveUser($bisUser, $adAccount);
+                }
+                $logs[] = $this->renameAdUser($bisUser->getDomainAccount());
+            } else {
+                $logs[] = $this->createUser($bisUser);
+            }
+        }
+
+        // Find inactive user
+        $adUsers = $this->getFieldUsers('email', 'ASC');
+        foreach ($adUsers as $adUser) {
+            $bisUser = null;
+            if (!empty($adUser->getEmail())) {
+                $bisUser = $bisPersonView->getUserByEmail($adUser->getEmail());
+            }
+            if (empty($bisUser)) {
+                $logs[] = $this->disableAccount($adUser);
+            }
+        }
+
+        return $logs;
+    }
+
+    /**
+     * Check user need to be moved
+     *
+     * @param BisPersonView $bisUser
+     * @param User          $adAccount
+     *
+     * @return ActiveDirectoryResponse
+     */
+    public function userNeedToMove(BisPersonView $bisUser, User $adAccount): ActiveDirectoryResponse
+    {
+        // Check Organizational Unit exist
+        $organizationalUnit = $this->checkOuExistByName($bisUser->getCountry());
+
+        if ($organizationalUnit === false) {
+            return new ActiveDirectoryResponse(
+                "Organizational unit for country '" . $bisUser->getCountry() . "' doesn't exist!",
+                ActiveDirectoryResponseStatus::EXCEPTION,
+                ActiveDirectoryResponseType::MOVE,
+                ActiveDirectoryHelper::getDataBisUser($bisUser)
+            );
+        } elseif (!$this->isUserMemberOf($adAccount, $organizationalUnit)) {
+            return new ActiveDirectoryResponse(
+                "User '" . $bisUser->getEmail() . "' need to be moved to organizational unit '" . $organizationalUnit->getDn() . "'",
+                ActiveDirectoryResponseStatus::ACTION_NEEDED,
+                ActiveDirectoryResponseType::MOVE
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $bisUser->getEmail() . "' already in correct organizational unit",
+            ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+            ActiveDirectoryResponseType::MOVE
+        );
+    }
+
+    /**
+     * Move user in the correct Organizational Unit
+     *
+     * @param BisPersonView $bisUser
+     * @param User          $adAccount
+     *
+     * @return ActiveDirectoryResponse
+     */
+    public function moveUser(BisPersonView $bisUser, User $adAccount): ActiveDirectoryResponse
+    {
+        // Check Organizational Unit exist
+        $organizationalUnit = $this->checkOuExistByName($bisUser->getCountry());
+
+        if ($organizationalUnit === false) {
+            return new ActiveDirectoryResponse(
+                "Organizational unit for country '" . $bisUser->getCountry() . "' doesn't exist!",
+                ActiveDirectoryResponseStatus::EXCEPTION,
+                ActiveDirectoryResponseType::MOVE,
+                ActiveDirectoryHelper::getDataAdUser(
+                    $adAccount,
+                    [
+                        'from' => $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName()),
+                        'to' => $bisUser->getCountry(),
+                    ]
+                )
+            );
+        } else {
+            $rdn = 'CN=' . $adAccount->getCommonName();
+            $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
+            if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
+                $from = implode('/', array_reverse($oldOu->organizationUnits));
+                $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                return new ActiveDirectoryResponse(
+                    "User '" . $bisUser->getEmail() . "' can't be moved from '" . $from . "' to '" . $to . "'",
+                    ActiveDirectoryResponseStatus::FAILED,
+                    ActiveDirectoryResponseType::MOVE,
+                    ActiveDirectoryHelper::getDataAdUser(
+                        $adAccount,
+                        [
+                            'from' => $oldOu->get(),
+                            'to' => $organizationalUnit->getDn(),
+                        ]
+                    )
+                );
+            } else {
+                $from = implode('/', array_reverse($oldOu->organizationUnits));
+                $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                return new ActiveDirectoryResponse(
+                    "User '" . $bisUser->getEmail() . "' moved from '" . $from . "' to '" . $to . "'",
+                    ActiveDirectoryResponseStatus::DONE,
+                    ActiveDirectoryResponseType::MOVE,
+                    ActiveDirectoryHelper::getDataAdUser(
+                        $adAccount,
+                        [
+                            'from' => $oldOu->get(),
+                            'to' => $organizationalUnit->getDn(),
+                        ]
+                    )
+                );
+            }
+        }
+    }
+
+    /**
+     *
+     * @param BisPersonView $bisUser
+     *
+     * @return ActiveDirectoryResponse
+     * @throws \Adldap\AdldapException
+     */
+    private function createUser(BisPersonView $bisUser): ActiveDirectoryResponse
+    {
+        // Init a new Active Directory user
+        $user = $this->activeDirectory->make()->user();
+
+        // Get the correct organizational unit
+        $organizationalUnit = $this->checkOuExistByName($bisUser->getCountry());
+
+        if ($organizationalUnit === false) {
+            return new ActiveDirectoryResponse(
+                "Organizational unit for country '" . $bisUser->getCountry() . "' doesn't exist!",
+                ActiveDirectoryResponseStatus::EXCEPTION,
+                ActiveDirectoryResponseType::CREATE,
+                ActiveDirectoryHelper::getDataBisUser($bisUser)
+            );
+        } elseif (empty($bisUser->getEmail())) {
+            return new ActiveDirectoryResponse(
+                "Unable to create this user '" . $bisUser->getFullName() . "' no email!",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::CREATE,
+                ActiveDirectoryHelper::getDataBisUser($bisUser)
+            );
+        } else {
+            // Set BIS data in Active Directory format
+            $user = ActiveDirectoryHelper::bisPersonToAdUser($bisUser, $user, $organizationalUnit);
+
+            // Save the basic data of the user
+            try {
+                if ($user->save()) {
+                    // Generate a password
+                    $password = ActiveDirectoryHelper::generatePassword();
+                    $user->setPassword($password);
+                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                    if (!$user->save()) {
+                        return new ActiveDirectoryResponse(
+                            "User '" . $bisUser->getEmail() . "' unable to enable and set '" . $password . "' as default password",
+                            ActiveDirectoryResponseStatus::EXCEPTION,
+                            ActiveDirectoryResponseType::CREATE,
+                            ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
+                        );
+                    }
+                    return new ActiveDirectoryResponse(
+                        "User '" . $bisUser->getEmail() . "' created with password '" . $password . "'",
+                        ActiveDirectoryResponseStatus::DONE,
+                        ActiveDirectoryResponseType::CREATE,
+                        ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
+                    );
+                }
+            } catch (ContextErrorException $e) {
+                var_dump(ActiveDirectoryHelper::getDataAdUser($user));
+                var_dump(ActiveDirectoryHelper::getDataBisUser($bisUser));
+                exit();
+            }
+        }
+
+        return new ActiveDirectoryResponse(
+            "Unable to create this user '" . $bisUser->getEmail() . "'",
+            ActiveDirectoryResponseStatus::FAILED,
+            ActiveDirectoryResponseType::CREATE,
+            ActiveDirectoryHelper::getDataBisUser($bisUser)
+        );
+
+    }
+
+    /**
+     * Enable a specific account
+     *
+     * @param User $adAccount The user account
+     *
+     * @return ActiveDirectoryResponse
+     */
+    private function enableExistingAccount(User $adAccount): ActiveDirectoryResponse
+    {
+        if (!$adAccount->isActive() && $adAccount->isExpired()) {
+            $adAccount->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            $adAccount->setAccountExpiry(null);
+            if ($adAccount->save()) {
+                return new ActiveDirectoryResponse(
+                    "User '" . $adAccount->getEmail() . "' successfully enabled in Active Directory",
+                    ActiveDirectoryResponseStatus::DONE,
+                    ActiveDirectoryResponseType::UPDATE
+                );
+            }
+            return new ActiveDirectoryResponse(
+                "User '" . $adAccount->getEmail() . "' can't be enabled in Active Directory",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::UPDATE
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $adAccount->getEmail() . "' already enabled in Active Directory",
+            ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+            ActiveDirectoryResponseType::UPDATE
+        );
+    }
+
+    /**
+     * Disable a specific account
+     *
+     * @param User $adAccount The user account
+     *
+     * @return ActiveDirectoryResponse
+     */
+    private function disableAccount(User $adAccount): ActiveDirectoryResponse
+    {
+        $ouName = 'DISABLED-USER';
+
+        if ($adAccount->isActive()) {
+            $adAccount->setUserAccountControl(AccountControl::ACCOUNTDISABLE);
+            $adAccount->setAccountExpiry(ActiveDirectoryHelper::today());
+            if ($adAccount->save()) {
+                // Check Organizational Unit exist
+                $organizationalUnit = $this->checkOuExistByName($ouName);
+
+                if ($organizationalUnit === false) {
+                    return new ActiveDirectoryResponse(
+                        "Organizational unit '" . $ouName . "' doesn't exist!",
+                        ActiveDirectoryResponseStatus::EXCEPTION,
+                        ActiveDirectoryResponseType::DISABLE,
+                        ActiveDirectoryHelper::getDataAdUser(
+                            $adAccount,
+                            [
+                                'from' => $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName()),
+                                'to' => $ouName,
+                            ]
+                        )
+                    );
+                } else {
+                    $rdn = 'CN=' . $adAccount->getCommonName();
+                    $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
+                    if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
+                        $from = implode('/', array_reverse($oldOu->organizationUnits));
+                        $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                        return new ActiveDirectoryResponse(
+                            "User '" . $adAccount->getEmail() . "'disabled but can't be moved from '" . $from . "' to '" . $to . "'",
+                            ActiveDirectoryResponseStatus::FAILED,
+                            ActiveDirectoryResponseType::DISABLE,
+                            ActiveDirectoryHelper::getDataAdUser(
+                                $adAccount,
+                                [
+                                    'from' => $oldOu->get(),
+                                    'to' => $organizationalUnit->getDn(),
+                                ]
+                            )
+                        );
+                    } else {
+                        $from = implode('/', array_reverse($oldOu->organizationUnits));
+                        $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                        return new ActiveDirectoryResponse(
+                            "User '" . $adAccount->getEmail() . "' disabled and moved from '" . $from . "' to '" . $to . "'",
+                            ActiveDirectoryResponseStatus::DONE,
+                            ActiveDirectoryResponseType::DISABLE,
+                            ActiveDirectoryHelper::getDataAdUser(
+                                $adAccount,
+                                [
+                                    'from' => $oldOu->get(),
+                                    'to' => $organizationalUnit->getDn(),
+                                ]
+                            )
+                        );
+                    }
+                }
+            }
+            return new ActiveDirectoryResponse(
+                "User '" . $adAccount->getEmail() . "' can't be disabled in Active Directory",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::DISABLE,
+                ActiveDirectoryHelper::getDataAdUser($adAccount)
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $adAccount->getEmail() . "' already disabled in Active Directory",
+            ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+            ActiveDirectoryResponseType::DISABLE,
+            ActiveDirectoryHelper::getDataAdUser($adAccount)
+        );
+    }
+
+    public function updateAccount(string $email): ActiveDirectoryResponse
+    {
+        $adAccount = $this->checkUserExistByUsername($email);
+        $bisUser = $this->em->getRepository('BisBundle:BisPersonView')->getUserByEmail($email);
+
+        if ($adAccount !== false && !empty($bisUser)) {
+            // Set BIS data in Active Directory format
+            list($adAccount, $diffData) = ActiveDirectoryHelper::bisPersonUpdateAdUser($bisUser, $adAccount);
+            //$adAccount->setAccountName($original['samaccountname'][0]);
+
+            if (!empty($diffData)) {
+                if ($adAccount->save()) {
+                    return new ActiveDirectoryResponse(
+                        "User '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
+                        ActiveDirectoryResponseStatus::DONE,
+                        ActiveDirectoryResponseType::UPDATE,
+                        ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+                    );
+                }
+                return new ActiveDirectoryResponse(
+                    "User '" . $adAccount->getEmail() . "' can't be disabled in Active Directory",
+                    ActiveDirectoryResponseStatus::FAILED,
+                    ActiveDirectoryResponseType::UPDATE,
+                    ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+                );
+            }
+
+            return new ActiveDirectoryResponse(
+                "User '" . $adAccount->getEmail() . "' already up to date in Active Directory",
+                ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+                ActiveDirectoryResponseType::UPDATE
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $email . "' not found! " . (($adAccount === null) ? '[NOT IN AD]' : '') . (($bisUser === null) ? '[NOT IN BIS]' : ''),
+            ActiveDirectoryResponseStatus::EXCEPTION,
+            ActiveDirectoryResponseType::UPDATE,
+            [
+                'AD data' => (array) $adAccount,
+                'BIS data' => (array) $bisUser,
+            ]
+        );
+    }
+
+    public function renameAdUser(string $email)
+    {
+        $adAccount = $this->checkUserExistByUsername($email);
+        $bisUser = $this->em->getRepository('BisBundle:BisPersonView')->getUserByEmail($email);
+
+        if ($adAccount !== false && !empty($bisUser)) {
+            if ($bisUser->getCommonName() !== $adAccount->getCommonName()) {
+                // Change dn based on CommonName
+                $newDn = $adAccount->getDnBuilder();
+                $newDn->removeCn($adAccount->getCommonName());
+                $newDn->addCn($bisUser->getCommonName());
+                $oldDn = $adAccount->getDnBuilder()->get();
+
+                $rdn = 'CN=' . $bisUser->getCommonName();
+                $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
+                if (!$adAccount->move($rdn, $oldOu->get())) {
+                    return new ActiveDirectoryResponse(
+                        "Unable to rename user '" . $adAccount->getEmail() . "'!",
+                        ActiveDirectoryResponseStatus::EXCEPTION,
+                        ActiveDirectoryResponseType::UPDATE,
+                        ActiveDirectoryHelper::getDataAdUser(
+                            $adAccount,
+                            [
+                                'to' => $newDn->get(),
+                                'from' => $oldDn,
+                            ]
+                        )
+                    );
+                }
+                return new ActiveDirectoryResponse(
+                    "User '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
+                    ActiveDirectoryResponseStatus::EXCEPTION,
+                    ActiveDirectoryResponseType::UPDATE,
+                    ActiveDirectoryHelper::getDataAdUser(
+                        $adAccount,
+                        [
+                            'to' => $newDn->get(),
+                            'from' => $oldDn,
+                        ]
+                    )
+                );
+            }
+            return new ActiveDirectoryResponse(
+                "User '" . $adAccount->getEmail() . "' already up to date in Active Directory",
+                ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+                ActiveDirectoryResponseType::UPDATE
+            );
+        }
+        return new ActiveDirectoryResponse(
+            "User '" . $email . "' not found! " . (($adAccount === null) ? '[NOT IN AD]' : '') . (($bisUser === null) ? '[NOT IN BIS]' : ''),
+            ActiveDirectoryResponseStatus::EXCEPTION,
+            ActiveDirectoryResponseType::UPDATE,
+            [
+                'AD data' => (array) $adAccount,
+                'BIS data' => (array) $bisUser,
+            ]
+        );
+    }
+
+/**
+ * Move user in the 'Enabel-NoMail' Organizational Unit
+ *
+ * @param string $email
+ *
+ * @return ActiveDirectoryResponse
+ */
+    public function noMail(string $email): ActiveDirectoryResponse
+    {
+        $ouName = 'Enabel-NoMail';
+        $adAccount = $this->checkUserExistByEmail($email);
+
+        if ($adAccount !== false) {
+            // Check Organizational Unit exist
+            $organizationalUnit = $this->checkOuExistByName($ouName);
+
+            if ($organizationalUnit === false) {
+                return new ActiveDirectoryResponse(
+                    "Organizational unit '" . $ouName . "' doesn't exist!",
+                    ActiveDirectoryResponseStatus::EXCEPTION,
+                    ActiveDirectoryResponseType::MOVE,
+                    ActiveDirectoryHelper::getDataAdUser(
+                        $adAccount,
+                        [
+                            'from' => $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName()),
+                            'to' => $ouName,
+                        ]
+                    )
+                );
+            } else {
+                $rdn = 'CN=' . $adAccount->getCommonName();
+                $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
+                if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
+                    $from = implode('/', array_reverse($oldOu->organizationUnits));
+                    $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                    return new ActiveDirectoryResponse(
+                        "User '" . $adAccount->getEmail() . "' can't be moved from '" . $from . "' to '" . $to . "'",
+                        ActiveDirectoryResponseStatus::FAILED,
+                        ActiveDirectoryResponseType::MOVE,
+                        ActiveDirectoryHelper::getDataAdUser(
+                            $adAccount,
+                            [
+                                'from' => $oldOu->get(),
+                                'to' => $organizationalUnit->getDn(),
+                            ]
+                        )
+                    );
+                } else {
+                    $from = implode('/', array_reverse($oldOu->organizationUnits));
+                    $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                    return new ActiveDirectoryResponse(
+                        "User '" . $adAccount->getEmail() . "' moved from '" . $from . "' to '" . $to . "'",
+                        ActiveDirectoryResponseStatus::DONE,
+                        ActiveDirectoryResponseType::MOVE,
+                        ActiveDirectoryHelper::getDataAdUser(
+                            $adAccount,
+                            [
+                                'from' => $oldOu->get(),
+                                'to' => $organizationalUnit->getDn(),
+                            ]
+                        )
+                    );
+                }
+            }
+        }
+        return new ActiveDirectoryResponse(
+            "AD user account with email '" . $email . "' doesn't exist!",
+            ActiveDirectoryResponseStatus::EXCEPTION,
+            ActiveDirectoryResponseType::MOVE
+        );
+    }
+
 }
