@@ -23,3 +23,8 @@ parameters:
     admin_password: "{{ ad_password }}"
     account_suffix: "{{ ad_account_suffix }}"
     mail_domain: "{{ ad_mail_domain }}"
+    bis_dir_hosts:
+    - "{{ ldap_server }}
+    bis_dir_base_dn: "{{ ldap_base_dn }}"
+    bis_dir_admin_username: "{{ ldap_user }}"
+    bis_dir_admin_password: "{{ ldap_password }}"
