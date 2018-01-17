@@ -96,7 +96,7 @@ class BisPersonView
     /**
      * @var BisCountry
      *
-     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisCountry")
+     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisCountry", inversedBy="bisPersons")
      * @ORM\JoinColumn(name="per_country_workplace", referencedColumnName="cou_isocode_3letters", nullable=true)
      */
     private $perCountryWorkplace;
