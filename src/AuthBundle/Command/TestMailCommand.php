@@ -100,23 +100,6 @@ class TestMailCommand extends Command
             ActiveDirectoryHelper::getDataBisUser($bisPersonView)
         );
 
-        $message = \Swift_Message::newInstance();
-        $message->setSubject('Test direct mail')
-            ->setFrom('ict.helpdesk@btcctb.org')
-            ->setTo('ict.helpdesk@btcctb.org')
-            ->setBody(
-                $this->engine->render(
-                    '@Auth/Emails/notifyCreation.html.twig',
-                    [
-                        'users' => $bisPersonView,
-                        'subject' => 'User creation in AD',
-                    ]
-                ),
-                'text/html'
-            );
-
-        $this->mailer->send($message);
-
         $this->activeDirectoryNotification->notifyCreation($logs);
     }
 
