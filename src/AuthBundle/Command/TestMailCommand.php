@@ -13,6 +13,7 @@ use BisBundle\Entity\BisPersonView;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 class TestMailCommand extends Command
 {
@@ -20,15 +21,27 @@ class TestMailCommand extends Command
      * @var ActiveDirectoryNotification
      */
     private $activeDirectoryNotification;
+    /**
+     * @var \Swift_Mailer
+     */
+    private $mailer;
+    /**
+     * @var EngineInterface
+     */
+    private $engine;
 
     /**
      * AdFixNameCommand constructor.
      *
      * @param ActiveDirectoryNotification $activeDirectoryNotification
+     * @param \Swift_Mailer               $mailer
+     * @param EngineInterface             $engine
      */
-    public function __construct(ActiveDirectoryNotification $activeDirectoryNotification)
+    public function __construct(ActiveDirectoryNotification $activeDirectoryNotification, \Swift_Mailer $mailer, EngineInterface $engine)
     {
         $this->activeDirectoryNotification = $activeDirectoryNotification;
+        $this->mailer = $mailer;
+        $this->engine = $engine;
         parent::__construct();
     }
 
@@ -86,6 +99,23 @@ class TestMailCommand extends Command
             ActiveDirectoryResponseType::CREATE,
             ActiveDirectoryHelper::getDataBisUser($bisPersonView)
         );
+
+        $message = \Swift_Message::newInstance();
+        $message->setSubject('Test direct mail')
+            ->setFrom('ict.helpdesk@btcctb.org')
+            ->setTo('ict.helpdesk@btcctb.org')
+            ->setBody(
+                $this->engine->render(
+                    '@Auth/Emails/notifyCreation.html.twig',
+                    [
+                        'users' => $bisPersonView,
+                        'subject' => 'User creation in AD',
+                    ]
+                ),
+                'text/html'
+            );
+
+        $this->mailer->send($message);
 
         $this->activeDirectoryNotification->notifyCreation($logs);
     }
