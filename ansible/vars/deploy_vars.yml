@@ -18,7 +18,7 @@ ad_account_suffix: 'ad4dev.local'
 ad_mail_domain: 'enabel.be'
 
 # AD Notification vars
-ad_notification_from: 'ict.helpdesk@enabel.be'
+ad_notification_from: 'ict.helpdesk@btcctb.org'
 ad_notification_to: 'ict.helpesk@btcctb.org'
 
 # GIT vars
