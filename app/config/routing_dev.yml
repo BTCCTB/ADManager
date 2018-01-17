@@ -12,6 +12,7 @@ _errors:
 
 _main:
     resource: routing.yml
+    schemes: [http]
 
 _translation_webui:
     resource: "@TranslationBundle/Resources/config/routing_webui.yml"

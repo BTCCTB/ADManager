@@ -3,11 +3,14 @@ auth:
     type:     annotation
     prefix:   /
     options: { i18n: false }
+    schemes:  [https]
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
     prefix:   /
+    schemes:  [https]
 
 _translation_edit_in_place:
     resource: '@TranslationBundle/Resources/config/routing_edit_in_place.yml'
     prefix:  /admin
+    schemes:  [https]
