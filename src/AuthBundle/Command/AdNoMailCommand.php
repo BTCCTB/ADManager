@@ -70,6 +70,8 @@ class AdNoMailCommand extends Command
             $logs[] = $this->activeDirectory->noMail($email);
         }
 
+        $this->activeDirectoryNotification->notifyMove($logs);
+
         $table = new Table($output);
         $table->setHeaders([
             'message',

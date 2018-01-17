@@ -27,6 +27,7 @@ class ActiveDirectoryHelper
      */
     public static function bisPersonToAdUser(BisPersonView $bisPersonView, User $user, OrganizationalUnit $unit): User
     {
+        $user->setEmployeeId($bisPersonView->getEmployeeId());
         $user->setCommonName($bisPersonView->getCommonName());
         $user->setAccountName($bisPersonView->getAccountName());
         $user->setDisplayName($bisPersonView->getDisplayName());
@@ -167,6 +168,7 @@ class ActiveDirectoryHelper
 
         return array_merge(
             [
+                'EmployeeId' => $bisPersonView->getEmployeeId(),
                 'CommonName' => $bisPersonView->getCommonName(),
                 'AccountName' => $bisPersonView->getAccountName(),
                 'DisplayName' => $bisPersonView->getDisplayName(),
@@ -209,6 +211,7 @@ class ActiveDirectoryHelper
 
         return array_merge(
             [
+                'EmployeeId' => $adUser->getEmployeeId(),
                 'CommonName' => $adUser->getCommonName(),
                 'AccountName' => $adUser->getAccountName(),
                 'DisplayName' => $adUser->getDisplayName(),
@@ -244,9 +247,18 @@ class ActiveDirectoryHelper
     {
         $diffData = [];
 
+        if ($bisPersonView->getEmployeeId() !== $user->getEmployeeId()) {
+            $diffData['EmployeeId'] = [
+                'attribute' => 'EmployeeId',
+                'value' => $bisPersonView->getEmployeeId(),
+                'original' => $user->getEmployeeId(),
+            ];
+            $user->setEmployeeId($bisPersonView->getEmployeeId());
+        }
+
         if ($bisPersonView->getDisplayName() !== $user->getDisplayName()) {
             $diffData['DisplayName'] = [
-                'attribut' => 'DisplayName',
+                'attribute' => 'DisplayName',
                 'value' => $bisPersonView->getDisplayName(),
                 'original' => $user->getDisplayName(),
             ];
@@ -254,7 +266,7 @@ class ActiveDirectoryHelper
         }
         if ($bisPersonView->getFirstname() !== $user->getFirstName()) {
             $diffData['firstName'] = [
-                'attribut' => 'firstName',
+                'attribute' => 'firstName',
                 'value' => $bisPersonView->getFirstname(),
                 'original' => $user->getFirstName(),
             ];
@@ -262,7 +274,7 @@ class ActiveDirectoryHelper
         }
         if ($bisPersonView->getLastname() !== $user->getLastName()) {
             $diffData['lastName'] = [
-                'attribut' => 'lastName',
+                'attribute' => 'lastName',
                 'value' => $bisPersonView->getLastname(),
                 'original' => $user->getLastName(),
             ];
@@ -270,7 +282,7 @@ class ActiveDirectoryHelper
         }
         if ($bisPersonView->getInitials() !== $user->getInitials()) {
             $diffData['initials'] = [
-                'attribut' => 'initials',
+                'attribute' => 'initials',
                 'value' => $bisPersonView->getInitials(),
                 'original' => $user->getInitials(),
             ];
@@ -278,7 +290,7 @@ class ActiveDirectoryHelper
         }
         if ($bisPersonView->getDepartment() !== $user->getDepartment()) {
             $diffData['department'] = [
-                'attribut' => 'department',
+                'attribute' => 'department',
                 'value' => $bisPersonView->getDepartment(),
                 'original' => $user->getDepartment(),
             ];
@@ -286,7 +298,7 @@ class ActiveDirectoryHelper
         }
         if ($bisPersonView->getCompany() !== $user->getCompany()) {
             $diffData['company'] = [
-                'attribut' => 'company',
+                'attribute' => 'company',
                 'value' => $bisPersonView->getCompany(),
                 'original' => $user->getCompany(),
             ];
@@ -294,7 +306,7 @@ class ActiveDirectoryHelper
         }
 //        if ($bisPersonView->getCountry() !== $user->getCountry()) {
         //            $diffData['country'] = [
-        //                'attribut' => 'country',
+        //                'attribute' => 'country',
         //                'value' => $bisPersonView->getCountry(),
         //                'original' => $user->getCountry(),
         //            ];
@@ -302,7 +314,7 @@ class ActiveDirectoryHelper
         //        }
         if ($bisPersonView->getAttribute('c') !== $user->getAttribute('c')[0]) {
             $diffData['c'] = [
-                'attribut' => 'c',
+                'attribute' => 'c',
                 'value' => $bisPersonView->getAttribute('c'),
                 'original' => $user->getAttribute('c'),
             ];
@@ -310,7 +322,7 @@ class ActiveDirectoryHelper
         }
         if ($bisPersonView->getAttribute('co') !== $user->getAttribute('co')[0]) {
             $diffData['co'] = [
-                'attribut' => 'co',
+                'attribute' => 'co',
                 'value' => $bisPersonView->getAttribute('co'),
                 'original' => $user->getAttribute('co'),
             ];
@@ -319,7 +331,7 @@ class ActiveDirectoryHelper
 
         if ($bisPersonView->getInfo() !== $user->getInfo()) {
             $diffData['info'] = [
-                'attribut' => 'info',
+                'attribute' => 'info',
                 'value' => $bisPersonView->getInfo(),
                 'original' => $user->getInfo(),
             ];
@@ -328,7 +340,7 @@ class ActiveDirectoryHelper
 
         if ($bisPersonView->getDescription() !== $user->getDescription()) {
             $diffData['description'] = [
-                'attribut' => 'description',
+                'attribute' => 'description',
                 'value' => $bisPersonView->getDescription(),
                 'original' => $user->getDescription(),
             ];
@@ -337,7 +349,7 @@ class ActiveDirectoryHelper
 
         if ($bisPersonView->getTitle() !== $user->getTitle()) {
             $diffData['title'] = [
-                'attribut' => 'title',
+                'attribute' => 'title',
                 'value' => $bisPersonView->getTitle(),
                 'original' => $user->getTitle(),
             ];
@@ -347,7 +359,7 @@ class ActiveDirectoryHelper
         // Email
         if ($bisPersonView->getEmail() !== $user->getEmail()) {
             $diffData['email'] = [
-                'attribut' => 'email',
+                'attribute' => 'email',
                 'value' => $bisPersonView->getEmail(),
                 'original' => $user->getEmail(),
             ];
@@ -356,7 +368,7 @@ class ActiveDirectoryHelper
 
         if ($bisPersonView->getProxyAddresses() !== $user->getProxyAddresses()) {
             $diffData['proxyAddresses'] = [
-                'attribut' => 'proxyAddresses',
+                'attribute' => 'proxyAddresses',
                 'value' => $bisPersonView->getProxyAddresses(),
                 'original' => $user->getProxyAddresses(),
             ];
@@ -379,10 +391,4 @@ class ActiveDirectoryHelper
 
         return $date->format($format);
     }
-}
-{
-
-}
-{
-
 }

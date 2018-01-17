@@ -30,7 +30,7 @@
             <td>{{ user.Department|default('unknow') }} [{{ user.Country|default('unknow') }}]</td>
             <td>
                 {% for val in user.diff %}
-                    <li>{{ val.attribut }}: {{ val.original|json_encode }} -> {{ val.value|json_encode }}</li>
+                    <li>{{ val.attribute }}: {{ val.original|json_encode }} -> {{ val.value|json_encode }}</li>
                 {% endfor %}
             </td>
             <td>{{ user.log }}</td>

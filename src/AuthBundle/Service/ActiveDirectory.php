@@ -771,9 +771,12 @@ class ActiveDirectory
                     );
                 }
             } catch (ContextErrorException $e) {
-                var_dump(ActiveDirectoryHelper::getDataAdUser($user));
-                var_dump(ActiveDirectoryHelper::getDataBisUser($bisUser));
-                exit();
+                return new ActiveDirectoryResponse(
+                    "Unable to create this user '" . $bisUser->getEmail() . "'",
+                    ActiveDirectoryResponseStatus::FAILED,
+                    ActiveDirectoryResponseType::CREATE,
+                    ActiveDirectoryHelper::getDataBisUser($bisUser)
+                );
             }
         }
 

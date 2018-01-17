@@ -456,4 +456,9 @@ class BisPersonView
 
         return null;
     }
+
+    public function getEmployeeId()
+    {
+        return $this->getId();
+    }
 }
