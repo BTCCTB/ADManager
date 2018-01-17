@@ -27,7 +27,10 @@ services:
         public: true
 
     AuthBundle\Service\ActiveDirectoryNotification:
-        arguments: ["@mailer","@templating.engine.twig",'%notification_from%', '%notification_to%']
+        autowire: true
+        arguments:
+            $fromAddress: '%notification_from%'
+            $toAddress: '%notification_to%'
         public: true
 
     AuthBundle\Service\BisDir:

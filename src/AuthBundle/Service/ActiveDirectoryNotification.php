@@ -27,14 +27,14 @@ class ActiveDirectoryNotification
      */
     private $fromAddress;
 
-    private $toAddresses;
+    private $toAddress;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $engine, string $fromAddress, $toAddresses)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $engine, string $fromAddress, $toAddress)
     {
         $this->mailer = $mailer;
         $this->engine = $engine;
         $this->fromAddress = $fromAddress;
-        $this->toAddresses = $toAddresses;
+        $this->toAddress = $toAddress;
     }
 
     /**
@@ -64,7 +64,7 @@ class ActiveDirectoryNotification
             $message = \Swift_Message::newInstance();
             $message->setSubject('User creation in AD')
                 ->setFrom($this->fromAddress)
-                ->setTo($this->toAddresses)
+                ->setTo($this->toAddress)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyCreation.html.twig',
@@ -108,7 +108,7 @@ class ActiveDirectoryNotification
             $message = \Swift_Message::newInstance();
             $message->setSubject('User move in AD')
                 ->setFrom($this->fromAddress)
-                ->setTo($this->toAddresses)
+                ->setTo($this->toAddress)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyMove.html.twig',
@@ -145,7 +145,7 @@ class ActiveDirectoryNotification
             $message = \Swift_Message::newInstance();
             $message->setSubject('User disabled in AD')
                 ->setFrom($this->fromAddress)
-                ->setTo($this->toAddresses)
+                ->setTo($this->toAddress)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyDisabled.html.twig',
@@ -182,7 +182,7 @@ class ActiveDirectoryNotification
             $message = \Swift_Message::newInstance();
             $message->setSubject('User updated in AD')
                 ->setFrom($this->fromAddress)
-                ->setTo($this->toAddresses)
+                ->setTo($this->toAddress)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyUpdate.html.twig',
