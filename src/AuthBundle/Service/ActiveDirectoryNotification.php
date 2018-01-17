@@ -26,12 +26,10 @@ class ActiveDirectoryNotification
      * @var string
      */
     private $fromAddress;
-    /**
-     * @var array
-     */
+
     private $toAddresses;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $engine, string $fromAddress, array $toAddresses)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $engine, string $fromAddress, $toAddresses)
     {
         $this->mailer = $mailer;
         $this->engine = $engine;
