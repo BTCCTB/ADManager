@@ -63,7 +63,7 @@ class AccountController extends Controller
                     if ($ad->changePassword($user->getEmail(), $data['password'])) {
                         if ($bisdir->syncPassword($user->getEmail(), $data['password'])) {
                             $this->addFlash('success', 'Password successfully changed !');
-                            $this->redirectToRoute('homepage');
+                            return $this->redirectToRoute('homepage');
                         }
                     } else {
                         $this->addFlash('danger', 'Password cannot be changed !');
