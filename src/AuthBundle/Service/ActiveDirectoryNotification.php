@@ -61,8 +61,9 @@ class ActiveDirectoryNotification
         }
 
         if (!empty($users)) {
+            $subject = 'User creation in AD';
             $message = \Swift_Message::newInstance();
-            $message->setSubject('User creation in AD')
+            $message->setSubject($subject)
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
@@ -70,10 +71,20 @@ class ActiveDirectoryNotification
                         '@Auth/Emails/notifyCreation.html.twig',
                         [
                             'users' => $users,
-                            'subject' => 'User creation in AD',
+                            'subject' => $subject,
                         ]
                     ),
                     'text/html'
+                )
+                ->addPart(
+                    $this->engine->render(
+                        '@Auth/Emails/notifyCreation.text.twig',
+                        [
+                            'users' => $users,
+                            'subject' => $subject,
+                        ]
+                    ),
+                    'text/plain'
                 );
 
             $this->mailer->send($message);

@@ -1,0 +1,18 @@
+List of new active directory users
+----------------------------------
+
+Hi ICT Team!
+
+a series of accounts have just been created for your new users.
+After verification, all that remains is to assign the O365 licenses.
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+| Firstname | Lastname | Email | Country workplace | Organizational Unit | Generated password | Start date | End date | Log |
+{% for user in users %}
+    -----------------------------------------------------------------------------------------------------------------------------
+    | {{ user.FirstName|default('unknow') }} | {{ user.LastName|default('unknow') }} | {{ user.Email }} | {{ user.Department|default('unknow') }} [{{ user.Country|default('unknow') }}] | {{ user.OrganizationalUnit|default('unknow') }} | {{ user.password|default('not generated') }} | {{ user.StartDate|default('unknow') }} | {{ user.EndDate|default('unknow') }} | {{ user.log }} |
+    {% endfor %}
+-----------------------------------------------------------------------------------------------------------------------------
+|                                                                                               {{ users|length }} user(s)  |
+-----------------------------------------------------------------------------------------------------------------------------
