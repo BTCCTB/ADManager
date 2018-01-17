@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  * @package AuthBundle\Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
- * @Route(schemes={"https"})
  */
 class SecurityController extends Controller
 {
