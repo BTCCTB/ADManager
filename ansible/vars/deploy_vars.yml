@@ -17,6 +17,12 @@ ad_password: '{{ vault_ad_password }}'
 ad_account_suffix: 'ad4dev.local'
 ad_mail_domain: 'enabel.be'
 
+# AD Notification vars
+ad_notification_from: 'ict.helpdesk@enabel.be'
+ad_notification_to:
+    - 'ict.helpesk@btcctb.org'
+    - 'damienlagae@gmail.com'
+
 # GIT vars
 deploy_key_public: '{{ vault_deploy_key_public }}'
 deploy_key_private: '{{ vault_deploy_key_private }}'

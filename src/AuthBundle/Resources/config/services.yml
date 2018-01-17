@@ -26,6 +26,10 @@ services:
         alias: AuthBundle\Service\ActiveDirectory
         public: true
 
+    AuthBundle\Service\ActiveDirectoryNotification:
+        arguments: ["@mailer","@templating.engine.twig",'%notification_from%', '%notification_to%']
+        public: true
+
     AuthBundle\Service\BisDir:
         arguments: [ "@doctrine.orm.bis_entity_manager", '@auth.ldap.password_encoder','%bis_dir_hosts%', '%bis_dir_base_dn%', '%bis_dir_admin_username%', '%bis_dir_admin_password%']
         public: true

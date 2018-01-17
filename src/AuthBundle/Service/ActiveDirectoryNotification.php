@@ -22,11 +22,21 @@ class ActiveDirectoryNotification
      * @var EngineInterface
      */
     private $engine;
+    /**
+     * @var string
+     */
+    private $fromAddress;
+    /**
+     * @var array
+     */
+    private $toAddresses;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $engine)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $engine, string $fromAddress, array $toAddresses)
     {
         $this->mailer = $mailer;
         $this->engine = $engine;
+        $this->fromAddress = $fromAddress;
+        $this->toAddresses = $toAddresses;
     }
 
     /**
@@ -55,8 +65,8 @@ class ActiveDirectoryNotification
         if (!empty($users)) {
             $message = \Swift_Message::newInstance();
             $message->setSubject('User creation in AD')
-                ->setFrom('ict.helpdesk@enabel.be')
-                ->setTo('ict.helpdesk@enabel.be')
+                ->setFrom($this->fromAddress)
+                ->setTo($this->toAddresses)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyCreation.html.twig',
@@ -99,8 +109,8 @@ class ActiveDirectoryNotification
         if (!empty($users)) {
             $message = \Swift_Message::newInstance();
             $message->setSubject('User move in AD')
-                ->setFrom('ict.helpdesk@enabel.be')
-                ->setTo('ict.helpdesk@enabel.be')
+                ->setFrom($this->fromAddress)
+                ->setTo($this->toAddresses)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyMove.html.twig',
@@ -136,8 +146,8 @@ class ActiveDirectoryNotification
         if (!empty($users)) {
             $message = \Swift_Message::newInstance();
             $message->setSubject('User disabled in AD')
-                ->setFrom('ict.helpdesk@enabel.be')
-                ->setTo('ict.helpdesk@enabel.be')
+                ->setFrom($this->fromAddress)
+                ->setTo($this->toAddresses)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyDisabled.html.twig',
@@ -173,8 +183,8 @@ class ActiveDirectoryNotification
         if (!empty($users)) {
             $message = \Swift_Message::newInstance();
             $message->setSubject('User updated in AD')
-                ->setFrom('ict.helpdesk@enabel.be')
-                ->setTo('ict.helpdesk@enabel.be')
+                ->setFrom($this->fromAddress)
+                ->setTo($this->toAddresses)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/notifyUpdate.html.twig',

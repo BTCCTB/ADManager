@@ -33,6 +33,12 @@ parameters:
     account_suffix: "ad4dev.local"
     mail_domain: "enabel.be"
 
+    # Active Directory Notification
+    notification_from: 'ict.helpdesk@enabel.be'
+    notification_to:
+        - 'ict.helpdesk@btcctb.org'
+        - 'damien.lagae@btcctb.org'
+
     # Bis Dir (ldap)
     bis_dir_hosts:
         - bisdir.btcctb.net
