@@ -100,6 +100,20 @@ class TestMailCommand extends Command
             ActiveDirectoryHelper::getDataBisUser($bisPersonView)
         );
 
+        $logs[] = new ActiveDirectoryResponse(
+            'test',
+            ActiveDirectoryResponseStatus::DONE,
+            ActiveDirectoryResponseType::CREATE,
+            ActiveDirectoryHelper::getDataBisUser($bisPersonView)
+        );
+
+        $logs[] = new ActiveDirectoryResponse(
+            'test',
+            ActiveDirectoryResponseStatus::DONE,
+            ActiveDirectoryResponseType::CREATE,
+            ActiveDirectoryHelper::getDataBisUser($bisPersonView)
+        );
+
         $this->activeDirectoryNotification->notifyCreation($logs);
     }
 

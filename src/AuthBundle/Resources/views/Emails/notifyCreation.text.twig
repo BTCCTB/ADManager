@@ -3,16 +3,20 @@ List of new active directory users
 
 Hi ICT Team!
 
-a series of accounts have just been created for your new users.
+a series of accounts [{{ users|length }}] have just been created for your new users.
 After verification, all that remains is to assign the O365 licenses.
 
-
------------------------------------------------------------------------------------------------------------------------------
-| Firstname | Lastname | Email | Country workplace | Organizational Unit | Generated password | Start date | End date | Log |
 {% for user in users %}
-    -----------------------------------------------------------------------------------------------------------------------------
-    | {{ user.FirstName|default('unknow') }} | {{ user.LastName|default('unknow') }} | {{ user.Email }} | {{ user.Department|default('unknow') }} [{{ user.Country|default('unknow') }}] | {{ user.OrganizationalUnit|default('unknow') }} | {{ user.password|default('not generated') }} | {{ user.StartDate|default('unknow') }} | {{ user.EndDate|default('unknow') }} | {{ user.log }} |
-    {% endfor %}
 -----------------------------------------------------------------------------------------------------------------------------
-|                                                                                               {{ users|length }} user(s)  |
+| Firstname:            {{ user.FirstName|default('unknow') }}
+| Lastname:             {{ user.LastName|default('unknow') }}
+| Email:                {{ user.Email }}
+| Country workplace:    {{ user.Department|default('unknow') }} ({{ user.Country|default('unknow') }})
+| Organizational Unit:  {{ user.OrganizationalUnit|default('unknow') }}
+| Generated password:   {{ user.password|default('not generated') }}
+| Start date:           {{ user.StartDate|default('unknow') }}
+| End date:             {{ user.EndDate|default('unknow') }}
+| Log:                  {{ user.log }}
 -----------------------------------------------------------------------------------------------------------------------------
+
+{% endfor %}
