@@ -15,3 +15,8 @@ ldap_base_dn: 'dc=enabel,dc=be'
 ldap_user: '{{ vault_ldap_user }}'
 ldap_password: '{{ vault_ldap_password }}'
 php_path: '/opt/rh/rh-php70/root/usr/bin/php'
+mailer_transport: 'smtp'
+mailer_host: 'mailhost.btcctb.org'
+mailer_port: '2525'
+mailer_user: "{{ vault_mailer_user }}"
+mailer_password: "{{ vault_mailer_password }}"

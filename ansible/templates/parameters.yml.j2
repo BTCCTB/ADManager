@@ -10,11 +10,11 @@ parameters:
     bis_name: "{{ bis_database }}"
     bis_user: "{{ bis_user }}"
     bis_password: "{{ bis_password }}"
-    mailer_transport: sendmail
-    mailer_host: 127.0.0.1
-    mailer_port: 25
-    mailer_user: null
-    mailer_password: null
+    mailer_transport: "{{ mailer_transport }}"
+    mailer_host: "{{ mailer_host }}"
+    mailer_port: "{{ mailer_port }}"
+    mailer_user: "{{ mailer_user }}"
+    mailer_password: "{{ mailer_password }}"
     secret: "{{ symfony_secret }}"
     domain_controllers:
         - "{{ ad_server }}"
