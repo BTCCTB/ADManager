@@ -3,6 +3,7 @@
 namespace AuthBundle\Service;
 
 use Adldap\Adldap;
+use Adldap\AdldapException;
 use Adldap\Connections\Provider;
 use Adldap\Models\Attributes\AccountControl;
 use Adldap\Models\Attributes\DistinguishedName;
@@ -78,7 +79,7 @@ class ActiveDirectory
      */
     public function getUser(string $email)
     {
-        $user = $this->activeDirectory->search()->findBy('userprincipalname', $email);
+        $user = $this->activeDirectory->search()->findBy('mail', $email);
 
         if (!$user instanceof User) {
             return null;
@@ -145,15 +146,23 @@ class ActiveDirectory
      *
      * @param String $email The email [firstname.lastname@company.domain]
      *
-     * @return bool|mixed
+     * @return bool|User
      */
     public function checkUserExistByEmail($email)
     {
 
         $user = $this->activeDirectory->search()->findBy('mail', $email);
-
+        $userEnabel = $this->activeDirectory->search()->findBy('mail', str_replace('@btcctb.org', '@enabel.be', $email));
+        $userBtc = $this->activeDirectory->search()->findBy('mail', str_replace('@enabel.be', '@btcctb.org', $email));
         if ($user instanceof User) {
+            var_dump($user->getEmail());
             return $user;
+        } elseif ($userEnabel instanceof User) {
+            var_dump($userEnabel->getEmail());
+            return $userEnabel;
+        } elseif ($userBtc instanceof User) {
+            var_dump($userBtc->getEmail());
+            return $userBtc;
         }
 
         return false;
@@ -508,6 +517,48 @@ class ActiveDirectory
                     'new' => json_encode($proxyAddresses),
                     'state' => $state,
 
+                ];
+            }
+        }
+
+        return $logs;
+    }
+
+    /**
+     * @return array
+     * TODO: Change return type to ActiveDirectoryResponse
+     */
+    public function fixAttributes()
+    {
+        // Set no limit time & memory
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
+        // Error Log
+        $logs = [];
+
+        /**
+         * @var BisPersonView[] $users
+         */
+        $users = $this->em->getRepository('BisBundle:BisPersonView')->findAllFieldUser();
+        foreach ($users as $user) {
+            $adAccount = $this->checkUserExistByEmail($user->getEmail());
+            if ($adAccount !== false) {
+                $language = $user->getLanguage();
+                $sex = $user->getSex();
+                $adAccount->setAttribute('preferredLanguage', $language);
+                $adAccount->setInitials($sex);
+                $adAccount->setAttribute('businessCategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()));
+                if (!$adAccount->save()) {
+                    $logs[] = [
+                        'user' => $adAccount->getUserPrincipalName(),
+                        'state' => '<error>FAILED</error>',
+                    ];
+                }
+            } else {
+                $logs[] = [
+                    'user' => $user->getEmail(),
+                    'state' => '<error>NOT FOUND</error>',
                 ];
             }
         }
@@ -1078,6 +1129,58 @@ class ActiveDirectory
             "AD user account with email '" . $email . "' doesn't exist!",
             ActiveDirectoryResponseStatus::EXCEPTION,
             ActiveDirectoryResponseType::MOVE
+        );
+    }
+
+    /**
+     * Intitalize a account with generated password.
+     * @param User $fieldUser
+     *
+     * @return ActiveDirectoryResponse
+     * @throws AdldapException
+     */
+    public function initAccount(User $fieldUser)
+    {
+        // Generate un new password
+        $password = ActiveDirectoryHelper::generatePassword();
+        // Set the generated password
+        $fieldUser->setPassword($password);
+
+        // Set default UserControl
+        $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+
+        // Set email to correct account
+        $fieldUser->setEmail(str_replace('@btcctb.org', '@enabel.be', $fieldUser->getEmail()));
+
+        // Save all these modification
+        if ($fieldUser->save()) {
+            // Send a ActiveDirectoryResponse
+            return new ActiveDirectoryResponse(
+                "Account '" . $fieldUser->getUserPrincipalName() . "' successfully initialized!",
+                ActiveDirectoryResponseStatus::DONE,
+                ActiveDirectoryResponseType::CREATE,
+                ActiveDirectoryHelper::getDataAdUser(
+                    $fieldUser,
+                    [
+                        'password' => $password,
+                        'generatedpassword' => $password,
+                        'fullname' => $fieldUser->getCommonName(),
+                        'domainaccount' => $fieldUser->getUserPrincipalName(),
+                    ]
+                )
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "Account '" . $fieldUser->getUserPrincipalName() . "' can not be initialized!",
+            ActiveDirectoryResponseStatus::FAILED,
+            ActiveDirectoryResponseType::CREATE,
+            ActiveDirectoryHelper::getDataAdUser(
+                $fieldUser,
+                [
+                    'password' => $password,
+                ]
+            )
         );
     }
 

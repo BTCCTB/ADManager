@@ -5,7 +5,7 @@ services:
         public: true
 
     AuthBundle\Security\AdldapAuthenticator:
-        arguments: [ "@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder","@auth.active_directory"]
+        arguments: [ "@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder","@auth.active_directory", "@auth.bis_dir"]
         autowire: true
         public: true
 
@@ -34,7 +34,7 @@ services:
         public: true
 
     AuthBundle\Service\BisDir:
-        arguments: [ "@doctrine.orm.bis_entity_manager", '@auth.ldap.password_encoder','%bis_dir_hosts%', '%bis_dir_base_dn%', '%bis_dir_admin_username%', '%bis_dir_admin_password%']
+        arguments: [ '@auth.ldap.password_encoder','%bis_dir_hosts%', '%bis_dir_base_dn%', '%bis_dir_admin_username%', '%bis_dir_admin_password%']
         public: true
     auth.bis_dir:
         alias: AuthBundle\Service\BisDir

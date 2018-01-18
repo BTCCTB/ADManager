@@ -26,15 +26,15 @@ class Version20171222106000 extends AbstractMigration
         $this->addSql("INSERT INTO application (name, link) VALUES (\"BAT\", 'http://intranet.btcctb.org/BAT/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Pitweb\", 'http://pitweb.enabel.be/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Timesheet\", 'https://timesheet.enabel.be/')");
-        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail O365\", 'http://portal.office365.com/')");
-        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail HQ\", 'https://domino.btcctb.org/')");
-        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail FIELD\", 'https://webmail.btcctb.org')");
+        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail Office 365\", 'https://login.microsoftonline.com')");
+//        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail HQ\", 'https://domino.btcctb.org/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Claroline\", 'https://intranet.enabel.be/claroline/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Damino\", 'https://damino.enabel.be')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Filecloud\", 'https://filecloud.enabel.be')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Mandates\", 'https://mandate.enabel.be/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"OpenEnabel\", 'https://open.enabel.be/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Parking\", 'https://intranet.enabel.be/servicecenter/')");
+        $this->addSql("INSERT INTO application (name, link) VALUES (\"OLD Webmail FIELD\", 'https://webmail.btcctb.org')");
     }
 
     /**

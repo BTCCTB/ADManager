@@ -6,6 +6,7 @@ use Adldap\Adldap;
 use AuthBundle\Entity\User;
 use AuthBundle\Form\Type\LoginForm;
 use AuthBundle\Service\ActiveDirectory;
+use AuthBundle\Service\BisDir;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -42,28 +43,35 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @var UserPasswordEncoder
      */
     private $passwordEncoder;
+    /**
+     * @var BisDir
+     */
+    private $bisDir;
 
     /**
      * AdldapAuthenticator
      *
-     * @param FormFactoryInterface $formFactory The form factory
-     * @param EntityManager        $em          The entity manager
-     * @param RouterInterface      $router      The router
+     * @param FormFactoryInterface $formFactory     The form factory
+     * @param EntityManager        $em              The entity manager
+     * @param RouterInterface      $router          The router
      * @param UserPasswordEncoder  $passwordEncoder The password encoder
      * @param ActiveDirectory      $activeDirectory The active directory connection service
+     * @param BisDir               $bisDir          The ldap [BisDir] connection service
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         EntityManager $em,
         RouterInterface $router,
         UserPasswordEncoder $passwordEncoder,
-        ActiveDirectory $activeDirectory
+        ActiveDirectory $activeDirectory,
+        BisDir $bisDir
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->router = $router;
         $this->activeDirectory = $activeDirectory;
         $this->passwordEncoder = $passwordEncoder;
+        $this->bisDir = $bisDir;
     }
 
     public function supports(Request $request)
@@ -173,6 +181,8 @@ class AdldapAuthenticator implements AuthenticatorInterface
             return $this->activeDirectory->checkCredentials($username, $password);
         } else {
             if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+                $adAccount = $this->activeDirectory->getUser($username);
+                $this->bisDir->synchronize($adAccount, $password);
                 return true;
             } else {
                 throw new BadCredentialsException('Invalid password');

@@ -36,6 +36,12 @@ class ActiveDirectoryHelper
         if (!empty($bisPersonView->getInitials())) {
             $user->setInitials($bisPersonView->getInitials());
         }
+        if (!empty($bisPersonView->getPreferredLanguage())) {
+            $user->setAttribute('preferredLanguage', $bisPersonView->getPreferredLanguage());
+        }
+        if (!empty($bisPersonView->getBusinessCategory())) {
+            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
+        }
         $user->setCompany($bisPersonView->getCompany());
 //        $user->setCountry($bisPersonView->getCountry());
         $user->setAttribute('c', $bisPersonView->getAttribute('c'));
@@ -175,6 +181,8 @@ class ActiveDirectoryHelper
                 'FirstName' => $bisPersonView->getFirstname(),
                 'LastName' => $bisPersonView->getLastname(),
                 'Initials' => $bisPersonView->getInitials(),
+                'PreferredLanguage' => $bisPersonView->getPreferredLanguage(),
+                'BusinessCategory' => $bisPersonView->getBusinessCategory(),
                 'Department' => $bisPersonView->getDepartment(),
                 'Company' => $bisPersonView->getCompany(),
                 'Country' => $bisPersonView->getCountry(),
@@ -218,6 +226,8 @@ class ActiveDirectoryHelper
                 'FirstName' => $adUser->getFirstName(),
                 'LastName' => $adUser->getLastName(),
                 'Initials' => $adUser->getInitials(),
+                'PreferredLanguage' => $adUser->getAttribute('PreferredLanguage'),
+                'BusinessCategory' => $adUser->getAttribute('BusinessCategory'),
                 'Department' => $adUser->getDepartment(),
                 'Company' => 'Enabel',
                 'Country' => $adUser->getCountry(),
@@ -287,6 +297,22 @@ class ActiveDirectoryHelper
                 'original' => $user->getInitials(),
             ];
             $user->setInitials($bisPersonView->getInitials());
+        }
+        if ($bisPersonView->getPreferredLanguage() !== $user->getAttribute('PreferredLanguage')[0]) {
+            $diffData['preferredLanguage'] = [
+                'attribute' => 'preferredLanguage',
+                'value' => $bisPersonView->getPreferredLanguage(),
+                'original' => $user->getAttribute('PreferredLanguage')[0],
+            ];
+            $user->setAttribute('PreferredLanguage', $bisPersonView->getPreferredLanguage());
+        }
+        if ($bisPersonView->getBusinessCategory() !== $user->getAttribute('BusinessCategory')[0]) {
+            $diffData['businessCategory'] = [
+                'attribute' => 'businessCategory',
+                'value' => $bisPersonView->getBusinessCategory(),
+                'original' => $user->getAttribute('BusinessCategory')[0],
+            ];
+            $user->setAttribute('BusinessCategory', $bisPersonView->getBusinessCategory());
         }
         if ($bisPersonView->getDepartment() !== $user->getDepartment()) {
             $diffData['department'] = [

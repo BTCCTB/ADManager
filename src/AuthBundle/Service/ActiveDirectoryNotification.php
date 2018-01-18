@@ -208,4 +208,46 @@ class ActiveDirectoryNotification
             $this->mailer->send($message);
         }
     }
+
+    /**
+     * Send credentials mail to the user with helpdesk in bcc
+     *
+     * @param ActiveDirectoryResponse $activeDirectoryResponse
+     *
+     * @throws \RuntimeException
+     */
+    public function notifyInitialization(ActiveDirectoryResponse $activeDirectoryResponse)
+    {
+        if ($activeDirectoryResponse->getType() === ActiveDirectoryResponseType::CREATE &&
+            $activeDirectoryResponse->getStatus() === ActiveDirectoryResponseStatus::DONE) {
+
+            $user = $activeDirectoryResponse->getData();
+
+            $message = \Swift_Message::newInstance();
+            $message->setSubject('Get started with Office 365')
+                ->setFrom($this->fromAddress)
+                ->setTo(str_replace('@enabel.be', '@btcctb.org', $user['Email']))
+//                ->setBcc($this->toAddress)
+                ->setBody(
+                    $this->engine->render(
+                        '@Auth/Emails/credentials.html.twig',
+                        [
+                            'user' => $user,
+                        ]
+                    ),
+                    'text/html'
+                )
+                ->addPart(
+                    $this->engine->render(
+                        '@Auth/Emails/credentials.text.twig',
+                        [
+                            'user' => $user,
+                        ]
+                    ),
+                    'text/plain'
+                );
+
+            $this->mailer->send($message);
+        }
+    }
 }

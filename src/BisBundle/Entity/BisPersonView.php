@@ -461,4 +461,15 @@ class BisPersonView
     {
         return $this->getId();
     }
+
+    public function getPreferredLanguage()
+    {
+        return $this->getLanguage();
+    }
+
+    public function getBusinessCategory()
+    {
+        return str_replace('@enabel.be', '@btcctb.org', $this->getEmail());
+    }
+
 }
