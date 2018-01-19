@@ -127,7 +127,7 @@ class ActiveDirectory
      *
      * @param String $username The username [firstname.lastname]
      *
-     * @return bool|mixed
+     * @return bool|User
      */
     public function checkUserExistByUsername($username)
     {
@@ -544,9 +544,7 @@ class ActiveDirectory
         foreach ($users as $user) {
             $adAccount = $this->checkUserExistByEmail($user->getEmail());
             if ($adAccount !== false) {
-                $language = $user->getLanguage();
                 $sex = $user->getSex();
-                $adAccount->setAttribute('preferredLanguage', $language);
                 $adAccount->setInitials($sex);
                 $adAccount->setAttribute('businessCategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()));
                 if (!$adAccount->save()) {

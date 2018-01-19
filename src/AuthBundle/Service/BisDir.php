@@ -68,7 +68,7 @@ class BisDir
      *
      * @param string $email His email
      *
-     * @return Entry The user.
+     * @return Entry|null The user.
      */
     public function getUser(string $email)
     {
@@ -83,7 +83,6 @@ class BisDir
         } elseif ($userEnabel instanceof Entry) {
             return $userEnabel;
         }
-
         return null;
     }
 
@@ -103,32 +102,42 @@ class BisDir
     /**
      * Create a ldap entry from a AD user
      *
-     * @param User $user The AD user
+     * @param User $adAccount The AD user
      *
-     * @return bool
+     * @return BisDirResponse
      */
-    public function createEntry(User $user): bool
+    public function createEntry(User $adAccount): BisDirResponse
     {
         $entry = $this->bisDir->make()->entry();
 
-        $entry = $this->adAccountToBisDirEntry($user, $entry);
+        $entry = BisDirHelper::adAccountToLdapEntry($adAccount, $entry);
 
         if ($entry->save()) {
-            return true;
+            return new BisDirResponse(
+                "User '" . $adAccount->getEmail() . "' successfully created in LDAP",
+                BisDirResponseStatus::DONE,
+                BisDirResponseType::CREATE,
+                BisDirHelper::getDataAdUser($adAccount)
+            );
         }
 
-        return false;
+        return new BisDirResponse(
+            "Unable to create this user '" . $adAccount->getEmail() . "' in LDAP",
+            BisDirResponseStatus::FAILED,
+            BisDirResponseType::CREATE,
+            BisDirHelper::getDataAdUser($adAccount)
+        );
     }
 
     /**
      * Synchronize password in ldap
      *
-     * @param string $email The user email
+     * @param string $email    The user email
      * @param string $password The clear password
      *
-     * @return bool
+     * @return BisDirResponse
      */
-    public function syncPassword(String $email, string $password): bool
+    public function syncPassword(String $email, string $password): BisDirResponse
     {
         $entry = $this->getUser($email);
 
@@ -136,37 +145,59 @@ class BisDir
             $passwordEncoded = $this->passwordEncoder->encodePassword($password);
             $entry->setAttribute('userPassword', $passwordEncoded);
             if ($entry->save()) {
-                return true;
+                return new BisDirResponse(
+                    "Password for user '" . $entry->getFirstAttribute('mail') . "' successfully synchronized in LDAP",
+                    BisDirResponseStatus::DONE,
+                    BisDirResponseType::UPDATE,
+                    BisDirHelper::getDataEntry($entry, ['password' => $password])
+                );
             }
+            return new BisDirResponse(
+                "Unable to synchronize password for user '" . $email . "' in LDAP",
+                BisDirResponseStatus::FAILED,
+                BisDirResponseType::UPDATE,
+                BisDirHelper::getDataEntry($entry, ['password' => $password])
+            );
         }
 
-        return false;
+        return new BisDirResponse(
+            "Unable to find a user for '" . $email . "' in LDAP",
+            BisDirResponseStatus::EXCEPTION,
+            BisDirResponseType::UPDATE,
+            [
+                'email' => $email,
+                'password' => $password,
+            ]
+        );
     }
 
     /**
      * @param User   $adAccount
      * @param String $password
      *
-     * @return bool
+     * @return BisDirResponse
      */
-    public function synchronize(User $adAccount, String $password): bool
+    public function synchronize(User $adAccount, String $password): BisDirResponse
     {
         // Check user exist in LDAP
         $ldapUser = $this->getUser($adAccount->getEmail());
 
+        // Create user in LDAP
         if ($ldapUser === null) {
-            // Create user in LDAP
-            if ($this->createEntry($adAccount)) {
-                $this->synchronize($adAccount, $password);
+            $log = $this->createEntry($adAccount);
+            if ($log->getStatus() === BisDirResponseStatus::DONE) {
+                return $this->synchronize($adAccount, $password);
             }
-        } else {
-            if ($this->updateUser($adAccount)) {
-                // Sync password in LDAP
-                return $this->syncPassword($adAccount->getEmail(), $password);
-            }
+            return $log;
         }
-        return false;
 
+        // Update user in LDAP
+        $log = $this->updateUser($adAccount);
+        if ($log->getStatus() === BisDirResponseStatus::DONE) {
+            // Sync password in LDAP
+            return $this->syncPassword($adAccount->getEmail(), $password);
+        }
+        return $log;
     }
 
     /**
@@ -174,16 +205,15 @@ class BisDir
      *
      * @param User $adAccount
      *
-     * @return bool
+     * @return BisDirResponse
      */
-    public function updateUser(User $adAccount): bool
+    public function updateUser(User $adAccount): BisDirResponse
     {
         // Define the attributes that can be updated
         $attributes = [
             'title',
             'sn',
             'givenname',
-            'preferredlanguage',
             'initials',
             'businesscategory',
             'displayname',
@@ -193,7 +223,7 @@ class BisDir
 
         if ($ldapUser !== null) {
             $entry = $this->bisDir->make()->entry();
-            $entry = $this->adAccountToBisDirEntry($adAccount, $entry);
+            $entry = BisDirHelper::adAccountToLdapEntry($adAccount, $entry);
             $diffData = [];
             foreach ($attributes as $attribute) {
                 $value = $entry->getAttribute($attribute);
@@ -215,77 +245,86 @@ class BisDir
             }
             if (!empty($diffData)) {
                 if ($ldapUser->save()) {
-                    return true;
+                    return new BisDirResponse(
+                        "User '" . $adAccount->getEmail() . "' successfully updated in LDAP",
+                        BisDirResponseStatus::DONE,
+                        BisDirResponseType::UPDATE,
+                        BisDirHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+                    );
                 }
+                return new BisDirResponse(
+                    "Unable to update user '" . $adAccount->getEmail() . "' in LDAP",
+                    BisDirResponseStatus::FAILED,
+                    BisDirResponseType::UPDATE,
+                    BisDirHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+                );
             }
-
-            return false;
+            return new BisDirResponse(
+                "User '" . $adAccount->getEmail() . "' already up to date in LDAP",
+                BisDirResponseStatus::NOTHING_TO_DO,
+                BisDirResponseType::UPDATE,
+                BisDirHelper::getDataAdUser($adAccount)
+            );
         }
-
+        return new BisDirResponse(
+            "Unable to find a user for '" . $adAccount->getEmail() . "' in LDAP",
+            BisDirResponseStatus::EXCEPTION,
+            BisDirResponseType::UPDATE
+        );
     }
 
     /**
      * Move a user / Change DN
      *
      * @param User  $adAccount The Active Directory account
-     * @param Entry $entry The LDAP entry
+     * @param Entry $entry     The LDAP entry
      *
-     * @return bool
+     * @return BisDirResponse
      */
-    public function moveUser(User $adAccount, Entry $entry): bool
+    public function moveUser(User $adAccount, Entry $entry): BisDirResponse
     {
-        //TODO: implement me!
-        $country = $adAccount->getCountry();
-        $dn = 'uid=' . $adAccount->getEmail();
-        if (!empty($country)) {
-            $dn .= ',c=' . $country;
-        }
-        $dn .= ',' . $this->baseDn;
+        $dn = BisDirHelper::buildDn($adAccount->getEmail(), $adAccount->getFirstAttribute('c'));
 
         if ($entry->getDn() != $dn) {
             // Need to move to the correct DN
-        } else {
-            // Already correct, nothing to do!
-            return true;
+            $rdn = 'uid=' . $adAccount->getEmail();
+            $newParent = BisDirHelper::buildParentDn($adAccount->getFirstAttribute('c'));
+            if ($entry->move($rdn, $newParent)) {
+                return new BisDirResponse(
+                    "DN for user '" . $adAccount->getEmail() . "' successfully updated in LDAP",
+                    BisDirResponseStatus::DONE,
+                    BisDirResponseType::MOVE,
+                    BisDirHelper::getDataEntry(
+                        $entry,
+                        [
+                            'from' => $entry->getDn(),
+                            'to' => $dn,
+                        ]
+                    )
+                );
+            }
+
+            return new BisDirResponse(
+                "Unable to update the DN for user '" . $adAccount->getEmail() . "' in LDAP",
+                BisDirResponseStatus::FAILED,
+                BisDirResponseType::MOVE,
+                BisDirHelper::getDataEntry(
+                    $entry,
+                    [
+                        'from' => $entry->getDn(),
+                        'to' => $dn,
+                    ]
+                )
+            );
         }
 
-        return false;
-    }
+        // Already correct, nothing to do!
+        return new BisDirResponse(
+            "DN for user '" . $adAccount->getEmail() . "' already up to date in LDAP",
+            BisDirResponseStatus::NOTHING_TO_DO,
+            BisDirResponseType::MOVE,
+            BisDirHelper::getDataEntry($entry)
+        );
 
-    /**
-     * Convert a Active Directory account to a LDAP entry [BisDir]
-     *
-     * @param User  $adAccount The Active Directory account
-     * @param Entry $entry The LDAP entry
-     *
-     * @return Entry The LDAP entry
-     */
-    private function adAccountToBisDirEntry(User $adAccount, Entry $entry): Entry
-    {
-        //TODO: Add old btcctb.org email in one of these attribute
-        $entry->setCommonName($adAccount->getCommonName())
-            ->setDisplayName($adAccount->getDisplayName())
-            ->setAttribute('uid', $adAccount->getEmail())
-            ->setAttribute('employeenumber', $adAccount->getEmployeeId())
-            ->setAttribute('mail', $adAccount->getEmail())
-            ->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()))
-            ->setAttribute('initials', $adAccount->getInitials())
-            ->setAttribute('preferredlanguage', $adAccount->getAttribute('preferedLanguage')[0])
-            ->setAttribute('givenname', $adAccount->getFirstName())
-            ->setAttribute('sn', $adAccount->getLastName())
-            ->setAttribute('title', $adAccount->getDescription())
-            ->setAttribute('objectclass', 'inetOrgPerson');
-
-        $country = $adAccount->getAttribute('c');
-
-        $dn = 'uid=' . $adAccount->getEmail();
-        if (!empty($country)) {
-            $dn .= ',c=' . $country[0];
-        }
-        $dn .= ',' . $this->baseDn;
-
-        $entry->setDn($dn);
-
-        return $entry;
     }
 }
