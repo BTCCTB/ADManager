@@ -112,6 +112,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $form->handleRequest($request);
         $data = $form->getData();
 
+        if (strpos($data['_username'], '@btcctb.org')) {
+            $data['_username'] = str_replace('@btcctb.org', '@enabel.be', $data['_username']);
+        }
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $data['_username']
@@ -144,10 +148,13 @@ class AdldapAuthenticator implements AuthenticatorInterface
 
         if (null === $username) {
             throw new UsernameNotFoundException('Username can\'t be empty!');
+        } elseif (strpos($username, '@btcctb.org')) {
+            $username = str_replace('@btcctb.org', '@enabel.be', $username);
         }
 
         $user = $this->em->getRepository('AuthBundle:User')
             ->findOneBy(['email' => $username]);
+
         if ($user === null) {
             $adUser = $this->activeDirectory->getUser($username);
 
@@ -186,6 +193,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
     {
         $password = $credentials['_password'];
         $username = $credentials['_username'];
+
+        if (strpos($username, '@btcctb.org')) {
+            $username = str_replace('@btcctb.org', '@enabel.be', $username);
+        }
 
         if ($this->activeDirectory->checkUserExistByUsername($username) !== false) {
             $adAccount = $this->activeDirectory->getUser($username);

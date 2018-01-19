@@ -26,8 +26,8 @@ class Version20171222106000 extends AbstractMigration
         $this->addSql("INSERT INTO application (name, link) VALUES (\"BAT\", 'http://intranet.btcctb.org/BAT/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Pitweb\", 'http://pitweb.enabel.be/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Timesheet\", 'https://timesheet.enabel.be/')");
-        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail Office 365\", 'https://login.microsoftonline.com')");
-//        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail HQ\", 'https://domino.btcctb.org/')");
+        $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail Office 365\", 'https://outlook.office.com')");
+        $this->addSql("INSERT INTO application (name, link, enable) VALUES (\"Webmail HQ\", 'https://domino.btcctb.org/', 0)");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Claroline\", 'https://intranet.enabel.be/claroline/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Damino\", 'https://damino.enabel.be')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Filecloud\", 'https://filecloud.enabel.be')");

@@ -79,7 +79,7 @@ class ActiveDirectory
      */
     public function getUser(string $email)
     {
-        $user = $this->activeDirectory->search()->findBy('mail', $email);
+        $user = $this->checkUserExistByEmail($email);
 
         if (!$user instanceof User) {
             return null;
