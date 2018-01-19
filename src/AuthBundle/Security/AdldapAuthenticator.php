@@ -7,7 +7,10 @@ use AuthBundle\Entity\User;
 use AuthBundle\Form\Type\LoginForm;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\BisDir;
+use AuthBundle\Service\BisDirResponseStatus;
 use Doctrine\ORM\EntityManager;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +50,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @var BisDir
      */
     private $bisDir;
+    /**
+     * @var Logger
+     */
+    private $logger;
 
     /**
      * AdldapAuthenticator
@@ -57,6 +64,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @param UserPasswordEncoder  $passwordEncoder The password encoder
      * @param ActiveDirectory      $activeDirectory The active directory connection service
      * @param BisDir               $bisDir          The ldap [BisDir] connection service
+     * @param LoggerInterface      $logger          The logger service
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -64,7 +72,8 @@ class AdldapAuthenticator implements AuthenticatorInterface
         RouterInterface $router,
         UserPasswordEncoder $passwordEncoder,
         ActiveDirectory $activeDirectory,
-        BisDir $bisDir
+        BisDir $bisDir,
+        LoggerInterface $logger
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -72,6 +81,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $this->activeDirectory = $activeDirectory;
         $this->passwordEncoder = $passwordEncoder;
         $this->bisDir = $bisDir;
+        $this->logger = $logger;
     }
 
     public function supports(Request $request)
@@ -182,7 +192,11 @@ class AdldapAuthenticator implements AuthenticatorInterface
         } else {
             if ($this->passwordEncoder->isPasswordValid($user, $password)) {
                 $adAccount = $this->activeDirectory->getUser($username);
-                $this->bisDir->synchronize($adAccount, $password);
+                $log = $this->bisDir->synchronize($adAccount, $password);
+                if ($log->getStatus() !== BisDirResponseStatus::DONE) {
+                    $this->logger->error($log->getMessage());
+                }
+                $this->logger->info($log->getMessage());
                 return true;
             } else {
                 throw new BadCredentialsException('Invalid password');
