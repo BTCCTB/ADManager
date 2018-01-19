@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use Adldap\Models\User;
 use AuthBundle\Form\ChangePasswordForm;
 use AuthBundle\Service\ActiveDirectoryHelper;
-use BisBundle\Entity\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -81,27 +80,14 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/bis", name="account_bis_list")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Route("/disable/{employeeID}", name="ad_disable_account")
+     * @ecurity("is_granted('ROLE_ADMIN')")
+     * @Method({"GET"})
+     * @param integer $employeeID The employee ID
+     *
+     * @return RedirectResponse
      * @throws \LogicException
      */
-    public function listBisAction()
-    {
-        $em = $this->getDoctrine()->getManager('bis');
-        $users = $em->getRepository('BisBundle:BisPersonView')->findBy(['jobClass' => 'Expat']);
-
-        return $this->render('AppBundle:Account:listBis.html.twig', ['users' => $users]);
-    }
-
-/**
- * @Route("/disable/{employeeID}", name="ad_disable_account")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Method({"GET"})
- * @param integer $employeeID The employee ID
- *
- * @return RedirectResponse
- * @throws \LogicException
- */
     public function disableAction($employeeID): RedirectResponse
     {
         $ad = $this->get('auth.active_directory');
@@ -119,15 +105,15 @@ class AccountController extends Controller
         return $this->redirectToRoute('account_ad_list');
     }
 
-/**
- * @Route("/enable/{employeeID}", name="ad_enable_account")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Method({"GET"})
- * @param integer $employeeID The employee ID
- *
- * @return RedirectResponse
- * @throws \LogicException
- */
+    /**
+     * @Route("/enable/{employeeID}", name="ad_enable_account")
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @Method({"GET"})
+     * @param integer $employeeID The employee ID
+     *
+     * @return RedirectResponse
+     * @throws \LogicException
+     */
     public function enableAction($employeeID): RedirectResponse
     {
         $ad = $this->get('auth.active_directory');
@@ -140,76 +126,5 @@ class AccountController extends Controller
         }
 
         return $this->redirectToRoute('account_ad_list');
-    }
-
-/**
- * @Route("/import/{country_code}", name="ad_import_account")
- * @Security("is_granted('ROLE_ADMIN')")
- * @param String $country_code The country code
- * @Method({"GET"})
- * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
- * @throws \LogicException
- * @throws \Adldap\Models\UserPasswordPolicyException
- */
-    public function importAction($country_code)
-    {
-        $em = $this->getDoctrine()->getManager('bis');
-        $ad = $this->get('auth.active_directory');
-        $users = [];
-
-        if (!empty($country_code)) {
-            // Get Users from BIS
-            $users = $em->getRepository('BisBundle:BisPersonView')->findBy([
-                'perCountryWorkplace' => $country_code,
-            ]);
-        }
-
-        $importedUsers = [];
-
-        foreach ($users as $user) {
-            /**
-             * @var BisPersonView $user
-             */
-            // Add/Update user in AD
-            $reset = $sync = $exist = false;
-            $password = '';
-            if ($user->getDomainAccount() !== false) {
-                $exist = $ad->checkUserExistByUsername($user->getDomainAccount());
-                $sync = $ad->syncAdUser($user->getUsername());
-                if (!$exist) {
-                    $password = $ad->generatePassword();
-                    $reset = $ad->resetAccount($user->getDomainAccount(), $password);
-                }
-            }
-            $importedUsers[] = [
-                'email' => $user->getEmail(),
-                'lastname' => $user->getLastname(),
-                'firstname' => $user->getFirstname(),
-                'country' => $user->getCountryWorkplace(),
-                'password' => $password,
-                'exist' => $exist,
-                'sync' => $sync,
-                'reset' => $reset,
-            ];
-        }
-
-        return $this->render('AppBundle:Account:import.html.twig', ['users' => $importedUsers]);
-    }
-
-/**
- * @Route("/test", name="ad_test")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Method({"GET"})
- * @throws \LogicException
- */
-    public function testAction()
-    {
-        $bisUser = $this->get('doctrine.orm.bis_entity_manager')->getRepository('BisBundle:BisPersonView')->getUserByEmail('damien.lagae@btcctb.org');
-        $adAccount = $this->get('auth.active_directory')->getUser('damien.lagae@enabel.be');
-        $response = $this->get('auth.active_directory')->updateAccount('damien.lagae@enabel.be');
-
-        dump($response);
-
-        exit();
     }
 }

@@ -2,6 +2,7 @@
 
 {% block body %}
     <h1>Password manager</h1>
+    {% include ':partial:flash.html.twig' %}
     <div class="card" style="width: 20rem;">
         <h4 class="card-header">
             <i class="flag-icon flag-icon-{{ country|lower }}" title="{{ user.department }}" alt="{{ user.department }}"></i> {{ user.firstname }} {{ user.lastname }}

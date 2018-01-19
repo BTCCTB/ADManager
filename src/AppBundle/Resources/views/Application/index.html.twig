@@ -3,6 +3,7 @@
 {% block body %}
     <h1>My apps</h1>
     <h3>Your apps & useful links</h3>
+    {% include ':partial:flash.html.twig' %}
     {% for row in applications|batch(6) %}
         <div class="row">
         {% for application in row %}
