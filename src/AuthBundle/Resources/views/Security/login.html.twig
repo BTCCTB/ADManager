@@ -2,6 +2,7 @@
 
 {% block body %}
     <div class="container">
+        {% include ':partial:flash.html.twig' %}
         {% form_theme form 'bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
             <div class="row">

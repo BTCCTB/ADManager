@@ -63,31 +63,4 @@ class SecurityController extends Controller
 
         return $this->redirectToRoute('homepage');
     }
-
-    /**
-     * @Route("/test", name="mail_test")
-     * @Method({"GET"})
-     */
-    public function testAction()
-    {
-        $message = \Swift_Message::newInstance();
-        $message->setSubject('User creation in AD')
-            ->setFrom('ict.helpdesk@enabel.be')
-            ->setTo('ict.helpdesk@btcctb.org')
-            ->setBody('test de mail via enabel.be');
-
-        $this->get('mailer')->send($message);
-
-        $message = \Swift_Message::newInstance();
-        $message->setSubject('User creation in AD')
-            ->setFrom('ict.helpdesk@btcctb.org')
-            ->setTo('ict.helpdesk@btcctb.org')
-            ->setBody('test de mail via btcctb.org');
-
-        $this->get('mailer')->send($message);
-
-        $this->addFlash('info', 'Send test mail');
-
-        return $this->redirectToRoute('homepage');
-    }
 }
