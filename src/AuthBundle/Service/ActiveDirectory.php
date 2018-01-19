@@ -155,13 +155,10 @@ class ActiveDirectory
         $userEnabel = $this->activeDirectory->search()->findBy('mail', str_replace('@btcctb.org', '@enabel.be', $email));
         $userBtc = $this->activeDirectory->search()->findBy('mail', str_replace('@enabel.be', '@btcctb.org', $email));
         if ($user instanceof User) {
-            var_dump($user->getEmail());
             return $user;
         } elseif ($userEnabel instanceof User) {
-            var_dump($userEnabel->getEmail());
             return $userEnabel;
         } elseif ($userBtc instanceof User) {
-            var_dump($userBtc->getEmail());
             return $userBtc;
         }
 

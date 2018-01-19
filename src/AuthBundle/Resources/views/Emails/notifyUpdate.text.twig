@@ -1,0 +1,46 @@
+{%  extends 'AuthBundle:Emails:layout.html.twig' %}
+{% block title %}{{ subject }}{% endblock %}
+{% block body %}
+<h3>List of users updated</h3>
+
+<p>Hi ICT Team!</p>
+
+<p>
+    a series of accounts have just been updated in your Active Directory.
+    <br>Check the list below.
+</p>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+    <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Country workplace</th>
+        <th>Diff</th>
+        <th>Log</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.FirstName|default('unknow') }}</td>
+            <td>{{ user.LastName|default('unknow') }}</td>
+            <td>{{ user.Email|default('unknow') }}</td>
+            <td>{{ user.Department|default('unknow') }} [{{ user.Country|default('unknow') }}]</td>
+            <td>
+                {% for val in user.diff %}
+                    <li>{{ val.attribute }}: {{ val.original|json_encode }} -> {{ val.value|json_encode }}</li>
+                {% endfor %}
+            </td>
+            <td>{{ user.log }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="8" style="text-align: right;">{{ users|length }} user(s)</td>
+    </tr>
+    </tfoot>
+</table>
+{% endblock %}

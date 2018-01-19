@@ -20,16 +20,16 @@ class BisDirHelper
     {
         $parentDn = '';
         if (!empty($countryCodeIso2)) {
-            $parentDn .= ',c=' . $countryCodeIso2;
+            $parentDn .= 'c=' . $countryCodeIso2 . ',';
         }
-        $parentDn .= ',' . self::BASEDN;
+        $parentDn .= self::BASEDN;
 
         return $parentDn;
     }
 
     public static function buildDn(String $uid, String $countryCodeIso2 = null)
     {
-        return 'uid=' . $uid . self::buildParentDn($countryCodeIso2);
+        return 'uid=' . $uid . ',' . self::buildParentDn($countryCodeIso2);
     }
 
     /**
@@ -49,13 +49,17 @@ class BisDirHelper
             ->setAttribute('employeenumber', $adAccount->getEmployeeId())
             ->setAttribute('mail', $adAccount->getEmail())
             ->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()))
-            ->setAttribute('initials', $adAccount->getInitials())
             ->setAttribute('givenname', $adAccount->getFirstName())
             ->setAttribute('sn', $adAccount->getLastName())
-            ->setAttribute('title', $adAccount->getDescription())
             ->setAttribute('objectclass', 'inetOrgPerson')
             ->setDn(self::buildDn($adAccount->getEmail(), $adAccount->getFirstAttribute('c')));
 
+        if (!empty($adAccount->getInitials())) {
+            $entry->setAttribute('initials', $adAccount->getInitials());
+        }
+        if (!empty($adAccount->getDescription())) {
+            $entry->setAttribute('title', $adAccount->getDescription());
+        }
         return $entry;
     }
 
@@ -116,4 +120,7 @@ class BisDirHelper
             $extraData
         );
     }
+}
+{
+
 }

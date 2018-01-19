@@ -38,10 +38,10 @@ class BisDir
         string $adminUsername,
         string $adminPassword,
         string $accountSuffix = '',
-        int $port = 389,
-        bool $followReferrals = false,
-        bool $useTls = false,
-        bool $useSsl = false
+        int $port = 636,
+        bool $followReferrals = true,
+        bool $useTls = true,
+        bool $useSsl = true
     ) {
 
         $adldap = new Adldap();
@@ -109,7 +109,6 @@ class BisDir
     public function createEntry(User $adAccount): BisDirResponse
     {
         $entry = $this->bisDir->make()->entry();
-
         $entry = BisDirHelper::adAccountToLdapEntry($adAccount, $entry);
 
         if ($entry->save()) {
@@ -175,29 +174,34 @@ class BisDir
      * @param User   $adAccount
      * @param String $password
      *
-     * @return BisDirResponse
+     * @return BisDirResponse[]
      */
-    public function synchronize(User $adAccount, String $password): BisDirResponse
+    public function synchronize(User $adAccount, String $password): array
     {
         // Check user exist in LDAP
         $ldapUser = $this->getUser($adAccount->getEmail());
 
+        // Logs
+        $logs = [];
+
         // Create user in LDAP
         if ($ldapUser === null) {
             $log = $this->createEntry($adAccount);
+            $logs[] = $log;
             if ($log->getStatus() === BisDirResponseStatus::DONE) {
-                return $this->synchronize($adAccount, $password);
+                $logs[] = $this->synchronize($adAccount, $password);
             }
-            return $log;
+            return $logs;
         }
 
         // Update user in LDAP
-        $log = $this->updateUser($adAccount);
-        if ($log->getStatus() === BisDirResponseStatus::DONE) {
-            // Sync password in LDAP
-            return $this->syncPassword($adAccount->getEmail(), $password);
-        }
-        return $log;
+        $logs[] = $this->updateUser($adAccount);
+        // Move user in LDAP
+        $logs[] = $this->moveUser($adAccount, $ldapUser);
+        // Sync password in LDAP
+        $logs[] = $this->syncPassword($adAccount->getEmail(), $password);
+
+        return $logs;
     }
 
     /**
@@ -243,6 +247,7 @@ class BisDir
                     ];
                 }
             }
+
             if (!empty($diffData)) {
                 if ($ldapUser->save()) {
                     return new BisDirResponse(
@@ -283,12 +288,12 @@ class BisDir
      */
     public function moveUser(User $adAccount, Entry $entry): BisDirResponse
     {
-        $dn = BisDirHelper::buildDn($adAccount->getEmail(), $adAccount->getFirstAttribute('c'));
-
-        if ($entry->getDn() != $dn) {
+        $rdn = 'uid=' . $adAccount->getEmail();
+        $newParent = BisDirHelper::buildParentDn($adAccount->getFirstAttribute('c'));
+        $oldParent = $entry->getDn();
+        $oldParent = str_replace($rdn . ',', '', $oldParent);
+        if ($oldParent !== $newParent) {
             // Need to move to the correct DN
-            $rdn = 'uid=' . $adAccount->getEmail();
-            $newParent = BisDirHelper::buildParentDn($adAccount->getFirstAttribute('c'));
             if ($entry->move($rdn, $newParent)) {
                 return new BisDirResponse(
                     "DN for user '" . $adAccount->getEmail() . "' successfully updated in LDAP",
@@ -297,8 +302,8 @@ class BisDir
                     BisDirHelper::getDataEntry(
                         $entry,
                         [
-                            'from' => $entry->getDn(),
-                            'to' => $dn,
+                            'from' => $oldParent,
+                            'to' => $newParent,
                         ]
                     )
                 );
@@ -311,8 +316,8 @@ class BisDir
                 BisDirHelper::getDataEntry(
                     $entry,
                     [
-                        'from' => $entry->getDn(),
-                        'to' => $dn,
+                        'from' => $oldParent,
+                        'to' => $newParent,
                     ]
                 )
             );

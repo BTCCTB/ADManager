@@ -81,7 +81,7 @@ class AccountController extends Controller
 
     /**
      * @Route("/disable/{employeeID}", name="ad_disable_account")
-     * @ecurity("is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *

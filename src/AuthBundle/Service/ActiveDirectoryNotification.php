@@ -129,6 +129,16 @@ class ActiveDirectoryNotification
                         ]
                     ),
                     'text/html'
+                )
+                ->addPart(
+                    $this->engine->render(
+                        '@Auth/Emails/notifyMove.text.twig',
+                        [
+                            'users' => $users,
+                            'subject' => 'User move in AD',
+                        ]
+                    ),
+                    'text/plain'
                 );
 
             $this->mailer->send($message);
@@ -166,6 +176,16 @@ class ActiveDirectoryNotification
                         ]
                     ),
                     'text/html'
+                )
+                ->addPart(
+                    $this->engine->render(
+                        '@Auth/Emails/notifyDisabled.text.twig',
+                        [
+                            'users' => $users,
+                            'subject' => 'User disabled in AD',
+                        ]
+                    ),
+                    'text/plain'
                 );
 
             $this->mailer->send($message);
@@ -203,6 +223,16 @@ class ActiveDirectoryNotification
                         ]
                     ),
                     'text/html'
+                )
+                ->addPart(
+                    $this->engine->render(
+                        '@Auth/Emails/notifyUpdate.text.twig',
+                        [
+                            'users' => $users,
+                            'subject' => 'User updated in AD',
+                        ]
+                    ),
+                    'text/plain'
                 );
 
             $this->mailer->send($message);

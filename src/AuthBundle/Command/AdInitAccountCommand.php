@@ -5,7 +5,6 @@ namespace AuthBundle\Command;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponse;
-use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use AuthBundle\Service\BisDir;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -72,11 +71,13 @@ class AdInitAccountCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //$fieldUsers = $this->activeDirectory->getFieldUsers('email');
+        $fieldUsers = $this->activeDirectory->getFieldUsers('email');
 
         // TESTING
-        $fieldUsers = [];
-        $fieldUsers[] = $this->activeDirectory->getUser('damien.lagae@enabel.be');
+        //        $fieldUsers = [];
+        //        $fieldUsers[] = $this->activeDirectory->getUser("pierre.dulieu@enabel.be");
+
+        $logs = [];
 
         /**
          * @var ActiveDirectoryResponse[] $logs
@@ -84,15 +85,10 @@ class AdInitAccountCommand extends Command
         foreach ($fieldUsers as $fieldUser) {
             $log = $this->activeDirectory->initAccount($fieldUser);
             $data = $log->getData();
-            $ldapSync = $this->bisDir->synchronize($fieldUser, $data['password']);
-            $this->activeDirectoryNotification->notifyInitialization($log);
             $logs[] = $log;
-            if ($ldapSync) {
-                $logs[] = new ActiveDirectoryResponse('LDAP sync OK', ActiveDirectoryResponseStatus::DONE);
-            } else {
-                $logs[] = new ActiveDirectoryResponse('LDAP sync FAILED', ActiveDirectoryResponseStatus::FAILED);
-            }
-
+            $ldapLogs = $this->bisDir->synchronize($fieldUser, $data['password']);
+            $logs = array_merge($logs, $ldapLogs);
+            $this->activeDirectoryNotification->notifyInitialization($log);
         }
 
         $this->activeDirectoryNotification->notifyCreation($logs);
