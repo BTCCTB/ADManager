@@ -17,6 +17,7 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> {{ app.user.username }} <span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a href="{{ path('my_account') }}" class="dropdown-item"><i class="fa fa-user"></i> My account</a>
                         <a href="{{ path('security_logout') }}" class="dropdown-item"><i class="fa fa-unlock"></i> Logout</a>
                     </div>
                 </li>

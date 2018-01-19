@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/my-account", name="my_account")
      * @throws \LogicException
      * @Security("has_role('ROLE_USER')")
      */
@@ -23,6 +23,17 @@ class IndexController extends Controller
     {
         $ad = $this->get('auth.active_directory');
         $user = $ad->checkUserExistByUsername($this->getUser()->getUsername());
-        return $this->render('AppBundle:Index:index.html.twig', ['user' => $user, 'country' => $user->getFirstAttribute('c')]);
+
+        $em = $this->getDoctrine()->getManager();
+        $applications = $em->getRepository('AppBundle:Application')->findBy(['enable' => 1]);
+
+        return $this->render(
+            'AppBundle:Index:index.html.twig',
+            [
+                'user' => $user,
+                'country' => $user->getFirstAttribute('c'),
+                'applications' => $applications,
+            ]
+        );
     }
 }

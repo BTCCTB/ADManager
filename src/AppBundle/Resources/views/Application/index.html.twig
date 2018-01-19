@@ -4,33 +4,7 @@
     <h1>My apps</h1>
     <h3>Your apps & useful links</h3>
     {% include ':partial:flash.html.twig' %}
-    {% for row in applications|batch(6) %}
-        <div class="row">
-        {% for application in row %}
-        <div class="col-sm-2" style="padding: 1rem;">
-            <div class="card text-center">
-                <h4 class="card-header">
-                    {{ application.name }}
-                </h4>
-                <div class="card-body">
-                    {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}
-                        {% if application.linkFr is not empty %}
-                            <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">FR</a>
-                        {% endif %}
-                        {% if application.linkNl is not empty %}
-                            <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">NL</a>
-                        {% endif %}
-                        <a href="{{ application.link }}" target="_blank" class="btn btn-primary">EN</a>
-                    {% else %}
-                        <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> LINK</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    {% endfor %}
-
+    {% include '@App/Application/partial/apps.html.twig' %}
 {% endblock %}
 
 {% block title %}

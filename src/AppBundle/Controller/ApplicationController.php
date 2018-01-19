@@ -13,13 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package AppBundle\Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
- * @Route("/application")
  * @Security("is_granted('ROLE_USER')")
  */
 class ApplicationController extends Controller
 {
     /**
-     * @Route("/my/portal", name="application_my_portal")
+     * @Route("/", name="homepage")
      * @return Response
      * @throws \LogicException
      * @throws \UnexpectedValueException
