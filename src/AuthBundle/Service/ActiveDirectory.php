@@ -1179,4 +1179,41 @@ class ActiveDirectory
         );
     }
 
+    public function migrate()
+    {
+        // Set no limit time & memory
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
+        // Error Log
+        $logs = [];
+
+        /**
+         * @var User[] $users
+         */
+        $users = $this->getAllUsers('mail');
+
+        foreach ($users as $user) {
+            $email = strtolower($user->getEmail());
+            $state = '<comment>OK</comment>';
+            if (!empty($email)) {
+                $emailPart = explode('@', $email);
+                if ($user->getEmail() !== $emailPart[0] . '@enabel.be') {
+                    $user->setEmail($emailPart[0] . '@enabel.be');
+                    if (!$user->save()) {
+                        $state = '<error>FAILED</error>';
+                    }
+                    $logs[] = [
+                        'user' => $user->getUserPrincipalName(),
+                        'current' => $email,
+                        'new' => $emailPart[0] . '@enabel.be',
+                        'state' => $state,
+                    ];
+                }
+            }
+        }
+
+        return $logs;
+    }
+
 }
