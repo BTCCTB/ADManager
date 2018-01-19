@@ -188,6 +188,12 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $username = $credentials['_username'];
 
         if ($this->activeDirectory->checkUserExistByUsername($username) !== false) {
+            $adAccount = $this->activeDirectory->getUser($username);
+            $log = $this->bisDir->syncPassword($adAccount->getEmail(), $password);
+            if ($log->getStatus() !== BisDirResponseStatus::DONE) {
+                $this->logger->error($log->getMessage());
+            }
+            $this->logger->info($log->getMessage());
             return $this->activeDirectory->checkCredentials($username, $password);
         } else {
             if ($this->passwordEncoder->isPasswordValid($user, $password)) {
@@ -196,6 +202,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
                 if ($log->getStatus() !== BisDirResponseStatus::DONE) {
                     $this->logger->error($log->getMessage());
                 }
+                dump($log->getMessage());
                 $this->logger->info($log->getMessage());
                 return true;
             } else {
