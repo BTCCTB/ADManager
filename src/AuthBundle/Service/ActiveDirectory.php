@@ -503,6 +503,7 @@ class ActiveDirectory
                 $emailPart = explode('@', $email);
                 $proxyAddresses = [
                     'SMTP:' . $emailPart[0] . '@enabel.be',
+                    'smtp:' . $emailPart[0] . '@btcctb.org',
                 ];
                 $user->setProxyAddresses($proxyAddresses);
                 if (!$user->save()) {
