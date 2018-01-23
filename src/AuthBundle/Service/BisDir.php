@@ -96,7 +96,8 @@ class BisDir
         return $this->bisDir
             ->search()
             ->whereEquals('objectClass', 'inetOrgPerson')
-            ->get();
+            ->paginate(10000)
+            ->getResults();
     }
 
     /**

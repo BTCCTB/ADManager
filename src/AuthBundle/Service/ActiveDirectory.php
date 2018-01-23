@@ -361,7 +361,10 @@ class ActiveDirectory
      */
     public function isUserMemberOf(User $user, OrganizationalUnit $ou): bool
     {
-        $members = $this->activeDirectory->search()->users()->setDn($ou->getDn())->get();
+        /**
+         * @var User[] $members
+         */
+        $members = $this->activeDirectory->search()->users()->setDn($ou->getDn())->paginate(10000)->getResults();
         foreach ($members as $member) {
             if ($user->getDn() === $member->getDn()) {
                 return true;
