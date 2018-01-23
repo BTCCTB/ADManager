@@ -2,7 +2,7 @@
 project_deploy_dir: '/var/www/html'
 host_server_name: 'password-test.up.btcctb.net'
 application_url: 'http://{{ host_server_name }}/'
-application_env: 'prod'
+application_env: 'dev'
 host_server_vhost_file: '/etc/apache2/sites-enabled/000-default.conf'
 database_root: '{{ vault_database_root }}'
 database_root_password: '{{ vault_database_root_password }}'
