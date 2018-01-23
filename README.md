@@ -77,10 +77,10 @@ $ composer test
     - [X] Guard Auth
 - [X] Import user in ldap
 - [X] Password generator
-- [ ] Change password form
+- [X] Change password form
 - [ ] Reset password form ?
-- [ ] List latest in/out
-- [ ] Mail notification
+- [X] List latest in/out
+- [X] Mail notification
 
 ## Contributing
 

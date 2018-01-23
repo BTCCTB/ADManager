@@ -20,4 +20,4 @@
 .vagrant
 ansible/.ssh/*
 !ansible/.ssh/.gitkeep
-
+.credentials
