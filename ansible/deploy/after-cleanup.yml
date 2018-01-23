@@ -1,7 +1,7 @@
 ---
 - name: CRONTAB | AD Sync noon [1 pm]
   cron:
-    name: Synchronize person between GO4HR and ActiveDirectory
+    name: Synchronize person between GO4HR and ActiveDirectory (1pm)
     minute: "0"
     hour: "13"
     state: present
@@ -11,7 +11,7 @@
 
 - name: CRONTAB | AD Sync morning [1 am]
   cron:
-    name: Synchronize person between GO4HR and ActiveDirectory
+    name: Synchronize person between GO4HR and ActiveDirectory (1am)
     minute: "0"
     hour: "1"
     state: present

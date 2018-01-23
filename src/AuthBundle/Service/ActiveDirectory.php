@@ -220,7 +220,8 @@ class ActiveDirectory
             ->whereEquals('objectClass', 'user')
             ->in($fieldDn->get())
             ->sortBy($sortField, $sortDirection)
-            ->get();
+            ->paginate('10000')
+            ->getResults();
     }
 
     /**
@@ -242,7 +243,8 @@ class ActiveDirectory
             ->whereEquals('objectClass', 'user')
             ->in($hqDn->get())
             ->sortBy($sortField, $sortDirection)
-            ->get();
+            ->paginate(10000)
+            ->getResults();
     }
 
     /**
@@ -500,17 +502,20 @@ class ActiveDirectory
             $email = strtolower($user->getEmail());
             $state = '<comment>OK</comment>';
             if (!empty($email)) {
+                $proxyAddresses = $user->getProxyAddresses();
                 $emailPart = explode('@', $email);
-                $proxyAddresses = [
-                    'SMTP:' . $emailPart[0] . '@enabel.be',
-                    'smtp:' . $emailPart[0] . '@btcctb.org',
-                ];
+                if (!\in_array('SMTP:' . $emailPart[0] . '@enabel.be', $proxyAddresses, false)) {
+                    $proxyAddresses[] = 'SMTP:' . $emailPart[0] . '@enabel.be';
+                }
+                if (!\in_array('smtp:' . $emailPart[0] . '@btcctb.org', $proxyAddresses, false)) {
+                    $proxyAddresses[] = 'smtp:' . $emailPart[0] . '@btcctb.org';
+                }
                 $user->setProxyAddresses($proxyAddresses);
                 if (!$user->save()) {
                     $state = '<error>FAILED</error>';
                 }
                 $logs[] = [
-                    'user' => $user->getUserPrincipalName(),
+                    'user' => $user->getEmail(),
                     'current' => json_encode($user->getProxyAddresses()),
                     'new' => json_encode($proxyAddresses),
                     'state' => $state,

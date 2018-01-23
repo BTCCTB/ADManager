@@ -379,13 +379,20 @@ class ActiveDirectoryHelper
             $user->setEmail($bisPersonView->getEmail());
         }
 
-        if ($bisPersonView->getProxyAddresses() !== $user->getProxyAddresses()) {
+        $proxyAddresses = $user->getProxyAddresses();
+        $bisProxyAddresses = $bisPersonView->getProxyAddresses();
+        foreach ($bisProxyAddresses as $bisProxyAddress) {
+            if (!\in_array($bisProxyAddress, $proxyAddresses, false)) {
+                $proxyAddresses[] = $bisProxyAddress;
+            }
+        }
+        if ($proxyAddresses !== $user->getProxyAddresses()) {
             $diffData['proxyAddresses'] = [
                 'attribute' => 'proxyAddresses',
-                'value' => $bisPersonView->getProxyAddresses(),
+                'value' => $proxyAddresses,
                 'original' => $user->getProxyAddresses(),
             ];
-            $user->setProxyAddresses($bisPersonView->getProxyAddresses());
+            $user->setProxyAddresses($proxyAddresses);
         }
 
         return [$user, $diffData];

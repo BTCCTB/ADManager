@@ -440,6 +440,7 @@ class BisPersonView
     {
         return [
             'SMTP:' . $this->getUsername() . self::MAIN_DOMAIN,
+            'smtp:' . $this->getBusinessCategory(),
         ];
     }
 
