@@ -1,0 +1,18 @@
+---
+- name: CRONTAB | AD Sync noon [1 pm]
+  cron:
+    name: Synchronize person between GO4HR and ActiveDirectory
+    minute: "0"
+    hour: "13"
+    state: present
+    user: root
+    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }}'"
+
+- name: CRONTAB | AD Sync morning [1 am]
+  cron:
+    name: Synchronize person between GO4HR and ActiveDirectory
+    minute: "0"
+    hour: "1"
+    state: present
+    user: root
+    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }}'"

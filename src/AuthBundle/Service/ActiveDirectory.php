@@ -624,7 +624,7 @@ class ActiveDirectory
         if (!empty($country)) {
             $bisUsers = $bisPersonView->findBy(['perCountryWorkplace' => $country]);
         } else {
-            $bisUsers = $bisPersonView->findAllFieldUser();
+            $bisUsers = $bisPersonView->findAll();
         }
 
         /**

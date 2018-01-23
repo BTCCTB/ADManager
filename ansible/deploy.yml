@@ -26,6 +26,7 @@
     ansistrano_after_symlink_shared_tasks_file: "{{ playbook_dir }}/deploy/after-symlink-shared.yml"
     ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/deploy/before-symlink.yml"
     ansistrano_before_cleanup_tasks_file: "{{ playbook_dir }}/deploy/before-cleanup.yml"
+    ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/deploy/after-cleanup.yml"
 
     # Symfony vars
     release_console_path: "{{ php_path }} {{ ansistrano_release_path.stdout }}/bin/console"
