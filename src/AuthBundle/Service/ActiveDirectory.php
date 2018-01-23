@@ -288,8 +288,8 @@ class ActiveDirectory
     public function getCountryStatUsers()
     {
         $stats = [];
-        $stats['HQ'] = $this->getHqUsers()->count();
-        $stats['Field'] = $this->getFieldUsers()->count();
+        $stats['HQ'] = count($this->getHqUsers());
+        $stats['Field'] = count($this->getFieldUsers());
 
         return $stats;
     }
