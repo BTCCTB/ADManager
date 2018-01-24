@@ -6,7 +6,7 @@
     hour: "13"
     state: present
     user: root
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }}'"
+    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_noon.log"
   when: application_env == 'prod'
 
 - name: CRONTAB | AD Sync morning [1 am]
@@ -16,5 +16,5 @@
     hour: "1"
     state: present
     user: root
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }}'"
+    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
