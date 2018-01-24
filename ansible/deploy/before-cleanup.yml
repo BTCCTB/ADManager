@@ -42,6 +42,22 @@
     state: present
   when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
 
+- name: Allow Apache to send mail on tcp port 587
+  seport:
+    ports: 587
+    proto: "tcp"
+    setype: "smtp_port_t"
+    state: present
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
+- name: Allow Apache to send mail on tcp port 25
+  seport:
+    ports: 25
+    proto: "tcp"
+    setype: "smtp_port_t"
+    state: present
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+
 - name: Configure Apache so it is able to connect to BIS
   seboolean:
     name: "httpd_can_network_connect_db"
