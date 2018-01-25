@@ -257,7 +257,7 @@ class ActiveDirectoryNotification
             $message->setSubject('Get started with Office 365')
                 ->setFrom($this->fromAddress)
                 ->setTo(str_replace('@enabel.be', '@btcctb.org', $user['Email']))
-//                ->setBcc($this->toAddress)
+                ->setBcc($this->fromAddress)
                 ->setBody(
                     $this->engine->render(
                         '@Auth/Emails/credentials.html.twig',

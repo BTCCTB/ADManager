@@ -122,8 +122,6 @@ swiftmailer:
     port: '%mailer_port%'
     username: '%mailer_user%'
     password: '%mailer_password%'
-    encryption: tls
-    auth_mode: login
     spool:
         type: memory
         path: '%kernel.project_dir%/var/spool'

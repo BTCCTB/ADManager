@@ -293,11 +293,11 @@ class ActiveDirectoryHelper
             ];
             $user->setInitials($bisPersonView->getInitials());
         }
-        if ($bisPersonView->getBusinessCategory() !== $user->getAttribute('BusinessCategory')[0]) {
+        if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('BusinessCategory')) {
             $diffData['businessCategory'] = [
                 'attribute' => 'businessCategory',
                 'value' => $bisPersonView->getBusinessCategory(),
-                'original' => $user->getAttribute('BusinessCategory')[0],
+                'original' => $user->getFirstAttribute('BusinessCategory'),
             ];
             $user->setAttribute('BusinessCategory', $bisPersonView->getBusinessCategory());
         }
@@ -325,19 +325,19 @@ class ActiveDirectoryHelper
         //            ];
         //            $user->setCountry($bisPersonView->getCountry());
         //        }
-        if ($bisPersonView->getAttribute('c') !== $user->getAttribute('c')[0]) {
+        if ($bisPersonView->getAttribute('c') !== $user->getFirstAttribute('c')) {
             $diffData['c'] = [
                 'attribute' => 'c',
                 'value' => $bisPersonView->getAttribute('c'),
-                'original' => $user->getAttribute('c'),
+                'original' => $user->getFirstAttribute('c'),
             ];
             $user->setAttribute('c', $bisPersonView->getAttribute('c'));
         }
-        if ($bisPersonView->getAttribute('co') !== $user->getAttribute('co')[0]) {
+        if ($bisPersonView->getAttribute('co') !== $user->getFirstAttribute('co')) {
             $diffData['co'] = [
                 'attribute' => 'co',
                 'value' => $bisPersonView->getAttribute('co'),
-                'original' => $user->getAttribute('co'),
+                'original' => $user->getFirstAttribute('co'),
             ];
             $user->setAttribute('co', $bisPersonView->getAttribute('co'));
         }

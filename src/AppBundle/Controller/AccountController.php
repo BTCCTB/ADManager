@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Adldap\Models\User;
 use AuthBundle\Form\ChangePasswordForm;
 use AuthBundle\Service\ActiveDirectoryHelper;
+use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -54,7 +55,7 @@ class AccountController extends Controller
         $form = $this->createForm(ChangePasswordForm::class);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             if ($ad->checkCredentials($user->getEmail(), $data['current_password'])) {
                 $passwordCheck = ActiveDirectoryHelper::checkPasswordComplexity($data['password']);
@@ -121,6 +122,34 @@ class AccountController extends Controller
 
         if ($ad->enableUser($user)) {
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] enabled!');
+        } else {
+            $this->addFlash('danger', 'Can\'t do this action!');
+        }
+
+        return $this->redirectToRoute('account_ad_list');
+    }
+
+    /**
+     * @Route("/reset/{employeeID}", name="ad_reset_account")
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @Method({"GET"})
+     * @param integer $employeeID The employee ID
+     *
+     * @return RedirectResponse
+     * @throws \LogicException
+     * @throws \Adldap\AdldapException
+     */
+    public function resetAction($employeeID): RedirectResponse
+    {
+        $ad = $this->get('auth.active_directory');
+        $adNotification = $this->get('AuthBundle\Service\ActiveDirectoryNotification');
+        $user = $ad->checkUserExistByEmployeeID($employeeID);
+
+        $resetPassword = $ad->initAccount($user);
+
+        if ($resetPassword->getStatus() === ActiveDirectoryResponseStatus::DONE) {
+            $adNotification->notifyInitialization($resetPassword);
+            $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized!');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
         }
