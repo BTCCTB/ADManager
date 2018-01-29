@@ -4,7 +4,7 @@ Thank you for considering contributing to the PasswordManager project!
 
 ## Bug reports
 
-To encourage active collaboration, BTC-CTB strongly encourages pull requests, not just bug reports. "Bug reports" may also be sent in the form of a pull request containing a failing test.
+To encourage active collaboration, Enabel strongly encourages pull requests, not just bug reports. "Bug reports" may also be sent in the form of a pull request containing a failing test.
 
 However, if you file a bug report, your issue should contain a title and a clear description of the issue. You should also include as much relevant information as possible that demonstrates the issue. The goal of a bug report is to make it easy for yourself - and others - to replicate the bug and develop a fix.
 
@@ -14,7 +14,7 @@ The PasswordManager source code is managed on GitHub
 
 ## Security Vulnerabilities
    
-If you discover a security vulnerability within PasswordManager, please send an email to BTC-CTB at ict.helpdesk@btcctb.org. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within PasswordManager, please send an email to Enabel at ict.helpdesk@enabel.be. All security vulnerabilities will be promptly addressed.
 
 ## Coding Style
    
