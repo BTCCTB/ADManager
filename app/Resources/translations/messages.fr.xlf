@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!--
+ Loco xml export: XLIFF for Symfony
+ Project: password
+ Release: Working copy
+ Locale: fr, French
+ Exported by: Damien Lagae
+ Exported at: Fri, 26 Jan 2018 12:31:26 +0100 
+-->
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="fr" tool-id="loco" datatype="plaintext" original="file.ext">
+        <header>
+          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.18 20180122-1" tool-company="Loco" />
+        </header>
+        <body> 
+            <trans-unit id="loco:5a6af738820ee9d7398b4569"> 
+                <source>Current password</source>
+                <target>Mot de passe actuel</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6af828a39ff36c058b4569"> 
+                <source>Repeat new password</source>
+                <target>Répéter le nouveau mot de passe</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6af828a39ff36d058b4568"> 
+                <source>New password</source>
+                <target>Nouveau mot de passe</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6af829a39ff39d058b4579"> 
+                <source>Change password</source>
+                <target>Modifier le mot de passe</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b0867c430fe55478b4568"> 
+                <source>AD Accounts</source>
+                <target>Comptes AD</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b0869c430fe13478b4567"> 
+                <source>My account</source>
+                <target>Mon compte</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b086ac430fe65478b4568"> 
+                <source>My apps</source>
+                <target>Mes applications</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b086ac430fe66478b4567"> 
+                <source>Logout</source>
+                <target>Déconnexion</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b086cc430fe24478b456a"> 
+                <source>must contains a capital letter</source>
+                <target>doit contenir une majuscule</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b086cc430fe58478b4568"> 
+                <source>Your new password must be at least 8 characters long and follow three of these rules:</source>
+                <target>Votre nouveau mot de passe doit comporter au moins 8 caractères et suivre trois de ces règles:</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b086cc430fe5d478b4568"> 
+                <source>must contains a lower-case letter</source>
+                <target>doit contenir une minuscule</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b086dc430fe59478b4567"> 
+                <source>must contains a number</source>
+                <target>doit contenir un chiffre</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b08cfc430fe24478b456b"> 
+                <source>Home</source>
+                <target>Accueil</target> 
+            </trans-unit> 
+            <trans-unit id="loco:5a6b0fdcc430fe95488b4567"> 
+                <source>must contains a special character</source>
+                <target>doit contenir un caractère spécial</target> 
+            </trans-unit> 
+        </body>
+    </file>
+</xliff>

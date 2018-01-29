@@ -2,124 +2,123 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
   <file id="messages.en">
     <unit id="cu0r12f">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:18</note>
-        <note category="state" priority="1">new</note>
-      </notes>
       <segment>
         <source>Current password</source>
         <target>Current password</target>
       </segment>
     </unit>
-    <unit id="XohImNo">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:24</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="QQ_eFeF">
       <segment>
-        <source>password</source>
-        <target></target>
+        <source>Your new password must contain at least three of these rules:</source>
+        <target>Your new password must contain at least three of these rules:</target>
       </segment>
     </unit>
-    <unit id="PdnfREH">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:34</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="2yRaic.">
       <segment>
-        <source>New password</source>
-        <target>New password</target>
+        <source>a lower-case letter</source>
+        <target>a lower-case letter</target>
+      </segment>
+    </unit>
+    <unit id="yUspTO1">
+      <segment>
+        <source>a capital letter</source>
+        <target>a capital letter</target>
+      </segment>
+    </unit>
+    <unit id="0k8foW0">
+      <segment>
+        <source>a number</source>
+        <target>a number</target>
       </segment>
     </unit>
     <unit id="DInsk4R">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/ChangePasswordForm.php:37</note>
-        <note category="state" priority="1">new</note>
-      </notes>
       <segment>
         <source>Repeat new password</source>
         <target>Repeat new password</target>
       </segment>
     </unit>
-    <unit id="47ienTP">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:25</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="PdnfREH">
       <segment>
-        <source>Username</source>
+        <source>New password</source>
+        <target>New password</target>
+      </segment>
+    </unit>
+    <unit id="RZp86Ww">
+      <segment>
+        <source>a special character</source>
+        <target>a special character</target>
+      </segment>
+    </unit>
+    <unit id="P5yZH2O">
+      <segment>
+        <source>Change password</source>
+        <target>Change password</target>
+      </segment>
+    </unit>
+    <unit id="UzFhc1Y">
+      <segment>
+        <source>Accueil</source>
         <target></target>
       </segment>
     </unit>
-    <unit id="4KZ8dE1">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:28</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="hFqpL4Y">
       <segment>
-        <source>lastname.firstname@enabel.be</source>
+        <source>AD Accounts</source>
+        <target>AD Accounts</target>
+      </segment>
+    </unit>
+    <unit id="tTGBpNh">
+      <segment>
+        <source>My account</source>
+        <target>My account</target>
+      </segment>
+    </unit>
+    <unit id="0FJ_Sz1">
+      <segment>
+        <source>Logout</source>
+        <target>Logout</target>
+      </segment>
+    </unit>
+    <unit id="xTIDQl8">
+      <segment>
+        <source>My apps</source>
+        <target>My apps</target>
+      </segment>
+    </unit>
+    <unit id="ttYfwOT">
+      <segment>
+        <source>Your new password must be at least 8 characters long and follow three of these rules:</source>
         <target></target>
       </segment>
     </unit>
-    <unit id="588_9PF">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:35</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="wdxlR69">
       <segment>
-        <source>Password</source>
-        <target></target>
+        <source>must contains a lower-case letter</source>
+        <target>must contains a lower-case letter</target>
       </segment>
     </unit>
-    <unit id="gJanvZo">
-      <notes>
-        <note category="file-source" priority="1">src/AuthBundle/Form/Type/LoginForm.php:42</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="NPexgaX">
       <segment>
-        <source>Remember</source>
-        <target></target>
+        <source>must contains a capital letter</source>
+        <target>must contains a capital letter</target>
       </segment>
     </unit>
-    <unit id="LyrbXfQ">
-      <notes>
-        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:60</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="cMpPhCU">
       <segment>
-        <source>Password successfully changed !</source>
-        <target></target>
+        <source>must contains a number</source>
+        <target>must contains a number</target>
       </segment>
     </unit>
-    <unit id="JjgOAvY">
-      <notes>
-        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:63</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="nsr9R6l">
       <segment>
-        <source>Password cannot be changed !</source>
-        <target></target>
+        <source>must contains a special character</source>
+        <target>must contains a special character</target>
       </segment>
     </unit>
-    <unit id="Jly4PdM">
-      <notes>
-        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:66</note>
-        <note category="state" priority="1">new</note>
-      </notes>
+    <unit id="OnhpU4i">
       <segment>
-        <source>Current password don't match !</source>
-        <target></target>
-      </segment>
-    </unit>
-    <unit id="TrlfUem">
-      <notes>
-        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:106</note>
-        <note category="file-source" priority="1">src/AppBundle/Controller/AccountController.php:129</note>
-        <note category="state" priority="1">new</note>
-      </notes>
-      <segment>
-        <source>Can't do this action!</source>
-        <target></target>
+        <source>Home</source>
+        <target>Home</target>
       </segment>
     </unit>
   </file>
