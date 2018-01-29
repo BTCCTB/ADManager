@@ -21,6 +21,20 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
+            <div class="alert alert-warning">
+                <p>{% trans %}Your new password must be at least 8 characters long and follow three of these rules:{% endtrans %}</p>
+                <ul>
+                    <li>{% trans %}must contains a lower-case letter{% endtrans %} [abc...xyz]</li>
+                    <li>{% trans %}must contains a capital letter{% endtrans %} [ABC...XYZ]</li>
+                    <li>{% trans %}must contains a number{% endtrans %} [012...789]</li>
+                    <li>{% trans %}must contains a special character{% endtrans %} [&@€...!-_]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
             {{ form_row(form.password.first) }}
         </div>
         <div class="col-md-3">
@@ -47,7 +61,7 @@
     <div class="row" style="padding-top: 1rem">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-key"></i> Change password</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-key"></i> {% trans %}Change password{% endtrans %}</button>
         </div>
     </div>
     {{ form_rest(form) }}

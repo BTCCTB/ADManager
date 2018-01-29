@@ -28,7 +28,9 @@ class ChangePasswordForm extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'The new password fields must match.',
                 'options' => [
-                    'attr' => ['class' => 'password-field'],
+                    'attr' => [
+                        'class' => 'password-field',
+                    ],
                 ],
                 'required' => true,
                 'first_options' => [
