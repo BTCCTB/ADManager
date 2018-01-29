@@ -30,9 +30,10 @@
 
     # Symfony vars
     release_console_path: "{{ php_path }} {{ ansistrano_release_path.stdout }}/bin/console"
-    release_var_path: "{{ ansistrano_release_path.stdout }}/var"
+    release_path: "{{ ansistrano_release_path.stdout }}"
+    release_var_path: "{{ release_path }}/var"
     release_logs_path: "{{ ansistrano_shared_path }}/var/logs"
-    release_web_path: "{{ ansistrano_release_path.stdout }}/web"
+    release_web_path: "{{ release_path }}/web"
 
   environment:
     SYMFONY_ENV: "{{ application_env }}"
