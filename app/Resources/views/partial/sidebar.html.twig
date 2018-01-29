@@ -1,16 +1,16 @@
 <nav class="col-sm-2 col-md-1 d-none d-sm-block bg-light sidebar">
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link {% if app.request.get('_route') == 'homepage' %}active{% endif %}" href="{{ path('homepage') }}">My apps</a>
+            <a class="nav-link {% if app.request.get('_route') == 'homepage' %}active{% endif %}" href="{{ path('homepage') }}">{% trans %}My apps{% endtrans %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if app.request.get('_route') == 'my_account' %}active{% endif %}" href="{{ path('my_account') }}">My account</a>
+            <a class="nav-link {% if app.request.get('_route') == 'my_account' %}active{% endif %}" href="{{ path('my_account') }}">{% trans %}My account{% endtrans %}</a>
         </li>
     </ul>
     {% if is_granted('ROLE_ADMIN') %}
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link {% if app.request.get('_route') == 'account_ad_list' %}active{% endif %}" href="{{ path('account_ad_list') }}">AD Accounts</a>
+            <a class="nav-link {% if app.request.get('_route') == 'account_ad_list' %}active{% endif %}" href="{{ path('account_ad_list') }}">{% trans %}AD Accounts{% endtrans %}</a>
         </li>
     </ul>
 

@@ -8,7 +8,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app.locales: [en,fr]
+    app.locales: [en,fr,nl]
 
 framework:
     #esi: ~
@@ -176,7 +176,7 @@ stof_doctrine_extensions:
 #    strategy: prefix_except_default
 
 translation:
-    locales: ["en", "fr"]
+    locales: ["en", "fr", "nl"]
     symfony_profiler: # must be placed in config_dev.yml
         enabled: true
     webui:
@@ -195,6 +195,6 @@ translation:
 
 translation_adapter_loco:
   projects:
-    password:
-      api_key: 'hSgiiPfDFDxFsUqzFsnIwlyJAGdqag6_J'
+    messages:
+      api_key: 'BQtDiLdqFbhpKQ_DvIUV9tYMDKK481J0F'
 
