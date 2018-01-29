@@ -68,6 +68,12 @@ class ActiveDirectoryHelper
 
     public static function checkPasswordComplexity(string $password)
     {
+        $rules = [
+            'A-Z' => 'Error E105 - Your password must contain at least one capital letter.',
+            'a-z' => 'Error E106 - Your password must contain at least one lowercase letter.',
+            '0-9' => 'Error E107 - Your password must contain at least one number.',
+            '@' => 'Error E108 - Your password must contain at least one special character.',
+        ];
         if (\strlen($password) < 8) {
             return 'Error E101 - Your password is too short. Your password must be at least 8 characters long.';
         }
@@ -294,11 +300,6 @@ class ActiveDirectoryHelper
             $user->setInitials($bisPersonView->getInitials());
         }
         if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('BusinessCategory')) {
-            $diffData['businessCategory'] = [
-                'attribute' => 'businessCategory',
-                'value' => $bisPersonView->getBusinessCategory(),
-                'original' => $user->getFirstAttribute('BusinessCategory'),
-            ];
             $user->setAttribute('BusinessCategory', $bisPersonView->getBusinessCategory());
         }
         if ($bisPersonView->getDepartment() !== $user->getDepartment()) {
