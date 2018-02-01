@@ -200,6 +200,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
 
         if ($this->activeDirectory->checkUserExistByUsername($username) !== false) {
             $adAccount = $this->activeDirectory->getUser($username);
+            $ldapUser = $this->bisDir->getUser($adAccount->getEmail());
+            if ($ldapUser === null) {
+                $this->bisDir->synchronize($adAccount, $password);
+            }
             $log = $this->bisDir->syncPassword($adAccount->getEmail(), $password);
             if ($log->getStatus() !== BisDirResponseStatus::DONE) {
                 $this->logger->error($log->getMessage());
