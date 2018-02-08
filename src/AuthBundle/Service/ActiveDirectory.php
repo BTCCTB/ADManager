@@ -1225,4 +1225,37 @@ class ActiveDirectory
         return $logs;
     }
 
+    /**
+     * Synchronise a BisPersonView with Active directory
+     *
+     * @param BisPersonView $bisPersonView
+     *
+     * @return ActiveDirectoryResponse[]
+     * @throws AdldapException
+     */
+    public function synchronizeFromBis(BisPersonView $bisPersonView)
+    {
+        // Check user exist in AD
+        $adAccount = $this->getUser($bisPersonView->getEmail());
+
+        // Logs
+        $logs = [];
+
+        // Create user in AD
+        if ($adAccount === null) {
+            $log = $this->createUser($bisPersonView);
+            $logs[] = $log;
+            return $logs;
+        }
+
+        // Update user in AD
+        $logs[] = $this->updateAccount($bisPersonView->getEmail());
+        $moved = $this->userNeedToMove($bisPersonView, $adAccount);
+        if (ActiveDirectoryResponseStatus::ACTION_NEEDED === $moved->getStatus()) {
+            // Move user in AD
+            $logs[] = $this->moveUser($bisPersonView, $adAccount);
+        }
+        return $logs;
+    }
+
 }

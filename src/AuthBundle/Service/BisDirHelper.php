@@ -5,6 +5,7 @@ namespace AuthBundle\Service;
 use Adldap\Models\Entry;
 use Adldap\Models\User;
 use AuthBundle\AuthBundle;
+use BisBundle\Entity\BisPersonView;
 
 /**
  * Class BisDirHelper
@@ -64,6 +65,37 @@ class BisDirHelper
     }
 
     /**
+     * Convert a Active Directory account to a LDAP entry
+     *
+     * @param BisPersonView $bisPersonView
+     * @param Entry         $entry The LDAP entry
+     *
+     * @return Entry The LDAP entry
+     */
+    public static function bisPersonViewToLdapEntry(BisPersonView $bisPersonView, Entry $entry): Entry
+    {
+        //TODO: Add old btcctb.org email in one of these attribute
+        $entry->setCommonName($bisPersonView->getCommonName())
+            ->setDisplayName($bisPersonView->getDisplayName())
+            ->setAttribute('uid', $bisPersonView->getEmail())
+            ->setAttribute('employeenumber', $bisPersonView->getEmployeeId())
+            ->setAttribute('mail', $bisPersonView->getEmail())
+            ->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()))
+            ->setAttribute('givenname', $bisPersonView->getFirstName())
+            ->setAttribute('sn', $bisPersonView->getLastName())
+            ->setAttribute('objectclass', 'inetOrgPerson')
+            ->setDn(self::buildDn($bisPersonView->getEmail(), $bisPersonView->getFirstAttribute('c')));
+
+        if (!empty($bisPersonView->getInitials())) {
+            $entry->setAttribute('initials', $bisPersonView->getInitials());
+        }
+        if (!empty($bisPersonView->getDescription())) {
+            $entry->setAttribute('title', $bisPersonView->getDescription());
+        }
+        return $entry;
+    }
+
+    /**
      * Convert AD Account to LDAP Entry & generate info into a array
      *
      * @param User  $adAccount
@@ -87,6 +119,35 @@ class BisDirHelper
                 'title' => $adAccount->getDescription(),
                 'objectclass' => 'inetOrgPerson',
                 'dn' => self::buildDn($adAccount->getEmail(), $adAccount->getFirstAttribute('c')),
+            ],
+            $extraData
+        );
+    }
+
+    /**
+     * Convert AD Account to LDAP Entry & generate info into a array
+     *
+     * @param BisPersonView $bisPersonView
+     * @param array         $extraData
+     *
+     * @return array
+     */
+    public static function getDataBisPersonView(BisPersonView $bisPersonView, array $extraData = []): array
+    {
+        return array_merge(
+            [
+                'CommonName' => $bisPersonView->getCommonName(),
+                'DisplayName' => $bisPersonView->getDisplayName(),
+                'uid' => $bisPersonView->getEmail(),
+                'employeenumber' => $bisPersonView->getEmployeeId(),
+                'mail' => $bisPersonView->getEmail(),
+                'businesscategory' => str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()),
+                'initials' => $bisPersonView->getInitials(),
+                'givenname' => $bisPersonView->getFirstName(),
+                'sn' => $bisPersonView->getLastName(),
+                'title' => $bisPersonView->getDescription(),
+                'objectclass' => 'inetOrgPerson',
+                'dn' => self::buildDn($bisPersonView->getEmail(), $bisPersonView->getFirstAttribute('c')),
             ],
             $extraData
         );

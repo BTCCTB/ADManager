@@ -52,6 +52,13 @@ class BisPersonView
     private $perLastname;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="per_nickname", type="string", length=100, nullable=true)
+     */
+    private $perNickname;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="per_active", type="boolean", nullable=false)
@@ -355,6 +362,9 @@ class BisPersonView
 
     public function getDisplayName()
     {
+        if ($this->getNickname() !== null) {
+            return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getNickname()));
+        }
         return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
     }
 
@@ -400,9 +410,35 @@ class BisPersonView
         return self::COMPANY;
     }
 
+    public function getFirstAttribute($key)
+    {
+        return $this->getAttribute($key);
+    }
+
     public function getAttribute($key)
     {
         switch ($key) {
+            case 'per_id':
+                return $this->getId();
+                break;
+            case 'per_firstname':
+                return $this->getFirstname();
+                break;
+            case 'per_lastname':
+                return $this->getLastname();
+                break;
+            case 'per_email':
+                return $this->getEmail();
+                break;
+            case 'displayname':
+                return $this->getDisplayName();
+                break;
+            case 'per_sex':
+                return $this->getSex();
+                break;
+            case 'per_function':
+                return $this->getFunction();
+                break;
             case 'c':
                 if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
                     return $this->getCountryWorkplace()->getCouIsocode2letters();
@@ -471,6 +507,17 @@ class BisPersonView
     public function getBusinessCategory()
     {
         return str_replace('@enabel.be', '@btcctb.org', $this->getEmail());
+    }
+
+    public function getNickname()
+    {
+        return $this->perNickname;
+    }
+
+    public function setNickname($perNickname)
+    {
+        $this->perNickname = $perNickname;
+        return $this;
     }
 
 }

@@ -7,6 +7,7 @@ use Adldap\Connections\Provider;
 use Adldap\Models\Entry;
 use Adldap\Models\User;
 use AuthBundle\AuthBundle;
+use BisBundle\Entity\BisPersonView;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
@@ -130,6 +131,35 @@ class BisDir
     }
 
     /**
+     * Create a ldap entry from a AD user
+     *
+     * @param BisPersonView $bisPersonView
+     *
+     * @return BisDirResponse
+     */
+    public function createEntryFromBis(BisPersonView $bisPersonView): BisDirResponse
+    {
+        $entry = $this->bisDir->make()->entry();
+        $entry = BisDirHelper::bisPersonViewToLdapEntry($bisPersonView, $entry);
+
+        if ($entry->save()) {
+            return new BisDirResponse(
+                "User '" . $bisPersonView->getEmail() . "' successfully created in LDAP",
+                BisDirResponseStatus::DONE,
+                BisDirResponseType::CREATE,
+                BisDirHelper::getDataBisPersonView($bisPersonView)
+            );
+        }
+
+        return new BisDirResponse(
+            "Unable to create this user '" . $bisPersonView->getEmail() . "' in LDAP",
+            BisDirResponseStatus::FAILED,
+            BisDirResponseType::CREATE,
+            BisDirHelper::getDataBisPersonView($bisPersonView)
+        );
+    }
+
+    /**
      * Synchronize password in ldap
      *
      * @param string $email    The user email
@@ -177,7 +207,7 @@ class BisDir
      *
      * @return BisDirResponse[]
      */
-    public function synchronize(User $adAccount, String $password): array
+    public function synchronize(User $adAccount, String $password = null): array
     {
         // Check user exist in LDAP
         $ldapUser = $this->getUser($adAccount->getEmail());
@@ -189,7 +219,7 @@ class BisDir
         if ($ldapUser === null) {
             $log = $this->createEntry($adAccount);
             $logs[] = $log;
-            if ($log->getStatus() === BisDirResponseStatus::DONE) {
+            if ($log->getStatus() === BisDirResponseStatus::DONE && $password !== null) {
                 $logs[] = $this->synchronize($adAccount, $password);
             }
             return $logs;
@@ -199,8 +229,39 @@ class BisDir
         $logs[] = $this->updateUser($adAccount);
         // Move user in LDAP
         $logs[] = $this->moveUser($adAccount, $ldapUser);
-        // Sync password in LDAP
-        $logs[] = $this->syncPassword($adAccount->getEmail(), $password);
+
+        if ($password !== null) {
+            // Sync password in LDAP
+            $logs[] = $this->syncPassword($adAccount->getEmail(), $password);
+        }
+
+        return $logs;
+    }
+
+    /**
+     * @param BisPersonView $bisPersonView
+     *
+     * @return BisDirResponse[]
+     */
+    public function synchronizeFromBis(BisPersonView $bisPersonView): array
+    {
+        // Check user exist in LDAP
+        $ldapUser = $this->getUser($bisPersonView->getEmail());
+
+        // Logs
+        $logs = [];
+
+        // Create user in LDAP
+        if ($ldapUser === null) {
+            $log = $this->createEntryFromBis($bisPersonView);
+            $logs[] = $log;
+            return $logs;
+        }
+
+        // Update user in LDAP
+        $logs[] = $this->updateUserFromBis($bisPersonView);
+        // Move user in LDAP
+        $logs[] = $this->moveUserFromBis($bisPersonView, $ldapUser);
 
         return $logs;
     }
@@ -280,6 +341,80 @@ class BisDir
     }
 
     /**
+     * Update basic information of a user
+     *
+     * @param BisPersonView $bisPersonView
+     *
+     * @return BisDirResponse
+     */
+    public function updateUserFromBis(BisPersonView $bisPersonView): BisDirResponse
+    {
+        // Define the attributes that can be updated
+        $attributes = [
+            'title',
+            'sn',
+            'givenname',
+            'initials',
+            'businesscategory',
+            'displayname',
+            'cn',
+        ];
+        $ldapUser = $this->getUser($bisPersonView->getEmail());
+
+        if ($ldapUser !== null) {
+            $entry = $this->bisDir->make()->entry();
+            $entry = BisDirHelper::bisPersonViewToLdapEntry($bisPersonView, $entry);
+            $diffData = [];
+            foreach ($attributes as $attribute) {
+                $value = $entry->getAttribute($attribute);
+                if (\is_array($value) && array_key_exists(0, $value)) {
+                    $value = $value[0];
+                }
+                $original = $ldapUser->getAttribute($attribute);
+                if (\is_array($original) && array_key_exists(0, $original)) {
+                    $original = $original[0];
+                }
+                if ($value !== $original) {
+                    $ldapUser->setAttribute($attribute, $value);
+                    $diffData[$attribute] = [
+                        'attribute' => $attribute,
+                        'value' => $value,
+                        'original' => $original,
+                    ];
+                }
+            }
+
+            if (!empty($diffData)) {
+                if ($ldapUser->save()) {
+                    return new BisDirResponse(
+                        "User '" . $bisPersonView->getEmail() . "' successfully updated in LDAP",
+                        BisDirResponseStatus::DONE,
+                        BisDirResponseType::UPDATE,
+                        BisDirHelper::getDataBisPersonView($bisPersonView, ['diff' => $diffData])
+                    );
+                }
+                return new BisDirResponse(
+                    "Unable to update user '" . $bisPersonView->getEmail() . "' in LDAP",
+                    BisDirResponseStatus::FAILED,
+                    BisDirResponseType::UPDATE,
+                    BisDirHelper::getDataBisPersonView($bisPersonView, ['diff' => $diffData])
+                );
+            }
+            return new BisDirResponse(
+                "User '" . $bisPersonView->getEmail() . "' already up to date in LDAP",
+                BisDirResponseStatus::NOTHING_TO_DO,
+                BisDirResponseType::UPDATE,
+                BisDirHelper::getDataBisPersonView($bisPersonView)
+            );
+        }
+        return new BisDirResponse(
+            "Unable to find a user for '" . $bisPersonView->getEmail() . "' in LDAP",
+            BisDirResponseStatus::EXCEPTION,
+            BisDirResponseType::UPDATE
+        );
+    }
+
+    /**
      * Move a user / Change DN
      *
      * @param User  $adAccount The Active Directory account
@@ -327,6 +462,61 @@ class BisDir
         // Already correct, nothing to do!
         return new BisDirResponse(
             "DN for user '" . $adAccount->getEmail() . "' already up to date in LDAP",
+            BisDirResponseStatus::NOTHING_TO_DO,
+            BisDirResponseType::MOVE,
+            BisDirHelper::getDataEntry($entry)
+        );
+
+    }
+
+    /**
+     * Move a user / Change DN
+     *
+     * @param BisPersonView $bisPersonView
+     * @param Entry         $entry The LDAP entry
+     *
+     * @return BisDirResponse
+     */
+    public function moveUserFromBis(BisPersonView $bisPersonView, Entry $entry): BisDirResponse
+    {
+        $rdn = 'uid=' . $bisPersonView->getEmail();
+        $newParent = BisDirHelper::buildParentDn($bisPersonView->getFirstAttribute('c'));
+        $oldParent = $entry->getDn();
+        $oldParent = str_replace($rdn . ',', '', $oldParent);
+        if ($oldParent !== $newParent) {
+            // Need to move to the correct DN
+            if ($entry->move($rdn, $newParent)) {
+                return new BisDirResponse(
+                    "DN for user '" . $bisPersonView->getEmail() . "' successfully updated in LDAP",
+                    BisDirResponseStatus::DONE,
+                    BisDirResponseType::MOVE,
+                    BisDirHelper::getDataEntry(
+                        $entry,
+                        [
+                            'from' => $oldParent,
+                            'to' => $newParent,
+                        ]
+                    )
+                );
+            }
+
+            return new BisDirResponse(
+                "Unable to update the DN for user '" . $bisPersonView->getEmail() . "' in LDAP",
+                BisDirResponseStatus::FAILED,
+                BisDirResponseType::MOVE,
+                BisDirHelper::getDataEntry(
+                    $entry,
+                    [
+                        'from' => $oldParent,
+                        'to' => $newParent,
+                    ]
+                )
+            );
+        }
+
+        // Already correct, nothing to do!
+        return new BisDirResponse(
+            "DN for user '" . $bisPersonView->getEmail() . "' already up to date in LDAP",
             BisDirResponseStatus::NOTHING_TO_DO,
             BisDirResponseType::MOVE,
             BisDirHelper::getDataEntry($entry)
