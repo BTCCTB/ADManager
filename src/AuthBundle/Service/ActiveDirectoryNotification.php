@@ -2,8 +2,6 @@
 
 namespace AuthBundle\Service;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-
 /**
  * Class ActiveDirectoryNotification
  *
@@ -19,22 +17,25 @@ class ActiveDirectoryNotification
     private $mailer;
 
     /**
-     * @var EngineInterface
+     * @var \Twig_Environment
      */
-    private $engine;
+    private $twig;
     /**
      * @var string
      */
     private $fromAddress;
 
+    /**
+     * @var array
+     */
     private $toAddress;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $engine, string $fromAddress, $toAddress)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, string $fromAddress, string $toAddress)
     {
         $this->mailer = $mailer;
-        $this->engine = $engine;
+        $this->twig = $twig;
         $this->fromAddress = $fromAddress;
-        $this->toAddress = $toAddress;
+        $this->toAddress = explode(',', $toAddress);
     }
 
     /**
@@ -67,7 +68,7 @@ class ActiveDirectoryNotification
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyCreation.html.twig',
                         [
                             'users' => $users,
@@ -77,7 +78,7 @@ class ActiveDirectoryNotification
                     'text/html'
                 )
                 ->addPart(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyCreation.text.twig',
                         [
                             'users' => $users,
@@ -121,7 +122,7 @@ class ActiveDirectoryNotification
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyMove.html.twig',
                         [
                             'users' => $users,
@@ -131,7 +132,7 @@ class ActiveDirectoryNotification
                     'text/html'
                 )
                 ->addPart(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyMove.text.twig',
                         [
                             'users' => $users,
@@ -168,7 +169,7 @@ class ActiveDirectoryNotification
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyDisabled.html.twig',
                         [
                             'users' => $users,
@@ -178,7 +179,7 @@ class ActiveDirectoryNotification
                     'text/html'
                 )
                 ->addPart(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyDisabled.text.twig',
                         [
                             'users' => $users,
@@ -215,7 +216,7 @@ class ActiveDirectoryNotification
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyUpdate.html.twig',
                         [
                             'users' => $users,
@@ -225,7 +226,7 @@ class ActiveDirectoryNotification
                     'text/html'
                 )
                 ->addPart(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/notifyUpdate.text.twig',
                         [
                             'users' => $users,
@@ -259,7 +260,7 @@ class ActiveDirectoryNotification
                 ->setTo(str_replace('@enabel.be', '@btcctb.org', $user['Email']))
                 ->setBcc($this->fromAddress)
                 ->setBody(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/credentials.html.twig',
                         [
                             'user' => $user,
@@ -268,7 +269,7 @@ class ActiveDirectoryNotification
                     'text/html'
                 )
                 ->addPart(
-                    $this->engine->render(
+                    $this->twig->render(
                         '@Auth/Emails/credentials.text.twig',
                         [
                             'user' => $user,

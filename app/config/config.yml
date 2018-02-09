@@ -1,120 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: security.yml }
-    - { resource: services.yml }
-    - { resource: "@AuthBundle/Resources/config/services.yml" }
-    - { resource: "@BisBundle/Resources/config/services.yml" }
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: en
-    app.locales: [en,fr,nl]
-
-framework:
-    #esi: ~
-    translator: { fallbacks: ['%locale%'] }
-    secret: '%secret%'
-    router:
-        resource: '%kernel.project_dir%/app/config/routing.yml'
-        strict_requirements: ~
-    form: ~
-    csrf_protection: ~
-    validation: { enable_annotations: true }
-    #serializer: { enable_annotations: true }
-    templating:
-        engines: ['twig']
-    default_locale: '%locale%'
-    trusted_hosts: ~
-    session:
-        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id: session.handler.native_file
-        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
-    fragments: ~
-    http_method_override: true
-    assets: ~
-    php_errors:
-        log: true
-
-# Twig Configuration
-twig:
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
-    form_themes: ['bootstrap_4_layout.html.twig']
-# Doctrine Configuration
-doctrine:
-    dbal:
-        default_connection: default
-        connections:
-            default:
-                driver: pdo_mysql
-                host: '%database_host%'
-                port: '%database_port%'
-                dbname: '%database_name%'
-                user: '%database_user%'
-                password: '%database_password%'
-                charset: UTF8
-            bis:
-                driver:   pdo_mysql
-                server_version: 5.5
-                host:     '%bis_host%'
-                port:     '%bis_port%'
-                dbname:   '%bis_name%'
-                user:     '%bis_user%'
-                password: '%bis_password%'
-                charset:  UTF8
-                schema_filter: ~^(?!view_)~
-                mapping_types:
-                     enum: string
-        types:
-            phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
-    orm:
-        default_entity_manager: default
-        entity_managers:
-            default:
-                connection: default
-                naming_strategy: doctrine.orm.naming_strategy.underscore
-                mappings:
-                    AppBundle: ~
-                    AuthBundle: ~
-                dql:
-                    datetime_functions:
-                        year: DoctrineExtensions\Query\Mysql\Year
-                        week: DoctrineExtensions\Query\Mysql\Week
-                        quarter: DoctrineExtensions\Query\Mysql\Quarter
-                        month: DoctrineExtensions\Query\Mysql\Month
-                        day: DoctrineExtensions\Query\Mysql\Day
-                        hour: DoctrineExtensions\Query\Mysql\Hour
-                        minute: DoctrineExtensions\Query\Mysql\Minute
-                        now: DoctrineExtensions\Query\Mysql\Now
-                        dateadd: DoctrineExtensions\Query\Mysql\DateAdd
-                        datesub: DoctrineExtensions\Query\Mysql\DateSub
-                        datediff: DoctrineExtensions\Query\Mysql\DateDiff
-                    string_functions:
-                        concat_ws: DoctrineExtensions\Query\Mysql\ConcatWs
-                        regexp: DoctrineExtensions\Query\Mysql\Regexp
-            bis:
-                connection: bis
-                mappings:
-                    BisBundle: ~
-                dql:
-                    datetime_functions:
-                        year: DoctrineExtensions\Query\Mysql\Year
-                        week: DoctrineExtensions\Query\Mysql\Week
-                        quarter: DoctrineExtensions\Query\Mysql\Quarter
-                        month: DoctrineExtensions\Query\Mysql\Month
-                        day: DoctrineExtensions\Query\Mysql\Day
-                        hour: DoctrineExtensions\Query\Mysql\Hour
-                        minute: DoctrineExtensions\Query\Mysql\Minute
-                        now: DoctrineExtensions\Query\Mysql\Now
-                        dateadd: DoctrineExtensions\Query\Mysql\DateAdd
-                        datesub: DoctrineExtensions\Query\Mysql\DateSub
-                        datediff: DoctrineExtensions\Query\Mysql\DateDiff
-                    string_functions:
-                        concat_ws: DoctrineExtensions\Query\Mysql\ConcatWs
-                        regexp: DoctrineExtensions\Query\Mysql\Regexp
-        auto_generate_proxy_classes: "%kernel.debug%"
-
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -127,18 +12,13 @@ swiftmailer:
         type: memory
         path: '%kernel.project_dir%/var/spool'
 
-doctrine_migrations:
-    dir_name: "%kernel.root_dir%/DoctrineMigrations"
-    namespace: Application\Migrations
-    table_name: migration_versions
-    name: Application Migrations
-    organize_migrations: false
+#doctrine_migrations:
+#    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+#    namespace: Application\Migrations
+#    table_name: migration_versions
+#    name: Application Migrations
+#    organize_migrations: false
 
-stof_doctrine_extensions:
-    orm:
-        default:
-            timestampable: true
-            loggable: true
 #
 #jms_di_extra:
 #    automatic_controller_injections:
@@ -177,14 +57,12 @@ stof_doctrine_extensions:
 #    strategy: prefix_except_default
 
 translation:
-    locales: ["en", "fr", "nl"]
+
     symfony_profiler: # must be placed in config_dev.yml
         enabled: true
     webui:
         enabled: true
     edit_in_place:
-        enabled: true
-        config_name: default # the first one or one of your configs
         activator: php_translation.edit_in_place.activator
     configs:
         app:

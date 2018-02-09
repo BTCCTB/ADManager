@@ -25,6 +25,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AuthenticatorInterface;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 /**
  * Class AdldapAuthenticator
@@ -34,6 +35,7 @@ use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
  */
 class AdldapAuthenticator implements AuthenticatorInterface
 {
+    use TargetPathTrait;
 
     private $formFactory;
     private $em;
@@ -241,9 +243,11 @@ class AdldapAuthenticator implements AuthenticatorInterface
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $url = $this->router->generate('homepage');
+        if ($targetPath = $this->getTargetPath($request->getSession(), 'main')) {
+            return new RedirectResponse($targetPath);
+        }
 
-        return new RedirectResponse($url);
+        return new RedirectResponse($this->router->generate('homepage'));
     }
 
     /**

@@ -34,7 +34,7 @@ class BisDir
 
     public function __construct(
         PasswordEncoderInterface $passwordEncoder,
-        array $hosts,
+        string $hosts,
         string $baseDn,
         string $adminUsername,
         string $adminPassword,
@@ -47,7 +47,7 @@ class BisDir
 
         $adldap = new Adldap();
         $adldap->addProvider([
-            'domain_controllers' => $hosts,
+            'domain_controllers' => explode(',', $hosts),
             'base_dn' => $baseDn,
             'account_suffix' => $accountSuffix,
             'admin_username' => $adminUsername,

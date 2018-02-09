@@ -1,0 +1,43 @@
+security:
+    encoders:
+        AuthBundle\Entity\User:
+            id: AuthBundle\Security\SHA1PasswordEncoder
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_MANAGE_USER, ROLE_USER]
+        ROLE_USER: [IS_AUTHENTICATED]
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        adlap:
+            entity: { class: AuthBundle\Entity\User, property: email }
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            guard:
+                authenticators:
+                    - AuthBundle\Security\AdldapAuthenticator
+            provider: adlap
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 86400     # 1 day
+                path: /
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+#                always_remember_me: true
+            logout:
+                path: security_logout
+                target: security_login
+            logout_on_user_change: true
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

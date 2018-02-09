@@ -40,7 +40,7 @@ class ActiveDirectory
 
     public function __construct(
         EntityManager $em,
-        array $hosts,
+        string $hosts,
         string $baseDn,
         string $adminUsername,
         string $adminPassword,
@@ -53,7 +53,7 @@ class ActiveDirectory
 
         $adldap = new Adldap();
         $adldap->addProvider([
-            'domain_controllers' => $hosts,
+            'domain_controllers' => explode(',', $hosts),
             'base_dn' => $baseDn,
             'account_suffix' => $accountSuffix,
             'admin_username' => $adminUsername,
