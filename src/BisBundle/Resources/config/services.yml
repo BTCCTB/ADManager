@@ -1,8 +1,0 @@
-parameters:
-
-services:
-    BisBundle\Service\BisPersonView:
-        autowire: true
-        arguments:
-            $em: "@doctrine.orm.bis_entity_manager"
-        public: true
