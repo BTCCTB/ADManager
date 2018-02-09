@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
 use Adldap\Models\User;
 use AuthBundle\Form\ChangePasswordForm;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class AccountController
  *
- * @package AppBundle\Controller
+ * @package Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
  * @Route("/account")
  * @IsGranted("ROLE_USER")

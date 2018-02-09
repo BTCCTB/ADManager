@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
+use App\Entity\Application;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class IndexController
  *
- * @package AppBundle\Controller
+ * @package Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class IndexController extends Controller
@@ -25,7 +26,7 @@ class IndexController extends Controller
         $user = $ad->checkUserExistByUsername($this->getUser()->getUsername());
 
         $em = $this->getDoctrine()->getManager();
-        $applications = $em->getRepository('AppBundle:Application')->findBy(['enable' => 1]);
+        $applications = $em->getRepository(Application::class)->findBy(['enable' => 1]);
 
         return $this->render(
             'Index/index.html.twig',

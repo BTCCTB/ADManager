@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\Application;
+use App\Entity\Application;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class ApplicationController
  *
- * @package AppBundle\Controller
+ * @package Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
  * @IsGranted("ROLE_USER")
  */
@@ -29,7 +29,7 @@ class ApplicationController extends Controller
         /**
          * @var Application[] $applications
          */
-        $applications = $em->getRepository('AppBundle:Application')->findBy(['enable' => 1]);
+        $applications = $em->getRepository(Application::class)->findBy(['enable' => 1]);
 
         return $this->render('Application/index.html.twig', ['applications' => $applications]);
     }

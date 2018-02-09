@@ -17,7 +17,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,AppBundle,BisBundle,AuthBundle}'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,BisBundle,AuthBundle}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -26,15 +26,6 @@ services:
         tags: ['controller.service_arguments']
 
     ## REMOVE LATER
-    AppBundle\:
-        resource: '../src/AppBundle/*'
-        exclude: '../src/AppBundle/{Entity,Repository,Tests}'
-
-    AppBundle\Controller\:
-        resource: '../src/AppBundle/Controller'
-        public: true
-        tags: ['controller.service_arguments']
-
     AuthBundle\:
         resource: '../src/AuthBundle/*'
         exclude: '../src/AuthBundle/{Entity,Repository,Tests}'

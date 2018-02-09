@@ -1,8 +1,3 @@
-app:
-    resource: "../src/AppBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 auth:
     resource: '../src/AuthBundle/Controller/'
     type:     annotation
