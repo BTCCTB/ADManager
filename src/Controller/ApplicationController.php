@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Application;
+use App\Repository\ApplicationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,17 +20,14 @@ class ApplicationController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @param ApplicationRepository $applicationRepository
+     *
      * @return Response
-     * @throws \LogicException
-     * @throws \UnexpectedValueException
+     * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function indexAction(): Response
+    public function indexAction(ApplicationRepository $applicationRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        /**
-         * @var Application[] $applications
-         */
-        $applications = $em->getRepository(Application::class)->findBy(['enable' => 1]);
+        $applications = $applicationRepository->findAllApplications();
 
         return $this->render('Application/index.html.twig', ['applications' => $applications]);
     }
