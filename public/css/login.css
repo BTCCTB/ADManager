@@ -1,0 +1,16 @@
+body {
+    font-family: 'Aller';
+    color: #59595A;
+}
+h1, h2, h3, h4, h5, h6, h7{
+    font-family: 'Aller';
+    font-weight: inherit;
+}
+.btn-link,
+.btn-link:hover {
+    color: #C82732;
+}
+
+.btn-warning {
+    color: #59595A;
+}
