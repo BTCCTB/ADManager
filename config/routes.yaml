@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+app:
+    resource: "../src/AppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+auth:
+    resource: '../src/AuthBundle/Controller/'
+    type:     annotation
+    prefix:   /
+    options: { i18n: false }
+
