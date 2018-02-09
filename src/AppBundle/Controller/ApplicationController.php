@@ -3,8 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Application;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package AppBundle\Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
- * @Security("is_granted('ROLE_USER')")
+ * @IsGranted("ROLE_USER")
  */
 class ApplicationController extends Controller
 {
@@ -31,6 +31,6 @@ class ApplicationController extends Controller
          */
         $applications = $em->getRepository('AppBundle:Application')->findBy(['enable' => 1]);
 
-        return $this->render('AppBundle:Application:index.html.twig', ['applications' => $applications]);
+        return $this->render('Application/index.html.twig', ['applications' => $applications]);
     }
 }

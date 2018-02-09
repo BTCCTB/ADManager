@@ -34,7 +34,7 @@ class SecurityController extends Controller
         ]);
 
         return $this->render(
-            'AuthBundle:Security:login.html.twig',
+            'Security/login.html.twig',
             array(
                 'form' => $form->createView(),
                 'error' => $error,

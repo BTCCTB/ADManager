@@ -13,7 +13,7 @@
             <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
             <link rel="stylesheet" type="text/css" href="{{ asset('css/aller-webfont.css') }}" />
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/btcflagicon/css/flag-icon.min.css') }}" />
-            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/main.css') }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}" />
         {% endblock %}
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}" />
         <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png') }}" />
@@ -35,10 +35,10 @@
     </head>
     <body>
     {% block content %}
-        {% include ':partial:navbar.html.twig' %}
+        {% include '_partial/navbar.html.twig' %}
         <div class="container-fluid">
         <div class="row">
-            {% include ':partial:sidebar.html.twig' %}
+            {% include '_partial/sidebar.html.twig' %}
             <main role="main" class="col-sm-10 ml-sm-auto col-md-11 pt-3">
                 {% block body %}
                 {% endblock %}

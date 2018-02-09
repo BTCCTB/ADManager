@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -17,7 +17,7 @@ class IndexController extends Controller
     /**
      * @Route("/my-account", name="my_account")
      * @throws \LogicException
-     * @Security("has_role('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      */
     public function indexAction()
     {
@@ -28,7 +28,7 @@ class IndexController extends Controller
         $applications = $em->getRepository('AppBundle:Application')->findBy(['enable' => 1]);
 
         return $this->render(
-            'AppBundle:Index:index.html.twig',
+            'Index/index.html.twig',
             [
                 'user' => $user,
                 'country' => $user->getFirstAttribute('c'),

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3190341fe1fbdadc8020484a575b077a",
+    "content-hash": "adb011ebd25af2130fc32e14f77b4c18",
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v8.1.2",
+            "version": "v8.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "a2038fbbe1e456431737d98f0d41f2cfa6f25a35"
+                "reference": "d9ccfa694a593723a50e12bf304682f22f0bd254"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/a2038fbbe1e456431737d98f0d41f2cfa6f25a35",
-                "reference": "a2038fbbe1e456431737d98f0d41f2cfa6f25a35",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/d9ccfa694a593723a50e12bf304682f22f0bd254",
+                "reference": "d9ccfa694a593723a50e12bf304682f22f0bd254",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2018-01-31T17:50:51+00:00"
+            "time": "2018-02-08T14:42:49+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -104,17 +104,16 @@
         },
         {
             "name": "btc/flagicon-bundle",
-            "version": "1.2",
-            "target-dir": "BTC/FlagIconBundle",
+            "version": "1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BTCCTB/BTCFlagIconBundle.git",
-                "reference": "34b2ae3d718bee4fd1a6ae108ed802d0b7c1e05d"
+                "reference": "baed00c7df7a7058f8a07e4e50779f51e2540cfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BTCCTB/BTCFlagIconBundle/zipball/34b2ae3d718bee4fd1a6ae108ed802d0b7c1e05d",
-                "reference": "34b2ae3d718bee4fd1a6ae108ed802d0b7c1e05d",
+                "url": "https://api.github.com/repos/BTCCTB/BTCFlagIconBundle/zipball/baed00c7df7a7058f8a07e4e50779f51e2540cfe",
+                "reference": "baed00c7df7a7058f8a07e4e50779f51e2540cfe",
                 "shasum": ""
             },
             "require": {
@@ -123,12 +122,12 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "BTC\\FlagIconBundle": ""
+                "psr-4": {
+                    "BTC\\FlagIconBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -142,7 +141,7 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2018-02-08T10:11:41+00:00"
+            "time": "2018-02-09T12:06:55+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -1495,7 +1494,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.6.0",
+            "version": "v5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1539,7 +1538,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.6.0",
+            "version": "v5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -2964,16 +2963,16 @@
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v4.0.0",
+            "version": "v5.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "74f1f17e1e5c32ca43de92611e9097a8d0e0acf2"
+                "reference": "93ae48d5f4b567105bcc058c3a8ba506176eca8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/74f1f17e1e5c32ca43de92611e9097a8d0e0acf2",
-                "reference": "74f1f17e1e5c32ca43de92611e9097a8d0e0acf2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/93ae48d5f4b567105bcc058c3a8ba506176eca8a",
+                "reference": "93ae48d5f4b567105bcc058c3a8ba506176eca8a",
                 "shasum": ""
             },
             "require": {
@@ -3006,7 +3005,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0.x-dev"
+                    "dev-master": "5.1.x-dev"
                 }
             },
             "autoload": {
@@ -3029,7 +3028,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2017-09-29T16:05:12+00:00"
+            "time": "2018-02-06T19:53:10+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -4808,6 +4807,55 @@
             "time": "2018-01-31T17:43:24+00:00"
         },
         {
+            "name": "symfony/process",
+            "version": "v4.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "e1712002d81de6f39f854bc5bbd9e9f4bb6345b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/e1712002d81de6f39f854bc5bbd9e9f4bb6345b4",
+                "reference": "e1712002d81de6f39f854bc5bbd9e9f4bb6345b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2018-01-29T09:06:29+00:00"
+        },
+        {
             "name": "symfony/profiler-pack",
             "version": "v1.0.3",
             "source": {
@@ -5752,6 +5800,64 @@
             "description": "Symfony WebProfilerBundle",
             "homepage": "https://symfony.com",
             "time": "2018-01-10T11:36:17+00:00"
+        },
+        {
+            "name": "symfony/web-server-bundle",
+            "version": "v4.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/web-server-bundle.git",
+                "reference": "20ad52df8164d2eae029e6bb24356956c52380be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/web-server-bundle/zipball/20ad52df8164d2eae029e6bb24356956c52380be",
+                "reference": "20ad52df8164d2eae029e6bb24356956c52380be",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/config": "~3.4|~4.0",
+                "symfony/console": "~3.4|~4.0",
+                "symfony/dependency-injection": "~3.4|~4.0",
+                "symfony/http-kernel": "~3.4|~4.0",
+                "symfony/process": "^3.4.2|^4.0.2"
+            },
+            "suggest": {
+                "symfony/expression-language": "For using the filter option of the log server.",
+                "symfony/monolog-bridge": "For using the log server."
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\WebServerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony WebServerBundle",
+            "homepage": "https://symfony.com",
+            "time": "2018-01-03T17:15:19+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -7067,55 +7173,6 @@
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
             "time": "2018-01-21T19:06:11+00:00"
-        },
-        {
-            "name": "symfony/process",
-            "version": "v4.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/process.git",
-                "reference": "e1712002d81de6f39f854bc5bbd9e9f4bb6345b4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/e1712002d81de6f39f854bc5bbd9e9f4bb6345b4",
-                "reference": "e1712002d81de6f39f854bc5bbd9e9f4bb6345b4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Process\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Process Component",
-            "homepage": "https://symfony.com",
-            "time": "2018-01-29T09:06:29+00:00"
         },
         {
             "name": "symfony/proxy-manager-bridge",

@@ -1,13 +1,13 @@
-{%  extends 'AuthBundle:Emails:layout.html.twig' %}
+{%  extends 'Emails/layout.html.twig' %}
 {% block title %}{{ subject }}{% endblock %}
 {% block body %}
-<h3>List of users with Organizational Unit changes</h3>
+<h3>List of new active directory users</h3>
 
 <p>Hi ICT Team!</p>
 
 <p>
-    a series of accounts have just been moved in your Active Directory.
-    <br>Check the list below.
+    a series of accounts have just been created for your new users.
+    <br>After verification, all that remains is to assign the O365 licenses.
 </p>
 
 <table class="table table-bordered table-responsive">
@@ -18,8 +18,9 @@
             <th>Email</th>
             <th>Country workplace</th>
             <th>Organizational Unit</th>
-            <th>From</th>
-            <th>To</th>
+            <th>Generated password</th>
+            <th>Start date</th>
+            <th>End date</th>
             <th>Log</th>
         </tr>
     </thead>
@@ -28,18 +29,19 @@
         <tr>
             <td>{{ user.FirstName|default('unknow') }}</td>
             <td>{{ user.LastName|default('unknow') }}</td>
-            <td>{{ user.Email|default('unknow') }}</td>
+            <td>{{ user.Email }}</td>
             <td>{{ user.Department|default('unknow') }} [{{ user.Country|default('unknow') }}]</td>
             <td>{{ user.OrganizationalUnit|default('unknow') }}</td>
-            <td>{{ user.from|default('unknow') }}</td>
-            <td>{{ user.to|default('unknow') }}</td>
+            <td>{{ user.password|default('not generated') }}</td>
+            <td>{{ user.StartDate|default('unknow') }}</td>
+            <td>{{ user.EndDate|default('unknow') }}</td>
             <td>{{ user.log }}</td>
         </tr>
     {% endfor %}
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="8" style="text-align: right;">{{ users|length }} user(s)</td>
+            <td colspan="9" style="text-align: right;">{{ users|length }} user(s)</td>
         </tr>
     </tfoot>
 </table>

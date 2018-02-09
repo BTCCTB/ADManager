@@ -6,9 +6,9 @@ use Adldap\Models\User;
 use AuthBundle\Form\ChangePasswordForm;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,13 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  * @package AppBundle\Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
  * @Route("/account")
- * @Security("is_granted('ROLE_USER')")
+ * @IsGranted("ROLE_USER")
  */
 class AccountController extends Controller
 {
     /**
      * @Route("/", name="account_ad_list")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
      */
     public function indexAction()
@@ -37,7 +37,7 @@ class AccountController extends Controller
         $accounts = $ad->getAllUsers('Email', 'DESC')->sort();
 
         $countryStats = $ad->getCountryStatUsers();
-        return $this->render('AppBundle:Account:index.html.twig', ['accounts' => $accounts, 'country_distribution' => $countryStats]);
+        return $this->render('Account/index.html.twig', ['accounts' => $accounts, 'country_distribution' => $countryStats]);
     }
 
     /**
@@ -77,12 +77,12 @@ class AccountController extends Controller
             }
         }
 
-        return $this->render('AppBundle:Account:change.html.twig', ['form' => $form->createView()]);
+        return $this->render('Account/change.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * @Route("/disable/{employeeID}", name="ad_disable_account")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *
@@ -108,7 +108,7 @@ class AccountController extends Controller
 
     /**
      * @Route("/enable/{employeeID}", name="ad_enable_account")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *
@@ -131,7 +131,7 @@ class AccountController extends Controller
 
     /**
      * @Route("/reset/{employeeID}", name="ad_reset_account")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *

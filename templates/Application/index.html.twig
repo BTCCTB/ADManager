@@ -1,4 +1,10 @@
-{#{% for row in applications|batch(6) %}#}
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>My apps</h1>
+    <h3>Your apps & useful links</h3>
+    {% include '_partial/flash.html.twig' %}
+    {#{% for row in applications|batch(6) %}#}
     <div class="row">
         {% for application in applications %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2" style="padding: 1rem;">
@@ -23,4 +29,9 @@
             </div>
         {% endfor %}
     </div>
-{#{% endfor %}#}
+    {#{% endfor %}#}
+{% endblock %}
+
+{% block title %}
+    My apps - {{ parent() }}
+{% endblock %}

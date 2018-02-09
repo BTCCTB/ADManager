@@ -1,7 +1,7 @@
-{% extends '::layout.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block body %}
-    {% include ':partial:flash.html.twig' %}
+    {% include '_partial/flash.html.twig' %}
 
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
     {{ form_start(form) }}
@@ -70,9 +70,4 @@
 
 {% block title %}
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {#<script src="{{ asset('bundles/app/js/account.js') }}"></script>#}
 {% endblock %}
