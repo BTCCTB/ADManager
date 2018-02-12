@@ -77,6 +77,24 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "serve":[
+            "docker-compose start",
+            "bin/console server:run"
+        ],
+        "stop":[
+            "docker-compose stop"
+        ],
+        "db-init":[
+            "bin/console doctrine:database:drop --if-exists --force",
+            "bin/console doctrine:database:create",
+            "bin/console doctrine:migrations:migrate"
+        ],
+        "db-migrate":[
+            "bin/console doctrine:migrations:migrate"
+        ],
+        "test":[
+            "bin/phpunit"
         ]
     },
     "conflict": {
@@ -92,6 +110,13 @@
     "extra": {
         "symfony": {
             "allow-contrib": true
+        },
+        "scripts-description":{
+            "serve": "Start docker & internal php server",
+            "stop": "Stop docker",
+            "db-init": "Create database & schema",
+            "db-migrate": "Execute the last doctrine migration",
+            "test": "Execute the phpunit test"
         }
     }
 }
