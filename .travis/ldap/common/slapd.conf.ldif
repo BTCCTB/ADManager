@@ -53,7 +53,7 @@ olcSuffix: dc=enabel,dc=be
 olcDbDirectory: /var/lib/ldap
 olcRootDN: cn=admin,dc=enabel,dc=be
 # admin's password: "passwOrD"
-olcRootPW: {SHA}LFSkM9eegU6j3PeGG7UuHrT/KZM=
+olcRootPW: {SHA}fWHcvppCJfXx4JtfpAOlpmXkdBM=
 olcDbIndex: objectClass eq
 olcAccess: to attrs=userPassword,shadowLastChange
   by self write
