@@ -3,7 +3,7 @@ language: php
 
 # Allows use container-based infrastructure
 dist: trusty
-sudo: false
+sudo: true
 
 # Start database service
 services:
