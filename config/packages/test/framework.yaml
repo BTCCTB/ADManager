@@ -1,5 +1,5 @@
 framework:
     test: ~
-    defaukt_locale: en
+    default_locale: en
     session:
         storage_id: session.storage.mock_file
