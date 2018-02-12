@@ -8,6 +8,14 @@ sudo: false
 services:
   - mysql
 
+# Setting Custom Host Names
+addons:
+  hosts:
+    - bis.enabel.be
+    - dc1.enabel.be
+    - dc2.enabel.be
+    - ldap.enabel.be
+
 # Cache composer packages so "composer install" is faster
 cache:
   directories:
@@ -34,6 +42,7 @@ before-install:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
+  - ./.travis/ldap/ldap.sh
   - composer install
   - cp .env.travis .env
   - php bin/console doctrine:database:create --env=test
