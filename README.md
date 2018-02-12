@@ -1,6 +1,7 @@
 # PasswordManager
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/335ca539-4188-4da6-89c2-678910806b15/big.png)](https://insight.sensiolabs.com/projects/335ca539-4188-4da6-89c2-678910806b15)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/fb8347c4-6654-4d14-80df-d6bb422f62ad/mini.png)](https://insight.sensiolabs.com/projects/fb8347c4-6654-4d14-80df-d6bb422f62ad)
+[![Build Status](https://travis-ci.org/BTCCTB/Password.svg?branch=master)](https://travis-ci.org/BTCCTB/Password)
 
 A php application for Active Directory Manipulation.
 
