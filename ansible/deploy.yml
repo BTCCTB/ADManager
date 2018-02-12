@@ -33,7 +33,7 @@
     release_path: "{{ ansistrano_release_path.stdout }}"
     release_var_path: "{{ release_path }}/var"
     release_logs_path: "{{ ansistrano_shared_path }}/var/logs"
-    release_web_path: "{{ release_path }}/web"
+    release_web_path: "{{ release_path }}/public"
 
   environment:
     SYMFONY_ENV: "{{ application_env }}"
