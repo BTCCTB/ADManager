@@ -16,13 +16,13 @@ addons:
     - ldap-utils
     - slapd
   # Setting Custom Host Names
-  hosts:
-    - bis.enabel.be
-    - dc1.enabel.be
-    - dc2.enabel.be
-    - ldap.enabel.be
-  # Set mariadb version
-   mariadb: '10.2'
+#  hosts:
+#    - bis.enabel.be
+#    - dc1.enabel.be
+#    - dc2.enabel.be
+#    - ldap.enabel.be
+#   Set mariadb version
+#   mariadb: '10.2'
 
 # Cache composer packages so "composer install" is faster
 cache:
@@ -51,7 +51,7 @@ env:
 before_install:
   # Update composer
   - composer self-update
-  - ./.travis/ldap/ldap.sh
+#  - ./.travis/ldap/ldap.sh
 
 # Install composer dependencies,
 # Create database, schema and fixtures
