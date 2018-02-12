@@ -38,7 +38,7 @@ sudo /etc/init.d/slapd start
 # NOTE: use ldapadd in order for memberOf and refint to apply, instead of:
 # /vagrant/services/ldap/openldap/seed.rb | sudo slapadd -F /etc/ldap/slapd.d
 cat $SEED_PATH/seed.ldif |
-  /usr/bin/time sudo ldapadd -x -D "cn=admin,dc=enabel,dc=be" -w passwOrD \
+  /usr/bin/time sudo ldapadd -x -D "cn=admin,dc=enabel,dc=be" -w passw0rD \
                -h localhost -p 389
 
 sudo rm -rf $TMPDIR
