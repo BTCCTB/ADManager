@@ -1,59 +1,17 @@
-# Project language
 language: php
-
-# Allows use container-based infrastructure
-sudo: false
-
-# Start database service
-services:
-  - mariadb
-
-addons:
-#  apt_packages:
-#    - parallel
-#    - language-pack-fr-base
-#    - ldap-utils
-#    - slapd
-  # Setting Custom Host Names
-#  hosts:
-#    - bis.enabel.be
-#    - dc1.enabel.be
-#    - dc2.enabel.be
-#    - ldap.enabel.be
-#   Set mariadb version
-#   mariadb: '10.2'
-
-# Matrix to test in every php version
 matrix:
-  # Fast finish allows to set the build as "finished" even if the "allow_failures" matrix elements are not finished yet.
   fast_finish: true
   include:
     - php: 7.1
     - php: 7.2
-
-# Define an environment variable
 env:
-  - SYMFONY_VERSION="4.0.*"
   - APP_ENV=test
-
 before_install:
-  # Update composer
   - composer self-update
-#  - ./.travis/ldap/ldap.sh
-
-# Install composer dependencies,
-# Create database, schema and fixtures
 install:
   - cp .env.travis .env
   - composer install
-  - php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:create --env=test
-  - php bin/console doctrine:fixtures:load -n --env=test
-
-# Run script
 script:
   - phpunit
-
-# After a build, send email notification with the build results
 notifications:
   email: damien.lagae@enabel.be
