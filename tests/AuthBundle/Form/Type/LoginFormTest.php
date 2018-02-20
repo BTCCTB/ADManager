@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AuthBundle\Form\Type;
+namespace AuthBundle\Tests\Form\Type;
 
 use AuthBundle\Form\Type\LoginForm;
 use Symfony\Component\Form\Test\TypeTestCase;

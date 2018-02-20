@@ -18,8 +18,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\AuthBundle\\": "tests/AuthBundle",
-            "App\\Tests\\": "tests/"
+            "App\\Tests\\": "tests/",
+            "AuthBundle\\Tests\\": "tests/AuthBundle"
         }
     },
     "require": {
@@ -65,6 +65,8 @@
         "phpmd/phpmd": "^2.6",
         "phpro/grumphp": "^0.13",
         "squizlabs/php_codesniffer": "^3.0",
+        "symfony/browser-kit": "^4.0",
+        "symfony/css-selector": "^4.0",
         "symfony/phpunit-bridge": "^4.0"
     },
     "scripts": {
