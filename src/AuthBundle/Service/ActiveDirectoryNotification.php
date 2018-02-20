@@ -63,8 +63,7 @@ class ActiveDirectoryNotification
 
         if (!empty($users)) {
             $subject = 'User creation in AD';
-            $message = \Swift_Message::newInstance();
-            $message->setSubject($subject)
+            $message = (new \Swift_Message($subject))
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
@@ -117,8 +116,7 @@ class ActiveDirectoryNotification
         }
 
         if (!empty($users)) {
-            $message = \Swift_Message::newInstance();
-            $message->setSubject('User move in AD')
+            $message = (new \Swift_Message('User move in AD'))
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
@@ -164,8 +162,7 @@ class ActiveDirectoryNotification
         }
 
         if (!empty($users)) {
-            $message = \Swift_Message::newInstance();
-            $message->setSubject('User disabled in AD')
+            $message = (new \Swift_Message('User disabled in AD'))
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
@@ -211,8 +208,7 @@ class ActiveDirectoryNotification
         }
 
         if (!empty($users)) {
-            $message = \Swift_Message::newInstance();
-            $message->setSubject('User updated in AD')
+            $message = (new \Swift_Message('User updated in AD'))
                 ->setFrom($this->fromAddress)
                 ->setTo($this->toAddress)
                 ->setBody(
@@ -254,8 +250,7 @@ class ActiveDirectoryNotification
 
             $user = $activeDirectoryResponse->getData();
 
-            $message = \Swift_Message::newInstance();
-            $message->setSubject('Get started with Office 365')
+            $message = (new \Swift_Message('Get started with Office 365'))
                 ->setFrom($this->fromAddress)
                 ->setTo(str_replace('@enabel.be', '@btcctb.org', $user['Email']))
                 ->setBcc($this->fromAddress)
