@@ -46,8 +46,8 @@ class MailTestCommand extends Command
     {
         $subject = 'Test mail from symfony';
         $message = (new \Swift_Message($subject))
-            ->setFrom($this->fromAddress)
-            ->setTo($this->toAddress)
+            ->setFrom('ict.helpdesk@enabel.be')
+            ->setTo('damien.lagae@enabel.be')
             ->setBody(
                 'test mail',
                 'text/plain'
