@@ -68,7 +68,7 @@ class ActiveDirectoryNotification
                 ->setTo($this->toAddress)
                 ->setBody(
                     $this->twig->render(
-                        '@Auth/Emails/notifyCreation.html.twig',
+                        'Emails/notifyCreation.html.twig',
                         [
                             'users' => $users,
                             'subject' => $subject,
@@ -78,7 +78,7 @@ class ActiveDirectoryNotification
                 )
                 ->addPart(
                     $this->twig->render(
-                        '@Auth/Emails/notifyCreation.text.twig',
+                        'Emails/notifyCreation.text.twig',
                         [
                             'users' => $users,
                             'subject' => $subject,
@@ -121,7 +121,7 @@ class ActiveDirectoryNotification
                 ->setTo($this->toAddress)
                 ->setBody(
                     $this->twig->render(
-                        '@Auth/Emails/notifyMove.html.twig',
+                        'Emails/notifyMove.html.twig',
                         [
                             'users' => $users,
                             'subject' => 'User move in AD',
@@ -131,7 +131,7 @@ class ActiveDirectoryNotification
                 )
                 ->addPart(
                     $this->twig->render(
-                        '@Auth/Emails/notifyMove.text.twig',
+                        'Emails/notifyMove.text.twig',
                         [
                             'users' => $users,
                             'subject' => 'User move in AD',
@@ -167,7 +167,7 @@ class ActiveDirectoryNotification
                 ->setTo($this->toAddress)
                 ->setBody(
                     $this->twig->render(
-                        '@Auth/Emails/notifyDisabled.html.twig',
+                        'Emails/notifyDisabled.html.twig',
                         [
                             'users' => $users,
                             'subject' => 'User disabled in AD',
@@ -177,7 +177,7 @@ class ActiveDirectoryNotification
                 )
                 ->addPart(
                     $this->twig->render(
-                        '@Auth/Emails/notifyDisabled.text.twig',
+                        'Emails/notifyDisabled.text.twig',
                         [
                             'users' => $users,
                             'subject' => 'User disabled in AD',
@@ -213,7 +213,7 @@ class ActiveDirectoryNotification
                 ->setTo($this->toAddress)
                 ->setBody(
                     $this->twig->render(
-                        '@Auth/Emails/notifyUpdate.html.twig',
+                        'Emails/notifyUpdate.html.twig',
                         [
                             'users' => $users,
                             'subject' => 'User updated in AD',
@@ -223,7 +223,7 @@ class ActiveDirectoryNotification
                 )
                 ->addPart(
                     $this->twig->render(
-                        '@Auth/Emails/notifyUpdate.text.twig',
+                        'Emails/notifyUpdate.text.twig',
                         [
                             'users' => $users,
                             'subject' => 'User updated in AD',
@@ -256,7 +256,7 @@ class ActiveDirectoryNotification
                 ->setBcc($this->fromAddress)
                 ->setBody(
                     $this->twig->render(
-                        '@Auth/Emails/credentials.html.twig',
+                        'Emails/credentials.html.twig',
                         [
                             'user' => $user,
                         ]
@@ -265,7 +265,7 @@ class ActiveDirectoryNotification
                 )
                 ->addPart(
                     $this->twig->render(
-                        '@Auth/Emails/credentials.text.twig',
+                        'Emails/credentials.text.twig',
                         [
                             'user' => $user,
                         ]
