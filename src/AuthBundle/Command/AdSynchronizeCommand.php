@@ -68,11 +68,6 @@ class AdSynchronizeCommand extends Command
          */
         $logs = $this->activeDirectory->cronTaskSynchronize();
 
-        $this->activeDirectoryNotification->notifyCreation($logs);
-        $this->activeDirectoryNotification->notifyMove($logs);
-        $this->activeDirectoryNotification->notifyUpdate($logs);
-        //        $this->activeDirectoryNotification->notifyDisabled($logs);
-
         $table = new Table($output);
         $table->setHeaders([
             'message',
@@ -91,6 +86,11 @@ class AdSynchronizeCommand extends Command
         }
         $table->setRows($rows);
         $table->render();
+
+        $this->activeDirectoryNotification->notifyCreation($logs);
+        $this->activeDirectoryNotification->notifyMove($logs);
+        $this->activeDirectoryNotification->notifyUpdate($logs);
+        //        $this->activeDirectoryNotification->notifyDisabled($logs);
 
     }
 
