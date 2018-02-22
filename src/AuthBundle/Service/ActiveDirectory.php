@@ -888,9 +888,9 @@ class ActiveDirectory
     {
         $ouName = 'DISABLED-USER';
 
-        if ($adAccount->isActive()) {
+        if ($adAccount->isActive() === true) {
             $adAccount->setUserAccountControl(AccountControl::ACCOUNTDISABLE);
-            $adAccount->setAccountExpiry(ActiveDirectoryHelper::today());
+            $adAccount->setAccountExpiry(time());
             if ($adAccount->save()) {
                 // Check Organizational Unit exist
                 $organizationalUnit = $this->checkOuExistByName($ouName);
