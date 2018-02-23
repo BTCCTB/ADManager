@@ -14,6 +14,25 @@ use Doctrine\ORM\NonUniqueResultException;
  */
 class BisPersonViewRepository extends EntityRepository
 {
+    private function getMemberOtTheBoard()
+    {
+        return [
+            50180,
+            50413,
+            50175,
+            50176,
+            50177,
+            50435,
+            50183,
+            50470,
+            50472,
+            50473,
+            50227,
+            50186,
+            50187,
+        ];
+    }
+
     public function getUserByUsername($username)
     {
         $repository = $this->_em->getRepository(BisPersonView::class);
@@ -78,14 +97,7 @@ class BisPersonViewRepository extends EntityRepository
 
     public function findAllHqUser()
     {
-        $repository = $this->_em->getRepository(BisPersonView::class);
-
-        $query = $repository->createQueryBuilder('bpv')
-            ->where('bpv.perCountryWorkplace = :country')
-            ->setParameter('country', 'BEL')
-            ->getQuery();
-
-        return $query->getResult();
+        return $this->findAllUserByCountryWorkplace('BEL');
     }
 
     public function findAllUserByCountryWorkplace($countryWorkplace)
@@ -94,7 +106,21 @@ class BisPersonViewRepository extends EntityRepository
 
         $query = $repository->createQueryBuilder('bpv')
             ->where('bpv.perCountryWorkplace = :country')
+            ->andWhere('bpv.perId NOT IN (:perIds)')
             ->setParameter('country', $countryWorkplace)
+            ->setParameter('perIds', $this->getMemberOtTheBoard())
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findAll()
+    {
+        $repository = $this->_em->getRepository(BisPersonView::class);
+
+        $query = $repository->createQueryBuilder('bpv')
+            ->where('bpv.perId NOT IN (:perIds)')
+            ->setParameter('perIds', $this->getMemberOtTheBoard())
             ->getQuery();
 
         return $query->getResult();
