@@ -90,6 +90,7 @@ class AdCheckAccountCommand extends Command
             'sex' => 'initials',
             'country' => 'co',
             'function' => 'description',
+            'expired' => 'accountExpires',
         ];
         $fieldLdap = [
             'employeeID' => 'employeenumber',
@@ -100,6 +101,7 @@ class AdCheckAccountCommand extends Command
             'sex' => 'initials',
             'country' => 'c',
             'function' => 'title',
+            'expired' => 'expired',
         ];
         $fieldBis = [
             'employeeID' => 'per_id',
@@ -110,6 +112,7 @@ class AdCheckAccountCommand extends Command
             'sex' => 'per_sex',
             'country' => 'co',
             'function' => 'per_function',
+            'expired' => 'per_date_contract_stop',
         ];
 
         $rows = [];

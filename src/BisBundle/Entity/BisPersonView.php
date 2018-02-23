@@ -457,7 +457,7 @@ class BisPersonView
     public function getTitle()
     {
         if (!empty($this->getFunction())) {
-            return substr($this->getFunction(), 0, 60);
+            return mb_substr($this->getFunction(), 0, 60);
         }
 
         return null;
@@ -466,7 +466,7 @@ class BisPersonView
     public function getDescription()
     {
         if (!empty($this->getFunction())) {
-            return substr($this->getFunction(), 0, 60);
+            return mb_substr($this->getFunction(), 0, 60);
         }
 
         return null;
