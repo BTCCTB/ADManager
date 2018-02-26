@@ -258,7 +258,7 @@ class ActiveDirectoryHelper
     {
         $diffData = [];
 
-        if ($bisPersonView->getEmployeeId() !== $user->getEmployeeId()) {
+        if ($bisPersonView->getEmployeeId() != $user->getEmployeeId()) {
             $diffData['EmployeeId'] = [
                 'attribute' => 'EmployeeId',
                 'value' => $bisPersonView->getEmployeeId(),

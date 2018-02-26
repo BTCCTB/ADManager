@@ -1,0 +1,39 @@
+build:
+    environment:
+        mysql: 5.7
+        php:
+            version: 7.1
+            ini:
+                'date.timezone': 'Europe/Brussels'
+    tests:
+        override:
+            -
+                command: 'bin/phpunit --coverage-clover=clover.xml'
+                coverage:
+                    file: 'clover.xml'
+                    format: 'clover'
+            -
+                command: phpcs-run
+                use_website_config: false
+
+
+filter:
+    paths:
+        - 'src/*'
+
+before_commands:
+    - 'cp .env.travis .env'
+    - 'composer install --no-interaction --no-scripts'
+    - 'php bin/console doctrine:database:create --env=test'
+    - 'php bin/console doctrine:schema:create --env=test'
+    - 'php bin/console doctrine:fixtures:load -n --env=test'
+
+tools:
+    sensiolabs_security_checker: true
+    php_loc: true
+    php_pdepend: true
+    php_sim: true
+    php_changetracking: true
+    php_mess_detector:
+        config:
+            ruleset: ./codesize.xml
