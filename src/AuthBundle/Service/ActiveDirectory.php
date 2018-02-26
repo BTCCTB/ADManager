@@ -658,7 +658,7 @@ class ActiveDirectory
         }
 
         // Find inactive user
-        $adUsers = $this->getFieldUsers('email', 'ASC');
+        $adUsers = $this->getAllUsers('email', 'ASC');
         foreach ($adUsers as $adUser) {
             $bisUser = null;
             if (!empty($adUser->getEmail())) {
