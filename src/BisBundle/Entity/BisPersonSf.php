@@ -239,5 +239,4 @@ class BisPersonSf
         $this->perImage = $perImage;
         return $this;
     }
-
 }

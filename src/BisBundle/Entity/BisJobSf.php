@@ -145,5 +145,4 @@ class BisJobSf
         $this->jobLastUpdated = $jobLastUpdated;
         return $this;
     }
-
 }

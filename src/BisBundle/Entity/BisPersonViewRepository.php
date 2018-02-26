@@ -79,7 +79,6 @@ class BisPersonViewRepository extends EntityRepository
         } catch (NonUniqueResultException $e) {
             return null;
         }
-
     }
 
     public function findAllFieldUser()

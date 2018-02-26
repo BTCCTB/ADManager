@@ -519,5 +519,4 @@ class BisPersonView
         $this->perNickname = $perNickname;
         return $this;
     }
-
 }

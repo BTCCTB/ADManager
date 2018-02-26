@@ -112,5 +112,4 @@ class BisGroupSf
         $this->groLastUpdated = $groLastUpdated;
         return $this;
     }
-
 }

@@ -65,5 +65,4 @@ class BisConjobSf
         $this->conjobEntryDate = $conjobEntryDate;
         return $this;
     }
-
 }
