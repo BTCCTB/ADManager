@@ -665,7 +665,58 @@ class ActiveDirectory
                 $bisUser = $bisPersonView->getUserByEmail($adUser->getEmail());
             }
             if (empty($bisUser)) {
-                $logs[] = $this->disableAccount($adUser);
+                if ($adUser->getPhysicalDeliveryOfficeName() !== 'AD-ONLY') {
+                    $logs[] = $this->disableAccount($adUser);
+                }
+            }
+        }
+
+        return $logs;
+    }
+
+    public function ghostAccount()
+    {
+        // Set no limit time & memory
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
+        // ActiveDirectoryResponse Logs
+        $logs = [];
+
+        // Get BisPersonView Repository
+        $bisPersonView = $this->em->getRepository('BisBundle:BisPersonView');
+        $bisPersonSf = $this->em->getRepository('BisBundle:BisPersonSf');
+        $bisContractSf = $this->em->getRepository('BisBundle:BisContractSf');
+
+        $adUsers = $this->getAllUsers('email', 'ASC');
+        foreach ($adUsers as $adUser) {
+            $bisUser = null;
+            if (!empty($adUser->getEmail())) {
+                $bisUser = $bisPersonView->getUserByEmail($adUser->getEmail());
+            }
+            if (empty($bisUser)) {
+                if ($adUser->getPhysicalDeliveryOfficeName() !== 'AD-ONLY') {
+                    $userData = $bisPersonSf->findOneBy(['perEmail' => $adUser->getEmail()]);
+                    $log = [
+                        'email' => $adUser->getEmail(),
+                        'account' => $adUser->getAccountName(),
+                        'dn' => $adUser->getDn(),
+                        'startDate' => '',
+                        'endDate' => '',
+                        'log' => 'User does not exist in GO4HR',
+                    ];
+
+                    if (!empty($userData)) {
+                        $contractData = $bisContractSf->findOneBy(['conPerId' => $userData->getPerId()], ['conDateStart' => 'DESC']);
+                        $log['log'] = 'No contract information';
+                        if (!empty($contractData)) {
+                            $log['startDate'] = $contractData->getConDateStart()->format('Y-m-d');
+                            $log['endDate'] = $contractData->getConDateStop()->format('Y-m-d');
+                            $log['log'] = 'Contract terminated';
+                        }
+                    }
+                    $logs[] = $log;
+                }
             }
         }
 
