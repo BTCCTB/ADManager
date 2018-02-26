@@ -69,8 +69,6 @@ class AdGhostAccountCommand extends Command
         ]);
 
         $table->addRows($logs);
-
         $table->render();
-
     }
 }

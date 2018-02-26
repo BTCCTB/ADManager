@@ -160,6 +160,5 @@ class AdCheckAccountCommand extends Command
         $table->addRows($rows);
 
         $table->render();
-
     }
 }

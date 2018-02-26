@@ -91,7 +91,5 @@ class AdSynchronizeCommand extends Command
         $this->activeDirectoryNotification->notifyMove($logs);
         $this->activeDirectoryNotification->notifyUpdate($logs);
         $this->activeDirectoryNotification->notifyDisabled($logs);
-
     }
-
 }

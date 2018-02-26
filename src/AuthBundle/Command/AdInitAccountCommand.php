@@ -113,6 +113,5 @@ class AdInitAccountCommand extends Command
         }
         $table->setRows($rows);
         $table->render();
-
     }
 }

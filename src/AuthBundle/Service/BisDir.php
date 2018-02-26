@@ -466,7 +466,6 @@ class BisDir
             BisDirResponseType::MOVE,
             BisDirHelper::getDataEntry($entry)
         );
-
     }
 
     /**
@@ -521,6 +520,5 @@ class BisDir
             BisDirResponseType::MOVE,
             BisDirHelper::getDataEntry($entry)
         );
-
     }
 }

@@ -243,7 +243,6 @@ class ActiveDirectoryHelper
             ],
             $extraData
         );
-
     }
 
     /**

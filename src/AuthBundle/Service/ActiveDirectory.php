@@ -892,7 +892,6 @@ class ActiveDirectory
             ActiveDirectoryResponseType::CREATE,
             ActiveDirectoryHelper::getDataBisUser($bisUser)
         );
-
     }
 
     /**
@@ -1308,5 +1307,4 @@ class ActiveDirectory
         }
         return $logs;
     }
-
 }

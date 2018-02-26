@@ -79,5 +79,4 @@ class ActiveDirectoryResponse
         $this->type = $type;
         return $this;
     }
-
 }

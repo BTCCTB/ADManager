@@ -247,7 +247,6 @@ class ActiveDirectoryNotification
     {
         if ($activeDirectoryResponse->getType() === ActiveDirectoryResponseType::CREATE &&
             $activeDirectoryResponse->getStatus() === ActiveDirectoryResponseStatus::DONE) {
-
             $user = $activeDirectoryResponse->getData();
 
             $message = (new \Swift_Message('Get started with Office 365'))
