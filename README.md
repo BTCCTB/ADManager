@@ -1,14 +1,17 @@
 # PasswordManager
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/fb8347c4-6654-4d14-80df-d6bb422f62ad/mini.png)](https://insight.sensiolabs.com/projects/fb8347c4-6654-4d14-80df-d6bb422f62ad)
 [![Build Status](https://travis-ci.org/BTCCTB/Password.svg?branch=master)](https://travis-ci.org/BTCCTB/Password)
+[![Build Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/build.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/build-status/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/quality-score.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
+[![Code Coverage](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/coverage.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/code-intelligence.svg)](https://scrutinizer-ci.com/code-intelligence)
 
 A php application for Active Directory Manipulation.
 
 ## Requirement
-* You need PHP 7.0 or newer, with session support.
+* You need PHP 7.1 or newer, with session support.
 * PasswordManager supports MySQL-compatible databases
-    * MySQL 5.5 or newer
+    * MySQL 5.7 or newer
     * MariaDB 5.5 or newer
 * LDAP PHP extension enabled
 * and the [usual Symfony application requirements][1].
