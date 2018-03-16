@@ -1,16 +1,19 @@
 security:
     encoders:
-        AuthBundle\Entity\User:
+        App\Entity\User:
             id: AuthBundle\Security\SHA1PasswordEncoder
 
     role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
         ROLE_ADMIN: [ROLE_MANAGE_USER, ROLE_USER]
         ROLE_USER: [IS_AUTHENTICATED]
+
+    always_authenticate_before_granting: true
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         adlap:
-            entity: { class: AuthBundle\Entity\User, property: email }
+            entity: { class: App\Entity\User, property: email }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

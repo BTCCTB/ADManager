@@ -1,11 +1,12 @@
 <?php
 
-namespace AuthBundle\Entity;
+namespace App\Entity;
 
 use Adldap\Models\User as AdUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,14 +14,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class User
  *
  * @package AuthBundle\Entity
- * @ORM\Entity(repositoryClass="UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  * @UniqueEntity(fields={"email"}, message="It looks this user has already an account")
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  *
  * @author Damien Lagae <damienlagae@gmail.com>
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id
@@ -385,4 +386,41 @@ class User implements UserInterface
             ->setCreatedAt(new \DateTime())
             ->setActive($adUser->isActive());
     }
+
+    public function getIdentity()
+    {
+        return $this->getFirstname() . ' ' . $this->getLastname();
+    }
+
+    /**
+     * The equality comparison should neither be done by referential equality
+     * nor by comparing identities (i.e. getId() === getId()).
+     *
+     * However, you do not need to compare every attribute, but only those that
+     * are relevant for assessing whether re-authentication is required.
+     *
+     * Also implementation should consider that $user instance may implement
+     * the extended user interface `AdvancedUserInterface`.
+     *
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        if ($user instanceof self) {
+            $isEqual = (count($this->getRoles()) === count($user->getRoles()));
+
+            if ($isEqual) {
+                foreach ($this->getRoles() as $role) {
+                    $isEqual = $isEqual && \in_array($role, $user->getRoles(), true);
+                }
+            }
+
+            return $isEqual;
+        }
+
+        return false;
+    }
+
 }

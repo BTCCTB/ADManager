@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b13b1c541d373b4fdf554cb7794734c",
+    "content-hash": "1a599dc43d7bfd65ffe1701c47ef4602",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1812,6 +1812,64 @@
             "time": "2014-01-12T16:20:24+00:00"
         },
         {
+            "name": "koff/crud-maker-bundle",
+            "version": "v1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sadikoff/crud-maker-bundle.git",
+                "reference": "2b8516e55eadd7992e98ac7d894521a4431929f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sadikoff/crud-maker-bundle/zipball/2b8516e55eadd7992e98ac7d894521a4431929f6",
+                "reference": "2b8516e55eadd7992e98ac7d894521a4431929f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0.8",
+                "symfony/config": "^3.4|^4.0",
+                "symfony/console": "^3.4|^4.0",
+                "symfony/dependency-injection": "^3.4|^4.0",
+                "symfony/http-kernel": "^3.4|^4.0",
+                "symfony/maker-bundle": "^1.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.5.11",
+                "friendsofphp/php-cs-fixer": "^2.8",
+                "symfony/phpunit-bridge": "^3.4|^4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Koff\\Bundle\\CrudMakerBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sadicov Vladimir",
+                    "homepage": "https://koff.pro"
+                }
+            ],
+            "description": "This bundle is extension to `symfony/maker-bundle`. It allows you to create simple crud with just one command.",
+            "keywords": [
+                "code generator",
+                "crud generator",
+                "generator",
+                "scaffold",
+                "scaffolding"
+            ],
+            "time": "2018-02-24T13:38:19+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.23.0",
             "source": {
@@ -2718,16 +2776,16 @@
         },
         {
             "name": "php-translation/loco-adapter",
-            "version": "0.5.0",
+            "version": "0.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-translation/loco-adapter.git",
-                "reference": "7683644632ff993809ca51759d6e889c650706e8"
+                "reference": "992188f64df442f91affc16daa44afd3a3d6f091"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-translation/loco-adapter/zipball/7683644632ff993809ca51759d6e889c650706e8",
-                "reference": "7683644632ff993809ca51759d6e889c650706e8",
+                "url": "https://api.github.com/repos/php-translation/loco-adapter/zipball/992188f64df442f91affc16daa44afd3a3d6f091",
+                "reference": "992188f64df442f91affc16daa44afd3a3d6f091",
                 "shasum": ""
             },
             "require": {
@@ -2750,7 +2808,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.3-dev"
+                    "dev-master": "0.5-dev"
                 }
             },
             "autoload": {
@@ -2769,7 +2827,7 @@
                 }
             ],
             "description": "Adapter for loco.",
-            "time": "2018-01-13T11:11:49+00:00"
+            "time": "2018-02-21T19:57:28+00:00"
         },
         {
             "name": "php-translation/symfony-bundle",
@@ -7284,6 +7342,51 @@
                 "phra"
             ],
             "time": "2015-10-13T18:44:15+00:00"
+        },
+        {
+            "name": "sensiolabs/security-checker",
+            "version": "v4.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs/security-checker.git",
+                "reference": "dc270d5fec418cc6ac983671dba5d80ffaffb142"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/dc270d5fec418cc6ac983671dba5d80ffaffb142",
+                "reference": "dc270d5fec418cc6ac983671dba5d80ffaffb142",
+                "shasum": ""
+            },
+            "require": {
+                "composer/ca-bundle": "^1.0",
+                "symfony/console": "~2.7|~3.0|~4.0"
+            },
+            "bin": [
+                "security-checker"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "SensioLabs\\Security": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien.potencier@gmail.com"
+                }
+            ],
+            "description": "A security checker for your composer.lock",
+            "time": "2018-02-28T22:10:01+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

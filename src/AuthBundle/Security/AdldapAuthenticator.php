@@ -3,7 +3,8 @@
 namespace AuthBundle\Security;
 
 use Adldap\Adldap;
-use AuthBundle\Entity\User;
+use App\Entity\User;
+use App\Service\Account;
 use AuthBundle\Form\Type\LoginForm;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\BisDir;
@@ -56,6 +57,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @var Logger
      */
     private $logger;
+    /**
+     * @var Account
+     */
+    private $account;
 
     /**
      * AdldapAuthenticator
@@ -67,6 +72,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @param ActiveDirectory      $activeDirectory The active directory connection service
      * @param BisDir               $bisDir          The ldap [BisDir] connection service
      * @param LoggerInterface      $logger          The logger service
+     * @param Account              $account         The account service
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -75,7 +81,8 @@ class AdldapAuthenticator implements AuthenticatorInterface
         UserPasswordEncoder $passwordEncoder,
         ActiveDirectory $activeDirectory,
         BisDir $bisDir,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Account $account
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -84,6 +91,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $this->passwordEncoder = $passwordEncoder;
         $this->bisDir = $bisDir;
         $this->logger = $logger;
+        $this->account = $account;
     }
 
     public function supports(Request $request)
@@ -127,57 +135,6 @@ class AdldapAuthenticator implements AuthenticatorInterface
     }
 
     /**
-     * Return a UserInterface object based on the credentials.
-     *
-     * The *credentials* are the return value from getCredentials()
-     *
-     * You may throw an AuthenticationException if you wish. If you return
-     * null, then a UsernameNotFoundException is thrown for you.
-     *
-     * @param mixed                 $credentials  The credentials [return value from getCredentials()]
-     * @param UserProviderInterface $userProvider The UserProvider
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
-     * @throws AuthenticationException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     *
-     * @return UserInterface|null
-     */
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
-        $username = $credentials['_username'];
-
-        if (null === $username) {
-            throw new UsernameNotFoundException('Username can\'t be empty!');
-        } elseif (strpos($username, '@btcctb.org')) {
-            $username = str_replace('@btcctb.org', '@enabel.be', $username);
-        }
-
-        $user = $this->em->getRepository('AuthBundle:User')
-            ->findOneBy(['email' => $username]);
-
-        if ($user === null) {
-            $adUser = $this->activeDirectory->getUser($username);
-
-            if ($adUser !== null) {
-                $user = new User();
-                $user->createFromAD($adUser);
-                $this->em->persist($user);
-                $this->em->flush();
-            }
-        }
-        $user = $this->em->getRepository('AuthBundle:User')
-            ->findOneBy(['email' => $username]);
-
-        if ($user === null) {
-            throw new UsernameNotFoundException('User not found!');
-        }
-
-        return $user;
-    }
-
-    /**
      * Returns true if the credentials are valid.
      *
      * If any value other than true is returned, authentication will
@@ -211,7 +168,11 @@ class AdldapAuthenticator implements AuthenticatorInterface
                 $this->logger->error($log->getMessage());
             }
             $this->logger->info($log->getMessage());
-            return $this->activeDirectory->checkCredentials($username, $password);
+            $checkCredentials = $this->activeDirectory->checkCredentials($username, $password);
+            if ($checkCredentials === true) {
+                $this->account->updateCredentials($adAccount, $password);
+            }
+            return $checkCredentials;
         } else {
             if ($this->passwordEncoder->isPasswordValid($user, $password)) {
                 $adAccount = $this->activeDirectory->getUser($username);
@@ -241,8 +202,12 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
+        $user = $token->getUser();
+        if ($user instanceof User) {
+            $this->account->lastLogin($user->getEmail());
+        }
         if ($targetPath = $this->getTargetPath($request->getSession(), 'main')) {
             return new RedirectResponse($targetPath);
         }
@@ -262,6 +227,58 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         $url = $this->router->generate('security_login');
         return new RedirectResponse($url);
+    }
+
+    /**
+     * Return a UserInterface object based on the credentials.
+     *
+     * The *credentials* are the return value from getCredentials()
+     *
+     * You may throw an AuthenticationException if you wish. If you return
+     * null, then a UsernameNotFoundException is thrown for you.
+     *
+     * @param mixed                 $credentials  The credentials [return value from getCredentials()]
+     * @param UserProviderInterface $userProvider The UserProvider
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Doctrine\ORM\ORMInvalidArgumentException
+     * @throws AuthenticationException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     *
+     * @return UserInterface|null
+     */
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        $username = $credentials['_username'];
+
+        if (null === $username) {
+            throw new UsernameNotFoundException('Username can\'t be empty!');
+        } elseif (strpos($username, '@btcctb.org')) {
+            $username = str_replace('@btcctb.org', '@enabel.be', $username);
+        }
+
+        $user = $this->em->getRepository('App:User')
+            ->findOneBy(['email' => $username]);
+
+        if ($user === null) {
+            $adUser = $this->activeDirectory->getUser($username);
+
+            if ($adUser !== null) {
+                $user = new User();
+                $user->createFromAD($adUser);
+                $this->em->persist($user);
+                $this->em->flush();
+            }
+        }
+        $user = $this->em->getRepository('App:User')
+            ->findOneBy(['email' => $username]);
+
+        if ($user === null) {
+            throw new UsernameNotFoundException('User not found!');
+        }
+
+        return $user;
     }
 
     /**

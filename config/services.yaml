@@ -44,7 +44,13 @@ services:
         public: true
 
     AuthBundle\Service\ActiveDirectory:
-        arguments: ["@doctrine.orm.bis_entity_manager", '%env(resolve:DOMAIN_CONTROLLERS)%', '%env(resolve:BASE_DN)%', '%env(resolve:ADMIN_USERNAME)%', '%env(resolve:ADMIN_PASSWORD)%']
+        arguments:
+            $em: "@doctrine.orm.bis_entity_manager"
+            $hosts:  '%env(resolve:DOMAIN_CONTROLLERS)%'
+            $baseDn:  '%env(resolve:BASE_DN)%'
+            $adminUsername:  '%env(resolve:ADMIN_USERNAME)%'
+            $adminPassword: '%env(resolve:ADMIN_PASSWORD)%'
+            $accountService: '@App\Service\Account'
         public: true
 
     auth.active_directory:
@@ -67,7 +73,7 @@ services:
         public: true
 
     AuthBundle\Security\AdldapAuthenticator:
-        arguments: [ "@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder", "@auth.active_directory", "@auth.bis_dir"]
+        arguments: [ "@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder", "@auth.active_directory", "@auth.bis_dir", '@logger', '@App\Service\Account']
         autowire: true
         public: true
 
@@ -85,4 +91,14 @@ services:
         autowire: true
         arguments:
             $em: "@doctrine.orm.bis_entity_manager"
+        public: true
+
+    App\Service\Account:
+        autowire: true
+        arguments: ["@doctrine.orm.default_entity_manager"]
+        public: true
+
+    App\Service\SecurityAudit:
+        autowire: true
+        arguments: ["@doctrine.orm.default_entity_manager"]
         public: true

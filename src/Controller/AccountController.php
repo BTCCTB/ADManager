@@ -3,11 +3,18 @@
 namespace App\Controller;
 
 use Adldap\Models\User;
-use AuthBundle\Form\ChangePasswordForm;
+use App\Entity\Account;
+use App\Form\ActionAuthType;
+use App\Form\ChangePasswordType;
+use App\Repository\AccountRepository;
+use App\Service\Account as AccountService;
+use App\Service\SecurityAudit;
+use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,20 +31,17 @@ use Symfony\Component\HttpFoundation\Request;
 class AccountController extends Controller
 {
     /**
-     * @Route("/", name="account_ad_list")
+     * @Route("/", name="account_list")
      * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
+     * @param AccountRepository $accountRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(AccountRepository $accountRepository)
     {
-        $ad = $this->get('auth.active_directory');
-        /*
-         * @var \Adldap\Models\User[] $accounts
-         */
-        $accounts = $ad->getAllUsers('Email', 'DESC')->sort();
+        $accounts = $accountRepository->findAllActive();
 
-        $countryStats = $ad->getCountryStatUsers();
-        return $this->render('Account/index.html.twig', ['accounts' => $accounts, 'country_distribution' => $countryStats]);
+        return $this->render('Account/index.html.twig', ['accounts' => $accounts]);
     }
 
     /**
@@ -52,7 +56,7 @@ class AccountController extends Controller
         $bisdir = $this->get('auth.bis_dir');
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $form = $this->createForm(ChangePasswordForm::class);
+        $form = $this->createForm(ChangePasswordType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,6 +66,10 @@ class AccountController extends Controller
                 if ($passwordCheck === true) {
                     if ($ad->changePassword($user->getEmail(), $data['password'])) {
                         if ($bisdir->syncPassword($user->getEmail(), $data['password'])) {
+                            $this->get(SecurityAudit::class)->changePassword(
+                                $this->get(AccountService::class)->getAccount($user->getEmail()),
+                                $this->get('security.token_storage')->getToken()->getUser()
+                            );
                             $this->addFlash('success', 'Password successfully changed !');
                             return $this->redirectToRoute('homepage');
                         }
@@ -82,7 +90,7 @@ class AccountController extends Controller
 
     /**
      * @Route("/disable/{employeeID}", name="ad_disable_account")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *
@@ -97,13 +105,12 @@ class AccountController extends Controller
          */
         $user = $ad->checkUserExistByEmployeeID($employeeID);
         if ($ad->disableUser($user)) {
-            //TODO: flash message OK
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] disabled!');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
         }
 
-        return $this->redirectToRoute('account_ad_list');
+        return $this->redirectToRoute('account_list');
     }
 
     /**
@@ -126,11 +133,11 @@ class AccountController extends Controller
             $this->addFlash('danger', 'Can\'t do this action!');
         }
 
-        return $this->redirectToRoute('account_ad_list');
+        return $this->redirectToRoute('account_list');
     }
 
     /**
-     * @Route("/reset/{employeeID}", name="ad_reset_account")
+     * @Route("/reset/{employeeID}", name="account_reset_password")
      * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
      * @param integer $employeeID The employee ID
@@ -149,11 +156,42 @@ class AccountController extends Controller
 
         if ($resetPassword->getStatus() === ActiveDirectoryResponseStatus::DONE) {
             $adNotification->notifyInitialization($resetPassword);
+            $this->get(SecurityAudit::class)->resetPassword($user, $this->get('security.token_storage')->getToken()->getUser());
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized!');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
         }
 
-        return $this->redirectToRoute('account_ad_list');
+        return $this->redirectToRoute('account_list');
+    }
+
+    /**
+     * @Route("/check/{id}", name="account_check_password")
+     * @ParamConverter("id", class="App:Account")
+     * @IsGranted("ROLE_ADMIN")
+     * @Method({"GET","POST"})
+     * @param Account         $account The account to test
+     * @param Request         $request The request (Form data)
+     * @param ActiveDirectory $ad The Active Directory Service
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function checkPasswordAction(Account $account, Request $request, ActiveDirectory $ad)
+    {
+        $form = $this->createForm(ActionAuthType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            if ($ad->checkCredentials($account->getEmail(), $data['password'])) {
+                $this->get(SecurityAudit::class)->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), true);
+                $this->addFlash('success', 'This password is correct !');
+            } else {
+                $this->get(SecurityAudit::class)->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), false);
+                $this->addFlash('danger', 'This password don\'t match !');
+            }
+        }
+
+        return $this->render('Account/checkPassword.html.twig', ['form' => $form->createView(), 'account' => $account]);
     }
 }

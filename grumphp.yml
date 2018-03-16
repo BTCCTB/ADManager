@@ -9,12 +9,12 @@ parameters:
         securitychecker: ~
         phpcs:
             standard: "phpcs.xml"
-            ignore_patterns: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
+            ignore_patterns: ['ansible', 'bin', 'config', 'docs', 'public', '*/DataFixtures', '*/Migrations', 'templates', 'tests', 'var', 'vendor']
         phplint:
             exclude: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
         phpmd:
             ruleset: ['codesize.xml']
-            exclude: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
+            exclude: ['ansible', 'bin', 'config', 'docs', 'public', '*/DataFixtures', '*/Migrations', 'templates', 'tests', 'var', 'vendor']
         phpparser:
             kind: php7
             ignore_patterns: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']

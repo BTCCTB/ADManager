@@ -22,15 +22,15 @@ PasswordManager follows the PSR-2 coding standard and the PSR-4 autoloading stan
 
 ### PHPDoc
 
-Below is an example of a valid PasswordManager documentation block. Note that the @param attribute is followed by two spaces, the argument type, two more spaces, and finally the variable name:
+Below is an example of a valid PasswordManager documentation block. Note that the @param attribute is followed by one space, the argument type, more spaces, and finally the variable name:
 
 ```php
 /**
  * Register a binding with the container.
  *
- * @param  string|array  $abstract
- * @param  \Closure|string|null  $concrete
- * @param  bool  $shared
+ * @param string|array         $abstract
+ * @param \Closure|string|null $concrete
+ * @param bool                 $shared
  * @return void
  */
 public function bind($abstract, $concrete = null, $shared = false)

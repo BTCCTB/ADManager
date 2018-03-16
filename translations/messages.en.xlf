@@ -1,74 +1,317 @@
-<?xml version="1.0" encoding="utf-8"?> 
-<!--
- Loco xml export: XLIFF for Symfony
- Project: password
- Release: Working copy
- Locale: en, English
- Exported by: Damien Lagae
- Exported at: Fri, 26 Jan 2018 12:31:26 +0100 
--->
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-    <file source-language="en" target-language="en" tool-id="loco" datatype="plaintext" original="file.ext">
-        <header>
-          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.18 20180122-1" tool-company="Loco" />
-        </header>
-        <body> 
-            <trans-unit id="loco:5a6af738820ee9d7398b4569"> 
-                <source>Current password</source>
-                <target>Current password</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6af828a39ff36c058b4569"> 
-                <source>Repeat new password</source>
-                <target>Repeat new password</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6af828a39ff36d058b4568"> 
-                <source>New password</source>
-                <target>New password</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6af829a39ff39d058b4579"> 
-                <source>Change password</source>
-                <target>Change password</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b0867c430fe55478b4568"> 
-                <source>AD Accounts</source>
-                <target>AD Accounts</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b0869c430fe13478b4567"> 
-                <source>My account</source>
-                <target>My account</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086ac430fe65478b4568"> 
-                <source>My apps</source>
-                <target>My apps</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086ac430fe66478b4567"> 
-                <source>Logout</source>
-                <target>Logout</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086cc430fe24478b456a"> 
-                <source>must contains a capital letter</source>
-                <target>must contains a capital letter</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086cc430fe58478b4568"> 
-                <source>Your new password must be at least 8 characters long and follow three of these rules:</source>
-                <target>Your new password must be at least 8 characters long and follow three of these rules:</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086cc430fe5d478b4568"> 
-                <source>must contains a lower-case letter</source>
-                <target>must contains a lower-case letter</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086dc430fe59478b4567"> 
-                <source>must contains a number</source>
-                <target>must contains a number</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b08cfc430fe24478b456b"> 
-                <source>Home</source>
-                <target>Home</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b0fdcc430fe95488b4567"> 
-                <source>must contains a special character</source>
-                <target>must contains a special character</target> 
-            </trans-unit> 
-        </body>
-    </file>
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
+  <file id="messages.en">
+    <unit id="qCTbVRe">
+      <segment>
+        <source>.4BZ3Gd</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="N4Ynnfo">
+      <segment>
+        <source>0FJ_Sz1</source>
+        <target>Logout</target>
+      </segment>
+    </unit>
+    <unit id="qIskuHA">
+      <segment>
+        <source>1JkqMxP</source>
+        <target>Initial password</target>
+      </segment>
+    </unit>
+    <unit id="tcujLIb">
+      <segment>
+        <source>2xvEhkD</source>
+        <target>Test password</target>
+      </segment>
+    </unit>
+    <unit id="QNtEdTC">
+      <segment>
+        <source>4O3_s6c</source>
+        <target>Reset password</target>
+      </segment>
+    </unit>
+    <unit id="hFqpL4Y">
+      <segment>
+        <source>AD Accounts</source>
+        <target>AD Accounts</target>
+      </segment>
+    </unit>
+    <unit id="P5yZH2O">
+      <segment>
+        <source>Change password</source>
+        <target>Change password</target>
+      </segment>
+    </unit>
+    <unit id="cu0r12f">
+      <segment>
+        <source>Current password</source>
+        <target>Current password</target>
+      </segment>
+    </unit>
+    <unit id="IRXAzwA">
+      <segment>
+        <source>DInsk4R</source>
+        <target>Repeat new password</target>
+      </segment>
+    </unit>
+    <unit id="OnhpU4i">
+      <segment>
+        <source>Home</source>
+        <target>Home</target>
+      </segment>
+    </unit>
+    <unit id="0FJ_Sz1">
+      <segment>
+        <source>Logout</source>
+        <target>Logout</target>
+      </segment>
+    </unit>
+    <unit id="tTGBpNh">
+      <segment>
+        <source>My account</source>
+        <target>My account</target>
+      </segment>
+    </unit>
+    <unit id="xTIDQl8">
+      <segment>
+        <source>My apps</source>
+        <target>My apps</target>
+      </segment>
+    </unit>
+    <unit id=".0BORo1">
+      <segment>
+        <source>NPexgaX</source>
+        <target>must contains a capital letter</target>
+      </segment>
+    </unit>
+    <unit id="PdnfREH">
+      <segment>
+        <source>New password</source>
+        <target>New password</target>
+      </segment>
+    </unit>
+    <unit id="VYfrXdH">
+      <segment>
+        <source>OnhpU4i</source>
+        <target>Home</target>
+      </segment>
+    </unit>
+    <unit id="3wEuGf_">
+      <segment>
+        <source>P5yZH2O</source>
+        <target>Change password</target>
+      </segment>
+    </unit>
+    <unit id="GUeMf7P">
+      <segment>
+        <source>PdnfREH</source>
+        <target>New password</target>
+      </segment>
+    </unit>
+    <unit id="DInsk4R">
+      <segment>
+        <source>Repeat new password</source>
+        <target>Repeat new password</target>
+      </segment>
+    </unit>
+    <unit id="ttYfwOT">
+      <segment>
+        <source>Your new password must be at least 8 characters long and follow three of these rules:</source>
+        <target>Your new password must be at least 8 characters long and follow three of these rules:</target>
+      </segment>
+    </unit>
+    <unit id="deSlbyh">
+      <segment>
+        <source>ZHz6kbI</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="4Rw710I">
+      <segment>
+        <source>cMpPhCU</source>
+        <target>must contains a number</target>
+      </segment>
+    </unit>
+    <unit id="DUXqUGv">
+      <segment>
+        <source>cu0r12f</source>
+        <target>Current password</target>
+      </segment>
+    </unit>
+    <unit id="DV7BC5T">
+      <segment>
+        <source>hFqpL4Y</source>
+        <target>AD Accounts</target>
+      </segment>
+    </unit>
+    <unit id="NVwZ7JM">
+      <segment>
+        <source>htiPHRy</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="tgMS43e">
+      <segment>
+        <source>inyLZ.6</source>
+        <target>Accounts</target>
+      </segment>
+    </unit>
+    <unit id="SOzuz7d">
+      <segment>
+        <source>lpzL089</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="NPexgaX">
+      <segment>
+        <source>must contains a capital letter</source>
+        <target>must contains a capital letter</target>
+      </segment>
+    </unit>
+    <unit id="wdxlR69">
+      <segment>
+        <source>must contains a lower-case letter</source>
+        <target>must contains a lower-case letter</target>
+      </segment>
+    </unit>
+    <unit id="cMpPhCU">
+      <segment>
+        <source>must contains a number</source>
+        <target>must contains a number</target>
+      </segment>
+    </unit>
+    <unit id="nsr9R6l">
+      <segment>
+        <source>must contains a special character</source>
+        <target>must contains a special character</target>
+      </segment>
+    </unit>
+    <unit id="Gco2B8G">
+      <segment>
+        <source>nsr9R6l</source>
+        <target>must contains a special character</target>
+      </segment>
+    </unit>
+    <unit id="usEEvbW">
+      <segment>
+        <source>pwTY1Kg</source>
+        <target>Account name</target>
+      </segment>
+    </unit>
+    <unit id="xGF6zOf">
+      <segment>
+        <source>tTGBpNh</source>
+        <target>My account</target>
+      </segment>
+    </unit>
+    <unit id="wZYoI_e">
+      <segment>
+        <source>ttYfwOT</source>
+        <target>Your new password must be at least 8 characters long and follow three of these rules:</target>
+      </segment>
+    </unit>
+    <unit id="aRawTOF">
+      <segment>
+        <source>wdxlR69</source>
+        <target>must contains a lower-case letter</target>
+      </segment>
+    </unit>
+    <unit id="P.poQLE">
+      <segment>
+        <source>xTIDQl8</source>
+        <target>My apps</target>
+      </segment>
+    </unit>
+    <unit id="eazZfll">
+      <segment>
+        <source>zYd6EbR</source>
+        <target>User accounts</target>
+      </segment>
+    </unit>
+    <unit id="47ienTP">
+      <segment>
+        <source>Username</source>
+        <target>Username</target>
+      </segment>
+    </unit>
+    <unit id="4KZ8dE1">
+      <segment>
+        <source>lastname.firstname@enabel.be</source>
+        <target>lastname.firstname@enabel.be</target>
+      </segment>
+    </unit>
+    <unit id="588_9PF">
+      <segment>
+        <source>Password</source>
+        <target>Password</target>
+      </segment>
+    </unit>
+    <unit id="gJanvZo">
+      <segment>
+        <source>Remember</source>
+        <target>Remember</target>
+      </segment>
+    </unit>
+    <unit id="inyLZ.6">
+      <segment>
+        <source>Accounts</source>
+        <target>Accounts</target>
+      </segment>
+    </unit>
+    <unit id="zYd6EbR">
+      <segment>
+        <source>User accounts</source>
+        <target>User accounts</target>
+      </segment>
+    </unit>
+    <unit id="ZHz6kbI">
+      <segment>
+        <source>Firstname</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="htiPHRy">
+      <segment>
+        <source>Lastname</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="lpzL089">
+      <segment>
+        <source>Email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="pwTY1Kg">
+      <segment>
+        <source>Account name</source>
+        <target>Account name</target>
+      </segment>
+    </unit>
+    <unit id="1JkqMxP">
+      <segment>
+        <source>Initial password</source>
+        <target>Initial password</target>
+      </segment>
+    </unit>
+    <unit id=".4BZ3Gd">
+      <segment>
+        <source>Actions</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="2xvEhkD">
+      <segment>
+        <source>Test password</source>
+        <target>Test password</target>
+      </segment>
+    </unit>
+    <unit id="4O3_s6c">
+      <segment>
+        <source>Reset password</source>
+        <target>Reset password</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>

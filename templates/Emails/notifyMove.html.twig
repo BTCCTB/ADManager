@@ -13,6 +13,7 @@
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
+            <th>#</th>
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Email</th>
@@ -26,6 +27,7 @@
     <tbody>
     {% for user in users %}
         <tr>
+            <td>{{ user.EmployeeId|default('unknow') }}</td>
             <td>{{ user.FirstName|default('unknow') }}</td>
             <td>{{ user.LastName|default('unknow') }}</td>
             <td>{{ user.Email|default('unknow') }}</td>
@@ -39,7 +41,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="8" style="text-align: right;">{{ users|length }} user(s)</td>
+            <td colspan="9" style="text-align: right;">{{ users|length }} user(s)</td>
         </tr>
     </tfoot>
 </table>

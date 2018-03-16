@@ -10,7 +10,7 @@
     {% if is_granted('ROLE_ADMIN') %}
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link {% if app.request.get('_route') == 'account_ad_list' %}active{% endif %}" href="{{ path('account_ad_list') }}">{% trans %}AD Accounts{% endtrans %}</a>
+            <a class="nav-link {% if app.request.get('_route') == 'account_list' %}active{% endif %}" href="{{ path('account_list') }}">{% trans %}Accounts{% endtrans %}</a>
         </li>
     </ul>
 

@@ -4,6 +4,6 @@
 
 {% if is_granted('ROLE_ADMIN') %}
 <li class="nav-item {% if app.request.get('_route') == 'account_ad_list' %}active{% endif %}">
-    <a href="{{ path('account_ad_list') }}" class="nav-link">{% trans %}AD Accounts{% endtrans %}</a>
+    <a href="{{ path('account_list') }}" class="nav-link">{% trans %}Accounts{% endtrans %}</a>
 </li>
 {% endif %}

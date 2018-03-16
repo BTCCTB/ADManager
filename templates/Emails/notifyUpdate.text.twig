@@ -8,6 +8,7 @@ Check the list below.
 
 {% for user in users %}
     -----------------------------------------------------------------------------------------------------------------------------
+    | #:                    {{ user.EmployeeId|default('unknow') }}
     | Firstname:            {{ user.FirstName|default('unknow') }}
     | Lastname:             {{ user.LastName|default('unknow') }}
     | Email:                {{ user.Email|default('unknow') }}

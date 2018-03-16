@@ -31,6 +31,7 @@ class BisCountry
      */
     private $couIsocodeInt;
 
+    // @codingStandardsIgnoreStart
     /**
      * @var string
      * @ORM\Column(name="cou_isocode_2letters", type="string")
@@ -42,7 +43,7 @@ class BisCountry
      * @ORM\Id
      */
     private $couIsocode3letters;
-
+    // @codingStandardsIgnoreEnd
     /**
      * @ORM\Column(name="cou_name", type="string")
      */

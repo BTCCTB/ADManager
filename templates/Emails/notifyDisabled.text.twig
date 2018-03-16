@@ -7,15 +7,16 @@ a series of accounts [{{ users|length }}] have just been disabled in your Active
 Check the list below:
 
 {% for user in users %}
------------------------------------------------------------------------------------------------------------------------------
-| Firstname:            {{ user.FirstName|default('unknow') }}
-| Lastname:             {{ user.LastName|default('unknow') }}
-| Email:                {{ user.Email }}
-| Country workplace:    {{ user.Department|default('unknow') }} ({{ user.Country|default('unknow') }})
-| Organizational Unit:  {{ user.OrganizationalUnit|default('unknow') }}
-| From:                 {{ user.from|default('unknow') }}
-| To:                   {{ user.to|default('unknow') }}
-| Log:                  {{ user.log }}
------------------------------------------------------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
+    | #:                    {{ user.EmployeeId|default('unknow') }}
+    | Firstname:            {{ user.FirstName|default('unknow') }}
+    | Lastname:             {{ user.LastName|default('unknow') }}
+    | Email:                {{ user.Email }}
+    | Country workplace:    {{ user.Department|default('unknow') }} ({{ user.Country|default('unknow') }})
+    | Organizational Unit:  {{ user.OrganizationalUnit|default('unknow') }}
+    | From:                 {{ user.from|default('unknow') }}
+    | To:                   {{ user.to|default('unknow') }}
+    | Log:                  {{ user.log }}
+    -----------------------------------------------------------------------------------------------------------------------------
 
 {% endfor %}

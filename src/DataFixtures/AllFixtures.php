@@ -2,8 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Account;
 use App\Entity\Application;
-use AuthBundle\Entity\User;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
@@ -20,7 +21,9 @@ class AllFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->faker = Factory::create();
+        $this->addAdmin($manager);
         $this->addApplication($manager);
+        $this->addAccount($manager);
 
         $manager->flush();
     }
@@ -41,6 +44,37 @@ class AllFixtures extends Fixture
             $application->setEnable($this->faker->boolean(75));
             $em->persist($application);
         }
+    }
+
+    private function addAccount(EntityManager $em)
+    {
+        for ($i = 1; $i <= 2000; $i++) {
+            $account = new Account();
+            $account->setEmployeeId($i);
+            $account->setLastname($this->faker->lastName);
+            $account->setFirstname($this->faker->firstName);
+            $account->setEmail($this->faker->unique()->safeEmail);
+            $account->setEmailContact($this->faker->companyEmail);
+            $account->setUserPrincipalName($account->getEmail());
+            $account->setAccountName($this->faker->unique()->userName);
+            $account->setGeneratedPassword($this->faker->password);
+            $account->setToken($account->generateToken($account->getEmail(), $account->getGeneratedPassword()));
+            $account->setCreatedAt($this->faker->dateTime());
+            $account->setActive($this->faker->boolean(5));
+            $em->persist($account);
+        }
+    }
+
+    private function addAdmin(EntityManager $em)
+    {
+        $user = new User();
+        $user->setEmail("damien.lagae@enabel.be");
+        $user->setLastname('LAGAE');
+        $user->setFirstname('Damien');
+        $user->setAccountName("dlagae");
+        $user->setPlainPassword('p@ssw0rd');
+        $user->setRoles(['ROLE_SUPER_ADMIN']);
+        $em->persist($user);
     }
 
     private function addUser(EntityManager $em)

@@ -362,7 +362,7 @@ class BisPersonView
 
     public function getDisplayName()
     {
-        if ($this->getNickname() !== null) {
+        if (!empty($this->getNickname())) {
             return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getNickname()));
         }
         return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));

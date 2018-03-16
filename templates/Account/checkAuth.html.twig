@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+    <h1>{% trans %}This action requires authentication confirmation{% endtrans %}</h1>
+    <a href="{{ action.back | default(path('account_list')) }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> {% trans %}Back{% endtrans %}</a>
+    {% include '_partial/flash.html.twig' %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="alert alert-danger">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {% trans %}This action will be recorded in a security audit log{% endtrans %}
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {{ form_row(form.password) }}
+        </div>
+        <div class="col-md-3">
+            <div class="form-control-feedback">
+                <span class="text-danger align-middle">
+                    {{ form_errors(form.password) }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 1rem">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-outline-danger"><i class="fa fa-unlock"></i> {% trans %}Confirm authentication{% endtrans %}</button>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block title %}
+    {% trans %}Confirm authentication{% endtrans %} - {{ parent() }}
+{% endblock %}

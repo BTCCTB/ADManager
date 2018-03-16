@@ -2,7 +2,7 @@
 
 namespace AuthBundle\Doctrine;
 
-use AuthBundle\Entity\User;
+use App\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;

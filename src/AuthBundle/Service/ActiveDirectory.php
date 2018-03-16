@@ -10,6 +10,7 @@ use Adldap\Models\Attributes\DistinguishedName;
 use Adldap\Models\OrganizationalUnit;
 use Adldap\Models\User;
 use Adldap\Models\UserPasswordPolicyException;
+use App\Service\Account;
 use BisBundle\Entity\BisPersonView;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Collection;
@@ -37,6 +38,10 @@ class ActiveDirectory
      * @var string
      */
     private $baseDn;
+    /**
+     * @var Account
+     */
+    private $accountService;
 
     public function __construct(
         EntityManager $em,
@@ -48,7 +53,8 @@ class ActiveDirectory
         int $port = 636,
         bool $followReferrals = false,
         bool $useTls = true,
-        bool $useSsl = true
+        bool $useSsl = true,
+        Account $accountService
     ) {
 
         $adldap = new Adldap();
@@ -68,6 +74,7 @@ class ActiveDirectory
         $this->activeDirectory = $adldap->connect();
         $this->em = $em;
         $this->baseDn = $baseDn;
+        $this->accountService = $accountService;
     }
 
     /**
@@ -117,6 +124,7 @@ class ActiveDirectory
 
         if (ActiveDirectoryHelper::checkPasswordComplexity($password) === true) {
             $user->setPassword($password);
+            $this->accountService->updateCredentials($user, $password);
             return $user->save();
         }
         return false;
@@ -315,6 +323,7 @@ class ActiveDirectory
             if ($password !== null) {
                 if (ActiveDirectoryHelper::checkPasswordComplexity($password) === true) {
                     $user->setPassword($password);
+                    $this->accountService->updateCredentials($user, $password);
                     return $user->save();
                 } else {
                     throw new UserPasswordPolicyException('The password does not conform to the password policy!');
@@ -860,6 +869,7 @@ class ActiveDirectory
                     // Generate a password
                     $password = ActiveDirectoryHelper::generatePassword();
                     $user->setPassword($password);
+                    $this->accountService->updateCredentials($user, $password);
                     $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
                     if (!$user->save()) {
                         return new ActiveDirectoryResponse(
@@ -1199,6 +1209,7 @@ class ActiveDirectory
         $password = ActiveDirectoryHelper::generatePassword();
         // Set the generated password
         $fieldUser->setPassword($password);
+        $this->accountService->updateCredentials($fieldUser, $password);
 
         // Set default UserControl
         $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
