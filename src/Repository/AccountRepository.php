@@ -57,4 +57,14 @@ class AccountRepository extends ServiceEntityRepository
         }
 
     }
+
+    public function setGeneratedPassword(String $email, String $password)
+    {
+        $user = $this->findByEmail($email);
+        if ($user !== null) {
+            $user->setGeneratedPassword($password);
+            $this->_em->persist($user);
+            $this->_em->flush();
+        }
+    }
 }
