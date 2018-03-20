@@ -870,6 +870,7 @@ class ActiveDirectory
                     $password = ActiveDirectoryHelper::generatePassword();
                     $user->setPassword($password);
                     $this->accountService->updateCredentials($user, $password);
+                    $this->accountService->setGeneratedPassword($user->getEmail(), $password);
                     $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
                     if (!$user->save()) {
                         return new ActiveDirectoryResponse(
@@ -1210,6 +1211,7 @@ class ActiveDirectory
         // Set the generated password
         $fieldUser->setPassword($password);
         $this->accountService->updateCredentials($fieldUser, $password);
+        $this->accountService->setGeneratedPassword($fieldUser->getEmail(), $password);
 
         // Set default UserControl
         $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);

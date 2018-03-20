@@ -69,4 +69,11 @@ class Account
         $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
         $accountRepository->setLastLogin($email);
     }
+
+    public function setGeneratedPassword(String $email, $password)
+    {
+        $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
+        $accountRepository->setGeneratedPassword($email, $password);
+
+    }
 }
