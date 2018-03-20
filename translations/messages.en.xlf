@@ -313,5 +313,29 @@
         <target>Reset password</target>
       </segment>
     </unit>
+    <unit id="0yUidIu">
+      <segment>
+        <source>All Systems Operational</source>
+        <target>All Systems Operational</target>
+      </segment>
+    </unit>
+    <unit id="9SOdXnw">
+      <segment>
+        <source>Active Incidents</source>
+        <target>Active Incidents</target>
+      </segment>
+    </unit>
+    <unit id="FGYWXGP">
+      <segment>
+        <source>Active Maintenances</source>
+        <target>Active Maintenances</target>
+      </segment>
+    </unit>
+    <unit id="tKe4fYM">
+      <segment>
+        <source>Days Since Last Incident</source>
+        <target>Days Since Last Incident</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
