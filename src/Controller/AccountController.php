@@ -151,7 +151,8 @@ class AccountController extends Controller
         $ad = $this->get('auth.active_directory');
         $adNotification = $this->get('AuthBundle\Service\ActiveDirectoryNotification');
         $user = $ad->checkUserExistByEmployeeID($employeeID);
-        $accountRepository = $this->get(AccountRepository::class);
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $accountRepository = $em->getRepository(Account::class);
         $account = $accountRepository->find($employeeID);
 
         $resetPassword = $ad->initAccount($user);
