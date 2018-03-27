@@ -151,12 +151,15 @@ class AccountController extends Controller
         $ad = $this->get('auth.active_directory');
         $adNotification = $this->get('AuthBundle\Service\ActiveDirectoryNotification');
         $user = $ad->checkUserExistByEmployeeID($employeeID);
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $accountRepository = $em->getRepository(Account::class);
+        $account = $accountRepository->find($employeeID);
 
         $resetPassword = $ad->initAccount($user);
 
         if ($resetPassword->getStatus() === ActiveDirectoryResponseStatus::DONE) {
             $adNotification->notifyInitialization($resetPassword);
-            $this->get(SecurityAudit::class)->resetPassword($user, $this->get('security.token_storage')->getToken()->getUser());
+            $this->get(SecurityAudit::class)->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized!');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
