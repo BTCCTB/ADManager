@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="account")
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
- * @UniqueEntity(fields={"userPrincipalName"}, message="It looks this user has already an account")
+ * @UniqueEntity(fields={"email"}, message="It looks this user has already an account")
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  *
  * @author Damien Lagae <damienlagae@gmail.com>
@@ -25,13 +25,13 @@ class Account
     private $employeeId;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @var string
      */
     private $userPrincipalName;
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      * @var string

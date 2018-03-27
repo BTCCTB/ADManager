@@ -60,7 +60,7 @@ class User implements UserInterface, EquatableInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Gedmo\Versioned()
      * @Assert\NotBlank()
      * @var string
