@@ -2,14 +2,20 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Blameable;
+use App\Entity\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IncidentSeverityRepository")
  */
-class IncidentSeverity
+class IncidentSeverity implements EntityInterface
 {
+    // Traits
+    use Blameable;
+    use Timestampable;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,8 +16,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author Damien Lagae <damienlagae@gmail.com>
  */
-class Account
+class Account implements EntityInterface
 {
+    // Traits
+    use Timestampable;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -85,22 +89,15 @@ class Account
     private $isActive;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
-     * @var \DateTime
-     */
-    private $createdAt;
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Gedmo\Timestampable(on="update")
-     * @var \DateTime
-     */
-    private $updatedAt = null;
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
     private $lastLoginAt = null;
+
+    public function getId()
+    {
+        return $this->getEmployeeId();
+    }
 
     public function getEmployeeId()
     {
@@ -209,28 +206,6 @@ class Account
     public function setActive($active)
     {
         $this->isActive = $active;
-        return $this;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
         return $this;
     }
 

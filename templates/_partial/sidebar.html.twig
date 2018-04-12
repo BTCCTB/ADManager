@@ -1,7 +1,7 @@
 <nav class="col-sm-2 col-md-1 d-none d-sm-block bg-light sidebar">
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link {% if app.request.get('_route') == 'homepage' %}active{% endif %}" href="{{ path('homepage') }}">{% trans %}My apps{% endtrans %}</a>
+            <a class="nav-link {% if (app.request.get('_route') == 'homepage') or (app.request.get('_route') == 'application-my-apps') %}active{% endif %}" href="{{ path('application-my-apps') }}">{% trans %}My apps{% endtrans %}</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {% if app.request.get('_route') == 'my_account' %}active{% endif %}" href="{{ path('my_account') }}">{% trans %}My account{% endtrans %}</a>

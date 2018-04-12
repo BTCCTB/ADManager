@@ -20,15 +20,31 @@ class ApplicationController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @Route("/my-apps", name="application-my-apps")
      * @param ApplicationRepository $applicationRepository
      *
      * @return Response
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function indexAction(ApplicationRepository $applicationRepository): Response
+    public function myApps(ApplicationRepository $applicationRepository): Response
+    {
+        $applications = $applicationRepository->findAllApplications();
+
+        return $this->render('Application/myApps.html.twig', ['applications' => $applications]);
+    }
+
+    /**
+     * @Route("/admin/application", name="application_index")
+     * @param ApplicationRepository $applicationRepository
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\Query\QueryException
+     */
+    public function index(ApplicationRepository $applicationRepository): Response
     {
         $applications = $applicationRepository->findAllApplications();
 
         return $this->render('Application/index.html.twig', ['applications' => $applications]);
     }
+
 }

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Incident Severity' | trans }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'Incident Severity' | trans }}</h1>
+
+    <div class="btn-group" role="group" aria-label="Actions">
+        <a class="btn btn-outline-info" href="{{ path('incident_severity_index') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ 'back to list' | trans }}</a>
+        <a class="btn btn-outline-warning" href="{{ path('incident_severity_edit', {'id': incidentSeverity.id}) }}"><i class="fa fa-edit" aria-hidden="true"></i> {{ 'edit' | trans }}</a>
+    </div>
+
+    <div class="table-responsive my-3">
+        <table class="table table-hover table-striped table-sm">
+            <tr>
+                <th>#</th>
+                <td>{{ incidentSeverity.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Name' | trans }}</th>
+                <td>{{ incidentSeverity.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Label' | trans }}</th>
+                <td>{{ incidentSeverity.label }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Created at' | trans }}</th>
+                <td>{{ incidentSeverity.createdAt ? incidentSeverity.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Updated at' | trans }}</th>
+                <td>{{ incidentSeverity.updatedAt ? incidentSeverity.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+
+        </table>
+    </div>
+
+    {% include 'incident_severity/_delete_form.html.twig' with {'identifier': incidentSeverity.id} only %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit IncidentSeverity{% endblock %}
+
+{% block body %}
+
+    <h1>Edit IncidentSeverity</h1>
+
+    <div class="btn-group" role="group" aria-label="Actions">
+        <a class="btn btn-outline-info" href="{{ path('incident_severity_index') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ 'back to list' | trans }}</a>
+    </div>
+
+    <div class="my-3">
+    {% include 'incident_severity/_form.html.twig' with {'form': form, 'button_label': 'Edit', 'button_icon': 'fa fa-edit', 'button_class': 'btn btn-outline-warning'} only %}
+    </div>
+{% endblock %}

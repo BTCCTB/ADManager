@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,8 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
-class SecurityAudit
+class SecurityAudit implements EntityInterface
 {
+    // Traits
+    use Timestampable;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -2,16 +2,24 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Blameable;
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Application
  *
  * @ORM\Table(name="application")
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
+ * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  */
-class Application
+class Application implements EntityInterface
 {
+    // Traits
+    use Timestampable;
+    use Blameable;
+
     /**
      * @var int
      *

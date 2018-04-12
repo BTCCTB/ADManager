@@ -11,6 +11,7 @@ use App\Service\Account as AccountService;
 use App\Service\SecurityAudit;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
+use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -149,7 +150,7 @@ class AccountController extends Controller
     public function resetAction($employeeID): RedirectResponse
     {
         $ad = $this->get('auth.active_directory');
-        $adNotification = $this->get('AuthBundle\Service\ActiveDirectoryNotification');
+        $adNotification = $this->get(ActiveDirectoryNotification::class);
         $user = $ad->checkUserExistByEmployeeID($employeeID);
         $em = $this->get('doctrine.orm.default_entity_manager');
         $accountRepository = $em->getRepository(Account::class);

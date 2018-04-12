@@ -337,5 +337,137 @@
         <target>Days Since Last Incident</target>
       </segment>
     </unit>
+    <unit id="Ry52Ewq">
+      <segment>
+        <source>Test user password</source>
+        <target>Test user password</target>
+      </segment>
+    </unit>
+    <unit id="dpAPG.0">
+      <segment>
+        <source>Back</source>
+        <target>Back</target>
+      </segment>
+    </unit>
+    <unit id="8kiP1O9">
+      <segment>
+        <source>Email address</source>
+        <target>Email address</target>
+      </segment>
+    </unit>
+    <unit id="3NHVIj9">
+      <segment>
+        <source>Name</source>
+        <target>Name</target>
+      </segment>
+    </unit>
+    <unit id="DmY3P0X">
+      <segment>
+        <source>Label</source>
+        <target>Label</target>
+      </segment>
+    </unit>
+    <unit id="d1tb_WR">
+      <segment>
+        <source>Created at</source>
+        <target>Created at</target>
+      </segment>
+    </unit>
+    <unit id="PCEFPeg">
+      <segment>
+        <source>Updated at</source>
+        <target>Updated at</target>
+      </segment>
+    </unit>
+    <unit id="TDLNTiS">
+      <segment>
+        <source>Incident severity</source>
+        <target>Incident severity</target>
+      </segment>
+    </unit>
+    <unit id="NqYG1Ih">
+      <segment>
+        <source>Incident</source>
+        <target>Incident</target>
+      </segment>
+    </unit>
+    <unit id="byAvVKe">
+      <segment>
+        <source>List</source>
+        <target>List</target>
+      </segment>
+    </unit>
+    <unit id="GP3VSbL">
+      <segment>
+        <source>New</source>
+        <target>New</target>
+      </segment>
+    </unit>
+    <unit id="9pTy7pz">
+      <segment>
+        <source>Incident Severity</source>
+        <target>Incident Severity</target>
+      </segment>
+    </unit>
+    <unit id="nz33U6Q">
+      <segment>
+        <source>Create new</source>
+        <target>Create new</target>
+      </segment>
+    </unit>
+    <unit id="DfbxytN">
+      <segment>
+        <source>Show</source>
+        <target>Show</target>
+      </segment>
+    </unit>
+    <unit id="RkxP.QG">
+      <segment>
+        <source>Edit</source>
+        <target>Edit</target>
+      </segment>
+    </unit>
+    <unit id="uJsXU7n">
+      <segment>
+        <source>record(s)</source>
+        <target>record(s)</target>
+      </segment>
+    </unit>
+    <unit id="UTP6orU">
+      <segment>
+        <source>New Incident Severity</source>
+        <target>New Incident Severity</target>
+      </segment>
+    </unit>
+    <unit id="Ib7Ib9W">
+      <segment>
+        <source>Create new IncidentSeverity</source>
+        <target>Create new IncidentSeverity</target>
+      </segment>
+    </unit>
+    <unit id="U0M9PNE">
+      <segment>
+        <source>back to list</source>
+        <target>back to list</target>
+      </segment>
+    </unit>
+    <unit id="JiEhxTc">
+      <segment>
+        <source>edit</source>
+        <target>edit</target>
+      </segment>
+    </unit>
+    <unit id="4tClSWj">
+      <segment>
+        <source>Delete</source>
+        <target>Delete</target>
+      </segment>
+    </unit>
+    <unit id="REE8PZe">
+      <segment>
+        <source>Are you sure you want to delete this item?</source>
+        <target>Are you sure you want to delete this item?</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

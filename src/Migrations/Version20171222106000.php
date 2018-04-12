@@ -23,7 +23,7 @@ class Version20171222106000 extends AbstractMigration
         $this->addSql("INSERT INTO application (name, link, link_fr, link_nl) VALUES (\"Myworkandme\", 'https://www.myworkandme.com/site6/en/Portal/MyWorkAndMe/Start.aspx', 'https://www.myworkandme.com/site6/fr-BE/Portal/MyWorkAndMe/Start.aspx', 'https://www.myworkandme.com/site6/nl-BE/Portal/MyWorkAndMe/Start.aspx')");
         $this->addSql("INSERT INTO application (name, link, link_fr, link_nl) VALUES (\"Integrity\", 'https://intranet.enabel.be/fr/content/integrite', 'https://intranet.enabel.be/fr/content/integrite', 'https://intranet.enabel.be/nl/content/integriteit')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Webforms\", 'https://webforms.enabel.be/')");
-        $this->addSql("INSERT INTO application (name, link) VALUES (\"BAT\", 'http://intranet.btcctb.org/BAT/')");
+        $this->addSql("INSERT INTO application (name, link) VALUES (\"BAT\", 'https://intranet.enabel.be/BAT/LoginController?do=gotoIndexPage')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Pitweb\", 'http://pitweb.enabel.be/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Timesheet\", 'https://timesheet.enabel.be/')");
         $this->addSql("INSERT INTO application (name, link) VALUES (\"Webmail Office 365\", 'https://outlook.office.com')");

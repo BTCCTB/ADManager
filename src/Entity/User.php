@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Adldap\Models\User as AdUser;
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -21,8 +22,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author Damien Lagae <damienlagae@gmail.com>
  */
-class User implements UserInterface, EquatableInterface
+class User implements EntityInterface, UserInterface, EquatableInterface
 {
+    // Traits
+    use Timestampable;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -88,20 +92,6 @@ class User implements UserInterface, EquatableInterface
      * @var boolean
      */
     private $isActive = true;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Gedmo\Timestampable(on="update")
-     * @var \DateTime
-     */
-    private $updatedAt = null;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -309,42 +299,6 @@ class User implements UserInterface, EquatableInterface
     public function setActive(bool $isActive): User
     {
         $this->isActive = $isActive;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     * @return self
-     */
-    public function setCreatedAt(\DateTime $createdAt): User
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     * @return self
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): User
-    {
-        $this->updatedAt = $updatedAt;
         return $this;
     }
 
