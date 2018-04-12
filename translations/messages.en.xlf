@@ -313,5 +313,11 @@
         <target>Reset password</target>
       </segment>
     </unit>
+    <unit id="DTlgLcO">
+      <segment>
+        <source>Last login</source>
+        <target>Last login</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
