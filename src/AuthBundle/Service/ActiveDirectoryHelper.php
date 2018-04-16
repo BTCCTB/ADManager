@@ -419,11 +419,7 @@ class ActiveDirectoryHelper
      */
     public static function cleanUpPhoneNumber(String $phoneNumber)
     {
-        // Remove useless (0)
-        // Remove .
-        // Remove -
-        // Remove /
-        // Remove space
+        // Remove useless characters like '(0)', '.', '-', '/', ' '
         $phoneNumber = str_replace(array('(0)', '.', '-', '/', ' '), '', $phoneNumber);
 
         return $phoneNumber;

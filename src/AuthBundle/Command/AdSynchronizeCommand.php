@@ -76,15 +76,16 @@ class AdSynchronizeCommand extends Command
             'data',
         ]);
 
+        $i = 0;
         foreach ($logs as $log) {
-            $rows[] = [
+            $table->setRow($i, [
                 'message' => $log->getMessage(),
                 'status' => $log->getStatus(),
                 'type' => $log->getType(),
                 'data' => json_encode($log->getData()),
-            ];
+            ]);
+            $i++;
         }
-        $table->setRows($rows);
         $table->render();
 
         $this->activeDirectoryNotification->notifyCreation($logs);

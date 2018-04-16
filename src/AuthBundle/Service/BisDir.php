@@ -207,7 +207,7 @@ class BisDir
      *
      * @return BisDirResponse[]
      */
-    public function synchronize(User $adAccount, String $password = null): array
+    public function synchronize(User $adAccount, String $password = null)
     {
         // Check user exist in LDAP
         $ldapUser = $this->getUser($adAccount->getEmail());
