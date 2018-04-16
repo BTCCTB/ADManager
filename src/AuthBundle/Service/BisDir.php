@@ -241,7 +241,7 @@ class BisDir
     /**
      * @param BisPersonView $bisPersonView
      *
-     * @return BisDirResponse[]
+     * @return BisDirResponse[]|BisDirResponse[][]
      */
     public function synchronizeFromBis(BisPersonView $bisPersonView): array
     {
