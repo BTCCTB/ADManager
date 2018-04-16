@@ -38,4 +38,14 @@ class BisPersonView
     {
         return $this->repository->getUserByEmail($email);
     }
+
+    /**
+     * @param String $country Country code 3 letters iso
+     *
+     * @return \BisBundle\Entity\BisPersonView[]|null
+     */
+    public function getCountryUsers(String $country)
+    {
+        return $this->repository->getUsersByCountry($country);
+    }
 }

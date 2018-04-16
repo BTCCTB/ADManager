@@ -81,6 +81,25 @@ class BisPersonViewRepository extends EntityRepository
         }
     }
 
+    /**
+     * Get users by country
+     *
+     * @param string $country The country code [iso3letter] of the user
+     *
+     * @return BisPersonView[]|null The Users or null if not found
+     */
+    public function getUsersByCountry(string $country)
+    {
+        $repository = $this->_em->getRepository(BisPersonView::class);
+
+        $query = $repository->createQueryBuilder('bpv')
+            ->where('bpv.perCountryWorkplace = :country')
+            ->andWhere('bpv.perEmail IS NOT NULL')
+            ->setParameter('country', $country);
+
+        return $query->getQuery()->getResult();
+    }
+
     public function findAllFieldUser()
     {
         $repository = $this->_em->getRepository(BisPersonView::class);

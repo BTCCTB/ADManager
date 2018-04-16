@@ -1320,4 +1320,80 @@ class ActiveDirectory
         }
         return $logs;
     }
+
+    /**
+     * Sync phone number & mobile from GO4HR to AD
+     *
+     * @param User          $adAccount The AD User
+     * @param BisPersonView $bisPerson The BIS User [GO4HR]
+     *
+     * @return ActiveDirectoryResponse
+     */
+    public function syncPhone(User $adAccount, BisPersonView $bisPerson)
+    {
+        $diffData = [];
+
+        // Remove useless (0)
+        $telephone = ActiveDirectoryHelper::cleanUpPhoneNumber($bisPerson->getTelephone());
+        $mobile = ActiveDirectoryHelper::cleanUpPhoneNumber($bisPerson->getMobile());
+
+        // Get current phone number & mobile
+        $oldTelephone = $adAccount->getTelephoneNumber();
+        $oldMobile = $adAccount->getFirstAttribute('mobile');
+
+        // Update phone number if necessary
+        if (!empty($telephone)) {
+            if ($telephone !== $oldTelephone) {
+                $diffData['TelephoneNumber'] = [
+                    'attribute' => 'TelephoneNumber',
+                    'value' => $telephone,
+                    'original' => $oldTelephone,
+                ];
+                $adAccount->setTelephoneNumber($telephone);
+            }
+        }
+        // Update mobile if necessary
+        if (!empty($mobile)) {
+            if ($mobile !== $oldMobile) {
+                $diffData['mobile'] = [
+                    'attribute' => 'mobile',
+                    'value' => $mobile,
+                    'original' => $oldMobile,
+                ];
+                $adAccount->setFirstAttribute('mobile', $mobile);
+            }
+        }
+
+        // Save all these modification
+        if (!empty($diffData)) {
+            if ($adAccount->save()) {
+                return new ActiveDirectoryResponse(
+                    "User '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
+                    ActiveDirectoryResponseStatus::DONE,
+                    ActiveDirectoryResponseType::UPDATE,
+                    ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+                );
+            }
+            return new ActiveDirectoryResponse(
+                "User '" . $adAccount->getEmail() . "' can't be disabled in Active Directory",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::UPDATE,
+                ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $adAccount->getEmail() . "' already up to date in Active Directory",
+            ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+            ActiveDirectoryResponseType::UPDATE,
+            ActiveDirectoryHelper::getDataAdUser(
+                $adAccount,
+                [
+                    'telephone' => $telephone,
+                    'mobile' => $mobile,
+                ]
+            )
+        );
+    }
+
 }
