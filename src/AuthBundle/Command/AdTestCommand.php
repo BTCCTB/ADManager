@@ -7,6 +7,7 @@ use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -71,6 +72,9 @@ class AdTestCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $outputStyle = new OutputFormatterStyle('red', null, array('bold'));
+        $output->getFormatter()->setStyle('warning', $outputStyle);
+
 //        $user = $this->activeDirectory->getUser($input->getArgument('email'));
         $bisUsers = $this->bisPersonView->getCountryUsers();
 
@@ -90,7 +94,7 @@ class AdTestCommand extends Command
                     $output->writeln('<error> User not found: ' . $bisUser->getEmail() . ' [' . $bisUser->getEmployeeId() . ']</error>');
                 }
             } else {
-                $output->writeln('<error> User without email : ' . $bisUser->getEmployeeId() . '</error>');
+                $output->writeln('<warning> User without email : ' . $bisUser->getFirstname() . ' ' . $bisUser->getLastname() . ' [' . $bisUser->getEmployeeId() . ']</warning>');
             }
 
         }
