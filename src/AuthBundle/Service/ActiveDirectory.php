@@ -284,7 +284,11 @@ class ActiveDirectory
     public function enableUser(User $user): bool
     {
         if (!empty($user)) {
-            $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            if ($user->getCountry() !== 'BE') {
+                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+            } else {
+                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            }
             if ($user->save()) {
                 return true;
             }
@@ -871,7 +875,11 @@ class ActiveDirectory
                     $user->setPassword($password);
                     $this->accountService->updateCredentials($user, $password);
                     $this->accountService->setGeneratedPassword($user->getEmail(), $password);
-                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                    if ($user->getCountry() !== 'BE') {
+                        $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+                    } else {
+                        $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                    }
                     if (!$user->save()) {
                         return new ActiveDirectoryResponse(
                             "User '" . $bisUser->getEmail() . "' unable to enable and set '" . $password . "' as default password",
@@ -915,7 +923,11 @@ class ActiveDirectory
     private function enableExistingAccount(User $adAccount): ActiveDirectoryResponse
     {
         if (!$adAccount->isActive() && $adAccount->isExpired()) {
-            $adAccount->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            if ($adAccount->getCountry() !== 'BE') {
+                $adAccount->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+            } else {
+                $adAccount->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            }
             $adAccount->setAccountExpiry(null);
             if ($adAccount->save()) {
                 return new ActiveDirectoryResponse(
@@ -1214,7 +1226,11 @@ class ActiveDirectory
         $this->accountService->setGeneratedPassword($fieldUser->getEmail(), $password);
 
         // Set default UserControl
-        $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+        if ($fieldUser->getCountry() !== 'BE') {
+            $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+        } else {
+            $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+        }
 
         // Set email to correct account
         $fieldUser->setEmail(str_replace('@btcctb.org', '@enabel.be', $fieldUser->getEmail()));
