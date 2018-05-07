@@ -44,8 +44,12 @@ class BisPersonView
      *
      * @return \BisBundle\Entity\BisPersonView[]|null
      */
-    public function getCountryUsers(String $country)
+    public function getCountryUsers(String $country = null)
     {
-        return $this->repository->getUsersByCountry($country);
+        if ($country !== null) {
+            return $this->repository->getUsersByCountry($country);
+        }
+
+        return $this->repository->findAllFieldUser();
     }
 }

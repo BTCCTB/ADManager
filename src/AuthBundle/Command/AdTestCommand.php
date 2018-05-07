@@ -2,11 +2,11 @@
 
 namespace AuthBundle\Command;
 
+use Adldap\Models\Attributes\AccountControl;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -50,8 +50,8 @@ class AdTestCommand extends Command
     protected function configure()
     {
         $this->setName('ad:test')
-            ->setDescription('Test with AD')
-            ->addArgument('email', InputArgument::REQUIRED, 'Email to test');
+            ->setDescription('Test with AD');
+//        $this->addArgument('email', InputArgument::REQUIRED, 'Email to test');
     }
 
     /**
@@ -71,11 +71,33 @@ class AdTestCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $user = $this->activeDirectory->getUser($input->getArgument('email'));
+//        $user = $this->activeDirectory->getUser($input->getArgument('email'));
+        $bisUsers = $this->bisPersonView->getCountryUsers();
+
+        foreach ($bisUsers as $bisUser) {
+            if ($bisUser->getEmail() !== null) {
+                $user = $this->activeDirectory->getUser($bisUser->getEmail());
+                if ($user !== null) {
+                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+                    $user->setAccountExpiry(null);
+                    $user->save();
+                    if (!$user->save()) {
+                        $output->writeln('<error> Unable to change User Account Control for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</error>');
+                    } else {
+                        $output->writeln('<info> User Account Control updated for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
+                    }
+                } else {
+                    $output->writeln('<error> User not found: ' . $bisUser->getEmail() . ' [' . $bisUser->getEmployeeId() . ']</error>');
+                }
+            } else {
+                $output->writeln('<error> User without email : ' . $bisUser->getEmployeeId() . '</error>');
+            }
+
+        }
 
         // Test something
 
         // show result
-        $output->writeln('User: ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']');
+        //        $output->writeln('<info>User: ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
     }
 }
