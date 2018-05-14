@@ -411,4 +411,17 @@ class ActiveDirectoryHelper
 
         return $date->format($format);
     }
+
+    /**
+     * @param String $phoneNumber
+     *
+     * @return mixed|String
+     */
+    public static function cleanUpPhoneNumber(String $phoneNumber)
+    {
+        // Remove useless characters like '(0)', '.', '-', '/', ' '
+        $phoneNumber = str_replace(array('(0)', '.', '-', '/', ' '), '', $phoneNumber);
+
+        return $phoneNumber;
+    }
 }

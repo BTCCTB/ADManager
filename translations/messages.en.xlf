@@ -469,5 +469,11 @@
         <target>Are you sure you want to delete this item?</target>
       </segment>
     </unit>
+    <unit id="DTlgLcO">
+      <segment>
+        <source>Last login</source>
+        <target>Last login</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -284,7 +284,11 @@ class ActiveDirectory
     public function enableUser(User $user): bool
     {
         if (!empty($user)) {
-            $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            if ($user->getCountry() !== 'BE') {
+                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+            } else {
+                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            }
             if ($user->save()) {
                 return true;
             }
@@ -871,7 +875,11 @@ class ActiveDirectory
                     $user->setPassword($password);
                     $this->accountService->updateCredentials($user, $password);
                     $this->accountService->setGeneratedPassword($user->getEmail(), $password);
-                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                    if ($user->getCountry() !== 'BE') {
+                        $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+                    } else {
+                        $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                    }
                     if (!$user->save()) {
                         return new ActiveDirectoryResponse(
                             "User '" . $bisUser->getEmail() . "' unable to enable and set '" . $password . "' as default password",
@@ -915,7 +923,11 @@ class ActiveDirectory
     private function enableExistingAccount(User $adAccount): ActiveDirectoryResponse
     {
         if (!$adAccount->isActive() && $adAccount->isExpired()) {
-            $adAccount->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            if ($adAccount->getCountry() !== 'BE') {
+                $adAccount->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+            } else {
+                $adAccount->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            }
             $adAccount->setAccountExpiry(null);
             if ($adAccount->save()) {
                 return new ActiveDirectoryResponse(
@@ -1214,7 +1226,11 @@ class ActiveDirectory
         $this->accountService->setGeneratedPassword($fieldUser->getEmail(), $password);
 
         // Set default UserControl
-        $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+        if ($fieldUser->getCountry() !== 'BE') {
+            $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+        } else {
+            $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+        }
 
         // Set email to correct account
         $fieldUser->setEmail(str_replace('@btcctb.org', '@enabel.be', $fieldUser->getEmail()));
@@ -1320,4 +1336,80 @@ class ActiveDirectory
         }
         return $logs;
     }
+
+    /**
+     * Sync phone number & mobile from GO4HR to AD
+     *
+     * @param User          $adAccount The AD User
+     * @param BisPersonView $bisPerson The BIS User [GO4HR]
+     *
+     * @return ActiveDirectoryResponse
+     */
+    public function syncPhone(User $adAccount, BisPersonView $bisPerson)
+    {
+        $diffData = [];
+
+        // Remove useless (0)
+        $telephone = ActiveDirectoryHelper::cleanUpPhoneNumber($bisPerson->getTelephone());
+        $mobile = ActiveDirectoryHelper::cleanUpPhoneNumber($bisPerson->getMobile());
+
+        // Get current phone number & mobile
+        $oldTelephone = $adAccount->getTelephoneNumber();
+        $oldMobile = $adAccount->getFirstAttribute('mobile');
+
+        // Update phone number if necessary
+        if (!empty($telephone)) {
+            if ($telephone !== $oldTelephone) {
+                $diffData['TelephoneNumber'] = [
+                    'attribute' => 'TelephoneNumber',
+                    'value' => $telephone,
+                    'original' => $oldTelephone,
+                ];
+                $adAccount->setTelephoneNumber($telephone);
+            }
+        }
+        // Update mobile if necessary
+        if (!empty($mobile)) {
+            if ($mobile !== $oldMobile) {
+                $diffData['mobile'] = [
+                    'attribute' => 'mobile',
+                    'value' => $mobile,
+                    'original' => $oldMobile,
+                ];
+                $adAccount->setFirstAttribute('mobile', $mobile);
+            }
+        }
+
+        // Save all these modification
+        if (!empty($diffData)) {
+            if ($adAccount->save()) {
+                return new ActiveDirectoryResponse(
+                    "User '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
+                    ActiveDirectoryResponseStatus::DONE,
+                    ActiveDirectoryResponseType::UPDATE,
+                    ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+                );
+            }
+            return new ActiveDirectoryResponse(
+                "User '" . $adAccount->getEmail() . "' can't be disabled in Active Directory",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::UPDATE,
+                ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $adAccount->getEmail() . "' already up to date in Active Directory",
+            ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+            ActiveDirectoryResponseType::UPDATE,
+            ActiveDirectoryHelper::getDataAdUser(
+                $adAccount,
+                [
+                    'telephone' => $telephone,
+                    'mobile' => $mobile,
+                ]
+            )
+        );
+    }
+
 }

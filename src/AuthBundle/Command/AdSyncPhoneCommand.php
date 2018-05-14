@@ -5,12 +5,14 @@ namespace AuthBundle\Command;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponse;
+use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdSynchronizeCommand extends Command
+class AdSyncPhoneCommand extends Command
 {
     /**
      * @var ActiveDirectory
@@ -23,16 +25,22 @@ class AdSynchronizeCommand extends Command
     private $activeDirectoryNotification;
 
     /**
-     * AdFixNameCommand constructor.
+     * @var BisPersonView
+     */
+    private $bisPersonView;
+
+    /**
+     * AdSyncPhoneCommand constructor.
      *
      * @param ActiveDirectory             $activeDirectory Active directory Service
-     *
      * @param ActiveDirectoryNotification $activeDirectoryNotification
+     * @param BisPersonView               $bisPersonView
      */
-    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification)
+    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification, BisPersonView $bisPersonView)
     {
         $this->activeDirectory = $activeDirectory;
         $this->activeDirectoryNotification = $activeDirectoryNotification;
+        $this->bisPersonView = $bisPersonView;
         parent::__construct();
     }
 
@@ -43,8 +51,9 @@ class AdSynchronizeCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:crontask:synchronize')
-            ->setDescription('Synchronise the AD with GO4HR data.');
+        $this->setName('ad:sync:phone')
+            ->setDescription('Synchronize phone number with AD')
+            ->addArgument('country', InputArgument::OPTIONAL, 'Country to sync', 'BEL');
     }
 
     /**
@@ -59,14 +68,26 @@ class AdSynchronizeCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $bisPersons = $this->bisPersonView->getCountryUsers($input->getArgument('country'));
+
+        $logs = [];
+
         /**
          * @var ActiveDirectoryResponse[] $logs
          */
-        $logs = $this->activeDirectory->cronTaskSynchronize();
+        foreach ($bisPersons as $bisPerson) {
+            $adAccount = $this->activeDirectory->getUser($bisPerson->getEmail());
+            if ($adAccount !== null) {
+                $logs[] = $this->activeDirectory->syncPhone($adAccount, $bisPerson);
+            }
+        }
+
+        $this->activeDirectoryNotification->notifyUpdate($logs);
 
         $table = new Table($output);
         $table->setHeaders([
@@ -76,21 +97,17 @@ class AdSynchronizeCommand extends Command
             'data',
         ]);
 
-        $i = 0;
+        $rows = [];
+
         foreach ($logs as $log) {
-            $table->setRow($i, [
+            $rows[] = [
                 'message' => $log->getMessage(),
                 'status' => $log->getStatus(),
                 'type' => $log->getType(),
                 'data' => json_encode($log->getData()),
-            ]);
-            $i++;
+            ];
         }
+        $table->setRows($rows);
         $table->render();
-
-        $this->activeDirectoryNotification->notifyCreation($logs);
-        $this->activeDirectoryNotification->notifyMove($logs);
-        $this->activeDirectoryNotification->notifyUpdate($logs);
-        $this->activeDirectoryNotification->notifyDisabled($logs);
     }
 }
