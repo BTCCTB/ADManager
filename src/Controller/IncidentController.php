@@ -91,7 +91,7 @@ class IncidentController extends Controller
      */
     public function delete(Request $request, Incident $incident)
     {
-        if (!$this->isCsrfTokenValid('delete'.$incident->getId(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete' . $incident->getId(), $request->request->get('_token'))) {
             return $this->redirectToRoute('incident_index');
         }
 
