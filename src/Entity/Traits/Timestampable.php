@@ -49,7 +49,7 @@ trait Timestampable
      *
      * @return DateTime|null
      */
-    public function getCreatedAt():  ? DateTime
+    public function getCreatedAt(): ? DateTime
     {
         return $this->createdAt;
     }
@@ -73,7 +73,7 @@ trait Timestampable
      *
      * @return DateTime|null
      */
-    public function getUpdatedAt() :  ? DateTime
+    public function getUpdatedAt() : ? DateTime
     {
         return $this->updatedAt;
     }
