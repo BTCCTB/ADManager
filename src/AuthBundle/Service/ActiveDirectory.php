@@ -523,9 +523,9 @@ class ActiveDirectory
                 if (!\in_array('SMTP:' . $emailPart[0] . '@enabel.be', $proxyAddresses, false)) {
                     $proxyAddresses[] = 'SMTP:' . $emailPart[0] . '@enabel.be';
                 }
-                if (!\in_array('smtp:' . $emailPart[0] . '@btcctb.org', $proxyAddresses, false)) {
-                    $proxyAddresses[] = 'smtp:' . $emailPart[0] . '@btcctb.org';
-                }
+//                if (!\in_array('smtp:' . $emailPart[0] . '@btcctb.org', $proxyAddresses, false)) {
+                //                    $proxyAddresses[] = 'smtp:' . $emailPart[0] . '@btcctb.org';
+                //                }
                 $user->setProxyAddresses($proxyAddresses);
                 if (!$user->save()) {
                     $state = '<error>FAILED</error>';
