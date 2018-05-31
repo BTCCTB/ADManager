@@ -3,6 +3,22 @@
 parameters:
     locale: 'en'
     app.locales: [en,fr,nl]
+    # Adds a fallback if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(DOMAIN_CONTROLLERS): ''
+    env(BASE_DN): ''
+    env(ADMIN_USERNAME): ''
+    env(ADMIN_PASSWORD): ''
+    env(ACCOUNT_SUFFIX): ''
+    env(MAIL_DOMAIN): ''
+    env(NOTIFICATION_FROM): ''
+    env(NOTIFICATION_TO): ''
+    env(BIS_DIR_HOSTS): ''
+    env(BIS_DIR_BASE_DN): ''
+    env(BIS_DIR_ADMIN_USERNAME): ''
+    env(BIS_DIR_ADMIN_PASSWORD): ''
 
 services:
     # default configuration for services in *this* file
