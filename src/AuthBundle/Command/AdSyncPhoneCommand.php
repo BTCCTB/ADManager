@@ -73,7 +73,8 @@ class AdSyncPhoneCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bisPersons = $this->bisPersonView->getCountryUsers($input->getArgument('country'));
+        //$bisPersons = $this->bisPersonView->getCountryUsers($input->getArgument('country'));
+        $bisPersons = $this->bisPersonView->getAllUsers();
 
         $logs = [];
 
@@ -81,9 +82,11 @@ class AdSyncPhoneCommand extends Command
          * @var ActiveDirectoryResponse[] $logs
          */
         foreach ($bisPersons as $bisPerson) {
-            $adAccount = $this->activeDirectory->getUser($bisPerson->getEmail());
-            if ($adAccount !== null) {
-                $logs[] = $this->activeDirectory->syncPhone($adAccount, $bisPerson);
+            if (!empty($bisPerson->getEmail())) {
+                $adAccount = $this->activeDirectory->getUser($bisPerson->getEmail());
+                if ($adAccount !== null) {
+                    $logs[] = $this->activeDirectory->syncPhone($adAccount, $bisPerson);
+                }
             }
         }
 

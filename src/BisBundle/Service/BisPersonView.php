@@ -52,4 +52,9 @@ class BisPersonView
 
         return $this->repository->findAllFieldUser();
     }
+
+    public function getAllUsers()
+    {
+        return $this->repository->findAll();
+    }
 }
