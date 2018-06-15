@@ -251,7 +251,7 @@ class ActiveDirectoryNotification
 
             $message = (new \Swift_Message('Get started with Office 365'))
                 ->setFrom($this->fromAddress)
-                ->setTo(str_replace('@enabel.be', '@btcctb.org', $user['Email']))
+                ->setTo($user['Email'])
                 ->setBcc($this->fromAddress)
                 ->setBody(
                     $this->twig->render(
