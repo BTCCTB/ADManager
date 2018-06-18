@@ -56,8 +56,17 @@ class ActiveDirectoryHelper
         $user->setEmail($bisPersonView->getEmail());
         $user->setProxyAddresses($bisPersonView->getProxyAddresses());
 
-        $dn = new DistinguishedName();
+        // Get & clean phone info
+        $telephone = self::cleanUpPhoneNumber($bisPersonView->getTelephone());
+        $mobile = self::cleanUpPhoneNumber($bisPersonView->getMobile());
+        if (!empty($telephone)) {
+            $user->setTelephoneNumber($telephone);
+        }
+        if (!empty($mobile)) {
+            $user->setFirstAttribute('mobile', $mobile);
+        }
 
+        $dn = new DistinguishedName();
         // Get or create the country OU
         $dn->setBase($unit->getDn());
         $dn->addCn($user->getCommonName());
@@ -393,6 +402,30 @@ class ActiveDirectoryHelper
                 'original' => $user->getProxyAddresses(),
             ];
             $user->setProxyAddresses($proxyAddresses);
+        }
+
+        // Clean phone number
+        $telephone = self::cleanUpPhoneNumber($bisPersonView->getTelephone());
+        // Update phone number if necessary
+        if ($telephone !== $user->getTelephoneNumber()) {
+            $diffData['TelephoneNumber'] = [
+                'attribute' => 'TelephoneNumber',
+                'value' => $telephone,
+                'original' => $user->getTelephoneNumber(),
+            ];
+            $user->setTelephoneNumber($telephone);
+        }
+
+        // Clean mobile number
+        $mobile = self::cleanUpPhoneNumber($bisPersonView->getMobile());
+        // Update mobile if necessary
+        if ($mobile !== $user->getFirstAttribute('mobile')) {
+            $diffData['mobile'] = [
+                'attribute' => 'mobile',
+                'value' => $mobile,
+                'original' => $user->getFirstAttribute('mobile'),
+            ];
+            $user->setFirstAttribute('mobile', $mobile);
         }
 
         return [$user, $diffData];
