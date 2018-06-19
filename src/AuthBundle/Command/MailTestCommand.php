@@ -10,11 +10,16 @@ class MailTestCommand extends Command
 {
     private $mailer;
     private $twig;
+    /**
+     * @var string
+     */
+    private $fromAddress;
 
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, string $fromAddress)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->fromAddress = $fromAddress;
         parent::__construct();
     }
 
@@ -46,7 +51,7 @@ class MailTestCommand extends Command
     {
         $subject = 'Test mail from symfony';
         $message = (new \Swift_Message($subject))
-            ->setFrom('ict.helpdesk@enabel.be')
+            ->setFrom($this->fromAddress)
             ->setTo('damien.lagae@enabel.be')
             ->setBody(
                 'test mail',
