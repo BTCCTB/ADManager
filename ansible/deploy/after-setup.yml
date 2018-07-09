@@ -1,4 +1,15 @@
 ---
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname}} | Check GIT stuff'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
+
 - name: GIT | deploy key ?
   stat: 'path={{ ansistrano_deploy_to }}/.ssh/id_rsa'
   register: deploy_key
@@ -33,6 +44,17 @@
     src: '{{ ansistrano_deploy_to }}/.ssh/id_rsa'
     dest: '{{ playbook_dir }}/.ssh/id_rsa'
     flat: yes
+
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname}} | Check Composer stuff'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
 
 - name: Composer | Check
   stat:

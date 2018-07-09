@@ -1,4 +1,15 @@
 ---
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname }} | Install cron task :timer_clock:'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
+
 - name: CRONTAB | AD Sync noon [1 pm]
   cron:
     name: Synchronize person between GO4HR and ActiveDirectory (1pm)
@@ -28,3 +39,14 @@
     user: root
     job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
+
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname }} | Deployed ! :trophy:'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost

@@ -25,3 +25,10 @@ ad_notification_to: 'ict.helpdesk@enabel.be,ersin.yuksel@enabel.be,damien.lagae@
 deploy_key_public: '{{ vault_deploy_key_public }}'
 deploy_key_private: '{{ vault_deploy_key_private }}'
 github_oauth_token: '{{ vault_github_oauth_token }}'
+
+# Slack vars
+slack_token: "{{ vault_slack_token }}"
+slack_domain: "{{ vault_slack_domain }}"
+slack_headline: "Ansistrano"
+slack_icon_url: "https://cdn4.iconfinder.com/data/icons/boy-hair-and-face/100/face6-512.png"
+slack_channel: "#dev"

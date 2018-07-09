@@ -1,4 +1,15 @@
 ---
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname }} | Check write permissions [{{ release_var_path }}]'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
+
 - name: Add write permissions
   file:
     state: directory

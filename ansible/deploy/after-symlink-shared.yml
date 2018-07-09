@@ -1,8 +1,30 @@
 ---
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname }} | Set up infrastructure-related parameters'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
+
 - name: Set up infrastructure-related parameters
   template:
     src: '{{ playbook_dir }}/templates/.env.j2'
     dest: '{{ ansistrano_release_path.stdout }}/.env'
+
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname }} | Install composer dependencies'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
 
 - name: Install Composer dependencies
   composer:
@@ -12,11 +34,33 @@
     working_dir: '{{ ansistrano_release_path.stdout }}'
     executable: '{{ php_path }}'
 
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname}} | Clear cache'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
+
 - name: Clear the cache
   command: '{{ release_console_path }} cache:clear --no-warmup --env={{ application_env }}'
 
 - name: Warm up the cache
   command: '{{ release_console_path }} cache:warmup --env={{ application_env }}'
+
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname }} | Check database & run migrations if needed'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
 
 - name: Create DB if not exists
   command: '{{ release_console_path }} doctrine:database:create --if-not-exists --env={{ application_env }}'
@@ -41,6 +85,17 @@
 #  args:
 #    chdir: '{{ ansistrano_release_path.stdout }}'
 
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname}} | Check RO permissions'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
+
 - name: Setup owner/permissions
   file:
     path: "{{ release_path }}"
@@ -61,6 +116,18 @@
   with_items:
     - '{{ release_var_path }}'
     - '{{ release_logs_path }}'
+
+- name: Send notification message via Slack all options
+  slack:
+    token: "{{ slack_token }}"
+    domain: "{{ slack_domain }}"
+    msg: 'Server: {{ ansible_hostname}} | Check SELinux & context'
+    username: "{{ slack_headline }}"
+    icon_url: "{{ slack_icon_url }}"
+    channel: "{{ slack_channel }}"
+    parse: 'none'
+  delegate_to: localhost
+  when: ansible_distribution == 'CentOS'
 
 - name: getting selinux status
   command: getenforce

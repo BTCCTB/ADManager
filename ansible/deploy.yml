@@ -22,6 +22,7 @@
     ansistrano_git_identity_key_path: "{{ playbook_dir }}/.ssh/id_rsa"
 
     # Ansistrano - Hooks: custom tasks if you need them
+    ansistrano_before_setup_tasks_file: "{{ playbook_dir }}/deploy/before-setup.yml"
     ansistrano_after_setup_tasks_file: "{{ playbook_dir }}/deploy/after-setup.yml"
     ansistrano_after_symlink_shared_tasks_file: "{{ playbook_dir }}/deploy/after-symlink-shared.yml"
     ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/deploy/before-symlink.yml"
