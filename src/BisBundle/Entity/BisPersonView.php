@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Class BisPersonView
  *
  * @package BisBundle\Entity
- * @ORM\Entity(repositoryClass="BisPersonViewRepository")
+ * @ORM\Entity(repositoryClass="BisBundle\Repository\BisPersonViewRepository")
  * @ORM\Table(name="bis_person_view")
  * @UniqueEntity(fields={"per_email"})
  *
@@ -270,6 +270,14 @@ class BisPersonView
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
             return $this->getCountryWorkplace()->getCouIsocode3letters();
+        }
+        return null;
+    }
+
+    public function getCountryFlag()
+    {
+        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+            return "<i class=\"flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) . "\" title=\"" . $this->getCountryWorkplace()->getCouName() . "\" alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>";
         }
         return null;
     }

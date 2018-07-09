@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class BisContractSf
  *
  * @package BisBundle\Entity
- * @ORM\Entity(repositoryClass="BisBundle\Entity\BisContractSfRepository")
+ * @ORM\Entity(repositoryClass="BisBundle\Repository\BisContractSfRepository")
  * @ORM\Table(name="bis_contract_sf")
  *
  * @author  Damien Lagae <damienlagae@gmail.com>

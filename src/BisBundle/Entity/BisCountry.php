@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Class BisCountry
  *
  * @package BisBundle\Entity
- * @ORM\Entity(repositoryClass="BisCountryRepository")
+ * @ORM\Entity(repositoryClass="BisBundle\Repository\BisCountryRepository")
  * @ORM\Table(name="bis_country")
  * @UniqueEntity(fields={"private $cou_isocode_int"})
  * @author  Damien Lagae <damienlagae@gmail.com>

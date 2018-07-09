@@ -13,6 +13,7 @@ use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
+use BisBundle\Service\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -197,5 +198,30 @@ class AccountController extends Controller
         }
 
         return $this->render('Account/checkPassword.html.twig', ['form' => $form->createView(), 'account' => $account]);
+    }
+
+    /**
+     * @Route("/detail/{id}", name="account_detail")
+     * @ParamConverter("id", class="App:Account")
+     * @IsGranted("ROLE_ADMIN")
+     * @Method({"GET"})
+     * @param Account         $account The account to test
+     * @param Request         $request The request (Form data)
+     * @param ActiveDirectory $ad      The Active Directory Service
+     * @param BisPersonView   $bisPersonView The BIS Person View Service
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailAction(Account $account, Request $request, ActiveDirectory $ad, BisPersonView $bisPersonView)
+    {
+        if (!empty($account->getEmail())) {
+            $adUser = $ad->getUser($account->getEmail());
+            $bisUser = $bisPersonView->getUser($account->getEmail());
+        } else {
+            $this->addFlash('danger', 'Can\'t do this action!');
+            return $this->redirectToRoute('account_list');
+        }
+
+        return $this->render('Account/detail.html.twig', ['account' => $account, 'adData' => $adUser, 'bisData' => $bisUser]);
     }
 }

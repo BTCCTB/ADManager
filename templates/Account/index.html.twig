@@ -34,6 +34,7 @@
                 <td>{{ account.lastLoginAt|date('d/m/Y H:i')|default('00/00/0000 00:00') }}</td>
                 <td class="text-right">
                     {% if account.employeeId is not empty %}
+                        <a href="{{ path('account_detail', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Show detail{% endtrans %}</a>
                         <a href="{{ path('account_check_password', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-info"><i class="fa fa-medkit" aria-hidden="true"></i> {% trans %}Test password{% endtrans %}</a>
                         <a href="{{ path('account_reset_password', {'employeeID': account.employeeId }) }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-redo-alt" aria-hidden="true"></i> {% trans %}Reset password{% endtrans %}</a>
                     {% endif %}
