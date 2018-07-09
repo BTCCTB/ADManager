@@ -13,7 +13,7 @@ use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
-use BisBundle\Service\BisPersonView;
+use BisBundle\Entity\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -207,20 +207,22 @@ class AccountController extends Controller
      * @Method({"GET"})
      * @param Account         $account          The account to test
      * @param ActiveDirectory $ad               The Active Directory Service
-     * @param BisPersonView   $bisPersonView    The BIS Person View Service
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(Account $account, ActiveDirectory $ad, BisPersonView $bisPersonView)
+    public function detailAction(Account $account, ActiveDirectory $ad)
     {
         if (!empty($account->getEmail())) {
             $adUser = $ad->getUser($account->getEmail());
-            $bisUser = $bisPersonView->getUser($account->getEmail());
+
+            $em = $this->get('doctrine.orm.bis_entity_manager');
+            $bisPersonViewRepository = $em->getRepository(BisPersonView::class);
+            $bisData = $bisPersonViewRepository->getUserData($account->getEmail());
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
             return $this->redirectToRoute('account_list');
         }
 
-        return $this->render('Account/detail.html.twig', ['account' => $account, 'adData' => $adUser, 'bisData' => $bisUser]);
+        return $this->render('Account/detail.html.twig', ['account' => $account, 'adData' => $adUser, 'bisData' => $bisData]);
     }
 }

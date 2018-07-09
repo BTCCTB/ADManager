@@ -42,6 +42,11 @@ class BisPersonSf
     private $perLastname;
 
     /**
+     * @ORM\Column(type="string", name="per_nickname", length=100)
+     */
+    private $perNickname;
+
+    /**
      * @ORM\Column(type="boolean", name="per_active")
      */
     private $perActive;
@@ -138,6 +143,17 @@ class BisPersonSf
     public function setPerLastname($perLastname)
     {
         $this->perLastname = $perLastname;
+        return $this;
+    }
+
+    public function getPerNickname()
+    {
+        return $this->perNickname;
+    }
+
+    public function setPerNickname($perNickname)
+    {
+        $this->perNickname = $perNickname;
         return $this;
     }
 

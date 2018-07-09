@@ -3,6 +3,11 @@
 namespace BisBundle\Repository;
 
 use Adldap\Models\User;
+use BisBundle\Entity\BisConjobSf;
+use BisBundle\Entity\BisContractSf;
+use BisBundle\Entity\BisCountry;
+use BisBundle\Entity\BisJobSf;
+use BisBundle\Entity\BisPersonSf;
 use BisBundle\Entity\BisPersonView;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -48,6 +53,87 @@ class BisPersonViewRepository extends EntityRepository
         } catch (NonUniqueResultException $e) {
             return null;
         }
+    }
+
+    /**
+     * Find a user by email in bis_person_sf
+     *
+     * @param string $email His email
+     *
+     * @return BisPersonView The user.
+     */
+    public function getUserData(string $email)
+    {
+        $bisPersonView = new BisPersonView();
+        $bisPersonView->setEmail($email);
+
+        $bisPersonRepository = $this->_em->getRepository(BisPersonSf::class);
+        $bisContractRepository = $this->_em->getRepository(BisContractSf::class);
+        $bisConJobRepository = $this->_em->getRepository(BisConjobSf::class);
+        $bisJobRepository = $this->_em->getRepository(BisJobSf::class);
+        $bisCountryRepository = $this->_em->getRepository(BisCountry::class);
+
+        // Get person info
+        $query = $bisPersonRepository->createQueryBuilder('bp')
+            ->where('bp.perEmail LIKE :email')
+            ->setParameter('email', $email)
+            ->getQuery();
+
+        $personData = $query->getOneOrNullResult();
+
+        if ($personData !== null) {
+            $bisPersonView
+                ->setId($personData->getPerId())
+                ->setFirstname($personData->getPerFirstname())
+                ->setLastname($personData->getPerLastname())
+                ->setNickname($personData->getPerNickname())
+                ->setTelephone($personData->getPerTelephone())
+                ->setSex($personData->getPerGender())
+                ->setLanguage($personData->getPerUsualLang())
+                ->setMobile($personData->getPerMobile())
+            ;
+
+            // Get contract Info
+            $query = $bisContractRepository->createQueryBuilder('bcon')
+                ->where('bcon.conPerId = :perId')
+                ->setParameter('perId', $bisPersonView->getId())
+                ->orderBy('bcon.conDateStart', 'DESC')
+                ->getQuery();
+
+            $contractDatas = $query->getResult();
+            if (count($contractDatas) !== 0) {
+                $contractData = $contractDatas[0];
+                $bisPersonView
+                    ->setDateContractStop($contractData->getConDateStop())
+                    ->setDateContractStart($contractData->getConDateStart())
+                    ->setActive($contractData->getConActive())
+                ;
+
+                $query = $bisConJobRepository->createQueryBuilder('bcj')
+                    ->where('bcj.fkConId = :conId')
+                    ->setParameter('conId', $contractData->getConId())
+                    ->getQuery();
+                $conJobData = $query->getOneOrNullResult();
+
+                if ($conJobData !== null) {
+                    $query = $bisJobRepository->createQueryBuilder('bj')
+                        ->where('bj.jobId = :jobId')
+                        ->setParameter('jobId', $conJobData->getFkJobId())
+                        ->getQuery();
+                    $jobData = $query->getOneOrNullResult();
+
+                    if ($jobData !== null) {
+                        $bisPersonView
+                            ->setFunction($jobData->getJobFunction())
+                            ->setCountryWorkplace($bisCountryRepository->findOneBy(['couIsocode3letters' => $jobData->getJobCountryWorkplace()]))
+                            ->setJobClass($jobData->getJobClass())
+                        ;
+                    }
+                }
+            }
+        }
+
+        return $bisPersonView;
     }
 
     /**
