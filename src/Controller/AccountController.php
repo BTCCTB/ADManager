@@ -205,14 +205,13 @@ class AccountController extends Controller
      * @ParamConverter("id", class="App:Account")
      * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
-     * @param Account         $account The account to test
-     * @param Request         $request The request (Form data)
-     * @param ActiveDirectory $ad      The Active Directory Service
-     * @param BisPersonView   $bisPersonView The BIS Person View Service
+     * @param Account         $account          The account to test
+     * @param ActiveDirectory $ad               The Active Directory Service
+     * @param BisPersonView   $bisPersonView    The BIS Person View Service
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(Account $account, Request $request, ActiveDirectory $ad, BisPersonView $bisPersonView)
+    public function detailAction(Account $account, ActiveDirectory $ad, BisPersonView $bisPersonView)
     {
         if (!empty($account->getEmail())) {
             $adUser = $ad->getUser($account->getEmail());
