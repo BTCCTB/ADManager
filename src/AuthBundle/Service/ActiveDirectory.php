@@ -1512,8 +1512,13 @@ class ActiveDirectory
             if (in_array('SMTP:' . $newEmail, $proxyAddresses) === false) {
                 $proxyAddresses[] = 'SMTP:' . $newEmail;
             }
-        }
 
+            $adUser->setEmail($newEmail)
+                ->setUserPrincipalName($newEmail)
+                ->setProxyAddresses($proxyAddresses);
+
+            $adUser->save();
+        }
         return $adUser;
     }
 }

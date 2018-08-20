@@ -269,16 +269,18 @@ class AccountController extends Controller
                     // Apply email change in AD
                     $adUser = $ad->findAndChangeEmail($account->getEmail(), $email, $data['keep_proxy']);
 
-                    if ($adUser !== null) {
+                    if ($adUser !== null && $adUser->getEmail() == $email) {
                         // Apply email change in LDAP
                         $bisDir->findAndChangeEmail($account->getEmail(), $email);
                         // Apply email change in User DB
                         $userRepository->changeEmail($account->getAccountName(), $email);
                         // Apply email change in Account DB
                         $account = $accountRepository->changeEmail($account, $email);
-                    }
 
-                    return $this->redirectToRoute('account_detail', ['id' => $account->getEmployeeId()]);
+                        return $this->redirectToRoute('account_detail', ['id' => $account->getEmployeeId()]);
+                    } else {
+                        $form->addError(new FormError('The email address can\' t be changed'));
+                    }
                 } else {
                     $form->get('new_email')->addError(new FormError('The new email address must be a valid Enabel email address [firstname.lastname@enabel.be]'));
                 }
