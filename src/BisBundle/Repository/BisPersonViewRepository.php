@@ -230,4 +230,16 @@ class BisPersonViewRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function getActiveUserByEmail()
+    {
+        $activeUsers = [];
+
+        foreach ($this->findAll() as $bisPersonView) {
+            /* @var bisPersonView $bisPersonView */
+            $activeUsers[] = $bisPersonView->getEmail();
+        }
+
+        return $activeUsers;
+    }
 }

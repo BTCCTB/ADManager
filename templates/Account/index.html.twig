@@ -16,7 +16,7 @@
             <th>{% trans %}Firstname{% endtrans %}</th>
             <th>{% trans %}Lastname{% endtrans %}</th>
             <th>{% trans %}Email{% endtrans %}</th>
-            <th>{% trans %}Account name{% endtrans %}</th>
+            {#<th>{% trans %}Account name{% endtrans %}</th>#}
             <th>{% trans %}Initial password{% endtrans %}</th>
             <th>{% trans %}Last login{% endtrans %}</th>
             <th class="text-right">{% trans %}Actions{% endtrans %} </th>
@@ -29,12 +29,13 @@
                 <td>{{ account.firstname }}</td>
                 <td>{{ account.lastname }}</td>
                 <td>{{ account.email }}</td>
-                <td>{{ account.accountName }}</td>
+                {#<td>{{ account.accountName }}</td>#}
                 <td>{{ account.generatedPassword | default('Not generated') }}</td>
                 <td>{{ account.lastLoginAt|date('d/m/Y H:i')|default('00/00/0000 00:00') }}</td>
                 <td class="text-right">
                     {% if account.employeeId is not empty %}
                         <a href="{{ path('account_detail', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Show detail{% endtrans %}</a>
+                        <a href="{{ path('account_change_email', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-edit" aria-hidden="true"></i> {% trans %}Change email{% endtrans %}</a>
                         <a href="{{ path('account_check_password', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-info"><i class="fa fa-medkit" aria-hidden="true"></i> {% trans %}Test password{% endtrans %}</a>
                         <a href="{{ path('account_reset_password', {'employeeID': account.employeeId }) }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-redo-alt" aria-hidden="true"></i> {% trans %}Reset password{% endtrans %}</a>
                     {% endif %}

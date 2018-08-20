@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include '_partial/flash.html.twig' %}
+
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-danger">
+                <p>{% trans %}Your need to update the email address in GO4HR before doing this modification.{% endtrans %}</p>
+                <p><a href="https://performancemanager5.successfactors.eu/xi/ui/pages/empfile/liveprofile.xhtml?selected_user={{ account.employeeId }}" class="text-danger" target="_blank"><i class="fa fa-chevron-right" aria-hidden="true"></i> {{ [account.lastname, account.firstname]|join(' ') }} in GO4HR</a></p>
+                <p>{% trans %}Current proxyAddresses:{% endtrans %}</p>
+                <ul>
+                    <li>{{ adData.proxyAddresses|join('</li><li>')|raw }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {{ form_row(form.new_email) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {{ form_row(form.keep_proxy) }}
+        </div>
+    </div>
+    <div class="row" style="padding-top: 1rem">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-danger"><i class="fa fa-key"></i> {% trans %}Change email{% endtrans %}</button>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}

@@ -57,4 +57,9 @@ class BisPersonView
     {
         return $this->repository->findAll();
     }
+
+    public function getActiveUserByEmail()
+    {
+        return $this->repository->getActiveUserByEmail();
+    }
 }

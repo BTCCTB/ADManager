@@ -2,12 +2,13 @@
 
 namespace AuthBundle\Command;
 
-use Adldap\Models\Attributes\AccountControl;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryNotification;
+use AuthBundle\Service\BisDir;
 use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -29,17 +30,24 @@ class AdTestCommand extends Command
     private $bisPersonView;
 
     /**
+     * @var BisDir
+     */
+    private $bisDir;
+
+    /**
      * AdSyncPhoneCommand constructor.
      *
      * @param ActiveDirectory             $activeDirectory Active directory Service
      * @param ActiveDirectoryNotification $activeDirectoryNotification
      * @param BisPersonView               $bisPersonView
+     * @param BisDir                      $bisDir
      */
-    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification, BisPersonView $bisPersonView)
+    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification, BisPersonView $bisPersonView, BisDir $bisDir)
     {
         $this->activeDirectory = $activeDirectory;
         $this->activeDirectoryNotification = $activeDirectoryNotification;
         $this->bisPersonView = $bisPersonView;
+        $this->bisDir = $bisDir;
         parent::__construct();
     }
 
@@ -75,33 +83,58 @@ class AdTestCommand extends Command
         $outputStyle = new OutputFormatterStyle('red', null, array('bold'));
         $output->getFormatter()->setStyle('warning', $outputStyle);
 
-//        $user = $this->activeDirectory->getUser($input->getArgument('email'));
-        $bisUsers = $this->bisPersonView->getCountryUsers();
+        $bisPersons = $this->bisPersonView->getAllUsers();
 
-        foreach ($bisUsers as $bisUser) {
-            if ($bisUser->getEmail() !== null) {
-                $user = $this->activeDirectory->getUser($bisUser->getEmail());
-                if ($user !== null) {
-                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
-                    $user->setAccountExpiry(null);
-                    $user->save();
-                    if (!$user->save()) {
-                        $output->writeln('<error> Unable to change User Account Control for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</error>');
-                    } else {
-                        $output->writeln('<info> User Account Control updated for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
-                    }
-                } else {
-                    $output->writeln('<error> User not found: ' . $bisUser->getEmail() . ' [' . $bisUser->getEmployeeId() . ']</error>');
-                }
-            } else {
-                $output->writeln('<warning> User without email : ' . $bisUser->getFirstname() . ' ' . $bisUser->getLastname() . ' [' . $bisUser->getEmployeeId() . ']</warning>');
-            }
+        $logs = $this->bisDir->enableFromBis($bisPersons);
 
+        $table = new Table($output);
+        $table->setHeaders([
+            'message',
+            'status',
+            'type',
+            'data',
+        ]);
+
+        $i = 0;
+        foreach ($logs as $log) {
+            $table->setRow($i, [
+                'message' => $log->getMessage(),
+                'status' => $log->getStatus(),
+                'type' => $log->getType(),
+                'data' => json_encode($log->getData()),
+            ]);
+            $i++;
         }
-
-        // Test something
-
-        // show result
-        //        $output->writeln('<info>User: ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
+        $table->render();
     }
+
+//        $user = $this->activeDirectory->getUser($input->getArgument('email'));
+    //        $bisUsers = $this->bisPersonView->getCountryUsers();
+    //
+    //        foreach ($bisUsers as $bisUser) {
+    //            if ($bisUser->getEmail() !== null) {
+    //                $user = $this->activeDirectory->getUser($bisUser->getEmail());
+    //                if ($user !== null) {
+    //                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+    //                    $user->setAccountExpiry(null);
+    //                    $user->save();
+    //                    if (!$user->save()) {
+    //                        $output->writeln('<error> Unable to change User Account Control for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</error>');
+    //                    } else {
+    //                        $output->writeln('<info> User Account Control updated for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
+    //                    }
+    //                } else {
+    //                    $output->writeln('<error> User not found: ' . $bisUser->getEmail() . ' [' . $bisUser->getEmployeeId() . ']</error>');
+    //                }
+    //            } else {
+    //                $output->writeln('<warning> User without email : ' . $bisUser->getFirstname() . ' ' . $bisUser->getLastname() . ' [' . $bisUser->getEmployeeId() . ']</warning>');
+    //            }
+    //
+    //        }
+
+    // Test something
+
+    // show result
+    //        $output->writeln('<info>User: ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
+    //    }
 }

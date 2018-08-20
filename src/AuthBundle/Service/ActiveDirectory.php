@@ -4,12 +4,14 @@ namespace AuthBundle\Service;
 
 use Adldap\Adldap;
 use Adldap\AdldapException;
+use Adldap\Configuration\DomainConfiguration;
 use Adldap\Connections\Provider;
 use Adldap\Models\Attributes\AccountControl;
 use Adldap\Models\Attributes\DistinguishedName;
 use Adldap\Models\OrganizationalUnit;
 use Adldap\Models\User;
 use Adldap\Models\UserPasswordPolicyException;
+use Adldap\Schemas\ActiveDirectory as AdldapActiveDirectory;
 use App\Service\Account;
 use BisBundle\Entity\BisPersonView;
 use Doctrine\ORM\EntityManager;
@@ -43,6 +45,11 @@ class ActiveDirectory
      */
     private $accountService;
 
+    /**
+     * @var BisDir
+     */
+    private $bisDir;
+
     public function __construct(
         EntityManager $em,
         string $hosts,
@@ -54,27 +61,33 @@ class ActiveDirectory
         bool $followReferrals = false,
         bool $useTls = true,
         bool $useSsl = true,
-        Account $accountService
+        Account $accountService,
+        BisDir $bisDir
     ) {
 
-        $adldap = new Adldap();
-        $adldap->addProvider([
-            'domain_controllers' => explode(',', $hosts),
+        $config = new DomainConfiguration([
+            'hosts' => explode(',', $hosts),
             'base_dn' => $baseDn,
             'account_suffix' => $accountSuffix,
-            'admin_username' => $adminUsername,
-            'admin_password' => $adminPassword,
+            'username' => $adminUsername,
+            'password' => $adminPassword,
+            'schema' => AdldapActiveDirectory::class,
             'port' => $port,
             'version' => 3,
             'follow_referrals' => $followReferrals,
             'use_tls' => $useTls,
             'use_ssl' => $useSsl,
-        ]);
+        ]
+        );
 
-        $this->activeDirectory = $adldap->connect();
+        $adldap = new Adldap();
+        $adldap->addProvider($config, 'AD');
+
+        $this->activeDirectory = $adldap->connect('AD');
         $this->em = $em;
         $this->baseDn = $baseDn;
         $this->accountService = $accountService;
+        $this->bisDir = $bisDir;
     }
 
     /**
@@ -125,6 +138,7 @@ class ActiveDirectory
         if (ActiveDirectoryHelper::checkPasswordComplexity($password) === true) {
             $user->setPassword($password);
             $this->accountService->updateCredentials($user, $password);
+            $this->bisDir->syncPassword($email, $password);
             return $user->save();
         }
         return false;
@@ -888,6 +902,7 @@ class ActiveDirectory
                             ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
                         );
                     }
+                    $this->bisDir->synchronize($user, $password);
                     return new ActiveDirectoryResponse(
                         "User '" . $bisUser->getEmail() . "' created with password '" . $password . "'",
                         ActiveDirectoryResponseStatus::DONE,
@@ -930,6 +945,7 @@ class ActiveDirectory
             }
             $adAccount->setAccountExpiry(null);
             if ($adAccount->save()) {
+                $this->bisDir->synchronize($adAccount);
                 return new ActiveDirectoryResponse(
                     "User '" . $adAccount->getEmail() . "' successfully enabled in Active Directory",
                     ActiveDirectoryResponseStatus::DONE,
@@ -1045,6 +1061,7 @@ class ActiveDirectory
 
             if (!empty($diffData)) {
                 if ($adAccount->save()) {
+                    $this->bisDir->synchronize($adAccount);
                     return new ActiveDirectoryResponse(
                         "User '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
                         ActiveDirectoryResponseStatus::DONE,
@@ -1107,6 +1124,7 @@ class ActiveDirectory
                         )
                     );
                 }
+                $this->bisDir->synchronize($adAccount);
                 return new ActiveDirectoryResponse(
                     "User '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
                     ActiveDirectoryResponseStatus::EXCEPTION,
@@ -1412,4 +1430,59 @@ class ActiveDirectory
         );
     }
 
+    /**
+     * Update email for a account
+     *
+     * @param User   $adAccount The user account
+     * @param String $newEmail  The new email address
+     * @param bool   $keepProxy Keep current proxy as secondary
+     *
+     * @return ActiveDirectoryResponse
+     */
+    public function changeEmail(User $adAccount, String $newEmail, $keepProxy = false)
+    {
+        // Get current email
+        $email = $adAccount->getEmail();
+
+        if ($email !== $newEmail) {
+            // Get current proxyAddresses
+            $proxyAddresses = $adAccount->getProxyAddresses();
+
+            // Create proxyAddress data
+            if ($keepProxy === true) {
+                foreach ($proxyAddresses as $key => $proxyAddress) {
+                    if (strpos($proxyAddress, 'SMTP:')) {
+                        $proxyAddresses[$key] = str_replace("SMTP:", 'smtp:', $proxyAddress);
+                    }
+                }
+            } else {
+                $proxyAddresses = [
+                    'SMTP:' . $newEmail,
+                ];
+            }
+
+            $adAccount->setEmail($newEmail)
+                ->setUserPrincipalName($newEmail)
+                ->setProxyAddresses($proxyAddresses);
+
+            if (!$adAccount->save()) {
+                return new ActiveDirectoryResponse(
+                    "Unable to set new email ['" . $newEmail . "']  for this user '" . $adAccount->getEmail() . "'",
+                    ActiveDirectoryResponseStatus::FAILED,
+                    ActiveDirectoryResponseType::UPDATE
+                );
+            }
+            return new ActiveDirectoryResponse(
+                "Email ['" . $newEmail . "'] for user '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
+                ActiveDirectoryResponseStatus::DONE,
+                ActiveDirectoryResponseType::UPDATE
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $adAccount->getEmail() . "' already up to date in Active Directory",
+            ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+            ActiveDirectoryResponseType::UPDATE
+        );
+    }
 }

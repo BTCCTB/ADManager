@@ -3,9 +3,11 @@
 namespace AuthBundle\Service;
 
 use Adldap\Adldap;
+use Adldap\Configuration\DomainConfiguration;
 use Adldap\Connections\Provider;
 use Adldap\Models\Entry;
 use Adldap\Models\User;
+use Adldap\Schemas\OpenLDAP;
 use AuthBundle\AuthBundle;
 use BisBundle\Entity\BisPersonView;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -45,21 +47,25 @@ class BisDir
         bool $useSsl = true
     ) {
 
-        $adldap = new Adldap();
-        $adldap->addProvider([
-            'domain_controllers' => explode(',', $hosts),
+        $config = new DomainConfiguration([
+            'hosts' => explode(',', $hosts),
             'base_dn' => $baseDn,
             'account_suffix' => $accountSuffix,
-            'admin_username' => $adminUsername,
-            'admin_password' => $adminPassword,
+            'username' => $adminUsername,
+            'password' => $adminPassword,
+            'schema' => OpenLDAP::class,
             'port' => $port,
             'version' => 3,
             'follow_referrals' => $followReferrals,
             'use_tls' => $useTls,
             'use_ssl' => $useSsl,
-        ]);
+        ]
+        );
 
-        $this->bisDir = $adldap->connect();
+        $adldap = new Adldap();
+        $adldap->addProvider($config, 'ldap');
+
+        $this->bisDir = $adldap->connect('ldap');
         $this->baseDn = $baseDn;
         $this->passwordEncoder = $passwordEncoder;
     }
@@ -520,5 +526,106 @@ class BisDir
             BisDirResponseType::MOVE,
             BisDirHelper::getDataEntry($entry)
         );
+    }
+
+    /**
+     * Remove inactive user from LDAP
+     *
+     * @param bisPersonView[] $bisPersons List of active users
+     *
+     * @return BisDirResponse[]
+     * @throws \Adldap\Models\ModelDoesNotExistException
+     */
+    public function disableFromBis($bisPersons)
+    {
+        $userDeleted = [];
+
+        // Get all users from LDAP
+        $ldapAccounts = $this->getAllUsers();
+
+        // Test each ldap account against BIS
+        foreach ($ldapAccounts as $ldapAccount) {
+            // Get email
+            $email = $ldapAccount->getFirstAttribute('mail');
+
+            // Check Enabel email
+            if (!empty($email) && (strpos($email, '@enabel.be') !== false)) {
+                // User exist in bis_person_view [active users]
+                if (!in_array($email, $bisPersons)) {
+                    // Retrieve LDAP account by email
+                    $ldapUser = $this->getUser($email);
+                    if ($ldapUser !== null) {
+                        // Collect account data for logging
+                        $data = BisDirHelper::getDataEntry($ldapUser);
+                        // Remove account from LDAP
+                        if ($ldapUser->delete()) {
+                            // User successfully deleted
+                            $userDeleted[] = new BisDirResponse(
+                                "User '" . $email . "' successfully deleted from LDAP",
+                                BisDirResponseStatus::DONE,
+                                BisDirResponseType::DELETE,
+                                $data
+                            );
+                        } else {
+                            // User can't be deleted
+                            $userDeleted[] = new BisDirResponse(
+                                "Unable to delete the user '" . $email . "' in LDAP",
+                                BisDirResponseStatus::FAILED,
+                                BisDirResponseType::DELETE,
+                                $data
+                            );
+                        }
+                    } else {
+                        // User not found
+                        $userDeleted[] = new BisDirResponse(
+                            "Unable to find a user for '" . $email . "' in LDAP",
+                            BisDirResponseStatus::EXCEPTION,
+                            BisDirResponseType::DELETE
+                        );
+                    }
+                }
+            }
+        }
+
+        return $userDeleted;
+    }
+
+    /**
+     * Create active GO4HR user in LDAP
+     *
+     * @param bisPersonView[] $bisPersons List of active users
+     *
+     * @return BisDirResponse[]
+     * @throws \Adldap\Models\ModelDoesNotExistException
+     */
+    public function enableFromBis($bisPersons)
+    {
+        $userEnabled = [];
+
+        // Test each bis_person_view user against LDAP
+        foreach ($bisPersons as $bisPersonView) {
+            // Get emails
+            $email = $bisPersonView->getEmail();
+
+            // Check Enabel email
+            if (!empty($email) && (strpos($email, '@enabel.be') !== false)) {
+                // Retrieve LDAP account by email
+                $ldapUser = $this->getUser($email);
+                if ($ldapUser === null) {
+                    // Create LDAP account
+                    $userEnabled[] = $this->createEntryFromBis($bisPersonView);
+                } else {
+                    // User exist !
+                    $userEnabled[] = new BisDirResponse(
+                        "User '" . $email . "' already in LDAP",
+                        BisDirResponseStatus::NOTHING_TO_DO,
+                        BisDirResponseType::CREATE,
+                        BisDirHelper::getDataEntry($ldapUser)
+                    );
+                }
+            }
+        }
+
+        return $userEnabled;
     }
 }
