@@ -8,6 +8,7 @@ use App\Form\ActionAuthType;
 use App\Form\ChangeEmailType;
 use App\Form\ChangePasswordType;
 use App\Repository\AccountRepository;
+use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
 use App\Service\SecurityAudit;
 use AuthBundle\Service\ActiveDirectory;
@@ -235,26 +236,27 @@ class AccountController extends Controller
      * @IsGranted("ROLE_ADMIN")
      * @Method({"GET","POST"})
      *
-     * @param Account         $account The account to test
-     * @param Request         $request
-     * @param ActiveDirectory $ad      The Active Directory Service
-     * @param BisDir          $bisDir  The LDAP Service
+     * @param Account           $account The account to test
+     * @param Request           $request
+     * @param ActiveDirectory   $ad      The Active Directory Service
+     * @param BisDir            $bisDir  The LDAP Service
+     * @param UserRepository    $userRepository
+     * @param AccountRepository $accountRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function changeEmailAction(Account $account, Request $request, ActiveDirectory $ad, BisDir $bisDir)
+    public function changeEmailAction(Account $account, Request $request, ActiveDirectory $ad, BisDir $bisDir, UserRepository $userRepository, AccountRepository $accountRepository)
     {
         if (!empty($account->getEmail())) {
-            $adUser = $ad->getUser($account->getEmail());
-            $ldapUser = $bisDir->getUser($account->getEmail());
             $form = $this->createForm(ChangeEmailType::class);
             $form->handleRequest($request);
+            $adData = $ad->getUser($account->getEmail());
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $data = $form->getData();
-                $em = $this->getDoctrine()->getManager();
-//                dump($data);exit();
-                //TODO: check @enabel.be
                 $emailStringRule = '((?:[a-z][a-z]+))'; // Firstname
                 $emailStringRule .= '(\\.)'; // Separator
                 $emailStringRule .= '((?:[a-z][a-z]+))'; // Lastname
@@ -264,50 +266,19 @@ class AccountController extends Controller
                     // sanitize email
                     $email = strtolower(trim($data['new_email']));
 
-                    // Check proxy
-                    $proxyAddresses = [];
-                    if ($data['keep_proxy']) {
-                        $proxyAddresses = str_replace('SMTP:', 'smtp:', $adUser->getProxyAddresses());
-                    }
-                    // Add new email to proxy as primary email O365
-                    $proxyAddresses[] = 'SMTP:' . $email;
-
-                    // Apply email change in account
-                    $account->setEmail($email);
-                    $account->setUserPrincipalName($email);
-                    $account->setEmailContact($email);
-                    $em->persist($account);
-                    $em->flush();
-
-                    // Apply email change in user
-                    $user = $em->getRepository(\App\Entity\User::class)->findOneBy(['accountName' => $account->getAccountName()]);
-                    $user->setEmail($email);
-                    $em->persist($user);
-                    $em->flush();
-
                     // Apply email change in AD
-                    $adUser
-                        ->setEmail($email)
-                        ->setUserPrincipalName($email)
-                        ->setProxyAddresses($proxyAddresses)
-                    ;
-                    $adUser->save();
+                    $adUser = $ad->findAndChangeEmail($account->getEmail(), $email, $data['keep_proxy']);
 
-                    // Apply email change in LDAP
-                    if ($ldapUser !== null) {
-                        $ldapUser
-                            ->setAttribute('mail', $email)
-                            ->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $email));
-                        $ldapUser->save();
-                        $bisDir->moveUser($adUser, $ldapUser);
-                    } else {
-                        // Not found in LDAP, let's create it! May be later :D
-                        // $bisDir->createEntry($adUser);
+                    if ($adUser !== null) {
+                        // Apply email change in LDAP
+                        $bisDir->findAndChangeEmail($account->getEmail(), $email);
+                        // Apply email change in User DB
+                        $userRepository->changeEmail($account->getAccountName(), $email);
+                        // Apply email change in Account DB
+                        $account = $accountRepository->changeEmail($account, $email);
                     }
 
-                    //TODO: redirect to detail
                     return $this->redirectToRoute('account_detail', ['id' => $account->getEmployeeId()]);
-
                 } else {
                     $form->get('new_email')->addError(new FormError('The new email address must be a valid Enabel email address [firstname.lastname@enabel.be]'));
                 }
@@ -317,6 +288,6 @@ class AccountController extends Controller
             return $this->redirectToRoute('account_list');
         }
 
-        return $this->render('Account/changeEmail.html.twig', ['form' => $form->createView(), 'account' => $account, 'adData' => $adUser]);
+        return $this->render('Account/changeEmail.html.twig', ['form' => $form->createView(), 'account' => $account, 'adData' => $adData]);
     }
 }

@@ -57,6 +57,7 @@
 
         <!-- covered by Squiz FunctionDeclarationSniff -->
         <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
+        <exclude name="PEAR.Functions.ValidDefaultValue.NotAtEnd"/>
     </rule>
 
     <!-- Don't enforce Zend's private member underscores -->
@@ -99,6 +100,7 @@
             <property name="ignoreBlankLines" value="false"/>
         </properties>
     </rule>
+
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
         <severity>5</severity>
     </rule>

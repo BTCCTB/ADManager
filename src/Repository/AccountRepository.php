@@ -55,7 +55,6 @@ class AccountRepository extends ServiceEntityRepository
             $this->_em->persist($user);
             $this->_em->flush();
         }
-
     }
 
     public function setGeneratedPassword(String $email, String $password)
@@ -66,5 +65,25 @@ class AccountRepository extends ServiceEntityRepository
             $this->_em->persist($user);
             $this->_em->flush();
         }
+    }
+
+    /**
+     * @param Account $account
+     * @param String  $newEmail
+     *
+     * @return Account
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function changeEmail(Account $account, String $newEmail): Account
+    {
+        $account
+            ->setEmail($newEmail)
+            ->setUserPrincipalName($newEmail)
+            ->setEmailContact($newEmail);
+        $this->_em->persist($account);
+        $this->_em->flush();
+
+        return $account;
     }
 }

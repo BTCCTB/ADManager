@@ -24,6 +24,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
  *
  * @package AuthBundle\Service
  * @author  Damien Lagae <damienlagae@gmail.com>
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class ActiveDirectory
 {
@@ -64,20 +65,20 @@ class ActiveDirectory
         Account $accountService,
         BisDir $bisDir
     ) {
-
-        $config = new DomainConfiguration([
-            'hosts' => explode(',', $hosts),
-            'base_dn' => $baseDn,
-            'account_suffix' => $accountSuffix,
-            'username' => $adminUsername,
-            'password' => $adminPassword,
-            'schema' => AdldapActiveDirectory::class,
-            'port' => $port,
-            'version' => 3,
-            'follow_referrals' => $followReferrals,
-            'use_tls' => $useTls,
-            'use_ssl' => $useSsl,
-        ]
+        $config = new DomainConfiguration(
+            [
+                'hosts' => explode(',', $hosts),
+                'base_dn' => $baseDn,
+                'account_suffix' => $accountSuffix,
+                'username' => $adminUsername,
+                'password' => $adminPassword,
+                'schema' => AdldapActiveDirectory::class,
+                'port' => $port,
+                'version' => 3,
+                'follow_referrals' => $followReferrals,
+                'use_tls' => $useTls,
+                'use_ssl' => $useSsl,
+            ]
         );
 
         $adldap = new Adldap();
@@ -1484,5 +1485,35 @@ class ActiveDirectory
             ActiveDirectoryResponseStatus::NOTHING_TO_DO,
             ActiveDirectoryResponseType::UPDATE
         );
+    }
+
+    /**
+     * @param string $email
+     * @param string $newEmail
+     * @param        $keepProxy
+     *
+     * @return null|User
+     */
+    public function findAndChangeEmail(string $email, string $newEmail, $keepProxy)
+    {
+        $adUser = $this->getUser($email);
+
+        if ($adUser !== null) {
+            // Check proxy
+            $proxyAddresses = [];
+            if ($keepProxy) {
+                $proxyAddresses = str_replace('SMTP:', 'smtp:', $adUser->getProxyAddresses());
+                $key = array_search('smtp:' . $newEmail, $proxyAddresses);
+                if ($key !== false) {
+                    unset($proxyAddresses[$key]);
+                }
+            }
+            // Add new email to proxy as primary email O365
+            if (in_array('SMTP:' . $newEmail, $proxyAddresses) === false) {
+                $proxyAddresses[] = 'SMTP:' . $newEmail;
+            }
+        }
+
+        return $adUser;
     }
 }

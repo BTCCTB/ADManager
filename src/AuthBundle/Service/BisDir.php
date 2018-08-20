@@ -46,20 +46,20 @@ class BisDir
         bool $useTls = true,
         bool $useSsl = true
     ) {
-
-        $config = new DomainConfiguration([
-            'hosts' => explode(',', $hosts),
-            'base_dn' => $baseDn,
-            'account_suffix' => $accountSuffix,
-            'username' => $adminUsername,
-            'password' => $adminPassword,
-            'schema' => OpenLDAP::class,
-            'port' => $port,
-            'version' => 3,
-            'follow_referrals' => $followReferrals,
-            'use_tls' => $useTls,
-            'use_ssl' => $useSsl,
-        ]
+        $config = new DomainConfiguration(
+            [
+                'hosts' => explode(',', $hosts),
+                'base_dn' => $baseDn,
+                'account_suffix' => $accountSuffix,
+                'username' => $adminUsername,
+                'password' => $adminPassword,
+                'schema' => OpenLDAP::class,
+                'port' => $port,
+                'version' => 3,
+                'follow_referrals' => $followReferrals,
+                'use_tls' => $useTls,
+                'use_ssl' => $useSsl,
+            ]
         );
 
         $adldap = new Adldap();
@@ -627,5 +627,24 @@ class BisDir
         }
 
         return $userEnabled;
+    }
+
+    public function findAndChangeEmail(string $email, string $newEmail)
+    {
+        $ldapUser = $this->getUser($email);
+
+        if ($ldapUser !== null) {
+            // Change attribute
+            $ldapUser
+                ->setAttribute('mail', $newEmail)
+                ->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $newEmail));
+            $ldapUser->save();
+
+            // Rename user to rewrite uid & dn
+            $newRdn = 'uid=' . $newEmail;
+            $ldapUser->rename($newRdn);
+        }
+
+        return $ldapUser;
     }
 }

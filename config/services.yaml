@@ -125,3 +125,6 @@ services:
                 $fromAddress: '%env(resolve:NOTIFICATION_FROM)%'
             public: true
 
+    App\Repository\UserRepository:
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['App\Entity\User']

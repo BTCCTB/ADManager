@@ -11,11 +11,41 @@
     <rule ref="rulesets/codesize.xml" >
         <!-- configured below -->
         <exclude name="ExcessiveParameterList" />
+        <exclude name="CyclomaticComplexity" />
+        <exclude name="ExcessiveClassLength" />
+        <exclude name="TooManyMethods" />
+        <exclude name="TooManyPublicMethods" />
+        <exclude name="ExcessiveClassComplexity" />
     </rule>
     <!-- Increase maximum mumber of parameters for a new object -->
     <rule ref="rulesets/codesize.xml/ExcessiveParameterList">
         <properties>
             <property name="minimum" value="15" description="Maximum number of acceptable parameters." />
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+        <properties>
+            <property name="reportLevel" value="15" description="The Cyclomatic Complexity reporting threshold"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
+        <properties>
+            <property name="minimum" value="1500" description="The class size reporting threshold" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="40" description="The method count reporting threshold" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
+        <properties>
+            <property name="maxmethods" value="30" description="The method count reporting threshold" />
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
+        <properties>
+            <property name="maximum" value="100" description="The maximum WMC tolerable for a class" />
         </properties>
     </rule>
 
@@ -45,7 +75,7 @@
     <!-- Exclude $em, $id and $i from the short variables rule -->
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
-            <property name="exceptions" value="id,i,em,ad,dn,ou,to" />
+            <property name="exceptions" value="id,i,em,ad,dn,ou,to,c" />
         </properties>
     </rule>
     <!-- Allow a longer length for long variables rule -->
