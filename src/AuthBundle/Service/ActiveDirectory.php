@@ -1521,6 +1521,4 @@ class ActiveDirectory
         }
         return $adUser;
     }
-    public function getAd()
-    {return $this->activeDirectory;}
 }

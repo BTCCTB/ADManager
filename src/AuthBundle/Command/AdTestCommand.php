@@ -47,8 +47,13 @@ class AdTestCommand extends Command
      * @param BisPersonView               $bisPersonView
      * @param BisDir                      $bisDir
      */
-    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification, BisPersonView $bisPersonView, BisDir $bisDir, ActiveDirectoryHelper $activeDirectoryHelper)
-    {
+    public function __construct(
+        ActiveDirectory $activeDirectory,
+        ActiveDirectoryNotification $activeDirectoryNotification,
+        BisPersonView $bisPersonView,
+        BisDir $bisDir,
+        ActiveDirectoryHelper $activeDirectoryHelper
+    ) {
         $this->activeDirectory = $activeDirectory;
         $this->activeDirectoryNotification = $activeDirectoryNotification;
         $this->bisPersonView = $bisPersonView;
@@ -89,15 +94,6 @@ class AdTestCommand extends Command
         $outputStyle = new OutputFormatterStyle('red', null, array('bold'));
         $output->getFormatter()->setStyle('warning', $outputStyle);
         $email = 'damien.lagae@enabel.be';
-//        $bisPerson = $this->bisPersonView->getUser($email);
-        //$adUser = $this->activeDirectory->getUser($email);
-        //        $adUser = $this->activeDirectory->getAd()->make()->user();
-        // Get the correct organizational unit
-        //        $organizationalUnit = $this->activeDirectory->checkOuExistByName($bisPerson->getCountry());
-        //        $adUser = $this->activeDirectoryHelper::bisPersonToAdUser($bisPerson, $adUser, $organizationalUnit);
-        //        var_dump($adUser);
-        //        list($adAccount, $diffData) = $this->activeDirectoryHelper::bisPersonUpdateAdUser($bisPerson, $adUser);
-        //        var_dump($diffData);
 
         $logs[] = $this->activeDirectory->updateAccount($email);
 
