@@ -16,6 +16,8 @@ ad_user: '{{ vault_ad_user }}'
 ad_password: '{{ vault_ad_password }}'
 ad_account_suffix: 'ad4dev.local'
 ad_mail_domain: 'enabel.be'
+ad_home_drive: 'U:'
+ad_home_base_directory: '\\ad4dev.local\dfs1\homes$\'
 
 # AD Notification vars
 ad_notification_from: 'noreply@enabel.be'

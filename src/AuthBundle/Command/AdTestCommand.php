@@ -3,6 +3,7 @@
 namespace AuthBundle\Command;
 
 use AuthBundle\Service\ActiveDirectory;
+use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\BisDir;
 use BisBundle\Service\BisPersonView;
@@ -33,6 +34,10 @@ class AdTestCommand extends Command
      * @var BisDir
      */
     private $bisDir;
+    /**
+     * @var ActiveDirectoryHelper
+     */
+    private $activeDirectoryHelper;
 
     /**
      * AdSyncPhoneCommand constructor.
@@ -42,12 +47,13 @@ class AdTestCommand extends Command
      * @param BisPersonView               $bisPersonView
      * @param BisDir                      $bisDir
      */
-    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification, BisPersonView $bisPersonView, BisDir $bisDir)
+    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification, BisPersonView $bisPersonView, BisDir $bisDir, ActiveDirectoryHelper $activeDirectoryHelper)
     {
         $this->activeDirectory = $activeDirectory;
         $this->activeDirectoryNotification = $activeDirectoryNotification;
         $this->bisPersonView = $bisPersonView;
         $this->bisDir = $bisDir;
+        $this->activeDirectoryHelper = $activeDirectoryHelper;
         parent::__construct();
     }
 
@@ -82,10 +88,18 @@ class AdTestCommand extends Command
     {
         $outputStyle = new OutputFormatterStyle('red', null, array('bold'));
         $output->getFormatter()->setStyle('warning', $outputStyle);
+        $email = 'damien.lagae@enabel.be';
+//        $bisPerson = $this->bisPersonView->getUser($email);
+        //$adUser = $this->activeDirectory->getUser($email);
+        //        $adUser = $this->activeDirectory->getAd()->make()->user();
+        // Get the correct organizational unit
+        //        $organizationalUnit = $this->activeDirectory->checkOuExistByName($bisPerson->getCountry());
+        //        $adUser = $this->activeDirectoryHelper::bisPersonToAdUser($bisPerson, $adUser, $organizationalUnit);
+        //        var_dump($adUser);
+        //        list($adAccount, $diffData) = $this->activeDirectoryHelper::bisPersonUpdateAdUser($bisPerson, $adUser);
+        //        var_dump($diffData);
 
-        $bisPersons = $this->bisPersonView->getAllUsers();
-
-        $logs = $this->bisDir->enableFromBis($bisPersons);
+        $logs[] = $this->activeDirectory->updateAccount($email);
 
         $table = new Table($output);
         $table->setHeaders([
@@ -107,34 +121,4 @@ class AdTestCommand extends Command
         }
         $table->render();
     }
-
-//        $user = $this->activeDirectory->getUser($input->getArgument('email'));
-    //        $bisUsers = $this->bisPersonView->getCountryUsers();
-    //
-    //        foreach ($bisUsers as $bisUser) {
-    //            if ($bisUser->getEmail() !== null) {
-    //                $user = $this->activeDirectory->getUser($bisUser->getEmail());
-    //                if ($user !== null) {
-    //                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
-    //                    $user->setAccountExpiry(null);
-    //                    $user->save();
-    //                    if (!$user->save()) {
-    //                        $output->writeln('<error> Unable to change User Account Control for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</error>');
-    //                    } else {
-    //                        $output->writeln('<info> User Account Control updated for this user : ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
-    //                    }
-    //                } else {
-    //                    $output->writeln('<error> User not found: ' . $bisUser->getEmail() . ' [' . $bisUser->getEmployeeId() . ']</error>');
-    //                }
-    //            } else {
-    //                $output->writeln('<warning> User without email : ' . $bisUser->getFirstname() . ' ' . $bisUser->getLastname() . ' [' . $bisUser->getEmployeeId() . ']</warning>');
-    //            }
-    //
-    //        }
-
-    // Test something
-
-    // show result
-    //        $output->writeln('<info>User: ' . $user->getEmail() . ' [' . $user->getEmployeeId() . ']</info>');
-    //    }
 }

@@ -40,6 +40,7 @@ class ActiveDirectoryHelper
             $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
         }
         $user->setCompany($bisPersonView->getCompany());
+        $user->setDepartment($bisPersonView->getDepartment());
 //        $user->setCountry($bisPersonView->getCountry());
         $user->setAttribute('c', $bisPersonView->getAttribute('c'));
         $user->setAttribute('co', $bisPersonView->getAttribute('co'));
@@ -64,6 +65,11 @@ class ActiveDirectoryHelper
         }
         if (!empty($mobile)) {
             $user->setFirstAttribute('mobile', $mobile);
+        }
+        // For HQ only set HomeDrive
+        if ($user->getCountry() === 'BE') {
+            $user->setHomeDirectory(getenv('HOME_BASE_DIRECTORY') . $user->getAccountName());
+            $user->setHomeDrive(getenv('HOME_DRIVE'));
         }
 
         $dn = new DistinguishedName();
@@ -426,6 +432,27 @@ class ActiveDirectoryHelper
                 'original' => $user->getFirstAttribute('mobile'),
             ];
             $user->setFirstAttribute('mobile', $mobile);
+        }
+
+        // Update home drive for HQ users
+        if ($user->getCountry() === 'BE') {
+            // Set home directory only if empty not update !!!
+            if (empty($user->getHomeDirectory())) {
+                $homedirectory = getenv('HOME_BASE_DIRECTORY') . $user->getAccountName();
+                $homedrive = getenv('HOME_DRIVE');
+                $diffData['homedrive'] = [
+                    'attribute' => 'homedrive',
+                    'value' => $homedrive,
+                    'original' => $user->getHomeDrive(),
+                ];
+                $diffData['homedirectory'] = [
+                    'attribute' => 'homedirectory',
+                    'value' => $homedirectory,
+                    'original' => $user->getHomeDirectory(),
+                ];
+                $user->setHomeDirectory($homedirectory);
+                $user->setHomeDrive($homedrive);
+            }
         }
 
         return [$user, $diffData];

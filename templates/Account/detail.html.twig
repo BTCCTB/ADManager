@@ -75,6 +75,10 @@
                                 <td>{{ adData.distinguishedName }}</td>
                             </tr>
                             <tr>
+                                <th>Home Drive</th>
+                                <td>{{ adData.homeDrive }} => {{ adData.homeDirectory }}</td>
+                            </tr>
+                            <tr>
                                 <th>Bad password count</th>
                                 <td>{{ adData.badPasswordCount }}</td>
                             </tr>
@@ -108,7 +112,7 @@
                             </tr>
                             <tr>
                                 <th>Personal token</th>
-                                <td>{{ account.token|raw }}</td>
+                                <td><small>{{ account.token|raw }}</small></td>
                             </tr>
                         </tbody>
                     </table>
