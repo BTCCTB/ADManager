@@ -65,12 +65,12 @@
 - name: Create DB if not exists
   command: '{{ release_console_path }} doctrine:database:create --if-not-exists --env={{ application_env }}'
   register: create_db_output
-  changed_when: not create_db_output.stdout|search('already exists. Skipped')
+  changed_when: not create_db_output.stdout is search('already exists. Skipped')
 
 - name: Run migrations
   command: '{{ release_console_path }} doctrine:migrations:migrate --no-interaction --env={{ application_env }}'
   register: run_migrations_output
-  changed_when: not run_migrations_output.stdout|search('No migrations to execute')
+  changed_when: not run_migrations_output.stdout is search('No migrations to execute')
 
 - name: Install bundle assets
   command: '{{ release_console_path }} assets:install --symlink --env={{ application_env }}'
@@ -136,23 +136,23 @@
 
 - name: Configure SELinux RO
   action: "command semanage fcontext -a -t httpd_sys_content_t '{{ release_path }}/(/.*)?'"
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Exec restorecon RO
   action: "command restorecon -Rv {{ release_path }}"
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Configure SELinux RW
   action: "command semanage fcontext -a -t httpd_sys_rw_content_t '{{ release_var_path }}(/.*)?'"
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Configure SELinux LOG
   action: "command semanage fcontext -a -t httpd_log_t '{{ release_logs_path }}(/.*)?'"
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Exec restorecon
   action: "command restorecon -Rv {{ item }}"
   with_items:
     - "{{ release_var_path }}"
     - "{{ release_logs_path }}"
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"

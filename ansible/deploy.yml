@@ -9,6 +9,7 @@
 
   vars:
     # Ansistrano vars
+    ansistrano_allow_anonymous_stats: false
     ansistrano_deploy_to: "{{ project_deploy_dir }}"
     ansistrano_keep_releases: 3
     ansistrano_shared_paths:

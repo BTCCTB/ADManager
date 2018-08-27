@@ -24,7 +24,7 @@
     name: "httpd_can_sendmail"
     state: yes
     persistent: yes
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Allow Apache to send mail on tcp port 2525
   seport:
@@ -32,7 +32,7 @@
     proto: "tcp"
     setype: "smtp_port_t"
     state: present
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Allow Apache to send mail on tcp port 587
   seport:
@@ -40,7 +40,7 @@
     proto: "tcp"
     setype: "smtp_port_t"
     state: present
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Allow Apache to send mail on tcp port 25
   seport:
@@ -48,19 +48,19 @@
     proto: "tcp"
     setype: "smtp_port_t"
     state: present
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Configure Apache so it is able to connect to BIS
   seboolean:
     name: "httpd_can_network_connect_db"
     state: yes
     persistent: yes
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Configure Apache so it is able to connect to LDAP/AD
   seboolean:
     name: "httpd_can_connect_ldap"
     state: yes
     persistent: yes
-  when: "ansible_distribution == 'CentOS' and not selinux.stdout|search('Disabled')"
+  when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
