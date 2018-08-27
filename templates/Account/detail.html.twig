@@ -76,7 +76,7 @@
                             </tr>
                             <tr>
                                 <th>Home Drive</th>
-                                <td>{{ [adData.homeDrive, adData.homeDirectory]|join|default('N.C.') }}</td>
+                                <td>{{ [adData.homeDrive, adData.homeDirectory]|join(' => ')|default('N.C.') }}</td>
                             </tr>
                             <tr>
                                 <th>Bad password count</th>
