@@ -39,6 +39,7 @@ class ActiveDirectoryHelper
         if (!empty($bisPersonView->getBusinessCategory())) {
             $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
         }
+        $user->setAttribute('businessRoles', $bisPersonView->getBusinessRoles());
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
 //        $user->setCountry($bisPersonView->getCountry());
@@ -200,6 +201,7 @@ class ActiveDirectoryHelper
                 'LastName' => $bisPersonView->getLastname(),
                 'Initials' => $bisPersonView->getInitials(),
                 'BusinessCategory' => $bisPersonView->getBusinessCategory(),
+                'BusinessRoles' => $bisPersonView->getBusinessRoles(),
                 'Department' => $bisPersonView->getDepartment(),
                 'Company' => $bisPersonView->getCompany(),
                 'Country' => $bisPersonView->getCountry(),
@@ -244,6 +246,7 @@ class ActiveDirectoryHelper
                 'LastName' => $adUser->getLastName(),
                 'Initials' => $adUser->getInitials(),
                 'BusinessCategory' => $adUser->getAttribute('BusinessCategory'),
+                'BusinessRoles' => $adUser->getAttribute('BusinessRoles'),
                 'Department' => $adUser->getDepartment(),
                 'Company' => 'Enabel',
                 'Country' => $adUser->getCountry(),
@@ -313,8 +316,11 @@ class ActiveDirectoryHelper
             ];
             $user->setInitials($bisPersonView->getInitials());
         }
-        if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('BusinessCategory')) {
-            $user->setAttribute('BusinessCategory', $bisPersonView->getBusinessCategory());
+        if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('businessCategory')) {
+            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
+        }
+        if ($bisPersonView->getBusinessRoles() !== $user->getFirstAttribute('businessRoles')) {
+            $user->setAttribute('businessRoles', $bisPersonView->getBusinessRoles());
         }
         if ($bisPersonView->getDepartment() !== $user->getDepartment()) {
             $diffData['department'] = [

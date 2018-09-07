@@ -574,13 +574,11 @@ class ActiveDirectory
         /**
          * @var BisPersonView[] $users
          */
-        $users = $this->em->getRepository('BisBundle:BisPersonView')->findAllFieldUser();
+        $users = $this->em->getRepository('BisBundle:BisPersonView')->findAll();
         foreach ($users as $user) {
             $adAccount = $this->checkUserExistByEmail($user->getEmail());
             if ($adAccount !== false) {
-                $sex = $user->getSex();
-                $adAccount->setInitials($sex);
-                $adAccount->setAttribute('businessCategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()));
+                $adAccount->setAttribute('businessRoles', $user->getJobClass());
                 if (!$adAccount->save()) {
                     $logs[] = [
                         'user' => $adAccount->getUserPrincipalName(),

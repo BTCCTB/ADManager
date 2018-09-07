@@ -95,24 +95,17 @@ class AdTestCommand extends Command
         $output->getFormatter()->setStyle('warning', $outputStyle);
         $email = 'damien.lagae@enabel.be';
 
-        $logs[] = $this->activeDirectory->updateAccount($email);
+        $logs[] = $this->activeDirectory->fixAttributes();
 
         $table = new Table($output);
         $table->setHeaders([
-            'message',
+            'user',
             'status',
-            'type',
-            'data',
         ]);
 
         $i = 0;
         foreach ($logs as $log) {
-            $table->setRow($i, [
-                'message' => $log->getMessage(),
-                'status' => $log->getStatus(),
-                'type' => $log->getType(),
-                'data' => json_encode($log->getData()),
-            ]);
+            $table->setRow($i, $log);
             $i++;
         }
         $table->render();

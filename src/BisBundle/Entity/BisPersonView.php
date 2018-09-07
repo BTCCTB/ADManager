@@ -277,7 +277,9 @@ class BisPersonView
     public function getCountryFlag()
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-            return "<i class=\"flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) . "\" title=\"" . $this->getCountryWorkplace()->getCouName() . "\" alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>";
+            return "<i class=\"flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) . "\" " .
+            "title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
+            "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>";
         }
         return null;
     }
@@ -515,6 +517,11 @@ class BisPersonView
     public function getBusinessCategory()
     {
         return str_replace('@enabel.be', '@btcctb.org', $this->getEmail());
+    }
+
+    public function getBusinessRoles()
+    {
+        return $this->getJobClass();
     }
 
     public function getNickname()
