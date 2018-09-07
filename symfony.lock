@@ -128,9 +128,6 @@
     "illuminate/contracts": {
         "version": "v5.4.36"
     },
-    "illuminate/support": {
-        "version": "v5.4.36"
-    },
     "jakub-onderka/php-console-color": {
         "version": "0.1"
     },
@@ -148,9 +145,6 @@
     },
     "monolog/monolog": {
         "version": "1.23.0"
-    },
-    "nesbot/carbon": {
-        "version": "1.22.1"
     },
     "nikic/php-parser": {
         "version": "v3.1.4"
@@ -472,6 +466,9 @@
     },
     "symfony/yaml": {
         "version": "v4.0.4"
+    },
+    "tightenco/collect": {
+        "version": "v5.6.33"
     },
     "twig/twig": {
         "version": "v2.4.4"
