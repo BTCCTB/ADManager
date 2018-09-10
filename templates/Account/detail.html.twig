@@ -57,6 +57,68 @@
                     </table>
                 </div>
             </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-envelope-open"></i> Email information
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless table-sm" style="border: 0px none">
+                        <tbody>
+                        <tr>
+                            <th>Principal email</th>
+                            <td>{{ bisData.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Proxy addresses</th>
+                            <td>{{ adData.proxyAddresses|join('<br>')|raw }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-briefcase"></i> Job information
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless table-sm" style="border: 0px none">
+                        <tbody>
+                        <tr>
+                            <th>Country workplace</th>
+                            <td>{{ bisData.countryFlag|raw }} {{ bisData.department }}</td>
+                        </tr>
+                        <tr>
+                            <th>Function</th>
+                            <td>{{ bisData.function }}</td>
+                        </tr>
+                        <tr>
+                            <th>Type</th>
+                            <td>{{ bisData.jobClass }}</td>
+                        </tr>
+                        <tr>
+                            <th>In contract</th>
+                            <td>
+                                {% if bisData.perActive %}
+                                    <span class="badge badge-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Yes</span>
+                                {% else %}
+                                    <span class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i> No</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Start date</th>
+                            <td>{{ bisData.dateContractStart ? bisData.dateContractStart|date('d/m/Y') : 'N.C.' }}</td>
+                        </tr>
+                        <tr>
+                            <th>End date</th>
+                            <td>{{ bisData.dateContractStop ? bisData.dateContractStop|date('d/m/Y') : 'N.C.' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="card">
@@ -114,73 +176,50 @@
                                 <th>Personal token</th>
                                 <td><small>{{ account.token|raw }}</small></td>
                             </tr>
+                            <tr>
+                                <th>Creation date</th>
+                                <td>{{ adData.createdAtDate|date('d/m/Y H:i') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Modification date</th>
+                                <td>{{ adData.updatedAtDate|date('d/m/Y H:i') }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-
-        <div class="col-md-6">
+            <br>
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-briefcase"></i> Job information
+                    <i class="fa fa-key"></i> Account information [LDAP]
                 </div>
                 <div class="card-body">
                     <table class="table table-borderless table-sm" style="border: 0px none">
                         <tbody>
                         <tr>
-                            <th>Country workplace</th>
-                            <td>{{ bisData.countryFlag|raw }} {{ bisData.department }}</td>
+                            <th>Email</th>
+                            <td>{{ ldapData.email }}</td>
                         </tr>
                         <tr>
-                            <th>Function</th>
-                            <td>{{ bisData.function }}</td>
+                            <th>Display name</th>
+                            <td>{{ ldapData.displayName }}</td>
                         </tr>
                         <tr>
-                            <th>Type</th>
-                            <td>{{ bisData.jobClass }}</td>
+                            <th>DN</th>
+                            <td>{{ ldapData.distinguishedName }}</td>
                         </tr>
-                        <tr>
-                            <th>In contract</th>
-                            <td>
-                                {% if bisData.perActive %}
-                                    <span class="badge badge-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Yes</span>
-                                {% else %}
-                                    <span class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i> No</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Start date</th>
-                            <td>{{ bisData.prettyDateContractStart }}</td>
-                        </tr>
-                        <tr>
-                            <th>End date</th>
-                            <td>{{ bisData.prettyDateContractStop|default('N.C.') }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-envelope-open"></i> Email information
-                </div>
-                <div class="card-body">
-                    <table class="table table-borderless table-sm" style="border: 0px none">
-                        <tbody>
-                        <tr>
-                            <th>Principal email</th>
-                            <td>{{ bisData.email }}</td>
-                        </tr>
-                        <tr>
-                            <th>Proxy addresses</th>
-                            <td>{{ adData.proxyAddresses|join('<br>')|raw }}</td>
-                        </tr>
+                        {% if ldapData.createdAt is not empty %}
+                            <tr>
+                                <th>Creation date</th>
+                                <td>{{ ldapData.createdAtDate|date('d/m/Y H:i') }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if ldapData.updatedAt is not empty %}
+                            <tr>
+                                <th>Modify date</th>
+                                <td>{{ ldapData.updatedAtDate|date('d/m/Y H:i') }}</td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>

@@ -209,15 +209,17 @@ class AccountController extends Controller
      * @ParamConverter("id", class="App:Account")
      * @IsGranted("ROLE_ADMIN")
      * @Method({"GET"})
-     * @param Account         $account          The account to test
-     * @param ActiveDirectory $ad               The Active Directory Service
+     * @param Account         $account The account to test
+     * @param ActiveDirectory $ad      The Active Directory Service
+     * @param BisDir          $ldap    The ldap Service
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(Account $account, ActiveDirectory $ad)
+    public function detailAction(Account $account, ActiveDirectory $ad, BisDir $ldap)
     {
         if (!empty($account->getEmail())) {
             $adUser = $ad->getUser($account->getEmail());
+            $ldapUser = $ldap->getUser($account->getEmail());
 
             $em = $this->get('doctrine.orm.bis_entity_manager');
             $bisPersonViewRepository = $em->getRepository(BisPersonView::class);
@@ -227,7 +229,7 @@ class AccountController extends Controller
             return $this->redirectToRoute('account_list');
         }
 
-        return $this->render('Account/detail.html.twig', ['account' => $account, 'adData' => $adUser, 'bisData' => $bisData]);
+        return $this->render('Account/detail.html.twig', ['account' => $account, 'adData' => $adUser, 'ldapData' => $ldapUser, 'bisData' => $bisData]);
     }
 
     /**
