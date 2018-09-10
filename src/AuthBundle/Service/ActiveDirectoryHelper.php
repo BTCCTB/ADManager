@@ -67,10 +67,11 @@ class ActiveDirectoryHelper
         if (!empty($mobile)) {
             $user->setFirstAttribute('mobile', $mobile);
         }
-        // For HQ only set HomeDrive
+        // For HQ only set HomeDrive & login script
         if ($user->getCountry() === 'BE') {
             $user->setHomeDirectory(getenv('HOME_BASE_DIRECTORY') . $user->getAccountName());
             $user->setHomeDrive(getenv('HOME_DRIVE'));
+            $user->setScriptPath("login.bat");
         }
 
         $dn = new DistinguishedName();
@@ -440,7 +441,7 @@ class ActiveDirectoryHelper
             $user->setFirstAttribute('mobile', $mobile);
         }
 
-        // Update home drive for HQ users
+        // Update home drive & login script for HQ users
         if ($user->getCountry() === 'BE') {
             // Set home directory only if empty not update !!!
             if (empty($user->getHomeDirectory())) {
@@ -459,6 +460,42 @@ class ActiveDirectoryHelper
                 $user->setHomeDirectory($homedirectory);
                 $user->setHomeDrive($homedrive);
             }
+            // Set home directory only if empty not update !!!
+            if (empty($user->getScriptPath())) {
+                $diffData['scriptpath'] = [
+                    'attribute' => 'scriptpath',
+                    'value' => 'login.bat',
+                    'original' => $user->getScriptPath(),
+                ];
+                $user->setScriptPath('login.bat');
+            }
+        } else {
+            // empty home drive & login script
+            if (!empty($user->getHomeDrive())) {
+                $diffData['homedrive'] = [
+                    'attribute' => 'homedrive',
+                    'value' => null,
+                    'original' => $user->getHomeDrive(),
+                ];
+                $user->setHomeDrive(null);
+            }
+            if (!empty($user->getHomeDirectory())) {
+                $diffData['homedirectory'] = [
+                    'attribute' => 'homedirectory',
+                    'value' => null,
+                    'original' => $user->getHomeDirectory(),
+                ];
+                $user->setHomeDirectory(null);
+            }
+            if (!empty($user->getScriptPath())) {
+                $diffData['scriptpath'] = [
+                    'attribute' => 'scriptpath',
+                    'value' => null,
+                    'original' => $user->getScriptPath(),
+                ];
+                $user->setScriptPath(null);
+            }
+
         }
 
         return [$user, $diffData];
