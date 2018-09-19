@@ -1,170 +1,233 @@
-<?xml version="1.0" encoding="utf-8"?> 
-<!--
- Loco xml export: XLIFF for Symfony
- Project: password
- Release: Working copy
- Locale: fr, French
- Exported by: Damien Lagae
- Exported at: Thu, 15 Mar 2018 14:28:25 +0100 
--->
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-    <file source-language="en" target-language="fr" tool-id="loco" datatype="plaintext" original="file.ext">
-        <header>
-          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.18 20180307-1" tool-company="Loco" />
-        </header>
-        <body> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4578"> 
-                <source>.4BZ3Gd</source>
-                <target>Actions</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b456e"> 
-                <source>0FJ_Sz1</source>
-                <target>Déconnexion</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b457e"> 
-                <source>1JkqMxP</source>
-                <target>Mot de passe inital</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4575"> 
-                <source>2xvEhkD</source>
-                <target>Test du mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4577"> 
-                <source>4O3_s6c</source>
-                <target>Réinitialisation du mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b0867c430fe55478b4568"> 
-                <source>AD Accounts</source>
-                <target>Comptes AD</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6af829a39ff39d058b4579"> 
-                <source>Change password</source>
-                <target>Modifier le mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6af738820ee9d7398b4569"> 
-                <source>Current password</source>
-                <target>Mot de passe actuel</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4568"> 
-                <source>DInsk4R</source>
-                <target>Répéter le nouveau mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b08cfc430fe24478b456b"> 
-                <source>Home</source>
-                <target>Accueil</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086ac430fe66478b4567"> 
-                <source>Logout</source>
-                <target>Déconnexion</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b0869c430fe13478b4567"> 
-                <source>My account</source>
-                <target>Mon compte</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086ac430fe65478b4568"> 
-                <source>My apps</source>
-                <target>Mes applications</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b456f"> 
-                <source>NPexgaX</source>
-                <target>doit contenir une majuscule</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6af828a39ff36d058b4568"> 
-                <source>New password</source>
-                <target>Nouveau mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4573"> 
-                <source>OnhpU4i</source>
-                <target>Accueil</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b456a"> 
-                <source>P5yZH2O</source>
-                <target>Modifier le mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4569"> 
-                <source>PdnfREH</source>
-                <target>Nouveau mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6af828a39ff36c058b4569"> 
-                <source>Repeat new password</source>
-                <target>Répéter le nouveau mot de passe</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086cc430fe58478b4568"> 
-                <source>Your new password must be at least 8 characters long and follow three of these rules:</source>
-                <target>Votre nouveau mot de passe doit comporter au moins 8 caractères et suivre trois de ces règles:</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b457b"> 
-                <source>ZHz6kbI</source>
-                <target>Prénom</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4572"> 
-                <source>cMpPhCU</source>
-                <target>doit contenir un chiffre</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4567"> 
-                <source>cu0r12f</source>
-                <target>Mot de passe actuel</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b456b"> 
-                <source>hFqpL4Y</source>
-                <target>Comptes AD</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b457a"> 
-                <source>htiPHRy</source>
-                <target>Nom</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b457d"> 
-                <source>inyLZ.6</source>
-                <target>Comptes</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4579"> 
-                <source>lpzL089</source>
-                <target>Email</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086cc430fe24478b456a"> 
-                <source>must contains a capital letter</source>
-                <target>doit contenir une majuscule</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086cc430fe5d478b4568"> 
-                <source>must contains a lower-case letter</source>
-                <target>doit contenir une minuscule</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b086dc430fe59478b4567"> 
-                <source>must contains a number</source>
-                <target>doit contenir un chiffre</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5a6b0fdcc430fe95488b4567"> 
-                <source>must contains a special character</source>
-                <target>doit contenir un caractère spécial</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4574"> 
-                <source>nsr9R6l</source>
-                <target>doit contenir un caractère spécial</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b457f"> 
-                <source>pwTY1Kg</source>
-                <target>Nom de compte</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b456c"> 
-                <source>tTGBpNh</source>
-                <target>Mon compte</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4570"> 
-                <source>ttYfwOT</source>
-                <target>Votre nouveau mot de passe doit comporter au moins 8 caractères et suivre trois de ces règles:</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b4571"> 
-                <source>wdxlR69</source>
-                <target>doit contenir une minuscule</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b456d"> 
-                <source>xTIDQl8</source>
-                <target>Mes applications</target> 
-            </trans-unit> 
-            <trans-unit id="loco:5aaa73a5a39ff3f17c8b457c"> 
-                <source>zYd6EbR</source>
-                <target>Compte utilisateur</target> 
-            </trans-unit> 
-        </body>
-    </file>
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
+  <file id="messages.fr">
+    <unit id="cu0r12f" name="Current password">
+      <segment>
+        <source>Current password</source>
+        <target>Mot de passe actuel</target>
+      </segment>
+    </unit>
+    <unit id="DInsk4R" name="Repeat new password">
+      <segment>
+        <source>Repeat new password</source>
+        <target>Répéter le nouveau mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="PdnfREH" name="New password">
+      <segment>
+        <source>New password</source>
+        <target>Nouveau mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="P5yZH2O" name="Change password">
+      <segment>
+        <source>Change password</source>
+        <target>Modifier le mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="hFqpL4Y" name="AD Accounts">
+      <segment>
+        <source>AD Accounts</source>
+        <target>Comptes AD</target>
+      </segment>
+    </unit>
+    <unit id="tTGBpNh" name="My account">
+      <segment>
+        <source>My account</source>
+        <target>Mon compte</target>
+      </segment>
+    </unit>
+    <unit id="xTIDQl8" name="My apps">
+      <segment>
+        <source>My apps</source>
+        <target>Mes applications</target>
+      </segment>
+    </unit>
+    <unit id="0FJ_Sz1" name="Logout">
+      <segment>
+        <source>Logout</source>
+        <target>Déconnexion</target>
+      </segment>
+    </unit>
+    <unit id="NPexgaX" name="must contains a capital letter">
+      <segment>
+        <source>must contains a capital letter</source>
+        <target>doit contenir une majuscule</target>
+      </segment>
+    </unit>
+    <unit id="ttYfwOT" name="bb6a131">
+      <segment>
+        <source>Your new password must be at least 8 characters long and follow three of these rules:</source>
+        <target>Votre nouveau mot de passe doit comporter au moins 8 caractères et suivre trois de ces règles:</target>
+      </segment>
+    </unit>
+    <unit id="wdxlR69" name="must contains a lower-case letter">
+      <segment>
+        <source>must contains a lower-case letter</source>
+        <target>doit contenir une minuscule</target>
+      </segment>
+    </unit>
+    <unit id="cMpPhCU" name="must contains a number">
+      <segment>
+        <source>must contains a number</source>
+        <target>doit contenir un chiffre</target>
+      </segment>
+    </unit>
+    <unit id="OnhpU4i" name="Home">
+      <segment>
+        <source>Home</source>
+        <target>Accueil</target>
+      </segment>
+    </unit>
+    <unit id="nsr9R6l" name="must contains a special character">
+      <segment>
+        <source>must contains a special character</source>
+        <target>doit contenir un caractère spécial</target>
+      </segment>
+    </unit>
+    <unit id="DUXqUGv" name="cu0r12f">
+      <segment>
+        <source>cu0r12f</source>
+        <target>Mot de passe actuel</target>
+      </segment>
+    </unit>
+    <unit id="IRXAzwA" name="DInsk4R">
+      <segment>
+        <source>DInsk4R</source>
+        <target>Répéter le nouveau mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="GUeMf7P" name="PdnfREH">
+      <segment>
+        <source>PdnfREH</source>
+        <target>Nouveau mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="3wEuGf_" name="P5yZH2O">
+      <segment>
+        <source>P5yZH2O</source>
+        <target>Modifier le mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="DV7BC5T" name="hFqpL4Y">
+      <segment>
+        <source>hFqpL4Y</source>
+        <target>Comptes AD</target>
+      </segment>
+    </unit>
+    <unit id="xGF6zOf" name="tTGBpNh">
+      <segment>
+        <source>tTGBpNh</source>
+        <target>Mon compte</target>
+      </segment>
+    </unit>
+    <unit id="P.poQLE" name="xTIDQl8">
+      <segment>
+        <source>xTIDQl8</source>
+        <target>Mes applications</target>
+      </segment>
+    </unit>
+    <unit id="N4Ynnfo" name="0FJ_Sz1">
+      <segment>
+        <source>0FJ_Sz1</source>
+        <target>Déconnexion</target>
+      </segment>
+    </unit>
+    <unit id=".0BORo1" name="NPexgaX">
+      <segment>
+        <source>NPexgaX</source>
+        <target>doit contenir une majuscule</target>
+      </segment>
+    </unit>
+    <unit id="wZYoI_e" name="ttYfwOT">
+      <segment>
+        <source>ttYfwOT</source>
+        <target>Votre nouveau mot de passe doit comporter au moins 8 caractères et suivre trois de ces règles:</target>
+      </segment>
+    </unit>
+    <unit id="aRawTOF" name="wdxlR69">
+      <segment>
+        <source>wdxlR69</source>
+        <target>doit contenir une minuscule</target>
+      </segment>
+    </unit>
+    <unit id="4Rw710I" name="cMpPhCU">
+      <segment>
+        <source>cMpPhCU</source>
+        <target>doit contenir un chiffre</target>
+      </segment>
+    </unit>
+    <unit id="VYfrXdH" name="OnhpU4i">
+      <segment>
+        <source>OnhpU4i</source>
+        <target>Accueil</target>
+      </segment>
+    </unit>
+    <unit id="Gco2B8G" name="nsr9R6l">
+      <segment>
+        <source>nsr9R6l</source>
+        <target>doit contenir un caractère spécial</target>
+      </segment>
+    </unit>
+    <unit id="tcujLIb" name="2xvEhkD">
+      <segment>
+        <source>2xvEhkD</source>
+        <target>Test du mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="QNtEdTC" name="4O3_s6c">
+      <segment>
+        <source>4O3_s6c</source>
+        <target>Réinitialisation du mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="qCTbVRe" name=".4BZ3Gd">
+      <segment>
+        <source>.4BZ3Gd</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="SOzuz7d" name="lpzL089">
+      <segment>
+        <source>lpzL089</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="NVwZ7JM" name="htiPHRy">
+      <segment>
+        <source>htiPHRy</source>
+        <target>Nom</target>
+      </segment>
+    </unit>
+    <unit id="deSlbyh" name="ZHz6kbI">
+      <segment>
+        <source>ZHz6kbI</source>
+        <target>Prénom</target>
+      </segment>
+    </unit>
+    <unit id="eazZfll" name="zYd6EbR">
+      <segment>
+        <source>zYd6EbR</source>
+        <target>Compte utilisateur</target>
+      </segment>
+    </unit>
+    <unit id="tgMS43e" name="inyLZ.6">
+      <segment>
+        <source>inyLZ.6</source>
+        <target>Comptes</target>
+      </segment>
+    </unit>
+    <unit id="qIskuHA" name="1JkqMxP">
+      <segment>
+        <source>1JkqMxP</source>
+        <target>Mot de passe inital</target>
+      </segment>
+    </unit>
+    <unit id="usEEvbW" name="pwTY1Kg">
+      <segment>
+        <source>pwTY1Kg</source>
+        <target>Nom de compte</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>

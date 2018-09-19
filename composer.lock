@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "303c9409aff8bfd15204967b84990b1b",
+    "content-hash": "bb972fc99b83e15659db221f0b9c16e2",
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v9.0.2",
+            "version": "v9.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "4db23b9eba14b6c405d2e8974c1ac3b64e471968"
+                "reference": "a1a53addc2db95b8309bdabb37a424abc0814fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/4db23b9eba14b6c405d2e8974c1ac3b64e471968",
-                "reference": "4db23b9eba14b6c405d2e8974c1ac3b64e471968",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/a1a53addc2db95b8309bdabb37a424abc0814fd8",
+                "reference": "a1a53addc2db95b8309bdabb37a424abc0814fd8",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,7 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2018-09-06T16:36:59+00:00"
+            "time": "2018-09-07T13:36:11+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -143,6 +143,58 @@
             ],
             "description": "CSS for vector based country flags",
             "time": "2018-02-09T12:06:55+00:00"
+        },
+        {
+            "name": "clue/stream-filter",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clue/php-stream-filter.git",
+                "reference": "d80fdee9b3a7e0d16fc330a22f41f3ad0eeb09d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clue/php-stream-filter/zipball/d80fdee9b3a7e0d16fc330a22f41f3ad0eeb09d0",
+                "reference": "d80fdee9b3a7e0d16fc330a22f41f3ad0eeb09d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0 || ^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Clue\\StreamFilter\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@lueck.tv"
+                }
+            ],
+            "description": "A simple and modern approach to stream filtering in PHP",
+            "homepage": "https://github.com/clue/php-stream-filter",
+            "keywords": [
+                "bucket brigade",
+                "callback",
+                "filter",
+                "php_user_filter",
+                "stream",
+                "stream_filter_append",
+                "stream_filter_register"
+            ],
+            "time": "2017-08-18T09:54:01+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1538,6 +1590,69 @@
             "time": "2018-03-29T13:58:54+00:00"
         },
         {
+            "name": "friendsofapi/localise.biz",
+            "version": "0.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfApi/localise.biz.git",
+                "reference": "df98adf17607789f833a373d4430e3e32b8941c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfApi/localise.biz/zipball/df98adf17607789f833a373d4430e3e32b8941c5",
+                "reference": "df98adf17607789f833a373d4430e3e32b8941c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "php-http/client-common": "^1.1",
+                "php-http/discovery": "^1.0",
+                "php-http/httplug": "^1.0",
+                "php-http/multipart-stream-builder": "^1.0"
+            },
+            "require-dev": {
+                "guzzlehttp/psr7": "^1.3",
+                "nyholm/nsa": "^1.0",
+                "php-http/curl-client": "^1.6",
+                "php-http/message": "^1.0",
+                "php-http/message-factory": "^1.0",
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FAPI\\Localise\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "A community API client for localise.biz translation service",
+            "keywords": [
+                "Localise.biz",
+                "localise",
+                "loco",
+                "translation"
+            ],
+            "time": "2018-01-16T19:57:21+00:00"
+        },
+        {
             "name": "fzaninotto/faker",
             "version": "v1.8.0",
             "source": {
@@ -1851,16 +1966,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.7.2",
+            "version": "v5.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "fd5d68eddfe49647f8354ac4c5f09cb88ccece7a"
+                "reference": "2daf3c078610f744e2a4dc2f44fb5060cce9835b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/fd5d68eddfe49647f8354ac4c5f09cb88ccece7a",
-                "reference": "fd5d68eddfe49647f8354ac4c5f09cb88ccece7a",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/2daf3c078610f744e2a4dc2f44fb5060cce9835b",
+                "reference": "2daf3c078610f744e2a4dc2f44fb5060cce9835b",
                 "shasum": ""
             },
             "require": {
@@ -1891,7 +2006,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2018-09-05T21:56:43+00:00"
+            "time": "2018-09-18T12:50:05+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1942,6 +2057,129 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "jms/i18n-routing-bundle",
+            "version": "3.0.2",
+            "target-dir": "JMS/I18nRoutingBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/JMSI18nRoutingBundle.git",
+                "reference": "712a76f6fc30127bd73b662a72f59c546201c995"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/JMSI18nRoutingBundle/zipball/712a76f6fc30127bd73b662a72f59c546201c995",
+                "reference": "712a76f6fc30127bd73b662a72f59c546201c995",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "symfony/framework-bundle": "^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0",
+                "sensio/framework-extra-bundle": "*",
+                "symfony/symfony": "^4.0"
+            },
+            "suggest": {
+                "jms/translation-bundle": "If you want to use the RouteTranslation extractor"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "JMS\\I18nRoutingBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                },
+                {
+                    "name": "Albert Casademont",
+                    "email": "albertcasademont@gmail.com"
+                }
+            ],
+            "description": "This bundle allows you to create i18n routes.",
+            "homepage": "http://jmsyst.com/bundles/JMSI18nRoutingBundle",
+            "keywords": [
+                "multilanguage",
+                "routing",
+                "translation"
+            ],
+            "time": "2017-12-06T09:20:21+00:00"
+        },
+        {
+            "name": "jms/translation-bundle",
+            "version": "1.4.3",
+            "target-dir": "JMS/TranslationBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/JMSTranslationBundle.git",
+                "reference": "64c2a7d1ad4e61987bc79fbfb59067fc9460dc21"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/64c2a7d1ad4e61987bc79fbfb59067fc9460dc21",
+                "reference": "64c2a7d1ad4e61987bc79fbfb59067fc9460dc21",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^1.4 || ^2.0 || ^3.0 || ^4.0",
+                "php": "^5.3.3 || ^7.0",
+                "symfony/console": "^2.3 || ^3.0 || ^4.0",
+                "symfony/framework-bundle": "^2.3 || ^3.0 || ^4.0",
+                "symfony/validator": "^2.3 || ^3.0 || ^4.0",
+                "twig/twig": "^1.27 || ^2.0"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-dependency-injection-test": "^1.2",
+                "nyholm/nsa": "^1.0.1",
+                "phpunit/phpunit": "^4.8 || ^5.0",
+                "psr/log": "^1.0",
+                "sensio/framework-extra-bundle": "^2.3 || ^3.0 || ^4.0",
+                "symfony/expression-language": "^2.6 || ^3.0 || ^4.0",
+                "symfony/symfony": "^2.3 || ^3.0 || ^4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "JMS\\TranslationBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Puts the Symfony Translation Component on steroids",
+            "homepage": "http://jmsyst.com/bundles/JMSTranslationBundle",
+            "keywords": [
+                "extract",
+                "extraction",
+                "i18n",
+                "interface",
+                "multilanguage",
+                "translation",
+                "ui",
+                "webinterface"
+            ],
+            "time": "2018-06-28T05:04:47+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2023,16 +2261,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.0.3",
+            "version": "v4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d"
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/bd088dc940a418f09cda079a9b5c7c478890fb8d",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/fa6ee28600d21d49b2b4e1006b48426cec8e579c",
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c",
                 "shasum": ""
             },
             "require": {
@@ -2070,7 +2308,54 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-07-15T17:25:16+00:00"
+            "time": "2018-09-18T07:03:24+00:00"
+        },
+        {
+            "name": "nyholm/nsa",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nyholm/NSA.git",
+                "reference": "213a70dee2dd04433d31a187e24e92c8b59d1655"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nyholm/NSA/zipball/213a70dee2dd04433d31a187e24e92c8b59d1655",
+                "reference": "213a70dee2dd04433d31a187e24e92c8b59d1655",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0",
+                "webmozart/assert": "^1.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nyholm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "See everything and do whatever you want. No privacy rule will stop us. Used in tests, debugging and fixtures to access properties and methods.",
+            "homepage": "http://tnyholm.se",
+            "keywords": [
+                "Fixture",
+                "debug",
+                "reflection",
+                "test"
+            ],
+            "time": "2017-04-13T17:21:01+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -2191,6 +2476,185 @@
             "time": "2017-05-04T11:12:50+00:00"
         },
         {
+            "name": "php-http/cache-plugin",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/cache-plugin.git",
+                "reference": "c573ac6ea9b4e33fad567f875b844229d18000b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/cache-plugin/zipball/c573ac6ea9b4e33fad567f875b844229d18000b9",
+                "reference": "c573ac6ea9b4e33fad567f875b844229d18000b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0",
+                "php-http/client-common": "^1.1",
+                "php-http/message-factory": "^1.0",
+                "psr/cache": "^1.0",
+                "symfony/options-resolver": "^2.6 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "^1.0",
+                "phpspec/phpspec": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Client\\Common\\Plugin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "PSR-6 Cache plugin for HTTPlug",
+            "homepage": "http://httplug.io",
+            "keywords": [
+                "cache",
+                "http",
+                "httplug",
+                "plugin"
+            ],
+            "time": "2017-11-29T20:45:41+00:00"
+        },
+        {
+            "name": "php-http/client-common",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/client-common.git",
+                "reference": "9accb4a082eb06403747c0ffd444112eda41a0fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/client-common/zipball/9accb4a082eb06403747c0ffd444112eda41a0fd",
+                "reference": "9accb4a082eb06403747c0ffd444112eda41a0fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0",
+                "php-http/httplug": "^1.1",
+                "php-http/message": "^1.6",
+                "php-http/message-factory": "^1.0",
+                "symfony/options-resolver": "^2.6 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "guzzlehttp/psr7": "^1.4",
+                "phpspec/phpspec": "^2.5 || ^3.4 || ^4.2"
+            },
+            "suggest": {
+                "php-http/cache-plugin": "PSR-6 Cache plugin",
+                "php-http/logger-plugin": "PSR-3 Logger plugin",
+                "php-http/stopwatch-plugin": "Symfony Stopwatch plugin"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Client\\Common\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Common HTTP Client implementations and tools for HTTPlug",
+            "homepage": "http://httplug.io",
+            "keywords": [
+                "client",
+                "common",
+                "http",
+                "httplug"
+            ],
+            "time": "2017-11-30T11:06:59+00:00"
+        },
+        {
+            "name": "php-http/discovery",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/discovery.git",
+                "reference": "9a6cb24de552bfe1aa9d7d1569e2d49c5b169a33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/9a6cb24de552bfe1aa9d7d1569e2d49c5b169a33",
+                "reference": "9a6cb24de552bfe1aa9d7d1569e2d49c5b169a33",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "^2.0.2",
+                "php-http/httplug": "^1.0",
+                "php-http/message-factory": "^1.0",
+                "phpspec/phpspec": "^2.4",
+                "puli/composer-plugin": "1.0.0-beta10"
+            },
+            "suggest": {
+                "php-http/message": "Allow to use Guzzle, Diactoros or Slim Framework factories",
+                "puli/composer-plugin": "Sets up Puli which is recommended for Discovery to work. Check http://docs.php-http.org/en/latest/discovery.html for more details."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Discovery\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Finds installed HTTPlug implementations and PSR-7 message factories",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "adapter",
+                "client",
+                "discovery",
+                "factory",
+                "http",
+                "message",
+                "psr7"
+            ],
+            "time": "2018-02-06T10:55:24+00:00"
+        },
+        {
             "name": "php-http/guzzle6-adapter",
             "version": "v1.1.1",
             "source": {
@@ -2307,6 +2771,340 @@
             "time": "2016-08-31T08:30:17+00:00"
         },
         {
+            "name": "php-http/httplug-bundle",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/HttplugBundle.git",
+                "reference": "9fed9ddee92ee20cc39050749f2fb9b6cec3f83d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/HttplugBundle/zipball/9fed9ddee92ee20cc39050749f2fb9b6cec3f83d",
+                "reference": "9fed9ddee92ee20cc39050749f2fb9b6cec3f83d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "php-http/cache-plugin": "^1.4",
+                "php-http/client-common": "^1.6",
+                "php-http/client-implementation": "^1.0",
+                "php-http/discovery": "^1.0",
+                "php-http/httplug": "^1.0",
+                "php-http/logger-plugin": "^1.0",
+                "php-http/message": "^1.4",
+                "php-http/message-factory": "^1.0.2",
+                "php-http/stopwatch-plugin": "^1.0",
+                "psr/http-message": "^1.0",
+                "symfony/config": "^2.8 || ^3.0 || ^4.0",
+                "symfony/dependency-injection": "^2.8.3 || ^3.0.3 || ^4.0",
+                "symfony/event-dispatcher": "^2.8 || ^3.0 || ^4.0",
+                "symfony/http-kernel": "^2.8 || ^3.0 || ^4.0",
+                "symfony/options-resolver": "^2.8 || ^3.0 || ^4.0",
+                "twig/twig": "^1.18 || ^2.0"
+            },
+            "conflict": {
+                "php-http/guzzle6-adapter": "<1.1"
+            },
+            "require-dev": {
+                "guzzlehttp/psr7": "^1.0",
+                "matthiasnoback/symfony-dependency-injection-test": "^1.1 || ^2.3",
+                "nyholm/nsa": "^1.1",
+                "php-http/buzz-adapter": "^0.3",
+                "php-http/curl-client": "^1.0",
+                "php-http/guzzle6-adapter": "^1.1.1",
+                "php-http/mock-client": "^1.0",
+                "php-http/promise": "^1.0",
+                "php-http/react-adapter": "^0.2.1",
+                "php-http/socket-client": "^1.0",
+                "polishsymfonycommunity/symfony-mocker-container": "^1.0",
+                "symfony/browser-kit": "^2.8 || ^3.0 || ^4.0",
+                "symfony/cache": "^3.1 || ^4.0",
+                "symfony/dom-crawler": "^2.8 || ^3.0 || ^4.0",
+                "symfony/framework-bundle": "^2.8.1 || ^3.0.1 || ^4.0",
+                "symfony/http-foundation": "^2.8 || ^3.0 || ^4.0",
+                "symfony/phpunit-bridge": "^3.3 || ^4.0",
+                "symfony/stopwatch": "^2.8 || ^3.0 || ^4.0",
+                "symfony/twig-bundle": "^2.8 || ^3.0 || ^4.0",
+                "symfony/web-profiler-bundle": "^2.8 || ^3.0 || ^4.0"
+            },
+            "suggest": {
+                "php-http/mock-client": "Add this to your require-dev section to mock HTTP responses easily"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\HttplugBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Buchmann",
+                    "email": "mail@davidbu.ch"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Symfony integration for HTTPlug",
+            "homepage": "http://httplug.io",
+            "keywords": [
+                "adapter",
+                "bundle",
+                "discovery",
+                "factory",
+                "http",
+                "httplug",
+                "message",
+                "php-http"
+            ],
+            "time": "2018-07-07T09:19:05+00:00"
+        },
+        {
+            "name": "php-http/logger-plugin",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/logger-plugin.git",
+                "reference": "d6c2ac7d542bf9928a0ac7a8a249d02848b824ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/logger-plugin/zipball/d6c2ac7d542bf9928a0ac7a8a249d02848b824ec",
+                "reference": "d6c2ac7d542bf9928a0ac7a8a249d02848b824ec",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "php-http/client-common": "^1.1",
+                "php-http/message": "^1.0",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "^1.0",
+                "phpspec/phpspec": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Client\\Common\\Plugin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "PSR-3 Logger plugin for HTTPlug",
+            "homepage": "http://httplug.io",
+            "keywords": [
+                "http",
+                "httplug",
+                "logger",
+                "plugin"
+            ],
+            "time": "2016-05-04T22:43:46+00:00"
+        },
+        {
+            "name": "php-http/message",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/message.git",
+                "reference": "741f2266a202d59c4ed75436671e1b8e6f475ea3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/message/zipball/741f2266a202d59c4ed75436671e1b8e6f475ea3",
+                "reference": "741f2266a202d59c4ed75436671e1b8e6f475ea3",
+                "shasum": ""
+            },
+            "require": {
+                "clue/stream-filter": "^1.4",
+                "php": "^5.4 || ^7.0",
+                "php-http/message-factory": "^1.0.2",
+                "psr/http-message": "^1.0"
+            },
+            "provide": {
+                "php-http/message-factory-implementation": "1.0"
+            },
+            "require-dev": {
+                "akeneo/phpspec-skip-example-extension": "^1.0",
+                "coduo/phpspec-data-provider-extension": "^1.0",
+                "ext-zlib": "*",
+                "guzzlehttp/psr7": "^1.0",
+                "henrikbjorn/phpspec-code-coverage": "^1.0",
+                "phpspec/phpspec": "^2.4",
+                "slim/slim": "^3.0",
+                "zendframework/zend-diactoros": "^1.0"
+            },
+            "suggest": {
+                "ext-zlib": "Used with compressor/decompressor streams",
+                "guzzlehttp/psr7": "Used with Guzzle PSR-7 Factories",
+                "slim/slim": "Used with Slim Framework PSR-7 implementation",
+                "zendframework/zend-diactoros": "Used with Diactoros Factories"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Message\\": "src/"
+                },
+                "files": [
+                    "src/filters.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "HTTP Message related tools",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "http",
+                "message",
+                "psr-7"
+            ],
+            "time": "2018-08-15T06:37:30+00:00"
+        },
+        {
+            "name": "php-http/message-factory",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/message-factory.git",
+                "reference": "a478cb11f66a6ac48d8954216cfed9aa06a501a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/message-factory/zipball/a478cb11f66a6ac48d8954216cfed9aa06a501a1",
+                "reference": "a478cb11f66a6ac48d8954216cfed9aa06a501a1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Factory interfaces for PSR-7 HTTP Message",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "stream",
+                "uri"
+            ],
+            "time": "2015-12-19T14:08:53+00:00"
+        },
+        {
+            "name": "php-http/multipart-stream-builder",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/multipart-stream-builder.git",
+                "reference": "1fa3c623fc813a43b39494b2a1612174e36e0fb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/multipart-stream-builder/zipball/1fa3c623fc813a43b39494b2a1612174e36e0fb0",
+                "reference": "1fa3c623fc813a43b39494b2a1612174e36e0fb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "php-http/discovery": "^1.0",
+                "php-http/message-factory": "^1.0.2",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "php-http/message": "^1.5",
+                "phpunit/phpunit": "^4.8 || ^5.4",
+                "zendframework/zend-diactoros": "^1.3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Message\\MultipartStream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "A builder class that help you create a multipart stream",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "multipart stream",
+                "stream"
+            ],
+            "time": "2017-05-21T17:45:25+00:00"
+        },
+        {
             "name": "php-http/promise",
             "version": "v1.0.0",
             "source": {
@@ -2355,6 +3153,322 @@
                 "promise"
             ],
             "time": "2016-01-26T13:27:02+00:00"
+        },
+        {
+            "name": "php-http/stopwatch-plugin",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/stopwatch-plugin.git",
+                "reference": "b9d4ab7a0f4ca1fc17e323e880d1235076e31dbf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/stopwatch-plugin/zipball/b9d4ab7a0f4ca1fc17e323e880d1235076e31dbf",
+                "reference": "b9d4ab7a0f4ca1fc17e323e880d1235076e31dbf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "php-http/client-common": "^1.1",
+                "symfony/stopwatch": "^2.7|^3.0|^4.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^2.5 || ^3.0 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Client\\Common\\Plugin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Symfony Stopwatch plugin for HTTPlug",
+            "homepage": "http://httplug.io",
+            "keywords": [
+                "http",
+                "httplug",
+                "plugin",
+                "stopwatch"
+            ],
+            "time": "2017-11-29T19:20:03+00:00"
+        },
+        {
+            "name": "php-translation/common",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/common.git",
+                "reference": "ceac357a7ad0582d0a6be7b7f2db178c87f229fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/common/zipball/ceac357a7ad0582d0a6be7b7f2db178c87f229fd",
+                "reference": "ceac357a7ad0582d0a6be7b7f2db178c87f229fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.4 || ^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Translation\\Common\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Common translation stuff",
+            "time": "2018-06-14T16:18:37+00:00"
+        },
+        {
+            "name": "php-translation/extractor",
+            "version": "1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/extractor.git",
+                "reference": "82fc51a07fb626c0bfb31fb3f041baa88fee6acb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/extractor/zipball/82fc51a07fb626c0bfb31fb3f041baa88fee6acb",
+                "reference": "82fc51a07fb626c0bfb31fb3f041baa88fee6acb",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.2",
+                "nikic/php-parser": "^3.0 || ^4.0",
+                "php": "^5.5 || ^7.0",
+                "symfony/finder": "^2.7 || ^3.0 || ^4.0",
+                "twig/twig": "^1.27 || ^2.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.4 || ^4.0",
+                "symfony/translation": "^3.0 || ^4.0",
+                "symfony/twig-bridge": "^3.0 || ^4.0",
+                "symfony/validator": "^3.0 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\Extractor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Extract translations form the source code",
+            "time": "2018-07-09T17:05:17+00:00"
+        },
+        {
+            "name": "php-translation/loco-adapter",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/loco-adapter.git",
+                "reference": "757741c569312ae14dda456eb46c632101b69ec4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/loco-adapter/zipball/757741c569312ae14dda456eb46c632101b69ec4",
+                "reference": "757741c569312ae14dda456eb46c632101b69ec4",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofapi/localise.biz": "^0.2",
+                "php": "^7.0",
+                "php-translation/common": "^1.0",
+                "php-translation/symfony-storage": "^1.0",
+                "symfony/translation": "^2.7 || ^3.0 || ^4.0",
+                "symfony/yaml": "^2.7 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "guzzlehttp/psr7": "^1.4",
+                "nyholm/symfony-bundle-test": "^1.2.3",
+                "php-http/curl-client": "^1.7",
+                "php-http/httplug-bundle": "^1.3",
+                "php-http/message": "^1.6",
+                "phpunit/phpunit": "^6.2",
+                "symfony/framework-bundle": "^2.7 || ^3.0 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\PlatformAdapter\\Loco\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Adapter for loco.",
+            "time": "2018-06-27T15:39:36+00:00"
+        },
+        {
+            "name": "php-translation/symfony-bundle",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/symfony-bundle.git",
+                "reference": "380d979a2e17d4051c5347587745a148c667d3ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/symfony-bundle/zipball/380d979a2e17d4051c5347587745a148c667d3ee",
+                "reference": "380d979a2e17d4051c5347587745a148c667d3ee",
+                "shasum": ""
+            },
+            "require": {
+                "nyholm/nsa": "^1.1",
+                "php": "^5.5 || ^7.0",
+                "php-translation/common": "^1.0",
+                "php-translation/extractor": "^1.3",
+                "php-translation/symfony-storage": "^1.0",
+                "symfony/finder": "^2.7 || ^3.0 || ^4.0",
+                "symfony/framework-bundle": "^2.7 || ^3.0 || ^4.0",
+                "symfony/intl": "^2.7 || ^3.0 || ^4.0",
+                "symfony/translation": "^2.7 || ^3.0 || ^4.0",
+                "symfony/twig-bundle": "^2.7 || ^3.0 || ^4.0",
+                "symfony/validator": "^2.7 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "guzzlehttp/psr7": "^1.4",
+                "matthiasnoback/symfony-config-test": "^2.2 || ^3.1",
+                "matthiasnoback/symfony-dependency-injection-test": "^1.2 || ^2.3",
+                "nyholm/symfony-bundle-test": "^1.2.3",
+                "php-http/curl-client": "^1.7",
+                "php-http/message": "^1.6",
+                "php-http/message-factory": "^1.0.2",
+                "php-translation/translator": "^1.0",
+                "symfony/asset": "^2.7 || ^3.0 || ^4.0",
+                "symfony/console": "^2.7 || ^3.0 || ^4.0",
+                "symfony/dependency-injection": "^2.7 || ^3.0 || ^4.0",
+                "symfony/phpunit-bridge": "^3.4 || ^4.0",
+                "symfony/templating": "^2.7 || ^3.0 || ^4.0",
+                "symfony/twig-bridge": "^2.7 || ^3.0 || ^4.0",
+                "symfony/web-profiler-bundle": "^2.7 || ^3.0 || ^4.0"
+            },
+            "suggest": {
+                "php-http/httplug-bundle": "To easier configure your httplug clients."
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\Bundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "time": "2018-07-04T14:44:53+00:00"
+        },
+        {
+            "name": "php-translation/symfony-storage",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/symfony-storage.git",
+                "reference": "8d7b1ea6bf22bee0c7dc9b228cf9437312373a27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/symfony-storage/zipball/8d7b1ea6bf22bee0c7dc9b228cf9437312373a27",
+                "reference": "8d7b1ea6bf22bee0c7dc9b228cf9437312373a27",
+                "shasum": ""
+            },
+            "require": {
+                "nyholm/nsa": "^1.1",
+                "php": "^5.5 || ^7.0",
+                "php-translation/common": "^1.0",
+                "symfony/translation": "^2.7 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^2.7.39 || ^3.0 || ^4.0",
+                "symfony/phpunit-bridge": "^3.4 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\SymfonyStorage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "A translation file storage using Symfony translation component.",
+            "time": "2018-07-10T10:32:01+00:00"
         },
         {
             "name": "psr/cache",
@@ -2734,16 +3848,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.1.2",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8"
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8ddcb66ac10c392d3beb54829eef8ac1438595f4",
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4",
                 "shasum": ""
             },
             "require": {
@@ -2789,7 +3903,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-07-13T07:04:35+00:00"
+            "time": "2018-09-11T07:12:52+00:00"
         },
         {
             "name": "symfony/apache-pack",
@@ -4012,88 +5126,6 @@
                 "localization"
             ],
             "time": "2018-08-01T08:24:03+00:00"
-        },
-        {
-            "name": "symfony/lts",
-            "version": "dev-master",
-            "conflict": {
-                "symfony/asset": ">=5",
-                "symfony/browser-kit": ">=5",
-                "symfony/cache": ">=5",
-                "symfony/class-loader": ">=5",
-                "symfony/config": ">=5",
-                "symfony/console": ">=5",
-                "symfony/css-selector": ">=5",
-                "symfony/debug": ">=5",
-                "symfony/debug-bundle": ">=5",
-                "symfony/dependency-injection": ">=5",
-                "symfony/doctrine-bridge": ">=5",
-                "symfony/dom-crawler": ">=5",
-                "symfony/dotenv": ">=5",
-                "symfony/event-dispatcher": ">=5",
-                "symfony/expression-language": ">=5",
-                "symfony/filesystem": ">=5",
-                "symfony/finder": ">=5",
-                "symfony/form": ">=5",
-                "symfony/framework-bundle": ">=5",
-                "symfony/http-foundation": ">=5",
-                "symfony/http-kernel": ">=5",
-                "symfony/inflector": ">=5",
-                "symfony/intl": ">=5",
-                "symfony/ldap": ">=5",
-                "symfony/lock": ">=5",
-                "symfony/messenger": ">=5",
-                "symfony/monolog-bridge": ">=5",
-                "symfony/options-resolver": ">=5",
-                "symfony/process": ">=5",
-                "symfony/property-access": ">=5",
-                "symfony/property-info": ">=5",
-                "symfony/proxy-manager-bridge": ">=5",
-                "symfony/routing": ">=5",
-                "symfony/security": ">=5",
-                "symfony/security-bundle": ">=5",
-                "symfony/security-core": ">=5",
-                "symfony/security-csrf": ">=5",
-                "symfony/security-guard": ">=5",
-                "symfony/security-http": ">=5",
-                "symfony/serializer": ">=5",
-                "symfony/stopwatch": ">=5",
-                "symfony/symfony": ">=5",
-                "symfony/templating": ">=5",
-                "symfony/translation": ">=5",
-                "symfony/twig-bridge": ">=5",
-                "symfony/twig-bundle": ">=5",
-                "symfony/validator": ">=5",
-                "symfony/var-dumper": ">=5",
-                "symfony/web-link": ">=5",
-                "symfony/web-profiler-bundle": ">=5",
-                "symfony/web-server-bundle": ">=5",
-                "symfony/workflow": ">=5",
-                "symfony/yaml": ">=5"
-            },
-            "type": "metapackage",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Enforces Long Term Supported versions of Symfony components",
-            "homepage": "https://symfony.com",
-            "time": "2018-04-03T05:04:16+00:00"
         },
         {
             "name": "symfony/maker-bundle",
@@ -5755,26 +6787,26 @@
         },
         {
             "name": "tightenco/collect",
-            "version": "v5.6.33",
+            "version": "v5.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tightenco/collect.git",
-                "reference": "d7381736dca44ac17d0805a25191b094e5a22446"
+                "reference": "a4d5291ee732f8accad72d02ba2a06dc20780b75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/collect/zipball/d7381736dca44ac17d0805a25191b094e5a22446",
-                "reference": "d7381736dca44ac17d0805a25191b094e5a22446",
+                "url": "https://api.github.com/repos/tightenco/collect/zipball/a4d5291ee732f8accad72d02ba2a06dc20780b75",
+                "reference": "a4d5291ee732f8accad72d02ba2a06dc20780b75",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.3",
-                "symfony/var-dumper": ">=3.1.10"
+                "php": "^7.1.3",
+                "symfony/var-dumper": ">=3.4 <5"
             },
             "require-dev": {
-                "mockery/mockery": "~1.0",
-                "nesbot/carbon": "~1.20",
-                "phpunit/phpunit": "~7.0"
+                "mockery/mockery": "^1.0",
+                "nesbot/carbon": "^1.26.3",
+                "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "autoload": {
@@ -5801,7 +6833,7 @@
                 "collection",
                 "laravel"
             ],
-            "time": "2018-08-09T16:56:26+00:00"
+            "time": "2018-09-14T01:47:28+00:00"
         },
         {
             "name": "twig/twig",
@@ -5869,6 +6901,56 @@
                 "templating"
             ],
             "time": "2018-07-13T07:18:09+00:00"
+        },
+        {
+            "name": "webmozart/assert",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmozart/assert.git",
+                "reference": "0df1908962e7a3071564e857d86874dad1ef204a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/0df1908962e7a3071564e857d86874dad1ef204a",
+                "reference": "0df1908962e7a3071564e857d86874dad1ef204a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.6",
+                "sebastian/version": "^1.0.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webmozart\\Assert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Assertions to validate method input/output with nice error messages.",
+            "keywords": [
+                "assert",
+                "check",
+                "validate"
+            ],
+            "time": "2018-01-29T19:49:41+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -7222,9 +8304,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "symfony/lts": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

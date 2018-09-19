@@ -18,4 +18,9 @@ return [
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Enabel\Bundle\TwbCrudMakerBundle\TwbCrudMakerBundle::class => ['all' => true],
+    JMS\TranslationBundle\JMSTranslationBundle::class => ['all' => true],
+    JMS\I18nRoutingBundle\JMSI18nRoutingBundle::class => ['all' => true],
+    Translation\Bundle\TranslationBundle::class => ['all' => true],
+    Translation\PlatformAdapter\Loco\Bridge\Symfony\TranslationAdapterLocoBundle::class => ['all' => true],
+    Http\HttplugBundle\HttplugBundle::class => ['all' => true],
 ];
