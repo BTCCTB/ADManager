@@ -36,6 +36,10 @@ class BisPersonViewRepository extends EntityRepository
             50227,
             50186,
             50187,
+            50799,
+            50800,
+            50809,
+            50810,
         ];
     }
 
