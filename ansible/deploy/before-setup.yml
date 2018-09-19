@@ -3,7 +3,7 @@
   slack:
     token: "{{ slack_token }}"
     domain: "{{ slack_domain }}"
-    msg: 'Server: {{ ansible_hostname }} | Deploy a new version of password :crossed_fingers: '
+    msg: 'Server: {{ ansible_hostname }} | Deploy a new version of [{{ ansistrano_git_repo }} | branch: {{ git_branch }}] :crossed_fingers: '
     username: "{{ slack_headline }}"
     icon_url: "{{ slack_icon_url }}"
     channel: "{{ slack_channel }}"
