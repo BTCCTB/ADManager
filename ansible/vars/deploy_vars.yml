@@ -34,3 +34,6 @@ slack_domain: "{{ vault_slack_domain }}"
 slack_headline: "Ansistrano"
 slack_icon_url: "https://cdn4.iconfinder.com/data/icons/boy-hair-and-face/100/face6-512.png"
 slack_channel: "#dev"
+
+# Loco vars
+loco_api_key: "{{ vault_loco_api_key }}"
