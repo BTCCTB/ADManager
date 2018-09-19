@@ -64,6 +64,13 @@
         <![endif]-->
         <!-- holder.js -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
+        <!-- Timeago-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
+        <script>
+            jQuery(document).ready(function() {
+                jQuery("time.timeago").timeago();
+            });
+        </script>
     {% endblock %}
     </body>
 </html>

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Password manager</h1>
+    <h1>{{ 'Password manager'|trans }}</h1>
     {% include '_partial/flash.html.twig' %}
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
     <div class="card">
@@ -9,7 +9,7 @@
             <i class="flag-icon flag-icon-{{ country|lower }}" title="{{ user.department }}" alt="{{ user.department }}"></i> {{ user.firstname }} {{ user.lastname }}
         </h4>
         <div class="card-body">
-            <h5 class="card-title">My account</h5>
+            <h5 class="card-title">{{ 'my.account.title'|trans }}</h5>
             <p class="card-text">
                 {{ user.description }}<br>
                 <i class="fa fa-envelope" aria-hidden="true"></i> {{ user.userprincipalname }}
@@ -18,9 +18,20 @@
                 <i class="fa fa-phone" aria-hidden="true"></i> {{ user.telephoneNumber }}
                 {% endif %}
             </p>
+            {%  if passwordAges > 80 %}
+            <div class="alert alert-danger" role="alert">
+            {%  elseif passwordAges > 70 %}
+            <div class="alert alert-warning" role="alert">
+            {%  else %}
+            <div class="alert alert-primary" role="alert">
+            {% endif %}
+                {{ 'my.account.label.lastset'|trans }}:
+                <time class="timeago" datetime="{{ user.passwordLastSetTimestamp|date("Y-m-d H:i:s") }}">{{ user.passwordLastSetTimestamp|date("d/m/Y") }}</time>
+                <br/><small>{{ 'my.account.label.password.recommendation'|trans }}</small>
+            </div>
             <div class="btn-group pull-right" role="group" aria-label="Actions">
-                <a href="{{ url('homepage') }}" class="btn btn-primary"><i class="fa fa-sitemap"></i> My apps</a>
-                <a href="{{ url('account_change_password') }}" class="btn btn-warning"><i class="fa fa-key"></i> Change password</a>
+                <a href="{{ url('homepage') }}" class="btn btn-primary"><i class="fa fa-sitemap"></i> {{ 'btn.my.apps.label'|trans }}</a>
+                <a href="{{ url('account_change_password') }}" class="btn btn-warning"><i class="fa fa-key"></i> {{ 'btn.change.password.label'|trans }}</a>
             </div>
         </div>
     </div>
@@ -30,5 +41,5 @@
 {% endblock %}
 
 {% block title %}
-    Accueil - {{ parent() }}
+    {{ 'My account'|trans }} - {{ parent() }}
 {% endblock %}

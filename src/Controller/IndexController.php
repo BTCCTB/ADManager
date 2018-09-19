@@ -28,12 +28,19 @@ class IndexController extends Controller
         $em = $this->getDoctrine()->getManager();
         $applications = $em->getRepository(Application::class)->findBy(['enable' => 1]);
 
+        $now = new \DateTime('now');
+        $passwordLastSet = new \DateTime();
+        $passwordLastSet->setTimestamp($user->getPasswordLastSetTimestamp());
+
+        $passwordAges = $passwordLastSet->diff($now)->format('%a');
+
         return $this->render(
             'Index/index.html.twig',
             [
                 'user' => $user,
                 'country' => $user->getFirstAttribute('c'),
                 'applications' => $applications,
+                'passwordAges' => $passwordAges,
             ]
         );
     }
