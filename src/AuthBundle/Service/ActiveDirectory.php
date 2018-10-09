@@ -1519,4 +1519,21 @@ class ActiveDirectory
         }
         return $adUser;
     }
+
+    /**
+     * @param string $email
+     *
+     * @return null|User
+     */
+    public function fixSip(string $email)
+    {
+        $adUser = $this->getUser($email);
+
+        if ($adUser !== null) {
+            $adUser->setAttribute('msrtcSip-PrimaryUserAddress', $email);
+
+            $adUser->save();
+        }
+        return $adUser;
+    }
 }

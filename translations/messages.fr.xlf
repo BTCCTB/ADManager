@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
   <file id="messages.fr">
-    <unit id="cu0r12f" name="Current password">
+    <unit id="5M1TQkn" name="Current-password">
       <segment>
-        <source>Current password</source>
+        <source>Current-password</source>
         <target>Mot de passe actuel</target>
       </segment>
     </unit>
-    <unit id="DInsk4R" name="Repeat new password">
+    <unit id="4AdLhQR" name="Repeat-new-password">
       <segment>
-        <source>Repeat new password</source>
+        <source>Repeat-new-password</source>
         <target>Répéter le nouveau mot de passe</target>
       </segment>
     </unit>
-    <unit id="PdnfREH" name="New password">
+    <unit id="7kyLZix" name="New-password">
       <segment>
-        <source>New password</source>
+        <source>New-password</source>
         <target>Nouveau mot de passe</target>
       </segment>
     </unit>
-    <unit id="P5yZH2O" name="Change password">
+    <unit id="zbM5WE1" name="Change-password">
       <segment>
-        <source>Change password</source>
+        <source>Change-password</source>
         <target>Modifier le mot de passe</target>
       </segment>
     </unit>
-    <unit id="hFqpL4Y" name="AD Accounts">
+    <unit id="FnmphLu" name="AD-Accounts">
       <segment>
-        <source>AD Accounts</source>
+        <source>AD-Accounts</source>
         <target>Comptes AD</target>
       </segment>
     </unit>
-    <unit id="tTGBpNh" name="My account">
+    <unit id="SlP9qxy" name="My-account">
       <segment>
-        <source>My account</source>
+        <source>My-account</source>
         <target>Mon compte</target>
       </segment>
     </unit>
-    <unit id="xTIDQl8" name="My apps">
+    <unit id="g9HU8az" name="My-apps">
       <segment>
-        <source>My apps</source>
+        <source>My-apps</source>
         <target>Mes applications</target>
       </segment>
     </unit>
@@ -49,27 +49,27 @@
         <target>Déconnexion</target>
       </segment>
     </unit>
-    <unit id="NPexgaX" name="must contains a capital letter">
+    <unit id="Jh2JTkE" name="must-contains-a-capital-letter">
       <segment>
-        <source>must contains a capital letter</source>
+        <source>must-contains-a-capital-letter</source>
         <target>doit contenir une majuscule</target>
       </segment>
     </unit>
-    <unit id="ttYfwOT" name="bb6a131">
+    <unit id="6zpi4uW" name="Your-new-password-must-be-at-least-8-characters-lo">
       <segment>
-        <source>Your new password must be at least 8 characters long and follow three of these rules:</source>
+        <source>Your-new-password-must-be-at-least-8-characters-lo</source>
         <target>Votre nouveau mot de passe doit comporter au moins 8 caractères et suivre trois de ces règles:</target>
       </segment>
     </unit>
-    <unit id="wdxlR69" name="must contains a lower-case letter">
+    <unit id="9b1vXhu" name="must-contains-a-lower-case-letter">
       <segment>
-        <source>must contains a lower-case letter</source>
+        <source>must-contains-a-lower-case-letter</source>
         <target>doit contenir une minuscule</target>
       </segment>
     </unit>
-    <unit id="cMpPhCU" name="must contains a number">
+    <unit id="QsheWdX" name="must-contains-a-number">
       <segment>
-        <source>must contains a number</source>
+        <source>must-contains-a-number</source>
         <target>doit contenir un chiffre</target>
       </segment>
     </unit>
@@ -79,154 +79,82 @@
         <target>Accueil</target>
       </segment>
     </unit>
-    <unit id="nsr9R6l" name="must contains a special character">
+    <unit id="W41AHjM" name="must-contains-a-special-character">
       <segment>
-        <source>must contains a special character</source>
+        <source>must-contains-a-special-character</source>
         <target>doit contenir un caractère spécial</target>
       </segment>
     </unit>
-    <unit id="DUXqUGv" name="cu0r12f">
+    <unit id="bDdquw3" name="Test-password">
       <segment>
-        <source>cu0r12f</source>
-        <target>Mot de passe actuel</target>
-      </segment>
-    </unit>
-    <unit id="IRXAzwA" name="DInsk4R">
-      <segment>
-        <source>DInsk4R</source>
-        <target>Répéter le nouveau mot de passe</target>
-      </segment>
-    </unit>
-    <unit id="GUeMf7P" name="PdnfREH">
-      <segment>
-        <source>PdnfREH</source>
-        <target>Nouveau mot de passe</target>
-      </segment>
-    </unit>
-    <unit id="3wEuGf_" name="P5yZH2O">
-      <segment>
-        <source>P5yZH2O</source>
-        <target>Modifier le mot de passe</target>
-      </segment>
-    </unit>
-    <unit id="DV7BC5T" name="hFqpL4Y">
-      <segment>
-        <source>hFqpL4Y</source>
-        <target>Comptes AD</target>
-      </segment>
-    </unit>
-    <unit id="xGF6zOf" name="tTGBpNh">
-      <segment>
-        <source>tTGBpNh</source>
-        <target>Mon compte</target>
-      </segment>
-    </unit>
-    <unit id="P.poQLE" name="xTIDQl8">
-      <segment>
-        <source>xTIDQl8</source>
-        <target>Mes applications</target>
-      </segment>
-    </unit>
-    <unit id="N4Ynnfo" name="0FJ_Sz1">
-      <segment>
-        <source>0FJ_Sz1</source>
-        <target>Déconnexion</target>
-      </segment>
-    </unit>
-    <unit id=".0BORo1" name="NPexgaX">
-      <segment>
-        <source>NPexgaX</source>
-        <target>doit contenir une majuscule</target>
-      </segment>
-    </unit>
-    <unit id="wZYoI_e" name="ttYfwOT">
-      <segment>
-        <source>ttYfwOT</source>
-        <target>Votre nouveau mot de passe doit comporter au moins 8 caractères et suivre trois de ces règles:</target>
-      </segment>
-    </unit>
-    <unit id="aRawTOF" name="wdxlR69">
-      <segment>
-        <source>wdxlR69</source>
-        <target>doit contenir une minuscule</target>
-      </segment>
-    </unit>
-    <unit id="4Rw710I" name="cMpPhCU">
-      <segment>
-        <source>cMpPhCU</source>
-        <target>doit contenir un chiffre</target>
-      </segment>
-    </unit>
-    <unit id="VYfrXdH" name="OnhpU4i">
-      <segment>
-        <source>OnhpU4i</source>
-        <target>Accueil</target>
-      </segment>
-    </unit>
-    <unit id="Gco2B8G" name="nsr9R6l">
-      <segment>
-        <source>nsr9R6l</source>
-        <target>doit contenir un caractère spécial</target>
-      </segment>
-    </unit>
-    <unit id="tcujLIb" name="2xvEhkD">
-      <segment>
-        <source>2xvEhkD</source>
+        <source>Test-password</source>
         <target>Test du mot de passe</target>
       </segment>
     </unit>
-    <unit id="QNtEdTC" name="4O3_s6c">
+    <unit id="aVx7gwb" name="Reset-password">
       <segment>
-        <source>4O3_s6c</source>
+        <source>Reset-password</source>
         <target>Réinitialisation du mot de passe</target>
       </segment>
     </unit>
-    <unit id="qCTbVRe" name=".4BZ3Gd">
+    <unit id=".4BZ3Gd" name="Actions">
       <segment>
-        <source>.4BZ3Gd</source>
+        <source>Actions</source>
         <target>Actions</target>
       </segment>
     </unit>
-    <unit id="SOzuz7d" name="lpzL089">
+    <unit id="lpzL089" name="Email">
       <segment>
-        <source>lpzL089</source>
+        <source>Email</source>
         <target>Email</target>
       </segment>
     </unit>
-    <unit id="NVwZ7JM" name="htiPHRy">
+    <unit id="htiPHRy" name="Lastname">
       <segment>
-        <source>htiPHRy</source>
+        <source>Lastname</source>
         <target>Nom</target>
       </segment>
     </unit>
-    <unit id="deSlbyh" name="ZHz6kbI">
+    <unit id="ZHz6kbI" name="Firstname">
       <segment>
-        <source>ZHz6kbI</source>
+        <source>Firstname</source>
         <target>Prénom</target>
       </segment>
     </unit>
-    <unit id="eazZfll" name="zYd6EbR">
+    <unit id="lTZ0wp9" name="User-accounts">
       <segment>
-        <source>zYd6EbR</source>
+        <source>User-accounts</source>
         <target>Compte utilisateur</target>
       </segment>
     </unit>
-    <unit id="tgMS43e" name="inyLZ.6">
+    <unit id="inyLZ.6" name="Accounts">
       <segment>
-        <source>inyLZ.6</source>
+        <source>Accounts</source>
         <target>Comptes</target>
       </segment>
     </unit>
-    <unit id="qIskuHA" name="1JkqMxP">
+    <unit id="aHCc9AD" name="Initial-password">
       <segment>
-        <source>1JkqMxP</source>
+        <source>Initial-password</source>
         <target>Mot de passe inital</target>
       </segment>
     </unit>
-    <unit id="usEEvbW" name="pwTY1Kg">
+    <unit id="sDdHxeM" name="Account-name">
       <segment>
-        <source>pwTY1Kg</source>
+        <source>Account-name</source>
         <target>Nom de compte</target>
+      </segment>
+    </unit>
+    <unit id="26XWruv" name="Password-last-set">
+      <segment>
+        <source>Password-last-set</source>
+        <target>Mot de passe modifié le</target>
+      </segment>
+    </unit>
+    <unit id="YlVMJXN" name="We-recommend-to-change-your-password-every-3-month">
+      <segment>
+        <source>We-recommend-to-change-your-password-every-3-month</source>
+        <target>Nous vous recommandons de changer votre mot de passe tous les 3 mois.</target>
       </segment>
     </unit>
   </file>

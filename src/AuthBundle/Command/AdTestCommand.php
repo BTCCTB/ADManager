@@ -9,7 +9,6 @@ use AuthBundle\Service\BisDir;
 use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -95,19 +94,21 @@ class AdTestCommand extends Command
         $output->getFormatter()->setStyle('warning', $outputStyle);
         $email = 'damien.lagae@enabel.be';
 
-        $logs[] = $this->activeDirectory->fixAttributes();
+        $logs = $this->activeDirectory->fixSip($email);
 
-        $table = new Table($output);
-        $table->setHeaders([
-            'user',
-            'status',
-        ]);
+        var_dump($logs);
 
-        $i = 0;
-        foreach ($logs as $log) {
-            $table->setRow($i, $log);
-            $i++;
-        }
-        $table->render();
+//        $table = new Table($output);
+        //        $table->setHeaders([
+        //            'user',
+        //            'status',
+        //        ]);
+        //
+        //        $i = 0;
+        //        foreach ($logs as $log) {
+        //            $table->setRow($i, $log);
+        //            $i++;
+        //        }
+        //        $table->render();
     }
 }
