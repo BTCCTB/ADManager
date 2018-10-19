@@ -3,9 +3,8 @@
 namespace AuthBundle\Controller;
 
 use AuthBundle\Form\Type\LoginForm;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class SecurityController
@@ -16,8 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="security_login")
-     * @Method({"GET", "POST"})
+     * @Route("/login", name="security_login", methods={"GET","POST"})
      */
     public function loginAction()
     {
@@ -43,8 +41,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/logout", name="security_logout")
-     * @Method({"GET"})
+     * @Route("/logout", name="security_logout", methods={"GET"})
      */
     public function logoutAction()
     {
@@ -52,12 +49,11 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/redirect", name="security_redirect")
-     * @Method({"GET"})
+     * @Route("/redirect", name="security_redirect", methods={"GET"})
      */
     public function redirectAction()
     {
-        if ($this->isGranted("ROLE_APP_ADMIN")) {
+        if ($this->isGranted('ROLE_APP_ADMIN')) {
             return $this->redirectToRoute('admin_dashboard');
         }
 

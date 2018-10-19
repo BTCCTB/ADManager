@@ -34,13 +34,13 @@ security:
                 # by default, the feature is enabled by checking a
                 # checkbox in the login form (see below), uncomment the
                 # following line to always enable it.
-#                always_remember_me: true
+                always_remember_me: true
             logout:
                 path: security_logout
                 target: security_login
-            logout_on_user_change: true
 
     access_control:
+        - { path: ^/.*/translation/, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }

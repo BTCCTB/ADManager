@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Entity\IncidentSeverity;
 use App\Form\IncidentSeverityType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/incident/severity", name="incident_severity_")
@@ -30,8 +29,7 @@ class IncidentSeverityController extends Controller
     }
 
     /**
-     * @Route("/new", name="new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="new", methods={"GET", "POST"})
      */
     function new (Request $request) {
         $incidentSeverity = new IncidentSeverity();
@@ -53,8 +51,7 @@ class IncidentSeverityController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="show")
-     * @Method("GET")
+     * @Route("/{id}", name="show", methods={"GET"})
      */
     public function show(IncidentSeverity $incidentSeverity)
     {
@@ -64,8 +61,7 @@ class IncidentSeverityController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, IncidentSeverity $incidentSeverity)
     {
@@ -85,8 +81,7 @@ class IncidentSeverityController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="delete", methods={"DELETE"})
      */
     public function delete(Request $request, IncidentSeverity $incidentSeverity)
     {

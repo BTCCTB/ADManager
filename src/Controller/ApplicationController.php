@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Application;
 use App\Repository\ApplicationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ApplicationController
@@ -30,7 +30,23 @@ class ApplicationController extends Controller
     {
         $applications = $applicationRepository->findAllApplications();
 
-        return $this->render('Application/myApps.html.twig', ['applications' => $applications]);
+        $ad = $this->get('auth.active_directory');
+        $user = $ad->checkUserExistByUsername($this->getUser()->getUsername());
+
+        $now = new \DateTime('now');
+        $passwordLastSet = new \DateTime();
+        $passwordLastSet->setTimestamp($user->getPasswordLastSetTimestamp());
+
+        $passwordAges = $passwordLastSet->diff($now)->format('%a');
+
+        return $this->render(
+            'Application/myApps.html.twig',
+            [
+                'applications' => $applications,
+                'passwordAges' => $passwordAges,
+                'user' => $user,
+            ]
+        );
     }
 
     /**

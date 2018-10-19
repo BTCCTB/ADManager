@@ -3,4 +3,3 @@ auth:
     type:     annotation
     prefix:   /
     options: { i18n: false }
-

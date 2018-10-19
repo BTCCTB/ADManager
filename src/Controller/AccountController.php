@@ -18,13 +18,12 @@ use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use AuthBundle\Service\BisDir;
 use BisBundle\Entity\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AccountController
@@ -37,9 +36,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AccountController extends Controller
 {
     /**
-     * @Route("/", name="account_list")
+     * @Route("/", name="account_list", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @Method({"GET"})
      * @param AccountRepository $accountRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -51,8 +49,7 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/change-password", name="account_change_password")
-     * @Method({"GET", "POST"})
+     * @Route("/change-password", name="account_change_password", methods={"GET","POST"})
      * @throws \LogicException
      * @throws \Adldap\AdldapException
      */
@@ -95,9 +92,8 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/disable/{employeeID}", name="ad_disable_account")
+     * @Route("/disable/{employeeID}", name="ad_disable_account", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
-     * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *
      * @return RedirectResponse
@@ -120,9 +116,8 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/enable/{employeeID}", name="ad_enable_account")
+     * @Route("/enable/{employeeID}", name="ad_enable_account", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *
      * @return RedirectResponse
@@ -143,9 +138,8 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/reset/{employeeID}", name="account_reset_password")
+     * @Route("/reset/{employeeID}", name="account_reset_password", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @Method({"GET"})
      * @param integer $employeeID The employee ID
      *
      * @return RedirectResponse
@@ -175,10 +169,9 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/check/{id}", name="account_check_password")
+     * @Route("/check/{id}", name="account_check_password", methods={"GET","POST"})
      * @ParamConverter("id", class="App:Account")
      * @IsGranted("ROLE_ADMIN")
-     * @Method({"GET","POST"})
      * @param Account         $account The account to test
      * @param Request         $request The request (Form data)
      * @param ActiveDirectory $ad The Active Directory Service
@@ -205,10 +198,9 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/detail/{id}", name="account_detail")
+     * @Route("/detail/{id}", name="account_detail", methods={"GET"})
      * @ParamConverter("id", class="App:Account")
      * @IsGranted("ROLE_ADMIN")
-     * @Method({"GET"})
      * @param Account         $account The account to test
      * @param ActiveDirectory $ad      The Active Directory Service
      * @param BisDir          $ldap    The ldap Service
@@ -233,10 +225,9 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/change-email/{id}", name="account_change_email")
+     * @Route("/change-email/{id}", name="account_change_email", methods={"GET","POST"})
      * @ParamConverter("id", class="App:Account")
      * @IsGranted("ROLE_ADMIN")
-     * @Method({"GET","POST"})
      *
      * @param Account           $account The account to test
      * @param Request           $request

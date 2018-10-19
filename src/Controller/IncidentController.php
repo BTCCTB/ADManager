@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Incident;
 use App\Form\IncidentType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/incident", name="incident_")
@@ -30,11 +29,9 @@ class IncidentController extends Controller
     }
 
     /**
-     * @Route("/new", name="new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request)
-    {
+    function new (Request $request) {
         $incident = new Incident();
         $form = $this->createForm(IncidentType::class, $incident);
         $form->handleRequest($request);
@@ -54,8 +51,7 @@ class IncidentController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="show")
-     * @Method("GET")
+     * @Route("/{id}", name="show", methods={"GET"})
      */
     public function show(Incident $incident)
     {
@@ -65,8 +61,7 @@ class IncidentController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Incident $incident)
     {
@@ -86,8 +81,7 @@ class IncidentController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="delete", methods={"DELETE"})
      */
     public function delete(Request $request, Incident $incident)
     {

@@ -1,5 +1,7 @@
 parameters:
     env(LOCO_API_KEY): ''
+    locale: 'en'
+    app.locales: [en,fr,nl]
 
 translation:
     locales: '%app.locales%'
@@ -7,6 +9,7 @@ translation:
     edit_in_place:
         enabled: false
         config_name: app
+        activator: php_translation.edit_in_place.activator
     configs:
         app:
             dirs: ["%kernel.project_dir%/templates", "%kernel.project_dir%/src"]
