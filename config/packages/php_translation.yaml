@@ -22,6 +22,7 @@ translation_adapter_loco:
     projects:
         messages:
             api_key: '%env(resolve:LOCO_API_KEY)%'
+            domains: ['messages', 'validators']
 
 jms_i18n_routing:
     default_locale: '%locale%'
