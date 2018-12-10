@@ -6,6 +6,7 @@ use AuthBundle\Form\Type\LoginForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * Class SecurityController
@@ -18,10 +19,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="security_login", methods={"GET","POST"})
      */
-    public function loginAction()
+    public function loginAction(AuthenticationUtils $authenticationUtils)
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
