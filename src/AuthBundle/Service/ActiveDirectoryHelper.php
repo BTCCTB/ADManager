@@ -24,6 +24,7 @@ class ActiveDirectoryHelper
      * @param OrganizationalUnit $unit The user OrganizationalUnit
      *
      * @return User The AD user account.
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public static function bisPersonToAdUser(BisPersonView $bisPersonView, User $user, OrganizationalUnit $unit): User
     {
@@ -83,14 +84,14 @@ class ActiveDirectoryHelper
         return $user;
     }
 
+    /**
+     * @param string $password
+     *
+     * @return bool|string
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     */
     public static function checkPasswordComplexity(string $password)
     {
-        $rules = [
-            'A-Z' => 'Error E105 - Your password must contain at least one capital letter.',
-            'a-z' => 'Error E106 - Your password must contain at least one lowercase letter.',
-            '0-9' => 'Error E107 - Your password must contain at least one number.',
-            '@' => 'Error E108 - Your password must contain at least one special character.',
-        ];
         if (\strlen($password) < 8) {
             return 'Error E101 - Your password is too short. Your password must be at least 8 characters long.';
         }
@@ -271,6 +272,8 @@ class ActiveDirectoryHelper
      * @param User               $user          AD user data
      *
      * @return array The AD user account and data diff
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public static function bisPersonUpdateAdUser(BisPersonView $bisPersonView, User $user)
     {
@@ -339,14 +342,6 @@ class ActiveDirectoryHelper
             ];
             $user->setCompany($bisPersonView->getCompany());
         }
-//        if ($bisPersonView->getCountry() !== $user->getCountry()) {
-        //            $diffData['country'] = [
-        //                'attribute' => 'country',
-        //                'value' => $bisPersonView->getCountry(),
-        //                'original' => $user->getCountry(),
-        //            ];
-        //            $user->setCountry($bisPersonView->getCountry());
-        //        }
         if ($bisPersonView->getAttribute('c') !== $user->getFirstAttribute('c')) {
             $diffData['c'] = [
                 'attribute' => 'c',
@@ -495,7 +490,6 @@ class ActiveDirectoryHelper
                 ];
                 $user->setScriptPath(null);
             }
-
         }
 
         return [$user, $diffData];

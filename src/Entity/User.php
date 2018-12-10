@@ -376,5 +376,4 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
         return false;
     }
-
 }

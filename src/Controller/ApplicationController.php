@@ -73,5 +73,4 @@ class ApplicationController extends AbstractController
 
         return $this->render('Application/index.html.twig', ['applications' => $applications]);
     }
-
 }

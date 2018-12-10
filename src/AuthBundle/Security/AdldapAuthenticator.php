@@ -33,6 +33,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
  *
  * @package AuthBundle\Security
  * @author  Damien Lagae <damienlagae@gmail.com>
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class AdldapAuthenticator implements AuthenticatorInterface
 {

@@ -31,7 +31,8 @@ class IncidentController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
      */
-    function new (Request $request) {
+    public function create(Request $request)
+    {
         $incident = new Incident();
         $form = $this->createForm(IncidentType::class, $incident);
         $form->handleRequest($request);

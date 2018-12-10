@@ -31,7 +31,8 @@ class IncidentSeverityController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
      */
-    function new (Request $request) {
+    public function create(Request $request)
+    {
         $incidentSeverity = new IncidentSeverity();
         $form = $this->createForm(IncidentSeverityType::class, $incidentSeverity);
         $form->handleRequest($request);

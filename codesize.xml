@@ -25,12 +25,12 @@
     </rule>
     <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
         <properties>
-            <property name="reportLevel" value="15" description="The Cyclomatic Complexity reporting threshold"/>
+            <property name="reportLevel" value="30" description="The Cyclomatic Complexity reporting threshold"/>
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
         <properties>
-            <property name="minimum" value="1500" description="The class size reporting threshold" />
+            <property name="minimum" value="2000" description="The class size reporting threshold" />
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml/TooManyMethods">
@@ -56,7 +56,7 @@
     <!-- Increase maximum mumber of dependencies for coupling between objects rule -->
     <rule ref="rulesets/design.xml/CouplingBetweenObjects">
         <properties>
-            <property name="minimum" value="25" description="Maximum number of acceptable dependencies." />
+            <property name="minimum" value="30" description="Maximum number of acceptable dependencies." />
         </properties>
     </rule>
 
