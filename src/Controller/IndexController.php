@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Application;
+use App\Repository\ApplicationRepository;
+use AuthBundle\Service\ActiveDirectory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,8 +15,23 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
-class IndexController extends Controller
+class IndexController extends AbstractController
 {
+    /**
+     * @var ActiveDirectory
+     */
+    private $activeDirectory;
+    /**
+     * @var ApplicationRepository
+     */
+    private $applicationRepository;
+
+    public function __construct(ActiveDirectory $activeDirectory, ApplicationRepository $applicationRepository)
+    {
+        $this->activeDirectory = $activeDirectory;
+        $this->applicationRepository = $applicationRepository;
+    }
+
     /**
      * @Route("/my-account", name="my_account")
      * @throws \LogicException
@@ -22,11 +39,8 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        $ad = $this->get('auth.active_directory');
-        $user = $ad->checkUserExistByUsername($this->getUser()->getUsername());
-
-        $em = $this->getDoctrine()->getManager();
-        $applications = $em->getRepository(Application::class)->findBy(['enable' => 1]);
+        $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
+        $applications = $this->applicationRepository->findBy(['enable' => 1]);
 
         $now = new \DateTime('now');
         $passwordLastSet = new \DateTime();

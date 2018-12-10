@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
+  <file id="messages.en">
+    <unit id="DdLwEhz" name="my.account.label.password.recommendation">
+      <segment>
+        <source>my.account.label.password.recommendation</source>
+        <target>We recommend to change your password every 3 months</target>
+      </segment>
+    </unit>
+    <unit id="1pjSy9y" name="my.account.label.lastset">
+      <segment>
+        <source>my.account.label.lastset</source>
+        <target>Password last set</target>
+      </segment>
+    </unit>
+    <unit id="Kd99AFq" name="login.title">
+      <segment>
+        <source>login.title</source>
+        <target>Please login</target>
+      </segment>
+    </unit>
+    <unit id="UVnEemT" name="login.form.username.label">
+      <segment>
+        <source>login.form.username.label</source>
+        <target>Username</target>
+      </segment>
+    </unit>
+    <unit id="NRUZzJu" name="login.form.username.placeholder">
+      <segment>
+        <source>login.form.username.placeholder</source>
+        <target>firstname.lastname@enabel.be</target>
+      </segment>
+    </unit>
+    <unit id="OyhW8sn" name="login.form.password.label">
+      <segment>
+        <source>login.form.password.label</source>
+        <target>Password</target>
+      </segment>
+    </unit>
+    <unit id="ijtA4q4" name="login.form.remember.label">
+      <segment>
+        <source>login.form.remember.label</source>
+        <target>Remember</target>
+      </segment>
+    </unit>
+    <unit id="FePan4G" name="login.form.btn.submit">
+      <segment>
+        <source>login.form.btn.submit</source>
+        <target>Login</target>
+      </segment>
+    </unit>
+    <unit id="ZzrLz_I" name="application.name">
+      <segment>
+        <source>application.name</source>
+        <target>Password manager</target>
+      </segment>
+    </unit>
+    <unit id="taKndIV" name="main.menu.application.label">
+      <segment>
+        <source>main.menu.application.label</source>
+        <target>My apps</target>
+      </segment>
+    </unit>
+    <unit id="CW1ZuMf" name="main.menu.account.label">
+      <segment>
+        <source>main.menu.account.label</source>
+        <target>My account</target>
+      </segment>
+    </unit>
+    <unit id="6qLEnjB" name="main.menu.admin.new.label">
+      <segment>
+        <source>main.menu.admin.new.label</source>
+        <target>New</target>
+      </segment>
+    </unit>
+    <unit id="VdrSSjK" name="main.menu.admin.accounts.label">
+      <segment>
+        <source>main.menu.admin.accounts.label</source>
+        <target>Accounts</target>
+      </segment>
+    </unit>
+    <unit id="sFzCVxo" name="main.menu.admin.label">
+      <segment>
+        <source>main.menu.admin.label</source>
+        <target>Admin</target>
+      </segment>
+    </unit>
+    <unit id="7EcN_0I" name="main.menu.admin.list.label">
+      <segment>
+        <source>main.menu.admin.list.label</source>
+        <target>List</target>
+      </segment>
+    </unit>
+    <unit id="84mKp7M" name="btn.application.label">
+      <segment>
+        <source>btn.application.label</source>
+        <target>My apps</target>
+      </segment>
+    </unit>
+    <unit id="7WnZa6t" name="main.menu.logout.label">
+      <segment>
+        <source>main.menu.logout.label</source>
+        <target>Logout</target>
+      </segment>
+    </unit>
+    <unit id="WjT51w5" name="btn.change.password.label">
+      <segment>
+        <source>btn.change.password.label</source>
+        <target>Change password</target>
+      </segment>
+    </unit>
+    <unit id="QJAfKxM" name="main.menu.admin.application.label">
+      <segment>
+        <source>main.menu.admin.application.label</source>
+        <target>Applications</target>
+      </segment>
+    </unit>
+    <unit id="BxkFqZI" name="main.menu.admin.incident.label">
+      <segment>
+        <source>main.menu.admin.incident.label</source>
+        <target>Incidents</target>
+      </segment>
+    </unit>
+    <unit id="bFwSRu9" name="main.menu.admin.incident_severity.label">
+      <segment>
+        <source>main.menu.admin.incident_severity.label</source>
+        <target>Incident severity</target>
+      </segment>
+    </unit>
+    <unit id="lj5Vy_d" name="application.title.h3">
+      <segment>
+        <source>application.title.h3</source>
+        <target><![CDATA[Your apps & useful links]]></target>
+      </segment>
+    </unit>
+    <unit id="hKjaM.d" name="application.btn.link.label">
+      <segment>
+        <source>application.btn.link.label</source>
+        <target>Link</target>
+      </segment>
+    </unit>
+    <unit id="PP_aNNG" name="application.btn.link.fr.label">
+      <segment>
+        <source>application.btn.link.fr.label</source>
+        <target>FR</target>
+      </segment>
+    </unit>
+    <unit id="VXPdJHF" name="application.btn.link.nl.label">
+      <segment>
+        <source>application.btn.link.nl.label</source>
+        <target>NL</target>
+      </segment>
+    </unit>
+    <unit id="Gno_256" name="application.btn.link.en.label">
+      <segment>
+        <source>application.btn.link.en.label</source>
+        <target>EN</target>
+      </segment>
+    </unit>
+    <unit id="AbF_YOH" name="change.password.rules.p0">
+      <segment>
+        <source>change.password.rules.p0</source>
+        <target>Your new password must be at least 8 characters long and follow three of these rules:</target>
+      </segment>
+    </unit>
+    <unit id="ti8u8ZI" name="change.password.rules.li0">
+      <segment>
+        <source>change.password.rules.li0</source>
+        <target>must contains a lower-case letter [abc...xyz]</target>
+      </segment>
+    </unit>
+    <unit id="I_Ddnzg" name="change.password.rules.li1">
+      <segment>
+        <source>change.password.rules.li1</source>
+        <target>must contains a capital letter [ABC...XYZ]</target>
+      </segment>
+    </unit>
+    <unit id="LAk.OAt" name="change.password.rules.li2">
+      <segment>
+        <source>change.password.rules.li2</source>
+        <target>must contains a number [012...789]</target>
+      </segment>
+    </unit>
+    <unit id="P1xjluP" name="change.password.rules.li3">
+      <segment>
+        <source>change.password.rules.li3</source>
+        <target><![CDATA[must contains a special character [&@€...!-_]]]></target>
+      </segment>
+    </unit>
+    <unit id=".n6z9bO" name="change.password.title.h1">
+      <segment>
+        <source>change.password.title.h1</source>
+        <target>Change password</target>
+      </segment>
+    </unit>
+    <unit id="O1TRpn0" name="change.password.form.current.password.label">
+      <segment>
+        <source>change.password.form.current.password.label</source>
+        <target>Current password</target>
+      </segment>
+    </unit>
+    <unit id="fAwZtjg" name="change.password.form.new.password.label">
+      <segment>
+        <source>change.password.form.new.password.label</source>
+        <target>New password</target>
+      </segment>
+    </unit>
+    <unit id="sWnD0Zi" name="change.password.form.repeat.password.label">
+      <segment>
+        <source>change.password.form.repeat.password.label</source>
+        <target>Repeat new password</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

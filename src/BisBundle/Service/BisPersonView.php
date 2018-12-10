@@ -40,6 +40,16 @@ class BisPersonView
     }
 
     /**
+     * @param String $email
+     *
+     * @return \BisBundle\Entity\BisPersonView|null
+     */
+    public function getUserData(String $email)
+    {
+        return $this->repository->getUserData($email);
+    }
+
+    /**
      * @param String $country Country code 3 letters iso
      *
      * @return \BisBundle\Entity\BisPersonView[]|null

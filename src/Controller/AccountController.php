@@ -16,10 +16,10 @@ use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use AuthBundle\Service\BisDir;
-use BisBundle\Entity\BisPersonView;
+use BisBundle\Service\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,8 +33,34 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/account")
  * @IsGranted("ROLE_USER")
  */
-class AccountController extends Controller
+class AccountController extends AbstractController
 {
+    /**
+     * @var ActiveDirectory
+     */
+    private $activeDirectory;
+    /**
+     * @var BisDir
+     */
+    private $bisDir;
+    /**
+     * @var AccountService
+     */
+    private $accountService;
+    /**
+     * @var SecurityAudit
+     */
+    private $securityAudit;
+
+    public function __construct(ActiveDirectory $activeDirectory, BisDir $bisDir, AccountService $accountService, SecurityAudit $securityAudit)
+    {
+
+        $this->activeDirectory = $activeDirectory;
+        $this->bisDir = $bisDir;
+        $this->accountService = $accountService;
+        $this->securityAudit = $securityAudit;
+    }
+
     /**
      * @Route("/", name="account_list", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -50,13 +76,13 @@ class AccountController extends Controller
 
     /**
      * @Route("/change-password", name="account_change_password", methods={"GET","POST"})
-     * @throws \LogicException
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Adldap\AdldapException
      */
     public function changeAction(Request $request)
     {
-        $ad = $this->get('auth.active_directory');
-        $bisdir = $this->get('auth.bis_dir');
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $form = $this->createForm(ChangePasswordType::class);
@@ -64,14 +90,14 @@ class AccountController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            if ($ad->checkCredentials($user->getEmail(), $data['current_password'])) {
+            if ($this->activeDirectory->checkCredentials($user->getEmail(), $data['current_password'])) {
                 $passwordCheck = ActiveDirectoryHelper::checkPasswordComplexity($data['password']);
                 if ($passwordCheck === true) {
-                    if ($ad->changePassword($user->getEmail(), $data['password'])) {
-                        if ($bisdir->syncPassword($user->getEmail(), $data['password'])) {
-                            $this->get(SecurityAudit::class)->changePassword(
-                                $this->get(AccountService::class)->getAccount($user->getEmail()),
-                                $this->get('security.token_storage')->getToken()->getUser()
+                    if ($this->activeDirectory->changePassword($user->getEmail(), $data['password'])) {
+                        if ($this->bisDir->syncPassword($user->getEmail(), $data['password'])) {
+                            $this->securityAudit->changePassword(
+                                $this->accountService->getAccount($user->getEmail()),
+                                $user
                             );
                             $this->addFlash('success', 'Password successfully changed !');
                             return $this->redirectToRoute('homepage');
@@ -101,12 +127,11 @@ class AccountController extends Controller
      */
     public function disableAction($employeeID): RedirectResponse
     {
-        $ad = $this->get('auth.active_directory');
         /**
          * @var User $user
          */
-        $user = $ad->checkUserExistByEmployeeID($employeeID);
-        if ($ad->disableUser($user)) {
+        $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
+        if ($this->activeDirectory->disableUser($user)) {
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] disabled!');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
@@ -125,10 +150,9 @@ class AccountController extends Controller
      */
     public function enableAction($employeeID): RedirectResponse
     {
-        $ad = $this->get('auth.active_directory');
-        $user = $ad->checkUserExistByEmployeeID($employeeID);
+        $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
 
-        if ($ad->enableUser($user)) {
+        if ($this->activeDirectory->enableUser($user)) {
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] enabled!');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
@@ -140,26 +164,24 @@ class AccountController extends Controller
     /**
      * @Route("/reset/{employeeID}", name="account_reset_password", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param integer $employeeID The employee ID
+     * @param integer                     $employeeID The employee ID     *
+     * @param AccountRepository           $accountRepository
+     *
+     * @param ActiveDirectoryNotification $activeDirectoryNotification
      *
      * @return RedirectResponse
-     * @throws \LogicException
      * @throws \Adldap\AdldapException
      */
-    public function resetAction($employeeID): RedirectResponse
+    public function resetAction($employeeID, AccountRepository $accountRepository, ActiveDirectoryNotification $activeDirectoryNotification): RedirectResponse
     {
-        $ad = $this->get('auth.active_directory');
-        $adNotification = $this->get(ActiveDirectoryNotification::class);
-        $user = $ad->checkUserExistByEmployeeID($employeeID);
-        $em = $this->get('doctrine.orm.default_entity_manager');
-        $accountRepository = $em->getRepository(Account::class);
+        $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
         $account = $accountRepository->find($employeeID);
 
-        $resetPassword = $ad->initAccount($user);
+        $resetPassword = $this->activeDirectory->initAccount($user);
 
         if ($resetPassword->getStatus() === ActiveDirectoryResponseStatus::DONE) {
-            $adNotification->notifyInitialization($resetPassword);
-            $this->get(SecurityAudit::class)->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
+            $activeDirectoryNotification->notifyInitialization($resetPassword);
+            $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized!');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
@@ -174,22 +196,21 @@ class AccountController extends Controller
      * @IsGranted("ROLE_ADMIN")
      * @param Account         $account The account to test
      * @param Request         $request The request (Form data)
-     * @param ActiveDirectory $ad The Active Directory Service
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function checkPasswordAction(Account $account, Request $request, ActiveDirectory $ad)
+    public function checkPasswordAction(Account $account, Request $request)
     {
         $form = $this->createForm(ActionAuthType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            if ($ad->checkCredentials($account->getEmail(), $data['password'])) {
-                $this->get(SecurityAudit::class)->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), true);
+            if ($this->activeDirectory->checkCredentials($account->getEmail(), $data['password'])) {
+                $this->securityAudit->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), true);
                 $this->addFlash('success', 'This password is correct !');
             } else {
-                $this->get(SecurityAudit::class)->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), false);
+                $this->securityAudit->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), false);
                 $this->addFlash('danger', 'This password don\'t match !');
             }
         }
@@ -201,21 +222,17 @@ class AccountController extends Controller
      * @Route("/detail/{id}", name="account_detail", methods={"GET"})
      * @ParamConverter("id", class="App:Account")
      * @IsGranted("ROLE_ADMIN")
-     * @param Account         $account The account to test
-     * @param ActiveDirectory $ad      The Active Directory Service
-     * @param BisDir          $ldap    The ldap Service
+     * @param Account       $account The account to test     *
+     * @param BisPersonView $bisPersonView
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(Account $account, ActiveDirectory $ad, BisDir $ldap)
+    public function detailAction(Account $account, BisPersonView $bisPersonView)
     {
         if (!empty($account->getEmail())) {
-            $adUser = $ad->getUser($account->getEmail());
-            $ldapUser = $ldap->getUser($account->getEmail());
-
-            $em = $this->get('doctrine.orm.bis_entity_manager');
-            $bisPersonViewRepository = $em->getRepository(BisPersonView::class);
-            $bisData = $bisPersonViewRepository->getUserData($account->getEmail());
+            $adUser = $this->activeDirectory->getUser($account->getEmail());
+            $ldapUser = $this->bisDir->getUser($account->getEmail());
+            $bisData = $bisPersonView->getUserData($account->getEmail());
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
             return $this->redirectToRoute('account_list');
@@ -231,8 +248,6 @@ class AccountController extends Controller
      *
      * @param Account           $account The account to test
      * @param Request           $request
-     * @param ActiveDirectory   $ad      The Active Directory Service
-     * @param BisDir            $bisDir  The LDAP Service
      * @param UserRepository    $userRepository
      * @param AccountRepository $accountRepository
      *
@@ -241,12 +256,12 @@ class AccountController extends Controller
      * @throws \Doctrine\ORM\OptimisticLockException
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function changeEmailAction(Account $account, Request $request, ActiveDirectory $ad, BisDir $bisDir, UserRepository $userRepository, AccountRepository $accountRepository)
+    public function changeEmailAction(Account $account, Request $request, UserRepository $userRepository, AccountRepository $accountRepository)
     {
         if (!empty($account->getEmail())) {
             $form = $this->createForm(ChangeEmailType::class);
             $form->handleRequest($request);
-            $adData = $ad->getUser($account->getEmail());
+            $adData = $this->activeDirectory->getUser($account->getEmail());
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $data = $form->getData();
@@ -260,11 +275,11 @@ class AccountController extends Controller
                     $email = strtolower(trim($data['new_email']));
 
                     // Apply email change in AD
-                    $adUser = $ad->findAndChangeEmail($account->getEmail(), $email, $data['keep_proxy']);
+                    $adUser = $this->activeDirectory->findAndChangeEmail($account->getEmail(), $email, $data['keep_proxy']);
 
                     if ($adUser !== null && $adUser->getEmail() == $email) {
                         // Apply email change in LDAP
-                        $bisDir->findAndChangeEmail($account->getEmail(), $email);
+                        $this->bisDir->findAndChangeEmail($account->getEmail(), $email);
                         // Apply email change in User DB
                         $userRepository->changeEmail($account->getAccountName(), $email);
                         // Apply email change in Account DB

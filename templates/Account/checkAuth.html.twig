@@ -2,14 +2,14 @@
 
 {% block body %}
 
-    <h1>{% trans %}This action requires authentication confirmation{% endtrans %}</h1>
-    <a href="{{ action.back | default(path('account_list')) }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> {% trans %}Back{% endtrans %}</a>
+    <h1>{{ 'This action requires authentication confirmation'|trans }}</h1>
+    <a href="{{ action.back | default(path('account_list')) }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> {{ 'Back'|trans }}</a>
     {% include '_partial/flash.html.twig' %}
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <div class="alert alert-danger">
-                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {% trans %}This action will be recorded in a security audit log{% endtrans %}
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ 'This action will be recorded in a security audit log'|trans }}
             </div>
         </div>
         <div class="col-md-2"></div>
@@ -32,7 +32,7 @@
     <div class="row" style="padding-top: 1rem">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <button type="submit" class="btn btn-outline-danger"><i class="fa fa-unlock"></i> {% trans %}Confirm authentication{% endtrans %}</button>
+            <button type="submit" class="btn btn-outline-danger"><i class="fa fa-unlock"></i> {{ 'Confirm authentication'|trans }}</button>
         </div>
     </div>
     {{ form_rest(form) }}
@@ -40,5 +40,5 @@
 {% endblock %}
 
 {% block title %}
-    {% trans %}Confirm authentication{% endtrans %} - {{ parent() }}
+    {{ 'Confirm authentication'|trans }} - {{ parent() }}
 {% endblock %}

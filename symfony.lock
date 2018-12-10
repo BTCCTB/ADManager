@@ -149,9 +149,6 @@
     "jms/i18n-routing-bundle": {
         "version": "3.0.2"
     },
-    "jms/translation-bundle": {
-        "version": "1.4.3"
-    },
     "justinrainbow/json-schema": {
         "version": "5.2.6"
     },

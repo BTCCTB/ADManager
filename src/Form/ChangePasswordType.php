@@ -16,7 +16,7 @@ class ChangePasswordType extends AbstractType
             'current_password',
             PasswordType::class,
             [
-                'label' => 'Current password',
+                'label' => 'change.password.form.current.password.label',
                 'attr' => ['class' => 'password-field'],
             ]
         );
@@ -26,7 +26,7 @@ class ChangePasswordType extends AbstractType
             RepeatedType::class,
             [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The new password fields must match.',
+                'invalid_message' => 'change.password.form.new.password.invalid',
                 'options' => [
                     'attr' => [
                         'class' => 'password-field',
@@ -34,10 +34,10 @@ class ChangePasswordType extends AbstractType
                 ],
                 'required' => true,
                 'first_options' => [
-                    'label' => 'New password',
+                    'label' => 'change.password.form.new.password.label',
                 ],
                 'second_options' => [
-                    'label' => 'Repeat new password',
+                    'label' => 'change.password.form.repeat.password.label',
                 ],
             ]
         );

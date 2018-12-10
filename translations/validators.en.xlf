@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
+  <file id="validators.en">
+    <unit id="OqkX43e" name="change.password.form.new.password.invalid">
+      <notes>
+        <note>parameters:</note>
+        <note> '{{ value }}': array</note>
+      </notes>
+      <segment>
+        <source>change.password.form.new.password.invalid</source>
+        <target>The new password fields must match.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

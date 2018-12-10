@@ -3,6 +3,7 @@
 namespace AuthBundle\Controller;
 
 use AuthBundle\Form\Type\LoginForm;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package AuthBundle\Controller
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="security_login", methods={"GET","POST"})

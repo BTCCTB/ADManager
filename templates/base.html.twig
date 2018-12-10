@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -66,6 +66,11 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
         <!-- Timeago-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
+        {% if app.request.locale == 'fr'  %}
+        <script src="{{ asset('js/locales/jquery.timeago.fr.js') }}"></script>
+        {% elseif app.request.locale == 'nl'  %}
+        <script src="{{ asset('js/locales/jquery.timeago.nl.js') }}"></script>
+        {% endif %}
         <script>
             jQuery(document).ready(function() {
                 jQuery("time.timeago").timeago();

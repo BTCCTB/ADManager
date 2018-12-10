@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
+  <file id="messages.fr">
+    <unit id="DdLwEhz" name="my.account.label.password.recommendation">
+      <segment>
+        <source>my.account.label.password.recommendation</source>
+        <target>Nous vous recommandons de changer votre mot de passe tous les 3 mois.</target>
+      </segment>
+    </unit>
+    <unit id="1pjSy9y" name="my.account.label.lastset">
+      <segment>
+        <source>my.account.label.lastset</source>
+        <target>Dernier changement de mot de passe </target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

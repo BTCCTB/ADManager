@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-secondary">
         <a class="navbar-brand" href="{{ path('homepage') }}">
             <img alt="Enabel - Password manager" height="100%" class="rounded" src="{{ asset('img/logothumb.png') }}">
-            Password Manager
+            {{ 'application.name'|trans }}
         </a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,12 +13,13 @@
                 {% include '_partial/menu.html.twig' %}
             </ul>
             <ul class="navbar-nav">
+                {% include '_partial/lang.selector.html.twig' %}
             {%  if is_granted('ROLE_USER') %}
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> {{ app.user.username }} <span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a href="{{ path('my_account') }}" class="dropdown-item"><i class="fa fa-user"></i> {% trans %}My account{% endtrans %}</a>
-                        <a href="{{ path('security_logout') }}" class="dropdown-item"><i class="fa fa-unlock"></i> {% trans %}Logout{% endtrans %}</a>
+                        <a href="{{ path('my_account') }}" class="dropdown-item"><i class="fa fa-user"></i> {{ 'main.menu.account.label'|trans }}</a>
+                        <a href="{{ path('security_logout') }}" class="dropdown-item"><i class="fa fa-unlock"></i> {{ 'main.menu.logout.label'|trans }}</a>
                     </div>
                 </li>
             {%  else %}

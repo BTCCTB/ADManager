@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\IncidentSeverity;
 use App\Form\IncidentSeverityType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/admin/incident/severity", name="incident_severity_")
  */
-class IncidentSeverityController extends Controller
+class IncidentSeverityController extends AbstractController
 {
     /**
      * @Route("/", name="index")

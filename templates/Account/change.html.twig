@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <h1>{{ 'change.password.title.h1'|trans }}</h1>
+
     {% include '_partial/flash.html.twig' %}
 
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
@@ -13,7 +15,7 @@
         <div class="col-md-3">
             <div class="form-control-feedback">
                 <span class="text-danger align-middle">
-                    {{ form_errors(form.current_password) }}
+                    {#{{ form_errors(form.current_password) }}#}
                 </span>
             </div>
         </div>
@@ -22,12 +24,12 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <div class="alert alert-warning">
-                <p>{% trans %}Your new password must be at least 8 characters long and follow three of these rules:{% endtrans %}</p>
+                <p>{{ 'change.password.rules.p0'|trans }}</p>
                 <ul>
-                    <li>{% trans %}must contains a lower-case letter{% endtrans %} [abc...xyz]</li>
-                    <li>{% trans %}must contains a capital letter{% endtrans %} [ABC...XYZ]</li>
-                    <li>{% trans %}must contains a number{% endtrans %} [012...789]</li>
-                    <li>{% trans %}must contains a special character{% endtrans %} [&@€...!-_]</li>
+                    <li>{{ 'change.password.rules.li0'|trans }} </li>
+                    <li>{{ 'change.password.rules.li1'|trans }} </li>
+                    <li>{{ 'change.password.rules.li2'|trans }} </li>
+                    <li>{{ 'change.password.rules.li3'|trans }} </li>
                 </ul>
             </div>
         </div>
@@ -40,7 +42,7 @@
         <div class="col-md-3">
             <div class="form-control-feedback">
                 <span class="text-danger align-middle">
-                    {{ form_errors(form.password.first) }}
+                    {#{{ form_errors(form.password.first) }}#}
                 </span>
             </div>
         </div>
@@ -53,7 +55,7 @@
         <div class="col-md-3">
             <div class="form-control-feedback">
                 <span class="text-danger align-middle">
-                    {{ form_errors(form.password.second) }}
+                    {#{{ form_errors(form.password.second) }}#}
                 </span>
             </div>
         </div>
@@ -61,7 +63,7 @@
     <div class="row" style="padding-top: 1rem">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-key"></i> {% trans %}Change password{% endtrans %}</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-key"></i> {{ 'btn.change.password.label'|trans }}</button>
         </div>
     </div>
     {{ form_rest(form) }}

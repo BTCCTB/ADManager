@@ -1,9 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>My apps</h1>
-    <h3>Your apps & useful links</h3>
+    <h1>{{ 'main.menu.application.label'|trans }}</h1>
+    <h3>{{ 'application.title.h3'|trans }}</h3>
     {% include '_partial/flash.html.twig' %}
+    {% if passwordAges > 70 %}
+    {%  if passwordAges > 80 %}
+    <div class="alert alert-danger" role="alert">
+    {%  elseif passwordAges > 70 %}
+    <div class="alert alert-warning" role="alert">
+    {% endif %}
+        {{ 'my.account.label.lastset'|trans }}:
+        <time class="timeago" datetime="{{ user.passwordLastSetTimestamp|date("Y-m-d H:i:s") }}">{{ user.passwordLastSetTimestamp|date("d/m/Y") }}</time>
+        <br/><small>{{ 'my.account.label.password.recommendation'|trans }}</small>
+    </div>
+    {% endif %}
     {#{% for row in applications|batch(6) %}#}
     <div class="row">
         {% for application in applications %}
@@ -15,14 +26,14 @@
                     <div class="card-body">
                         {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}
                             {% if application.linkFr is not empty %}
-                                <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">FR</a>
+                                <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.fr.label'|trans|upper }}</a>
                             {% endif %}
                             {% if application.linkNl is not empty %}
-                                <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">NL</a>
+                                <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.nl.label'|trans|upper }}</a>
                             {% endif %}
-                            <a href="{{ application.link }}" target="_blank" class="btn btn-primary">EN</a>
+                            <a href="{{ application.link }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.en.label'|trans|upper }}</a>
                         {% else %}
-                            <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> LINK</a>
+                            <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> {{ 'application.btn.link.label'|trans|upper }}</a>
                         {% endif %}
                     </div>
                     {#<div class="card-footer text-right">#}
@@ -38,5 +49,5 @@
 {% endblock %}
 
 {% block title %}
-    My apps - {{ parent() }}
+    {{ 'main.menu.application.label'|trans }} - {{ parent() }}
 {% endblock %}

@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Application;
 use App\Repository\ApplicationRepository;
+use AuthBundle\Service\ActiveDirectory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,8 +17,19 @@ use Symfony\Component\Routing\Annotation\Route;
  * @author  Damien Lagae <damienlagae@gmail.com>
  * @IsGranted("ROLE_USER")
  */
-class ApplicationController extends Controller
+class ApplicationController extends AbstractController
 {
+    /**
+     * @var ActiveDirectory
+     */
+    private $activeDirectory;
+
+    public function __construct(ActiveDirectory $activeDirectory)
+    {
+
+        $this->activeDirectory = $activeDirectory;
+    }
+
     /**
      * @Route("/", name="homepage")
      * @Route("/my-apps", name="application-my-apps")
@@ -30,8 +42,7 @@ class ApplicationController extends Controller
     {
         $applications = $applicationRepository->findAllApplications();
 
-        $ad = $this->get('auth.active_directory');
-        $user = $ad->checkUserExistByUsername($this->getUser()->getUsername());
+        $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
 
         $now = new \DateTime('now');
         $passwordLastSet = new \DateTime();

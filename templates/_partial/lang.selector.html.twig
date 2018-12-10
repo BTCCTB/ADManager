@@ -1,0 +1,16 @@
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {% if app.request.locale == 'fr' %}
+        <i class="flag-icon flag-icon-fr"></i> FR
+    {% elseif app.request.locale == 'nl' %}
+        <i class="flag-icon flag-icon-nl"></i> NL
+    {% else %}
+        <i class="flag-icon flag-icon-gb"></i> EN
+    {% endif %}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{{ path('homepage', { _locale: 'en'}) }}"><i class="flag-icon flag-icon-gb"></i> English</a>
+        <a class="dropdown-item" href="{{ path('homepage', { _locale: 'fr'}) }}"><i class="flag-icon flag-icon-fr"></i> Français</a>
+        <a class="dropdown-item" href="{{ path('homepage', { _locale: 'nl'}) }}"><i class="flag-icon flag-icon-nl"></i> Nederlands</a>
+    </div>
+</div>

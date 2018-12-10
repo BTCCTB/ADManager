@@ -23,9 +23,9 @@ class LoginForm extends AbstractType
             '_username',
             EmailType::class,
             array(
-                'label' => 'Username',
+                'label' => 'login.form.username.label',
                 'attr' => [
-                    'placeholder' => "lastname.firstname@enabel.be",
+                    'placeholder' => "login.form.username.placeholder",
                 ],
             )
         );
@@ -33,14 +33,14 @@ class LoginForm extends AbstractType
             '_password',
             PasswordType::class,
             array(
-                'label' => 'Password',
+                'label' => 'login.form.password.label',
             )
         );
         $builder->add(
             '_remember',
             CheckboxType::class,
             array(
-                'label' => 'Remember',
+                'label' => 'login.form.remember.label',
                 'required' => false,
             )
         );
