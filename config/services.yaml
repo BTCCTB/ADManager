@@ -126,3 +126,5 @@ services:
     App\Repository\UserRepository:
         factory: 'doctrine.orm.entity_manager:getRepository'
         arguments: ['App\Entity\User']
+
+
