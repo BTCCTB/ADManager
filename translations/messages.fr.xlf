@@ -106,7 +106,7 @@
     <unit id="WjT51w5" name="btn.change.password.label">
       <segment>
         <source>btn.change.password.label</source>
-        <target>Changer mon mot de passe</target>
+        <target>Modifier le mot de passe</target>
       </segment>
     </unit>
     <unit id="QJAfKxM" name="main.menu.admin.application.label">
