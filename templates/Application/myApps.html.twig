@@ -51,7 +51,7 @@
         <div class="col-lg-3 col-xs-12">
             <div class="row">
                 <ul class="list-group col-lg-12">
-                    <li class="list-group-item list-group-item-success">{{ 'application.new_collegues.title.h3'|trans }}</li>
+                    <li class="list-group-item list-group-item-info"><i class="fa fa-users" aria-hidden="true"></i> {{ 'application.new_collegues.title.h3'|trans }}</li>
                     {% for collegue in starters %}
                     <li class="list-group-item">
                         {{ collegue.countryFlag|raw }} {{ collegue.displayName }}<br>
