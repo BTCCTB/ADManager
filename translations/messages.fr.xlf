@@ -211,5 +211,17 @@
         <target>Répéter le nouveau mot de passe</target>
       </segment>
     </unit>
+    <unit id="G30ur4w" name="application.new_collegues.title.h3">
+      <segment>
+        <source>application.new_collegues.title.h3</source>
+        <target>Nouveau collègues</target>
+      </segment>
+    </unit>
+    <unit id="HL4Bmh." name="application.new_collegues.start_date">
+      <segment>
+        <source>application.new_collegues.start_date</source>
+        <target>Date de début</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

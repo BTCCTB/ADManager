@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Application;
 use App\Repository\ApplicationRepository;
 use AuthBundle\Service\ActiveDirectory;
+use BisBundle\Service\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +39,7 @@ class ApplicationController extends AbstractController
      * @return Response
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function myApps(ApplicationRepository $applicationRepository): Response
+    public function myApps(ApplicationRepository $applicationRepository, BisPersonView $bisPersonView): Response
     {
         $applications = $applicationRepository->findAllApplications();
 
@@ -56,6 +57,8 @@ class ApplicationController extends AbstractController
                 'applications' => $applications,
                 'passwordAges' => $passwordAges,
                 'user' => $user,
+                'starters' => $bisPersonView->getStarters(),
+                'finishers' => $bisPersonView->getFinishers(),
             ]
         );
     }

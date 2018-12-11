@@ -246,4 +246,38 @@ class BisPersonViewRepository extends EntityRepository
 
         return $activeUsers;
     }
+
+    public function getStarters(int $nbDays)
+    {
+        $repository = $this->_em->getRepository(BisPersonView::class);
+
+        $start = (new \DateTime())->modify('-' . $nbDays . ' days');
+        $end = (new \DateTime())->modify('+' . $nbDays . ' days');
+
+        $query = $repository->createQueryBuilder('bpv')
+            ->where('bpv.perDateContractStart BETWEEN :start AND :end')
+            ->andWhere('bpv.perDateContractStop IS NULL OR bpv.perDateContractStop > :now')
+            ->setParameter('now', new \DateTime())
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getFinishers(int $nbDays)
+    {
+        $repository = $this->_em->getRepository(BisPersonView::class);
+
+        $start = (new \DateTime())->modify('-' . $nbDays . ' days');
+        $end = (new \DateTime())->modify('+' . $nbDays . ' days');
+
+        $query = $repository->createQueryBuilder('bpv')
+            ->where('bpv.perDateContractStop BETWEEN :start AND :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

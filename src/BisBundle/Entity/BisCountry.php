@@ -355,4 +355,9 @@ class BisCountry
         $this->couPartner = $couPartner;
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getCouName();
+    }
 }

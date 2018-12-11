@@ -211,5 +211,17 @@
         <target>Herhaal nieuw wachtwoord</target>
       </segment>
     </unit>
+    <unit id="G30ur4w" name="application.new_collegues.title.h3">
+      <segment>
+        <source>application.new_collegues.title.h3</source>
+        <target>Nieuwe collega's</target>
+      </segment>
+    </unit>
+    <unit id="HL4Bmh." name="application.new_collegues.start_date">
+      <segment>
+        <source>application.new_collegues.start_date</source>
+        <target>Begin datum</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

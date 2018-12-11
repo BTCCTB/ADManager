@@ -17,33 +17,53 @@
     {% endif %}
     {#{% for row in applications|batch(6) %}#}
     <div class="row">
-        {% for application in applications %}
-            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2" style="padding: 1rem;">
-                <div class="card text-center">
-                    <h4 class="card-header">
-                        {{ application.name }}
-                    </h4>
-                    <div class="card-body">
-                        {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}
-                            {% if application.linkFr is not empty %}
-                                <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.fr.label'|trans|upper }}</a>
-                            {% endif %}
-                            {% if application.linkNl is not empty %}
-                                <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.nl.label'|trans|upper }}</a>
-                            {% endif %}
-                            <a href="{{ application.link }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.en.label'|trans|upper }}</a>
-                        {% else %}
-                            <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> {{ 'application.btn.link.label'|trans|upper }}</a>
-                        {% endif %}
+        <div class="col-lg-9 col-xs-12">
+            <div class="row">
+                {% for application in applications %}
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2" style="padding: 1rem; padding-top: 0;">
+                        <div class="card text-center">
+                            <h4 class="card-header">
+                                {{ application.name }}
+                            </h4>
+                            <div class="card-body">
+                                {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}
+                                    {% if application.linkFr is not empty %}
+                                        <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.fr.label'|trans|upper }}</a>
+                                    {% endif %}
+                                    {% if application.linkNl is not empty %}
+                                        <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.nl.label'|trans|upper }}</a>
+                                    {% endif %}
+                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.en.label'|trans|upper }}</a>
+                                {% else %}
+                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> {{ 'application.btn.link.label'|trans|upper }}</a>
+                                {% endif %}
+                            </div>
+                            {#<div class="card-footer text-right">#}
+                                {#<a href="#" class="text-success"><i class="fa fa-check-circle"></i> Online</a>#}
+                                {#<a href="#" class="text-warning"><i class="fa fa-exclamation-circle"></i> Maintenance</a>#}
+                                {#<a href="#" class="text-danger"><i class="fa fa-times-circle"></i> Offline</a>#}
+                            {#</div>#}
+                        </div>
                     </div>
-                    {#<div class="card-footer text-right">#}
-                        {#<a href="#" class="text-success"><i class="fa fa-check-circle"></i> Online</a>#}
-                        {#<a href="#" class="text-warning"><i class="fa fa-exclamation-circle"></i> Maintenance</a>#}
-                        {#<a href="#" class="text-danger"><i class="fa fa-times-circle"></i> Offline</a>#}
-                    {#</div>#}
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
+        <div class="col-lg-3 col-xs-12">
+            <div class="row">
+                <ul class="list-group col-lg-12">
+                    <li class="list-group-item list-group-item-success">{{ 'application.new_collegues.title.h3'|trans }}</li>
+                    {% for collegue in starters %}
+                    <li class="list-group-item">
+                        {{ collegue.countryFlag|raw }} {{ collegue.displayName }}<br>
+                        <small>
+                            {{ 'application.new_collegues.start_date'|trans }}: {{ collegue.DateContractStart|date('d/m/Y') }}<br>
+                            <i class="fa fa-briefcase" aria-hidden="true"></i> {{ collegue.function }}
+                        </small>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
     {#{% endfor %}#}
 {% endblock %}

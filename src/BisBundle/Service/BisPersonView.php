@@ -72,4 +72,14 @@ class BisPersonView
     {
         return $this->repository->getActiveUserByEmail();
     }
+
+    public function getStarters(int $nbDays = 15)
+    {
+        return $this->repository->getStarters($nbDays);
+    }
+
+    public function getFinishers(int $nbDays = 15)
+    {
+        return $this->repository->getFinishers($nbDays);
+    }
 }

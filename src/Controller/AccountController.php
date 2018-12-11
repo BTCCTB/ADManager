@@ -65,11 +65,17 @@ class AccountController extends AbstractController
      * @Route("/", name="account_list", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param AccountRepository $accountRepository
+     * @param BisPersonView     $bisPersonView
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(AccountRepository $accountRepository)
+    public function indexAction(AccountRepository $accountRepository, BisPersonView $bisPersonView)
     {
         $accounts = $accountRepository->findAllActive();
+
+        $employees = $bisPersonView->getStarters();
+
+        dump($employees);
 
         return $this->render('Account/index.html.twig', ['accounts' => $accounts]);
     }
