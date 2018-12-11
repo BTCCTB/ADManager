@@ -260,6 +260,7 @@ class BisPersonViewRepository extends EntityRepository
             ->setParameter('now', new \DateTime())
             ->setParameter('start', $start)
             ->setParameter('end', $end)
+            ->orderBy('bpv.perDateContractStart', 'DESC')
             ->getQuery();
 
         return $query->getResult();
