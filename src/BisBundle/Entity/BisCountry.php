@@ -131,9 +131,15 @@ class BisCountry
      */
     private $bisPersons;
 
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisPhone", mappedBy="countryWorkplace")
+     */
+    private $bisPhones;
+
     public function __construct()
     {
         $this->bisPersons = new ArrayCollection();
+        $this->bisPhones = new ArrayCollection();
     }
 
     public function getCouId()

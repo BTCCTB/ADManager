@@ -20,7 +20,7 @@ use Doctrine\ORM\NonUniqueResultException;
  */
 class BisPersonViewRepository extends EntityRepository
 {
-    private function getMemberOtTheBoard()
+    public static function getMemberOtTheBoard()
     {
         return [
             50180,
@@ -217,7 +217,7 @@ class BisPersonViewRepository extends EntityRepository
             ->where('bpv.perCountryWorkplace = :country')
             ->andWhere('bpv.perId NOT IN (:perIds)')
             ->setParameter('country', $countryWorkplace)
-            ->setParameter('perIds', $this->getMemberOtTheBoard())
+            ->setParameter('perIds', self::getMemberOtTheBoard())
             ->getQuery();
 
         return $query->getResult();
@@ -229,7 +229,7 @@ class BisPersonViewRepository extends EntityRepository
 
         $query = $repository->createQueryBuilder('bpv')
             ->where('bpv.perId NOT IN (:perIds)')
-            ->setParameter('perIds', $this->getMemberOtTheBoard())
+            ->setParameter('perIds', self::getMemberOtTheBoard())
             ->getQuery();
 
         return $query->getResult();

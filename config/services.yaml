@@ -107,6 +107,12 @@ services:
             $em: "@doctrine.orm.bis_entity_manager"
         public: true
 
+    BisBundle\Service\PhoneDirectory:
+        autowire: true
+        arguments:
+            $em: "@doctrine.orm.bis_entity_manager"
+        public: true
+
     App\Service\Account:
         autowire: true
         arguments: ["@doctrine.orm.default_entity_manager"]
