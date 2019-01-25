@@ -1,11 +1,76 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>{{ 'main.menu.contact.my_country.label'|trans }}</h1>
-<h3>{{ 'contact.my_country.title.h3'|trans }}</h3>
+<h1>{{ 'contact.my_country.title.h3'|trans }}</h1>
 {% include '_partial/flash.html.twig' %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <input type="text" class="form-control contactSearch" placeholder="Search for..."> <br>
+    </div>
+    {% for contact in contacts %}
+        <div class="col-sm-3 contactCard">
+            <div class="card">
+                <div class="content">
+                    <p class="contactName">
+                        {{ contact.countryFlag|raw }} {{ contact.displayName }}
+                        <span class="contactFirstname text-hide">{{ contact.firstname }}</span>
+                        <span class="contactLastname text-hide">{{ contact.lastname }}</span>
+                        <span class="contactNickname text-hide">{{ contact.nickname }}</span>
+                    </p>
+                    <p class="contactFunction">{{ contact.function }}</p>
+                </div>
+                <a data-toggle="collapse" data-target="#collapse{{ contact.id }}" aria-expanded="false" aria-controls="collapseExample">
+                    <div class="arrow">
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="collapse{{ contact.id }}">
+                        <table class="table table-contact-information">
+                            <tbody>
+                            <tr>
+                                <td>Email:</td>
+                                <td>
+                                    <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                                    <span class="contactEmail text-hide">{{ contact.email }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Skype for business:</td>
+                                <td>
+                                    <a href="callto:{{ contact.email }}">{{ contact.email }}</a>
+                                    <span class="contactSkype text-hide">{{ contact.email }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phone:</td>
+                                <td>
+                                    <a href="tel:{{ contact.telephone|replace({' ': '', '(0)':''}) }}">{{ contact.telephone }}</a>
+                                    <span class="contactPhone text-hide">{{ contact.telephone|replace({' ': '', '(0)':''}) }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mobile:</td>
+                                <td>
+                                    <a href="tel:{{ contact.mobile|replace({' ': '', '(0)':''}) }}">{{ contact.mobile }}</a>
+                                    <span class="contactMobile text-hide">{{ contact.mobile|replace({' ': '', '(0)':''}) }}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
 
 {% block title %}
     {{ 'main.menu.application.label'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/contacts.js') }}"></script>
 {% endblock %}

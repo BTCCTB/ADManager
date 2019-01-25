@@ -100,3 +100,47 @@ h1 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
 }
+
+
+/**
+ * Contacts
+ */
+.card {
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 15px;
+    background-color: #fff;
+    color: #000;
+}
+
+.card .content {
+    position: relative;
+    z-index: 100;
+    text-align:left;
+    padding: 10px;
+}
+
+.table-contact-information {
+    text-align: left;
+    font-size: 12px;
+}
+
+.contactName {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #BA0100;
+    letter-spacing: 1px;
+}
+.arrow {
+    margin-top:5px;
+}
+.contactFunction
+{
+    font-size:12px;
+    letter-spacing:1px;
+}

@@ -488,7 +488,7 @@ class BisPersonView
     {
         return [
             'SMTP:' . $this->getUsername() . self::MAIN_DOMAIN,
-            'smtp:' . $this->getBusinessCategory(),
+//            'smtp:' . $this->getBusinessCategory(),
         ];
     }
 
@@ -518,7 +518,7 @@ class BisPersonView
 
     public function getBusinessCategory()
     {
-        return str_replace('@enabel.be', '@btcctb.org', $this->getEmail());
+        //return str_replace('@enabel.be', '@btcctb.org', $this->getEmail());
     }
 
     public function getBusinessRoles()

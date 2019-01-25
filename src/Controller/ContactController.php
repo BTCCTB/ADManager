@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use BisBundle\Service\BisPersonView;
 use BisBundle\Service\PhoneDirectory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,10 +35,15 @@ class ContactController extends AbstractController
      *
      * @return Response
      */
-    public function myCountry()
+    public function myCountry(BisPersonView $bisPersonView)
     {
+        $user = $bisPersonView->getUser($this->getUser()->getEmail());
+        $contacts = $this->phoneDirectory->getByCountry($user->getCountry());
         return $this->render(
-            'Contact/myCountry.html.twig'
+            'Contact/myCountry.html.twig',
+            [
+                'contacts' => $contacts,
+            ]
         );
     }
 }

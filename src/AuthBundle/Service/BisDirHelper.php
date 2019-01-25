@@ -49,7 +49,7 @@ class BisDirHelper
             ->setAttribute('uid', $adAccount->getEmail())
             ->setAttribute('employeenumber', $adAccount->getEmployeeId())
             ->setAttribute('mail', $adAccount->getEmail())
-            ->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()))
+        //->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()))
             ->setAttribute('givenname', $adAccount->getFirstName())
             ->setAttribute('sn', $adAccount->getLastName())
             ->setAttribute('objectclass', 'inetOrgPerson')
@@ -80,7 +80,7 @@ class BisDirHelper
             ->setAttribute('uid', $bisPersonView->getEmail())
             ->setAttribute('employeenumber', $bisPersonView->getEmployeeId())
             ->setAttribute('mail', $bisPersonView->getEmail())
-            ->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()))
+        //->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()))
             ->setAttribute('givenname', $bisPersonView->getFirstName())
             ->setAttribute('sn', $bisPersonView->getLastName())
             ->setAttribute('objectclass', 'inetOrgPerson')
@@ -112,7 +112,7 @@ class BisDirHelper
                 'uid' => $adAccount->getEmail(),
                 'employeenumber' => $adAccount->getEmployeeId(),
                 'mail' => $adAccount->getEmail(),
-                'businesscategory' => str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()),
+                //'businesscategory' => str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()),
                 'initials' => $adAccount->getInitials(),
                 'givenname' => $adAccount->getFirstName(),
                 'sn' => $adAccount->getLastName(),
@@ -141,7 +141,7 @@ class BisDirHelper
                 'uid' => $bisPersonView->getEmail(),
                 'employeenumber' => $bisPersonView->getEmployeeId(),
                 'mail' => $bisPersonView->getEmail(),
-                'businesscategory' => str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()),
+                //'businesscategory' => str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()),
                 'initials' => $bisPersonView->getInitials(),
                 'givenname' => $bisPersonView->getFirstName(),
                 'sn' => $bisPersonView->getLastName(),

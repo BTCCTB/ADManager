@@ -13,6 +13,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class BisPhoneRepository extends EntityRepository
 {
+
+    private function getBaseQuery()
+    {
+        $repository = $this->_em->getRepository(BisPhone::class);
+
+        return $repository->createQueryBuilder('bp')
+            ->where("bp.countryWorkplace != ''")
+            ->andWhere('bp.email IS NOT NULL')
+            ->andWhere('bp.email <> :empty')
+            ->andWhere('bp.mobile IS NOT NULL OR bp.telephone IS NOT NULL')
+            ->andWhere('bp.mobile <> :empty OR bp.telephone <> :empty')
+            ->andWhere('bp.id NOT IN (:ids)')
+            ->setParameter('ids', BisPersonViewRepository::getMemberOtTheBoard())
+            ->setParameter('empty', '')
+            ->orderBy('bp.lastname', 'ASC')
+            ->addOrderBy('bp.firstname', 'ASC');
+    }
     /**
      * Get phone directory by country
      *
@@ -22,14 +39,11 @@ class BisPhoneRepository extends EntityRepository
      */
     public function getPhoneDirectoryByCountry(string $country):  ? array
     {
-        $repository = $this->_em->getRepository(BisPhone::class);
-
-        $query = $repository->createQueryBuilder('bp')
-            ->where('bp.countryWorkplace = :country')
-            ->andWhere('bp.email IS NOT NULL')
-            ->setParameter('country', $country);
-
-        return $query->getQuery()->getResult();
+        return $this->getBaseQuery()
+            ->andWhere('bp.countryWorkplace = :country')
+            ->setParameter('country', $country)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -39,15 +53,11 @@ class BisPhoneRepository extends EntityRepository
      */
     public function getFieldPhoneDirectory() :  ? array
     {
-        $repository = $this->_em->getRepository(BisPhone::class);
-
-        $query = $repository->createQueryBuilder('bp')
-            ->where('bp.countryWorkplace != :country')
-            ->andWhere("bp.countryWorkplace != ''")
+        return $this->getBaseQuery()
+            ->andWhere('bp.countryWorkplace != :country')
             ->setParameter('country', 'BEL')
-            ->getQuery();
-
-        return $query->getResult();
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -67,13 +77,8 @@ class BisPhoneRepository extends EntityRepository
      */
     public function getPhoneDirectory() :  ? array
     {
-        $repository = $this->_em->getRepository(BisPhone::class);
-
-        $query = $repository->createQueryBuilder('bp')
-            ->where('bp.Id NOT IN (:ids)')
-            ->setParameter('ids', BisPersonViewRepository::getMemberOtTheBoard())
-            ->getQuery();
-
-        return $query->getResult();
+        return $this->getBaseQuery()
+            ->getQuery()
+            ->getResult();
     }
 }

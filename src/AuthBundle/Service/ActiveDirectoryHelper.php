@@ -37,9 +37,9 @@ class ActiveDirectoryHelper
         if (!empty($bisPersonView->getInitials())) {
             $user->setInitials($bisPersonView->getInitials());
         }
-        if (!empty($bisPersonView->getBusinessCategory())) {
-            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
-        }
+//        if (!empty($bisPersonView->getBusinessCategory())) {
+        //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
+        //        }
         $user->setAttribute('businessRoles', $bisPersonView->getBusinessRoles());
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
@@ -202,8 +202,7 @@ class ActiveDirectoryHelper
                 'FirstName' => $bisPersonView->getFirstname(),
                 'LastName' => $bisPersonView->getLastname(),
                 'Initials' => $bisPersonView->getInitials(),
-                'BusinessCategory' => $bisPersonView->getBusinessCategory(),
-                'BusinessRoles' => $bisPersonView->getBusinessRoles(),
+                'businessRoles' => $bisPersonView->getBusinessRoles(),
                 'Department' => $bisPersonView->getDepartment(),
                 'Company' => $bisPersonView->getCompany(),
                 'Country' => $bisPersonView->getCountry(),
@@ -247,8 +246,7 @@ class ActiveDirectoryHelper
                 'FirstName' => $adUser->getFirstName(),
                 'LastName' => $adUser->getLastName(),
                 'Initials' => $adUser->getInitials(),
-                'BusinessCategory' => $adUser->getAttribute('BusinessCategory'),
-                'BusinessRoles' => $adUser->getAttribute('BusinessRoles'),
+                'businessRoles' => $adUser->getAttribute('businessRoles'),
                 'Department' => $adUser->getDepartment(),
                 'Company' => 'Enabel',
                 'Country' => $adUser->getCountry(),
@@ -320,9 +318,9 @@ class ActiveDirectoryHelper
             ];
             $user->setInitials($bisPersonView->getInitials());
         }
-        if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('businessCategory')) {
-            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
-        }
+//        if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('businessCategory')) {
+        //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
+        //        }
         if ($bisPersonView->getBusinessRoles() !== $user->getFirstAttribute('businessRoles')) {
             $user->setAttribute('businessRoles', $bisPersonView->getBusinessRoles());
         }

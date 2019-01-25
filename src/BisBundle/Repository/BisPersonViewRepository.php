@@ -257,6 +257,7 @@ class BisPersonViewRepository extends EntityRepository
         $query = $repository->createQueryBuilder('bpv')
             ->where('bpv.perDateContractStart BETWEEN :start AND :end')
             ->andWhere('bpv.perDateContractStop IS NULL OR bpv.perDateContractStop > :now')
+            ->andWhere("bpv.perEmail <> ''")
             ->setParameter('now', new \DateTime())
             ->setParameter('start', $start)
             ->setParameter('end', $end)

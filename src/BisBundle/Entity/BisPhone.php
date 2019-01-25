@@ -271,7 +271,7 @@ class BisPhone
         return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
     }
 
-    public function getNickname(): string
+    public function getNickname()
     {
         return $this->nickname;
     }

@@ -223,5 +223,17 @@
         <target>Start date</target>
       </segment>
     </unit>
+    <unit id="1yyLjoH" name="main.menu.contact.my_country.label">
+      <segment>
+        <source>main.menu.contact.my_country.label</source>
+        <target>My country</target>
+      </segment>
+    </unit>
+    <unit id="RWTbiCy" name="contact.my_country.title.h3">
+      <segment>
+        <source>contact.my_country.title.h3</source>
+        <target>My country contacts</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

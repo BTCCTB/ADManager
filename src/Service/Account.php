@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Adldap\Models\User;
+use BisBundle\Entity\BisPersonView;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -74,5 +75,53 @@ class Account
     {
         $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
         $accountRepository->setGeneratedPassword($email, $password);
+    }
+
+    /**
+     * Update or Insert a new account with bis_person_view info
+     *
+     * @param BisPersonView $bisPersonView
+     *
+     * @return integer 0: no action, 1: creation, 2: update
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function upSertAccount(BisPersonView $bisPersonView): int
+    {
+        $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
+
+        $account = $accountRepository->findOneBy([
+            'employeeId' => $bisPersonView->getEmployeeId(),
+        ]);
+        $upsert = 0;
+
+        if (!empty($bisPersonView->getEmail())) {
+            if (empty($account)) {
+                $account = new \App\Entity\Account();
+                $account->setEmployeeId($bisPersonView->getEmployeeId())
+                    ->setAccountName($bisPersonView->getAccountName())
+                    ->setUserPrincipalName($bisPersonView->getUserPrincipalName())
+                    ->setEmail($bisPersonView->getEmail())
+                    ->setEmailContact($bisPersonView->getEmail())
+                    ->setFirstname($bisPersonView->getFirstname())
+                    ->setLastname($bisPersonView->getLastname())
+                    ->setToken($account->generateToken($account->getEmail(), 'empty'))
+                    ->setActive(true);
+                $upsert = 1;
+            } else {
+                $account->setEmployeeId($bisPersonView->getEmployeeId())
+                    ->setAccountName($bisPersonView->getAccountName())
+                    ->setUserPrincipalName($bisPersonView->getUserPrincipalName())
+                    ->setEmail($bisPersonView->getEmail())
+                    ->setEmailContact($bisPersonView->getEmail())
+                    ->setFirstname($bisPersonView->getFirstname())
+                    ->setLastname($bisPersonView->getLastname());
+                $upsert = 2;
+            }
+            $this->em->persist($account);
+            $this->em->flush();
+        }
+
+        return $upsert;
     }
 }

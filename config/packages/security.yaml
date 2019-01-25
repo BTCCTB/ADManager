@@ -27,6 +27,7 @@ security:
                 authenticators:
                     - AuthBundle\Security\AdldapAuthenticator
             provider: adlap
+            stateless: true
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 86400     # 1 day
