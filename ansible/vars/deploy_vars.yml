@@ -21,7 +21,7 @@ ad_home_base_directory: '\\\\ad4dev.local\\dfs1\\homes$\\'
 
 # AD Notification vars
 ad_notification_from: 'noreply@enabel.be'
-ad_notification_to: 'ersin.yuksel@enabel.be,damien.lagae@enabel.be'
+ad_notification_to: 'ersin.yuksel@enabel.be,francoise.simkens@enabel.be,damien.lagae@enabel.be'
 
 # GIT vars
 deploy_key_public: '{{ vault_deploy_key_public }}'
