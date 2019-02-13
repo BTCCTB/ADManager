@@ -75,6 +75,7 @@ class ActiveDirectory
                 'schema' => AdldapActiveDirectory::class,
                 'port' => $port,
                 'version' => 3,
+                'timeout' => 50,
                 'follow_referrals' => $followReferrals,
                 'use_tls' => $useTls,
                 'use_ssl' => $useSsl,
