@@ -235,6 +235,19 @@ class BisPersonViewRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findAllWithMail()
+    {
+        $repository = $this->_em->getRepository(BisPersonView::class);
+
+        $query = $repository->createQueryBuilder('bpv')
+            ->where('bpv.perId NOT IN (:perIds)')
+            ->andWhere('bpv.perEmail IS NOT NULL')
+            ->setParameter('perIds', self::getMemberOtTheBoard())
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getActiveUserByEmail()
     {
         $activeUsers = [];

@@ -659,7 +659,7 @@ class ActiveDirectory
         if (!empty($country)) {
             $bisUsers = $bisPersonView->findBy(['perCountryWorkplace' => $country]);
         } else {
-            $bisUsers = $bisPersonView->findAll();
+            $bisUsers = $bisPersonView->findAllWithMail();
         }
 
         /**
