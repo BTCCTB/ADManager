@@ -116,6 +116,7 @@ class BisPersonViewRepository extends EntityRepository
                 $query = $bisConJobRepository->createQueryBuilder('bcj')
                     ->where('bcj.fkConId = :conId')
                     ->setParameter('conId', $contractData->getConId())
+                    ->orderBy('bcj.fkJobId', 'DESC')
                     ->setMaxResults(1)
                     ->getQuery();
                 $conJobData = $query->getOneOrNullResult();
@@ -124,7 +125,6 @@ class BisPersonViewRepository extends EntityRepository
                     $query = $bisJobRepository->createQueryBuilder('bj')
                         ->where('bj.jobId = :jobId')
                         ->setParameter('jobId', $conJobData->getFkJobId())
-                        ->setMaxResults(1)
                         ->getQuery();
                     $jobData = $query->getOneOrNullResult();
 
