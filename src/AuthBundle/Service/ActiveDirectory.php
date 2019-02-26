@@ -693,7 +693,10 @@ class ActiveDirectory
             }
             if (empty($bisUser)) {
                 if ($adUser->getPhysicalDeliveryOfficeName() !== 'AD-ONLY') {
-                    $logs[] = $this->disableAccount($adUser);
+                    //TODO: Fix this shitty GO4HR export problem
+                    //TODO: Add dry-run
+                    //TODO: Add test disable users < limit allowed
+                    //$logs[] = $this->disableAccount($adUser); //TODO: Enable when is fixed !
                 }
             }
         }
