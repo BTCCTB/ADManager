@@ -57,7 +57,6 @@
 
         <!-- covered by Squiz FunctionDeclarationSniff -->
         <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
-        <exclude name="PEAR.Functions.ValidDefaultValue.NotAtEnd"/>
     </rule>
 
     <!-- Don't enforce Zend's private member underscores -->
