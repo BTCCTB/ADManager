@@ -28,6 +28,8 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
  */
 class ActiveDirectory
 {
+    const DISABLE_ALLOWED_LIMIT = 0;
+
     /**
      * @var Provider
      */
@@ -53,6 +55,8 @@ class ActiveDirectory
 
     public function __construct(
         EntityManager $em,
+        Account $accountService,
+        BisDir $bisDir,
         string $hosts,
         string $baseDn,
         string $adminUsername,
@@ -61,9 +65,7 @@ class ActiveDirectory
         int $port = 636,
         bool $followReferrals = false,
         bool $useTls = true,
-        bool $useSsl = true,
-        Account $accountService,
-        BisDir $bisDir
+        bool $useSsl = true
     ) {
         $config = new DomainConfiguration(
             [
@@ -686,6 +688,7 @@ class ActiveDirectory
 
         // Find inactive user
         $adUsers = $this->getAllUsers('email', 'ASC');
+        $accountsToDisable = [];
         foreach ($adUsers as $adUser) {
             $bisUser = null;
             if (!empty($adUser->getEmail())) {
@@ -693,11 +696,21 @@ class ActiveDirectory
             }
             if (empty($bisUser)) {
                 if ($adUser->getPhysicalDeliveryOfficeName() !== 'AD-ONLY') {
-                    //TODO: Fix this shitty GO4HR export problem
-                    //TODO: Add dry-run
-                    //TODO: Add test disable users < limit allowed
-                    //$logs[] = $this->disableAccount($adUser); //TODO: Enable when is fixed !
+                    $accountsToDisable[] = $adUser;
                 }
+            }
+        }
+
+        foreach ($accountsToDisable as $adAccount) {
+            if (count($accountsToDisable) < self::DISABLE_ALLOWED_LIMIT) {
+                $logs[] = $this->disableAccount($adAccount);
+            } else {
+                $logs[] = new ActiveDirectoryResponse(
+                    'The amount of accounts to be deactivated exceeds the authorized limit [' . self::DISABLE_ALLOWED_LIMIT . '] !',
+                    ActiveDirectoryResponseStatus::EXCEPTION,
+                    ActiveDirectoryResponseType::DISABLE,
+                    ActiveDirectoryHelper::getDataAdUser($adAccount)
+                );
             }
         }
 
