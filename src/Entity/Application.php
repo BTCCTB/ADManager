@@ -65,6 +65,16 @@ class Application implements EntityInterface
     private $enable;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $icon;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="applications")
+     */
+    private $category;
+
+    /**
      * Get id
      *
      * @return int
@@ -192,5 +202,29 @@ class Application implements EntityInterface
     public function isEnable()
     {
         return $this->enable;
+    }
+
+    public function getCategory():  ? Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(? Category $category) : self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getIcon() :  ? string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(string $icon) : self
+    {
+        $this->icon = $icon;
+
+        return $this;
     }
 }

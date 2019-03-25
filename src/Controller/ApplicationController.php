@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Application;
 use App\Repository\ApplicationRepository;
+use App\Repository\CategoryRepository;
 use AuthBundle\Service\ActiveDirectory;
 use BisBundle\Service\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -39,9 +40,9 @@ class ApplicationController extends AbstractController
      * @return Response
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function myApps(ApplicationRepository $applicationRepository, BisPersonView $bisPersonView): Response
+    public function myApps(CategoryRepository $categoryRepository, BisPersonView $bisPersonView): Response
     {
-        $applications = $applicationRepository->findAllApplications();
+        $categories = $categoryRepository->findAll();
 
         $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
 
@@ -54,7 +55,7 @@ class ApplicationController extends AbstractController
         return $this->render(
             'Application/myApps.html.twig',
             [
-                'applications' => $applications,
+                'categories' => $categories,
                 'passwordAges' => $passwordAges,
                 'user' => $user,
                 'starters' => $bisPersonView->getStarters(),
