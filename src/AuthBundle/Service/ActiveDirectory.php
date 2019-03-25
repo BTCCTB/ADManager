@@ -815,9 +815,9 @@ class ActiveDirectory
                 )
             );
         } else {
-            $rdn = 'CN=' . $adAccount->getCommonName();
+            //$rdn = 'CN=' . $adAccount->getCommonName();
             $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
-            if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
+            if (!$adAccount->move($organizationalUnit->getDn())) {
                 $from = implode('/', array_reverse($oldOu->organizationUnits));
                 $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
                 return new ActiveDirectoryResponse(
@@ -1001,9 +1001,9 @@ class ActiveDirectory
                         )
                     );
                 } else {
-                    $rdn = 'CN=' . $adAccount->getCommonName();
+                    //$rdn = 'CN=' . $adAccount->getCommonName();
                     $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
-                    if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
+                    if (!$adAccount->move($organizationalUnit->getDn())) {
                         $from = implode('/', array_reverse($oldOu->organizationUnits));
                         $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
                         return new ActiveDirectoryResponse(
@@ -1111,9 +1111,9 @@ class ActiveDirectory
                 $newDn->addCn($bisUser->getCommonName());
                 $oldDn = $adAccount->getDnBuilder()->get();
 
-                $rdn = 'CN=' . $bisUser->getCommonName();
+                //$rdn = 'CN=' . $bisUser->getCommonName();
                 $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
-                if (!$adAccount->move($rdn, $oldOu->get())) {
+                if (!$adAccount->move($oldOu->get())) {
                     return new ActiveDirectoryResponse(
                         "Unable to rename user '" . $adAccount->getEmail() . "'!",
                         ActiveDirectoryResponseStatus::EXCEPTION,
