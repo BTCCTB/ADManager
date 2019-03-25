@@ -28,6 +28,8 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
  */
 class ActiveDirectory
 {
+    const DISABLE_ALLOWED_LIMIT = 30;
+
     /**
      * @var Provider
      */
@@ -53,6 +55,8 @@ class ActiveDirectory
 
     public function __construct(
         EntityManager $em,
+        Account $accountService,
+        BisDir $bisDir,
         string $hosts,
         string $baseDn,
         string $adminUsername,
@@ -61,9 +65,7 @@ class ActiveDirectory
         int $port = 636,
         bool $followReferrals = false,
         bool $useTls = true,
-        bool $useSsl = true,
-        Account $accountService,
-        BisDir $bisDir
+        bool $useSsl = true
     ) {
         $config = new DomainConfiguration(
             [
@@ -686,6 +688,7 @@ class ActiveDirectory
 
         // Find inactive user
         $adUsers = $this->getAllUsers('email', 'ASC');
+        $accountsToDisable = [];
         foreach ($adUsers as $adUser) {
             $bisUser = null;
             if (!empty($adUser->getEmail())) {
@@ -693,11 +696,21 @@ class ActiveDirectory
             }
             if (empty($bisUser)) {
                 if ($adUser->getPhysicalDeliveryOfficeName() !== 'AD-ONLY') {
-                    //TODO: Fix this shitty GO4HR export problem
-                    //TODO: Add dry-run
-                    //TODO: Add test disable users < limit allowed
-                    //$logs[] = $this->disableAccount($adUser); //TODO: Enable when is fixed !
+                    $accountsToDisable[] = $adUser;
                 }
+            }
+        }
+
+        foreach ($accountsToDisable as $adAccount) {
+            if (count($accountsToDisable) < self::DISABLE_ALLOWED_LIMIT) {
+                $logs[] = $this->disableAccount($adAccount);
+            } else {
+                $logs[] = new ActiveDirectoryResponse(
+                    'The amount of accounts to be deactivated exceeds the authorized limit [' . self::DISABLE_ALLOWED_LIMIT . '] !',
+                    ActiveDirectoryResponseStatus::EXCEPTION,
+                    ActiveDirectoryResponseType::DISABLE,
+                    ActiveDirectoryHelper::getDataAdUser($adAccount)
+                );
             }
         }
 
@@ -815,11 +828,11 @@ class ActiveDirectory
                 )
             );
         } else {
-            $rdn = 'CN=' . $adAccount->getCommonName();
+            //$rdn = 'CN=' . $adAccount->getCommonName();
             $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
-            if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
-                $from = implode('/', array_reverse($oldOu->organizationUnits));
-                $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+            if (!$adAccount->move($organizationalUnit->getDn())) {
+                $from = implode('/', array_reverse($oldOu->getComponents('ou')));
+                $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
                 return new ActiveDirectoryResponse(
                     "User '" . $bisUser->getEmail() . "' can't be moved from '" . $from . "' to '" . $to . "'",
                     ActiveDirectoryResponseStatus::FAILED,
@@ -833,8 +846,8 @@ class ActiveDirectory
                     )
                 );
             } else {
-                $from = implode('/', array_reverse($oldOu->organizationUnits));
-                $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                $from = implode('/', array_reverse($oldOu->getComponents('ou')));
+                $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
                 return new ActiveDirectoryResponse(
                     "User '" . $bisUser->getEmail() . "' moved from '" . $from . "' to '" . $to . "'",
                     ActiveDirectoryResponseStatus::DONE,
@@ -1001,11 +1014,11 @@ class ActiveDirectory
                         )
                     );
                 } else {
-                    $rdn = 'CN=' . $adAccount->getCommonName();
+                    //$rdn = 'CN=' . $adAccount->getCommonName();
                     $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
-                    if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
-                        $from = implode('/', array_reverse($oldOu->organizationUnits));
-                        $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                    if (!$adAccount->move($organizationalUnit->getDn())) {
+                        $from = implode('/', array_reverse($oldOu->getComponents('ou')));
+                        $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
                         return new ActiveDirectoryResponse(
                             "User '" . $adAccount->getEmail() . "'disabled but can't be moved from '" . $from . "' to '" . $to . "'",
                             ActiveDirectoryResponseStatus::FAILED,
@@ -1019,8 +1032,8 @@ class ActiveDirectory
                             )
                         );
                     } else {
-                        $from = implode('/', array_reverse($oldOu->organizationUnits));
-                        $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                        $from = implode('/', array_reverse($oldOu->getComponents('ou')));
+                        $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
                         return new ActiveDirectoryResponse(
                             "User '" . $adAccount->getEmail() . "' disabled and moved from '" . $from . "' to '" . $to . "'",
                             ActiveDirectoryResponseStatus::DONE,
@@ -1111,9 +1124,9 @@ class ActiveDirectory
                 $newDn->addCn($bisUser->getCommonName());
                 $oldDn = $adAccount->getDnBuilder()->get();
 
-                $rdn = 'CN=' . $bisUser->getCommonName();
+                //$rdn = 'CN=' . $bisUser->getCommonName();
                 $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
-                if (!$adAccount->move($rdn, $oldOu->get())) {
+                if (!$adAccount->move($oldOu->get())) {
                     return new ActiveDirectoryResponse(
                         "Unable to rename user '" . $adAccount->getEmail() . "'!",
                         ActiveDirectoryResponseStatus::EXCEPTION,
@@ -1191,8 +1204,8 @@ class ActiveDirectory
                 $rdn = 'CN=' . $adAccount->getCommonName();
                 $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
                 if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
-                    $from = implode('/', array_reverse($oldOu->organizationUnits));
-                    $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                    $from = implode('/', array_reverse($oldOu->getComponents('ou')));
+                    $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
                     return new ActiveDirectoryResponse(
                         "User '" . $adAccount->getEmail() . "' can't be moved from '" . $from . "' to '" . $to . "'",
                         ActiveDirectoryResponseStatus::FAILED,
@@ -1206,8 +1219,8 @@ class ActiveDirectory
                         )
                     );
                 } else {
-                    $from = implode('/', array_reverse($oldOu->organizationUnits));
-                    $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->organizationUnits));
+                    $from = implode('/', array_reverse($oldOu->getComponents('ou')));
+                    $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
                     return new ActiveDirectoryResponse(
                         "User '" . $adAccount->getEmail() . "' moved from '" . $from . "' to '" . $to . "'",
                         ActiveDirectoryResponseStatus::DONE,
