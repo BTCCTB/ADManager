@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
  */
 class ActiveDirectory
 {
-    const DISABLE_ALLOWED_LIMIT = 0;
+    const DISABLE_ALLOWED_LIMIT = 30;
 
     /**
      * @var Provider
