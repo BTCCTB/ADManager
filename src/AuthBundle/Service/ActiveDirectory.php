@@ -1553,4 +1553,9 @@ class ActiveDirectory
         }
         return $adUser;
     }
+
+    public function createEmptyUser()
+    {
+        return $this->activeDirectory->make()->user();
+    }
 }
