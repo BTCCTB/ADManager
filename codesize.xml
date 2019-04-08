@@ -40,7 +40,7 @@
     </rule>
     <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
         <properties>
-            <property name="maxmethods" value="30" description="The method count reporting threshold" />
+            <property name="maxmethods" value="35" description="The method count reporting threshold" />
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">

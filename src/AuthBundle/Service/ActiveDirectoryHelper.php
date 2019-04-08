@@ -522,4 +522,46 @@ class ActiveDirectoryHelper
 
         return $phoneNumber;
     }
+
+    public static function compareWithBis(User $bisData, User $adData)
+    {
+        // Attributes list
+        $attributes = [
+            'employeeId',
+            'cn',
+            'displayname',
+            'samaccountname',
+            'givenname',
+            'sn',
+            'initials',
+            'businessRoles',
+            'company',
+            'department',
+            'c',
+            'co',
+            'info',
+            'title',
+            'description',
+            'userprincipalname',
+            'mail',
+            'proxyaddresses',
+            'telephonenumber',
+            'mobile',
+            'homedirectory',
+            'homedrive',
+            'scriptpath',
+            'Distinguishedname',
+        ];
+
+        // Compare data
+        $diff = [];
+        foreach ($attributes as $attribute) {
+            $diff[$attribute] = [
+                'ad' => json_encode($adData->getAttribute($attribute)),
+                'bis' => json_encode($bisData->getAttribute($attribute)),
+            ];
+        }
+
+        return $diff;
+    }
 }
