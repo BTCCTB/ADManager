@@ -20,6 +20,8 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
  */
 class BisDir
 {
+    const DISABLE_ALLOWED_LIMIT = 30;
+
     /**
      * @var Provider
      */
@@ -539,6 +541,7 @@ class BisDir
     public function disableFromBis($bisPersons)
     {
         $userDeleted = [];
+        $accountsToDisable = [];
 
         // Get all users from LDAP
         $ldapAccounts = $this->getAllUsers();
@@ -555,26 +558,7 @@ class BisDir
                     // Retrieve LDAP account by email
                     $ldapUser = $this->getUser($email);
                     if ($ldapUser !== null) {
-                        // Collect account data for logging
-                        $data = BisDirHelper::getDataEntry($ldapUser);
-                        // Remove account from LDAP
-                        if ($ldapUser->delete()) {
-                            // User successfully deleted
-                            $userDeleted[] = new BisDirResponse(
-                                "User '" . $email . "' successfully deleted from LDAP",
-                                BisDirResponseStatus::DONE,
-                                BisDirResponseType::DELETE,
-                                $data
-                            );
-                        } else {
-                            // User can't be deleted
-                            $userDeleted[] = new BisDirResponse(
-                                "Unable to delete the user '" . $email . "' in LDAP",
-                                BisDirResponseStatus::FAILED,
-                                BisDirResponseType::DELETE,
-                                $data
-                            );
-                        }
+                        $accountsToDisable[] = $ldapUser;
                     } else {
                         // User not found
                         $userDeleted[] = new BisDirResponse(
@@ -584,6 +568,40 @@ class BisDir
                         );
                     }
                 }
+            }
+        }
+
+        foreach ($accountsToDisable as $ldapUser) {
+            // Collect account data for logging
+            $data = BisDirHelper::getDataEntry($ldapUser);
+            $email = $ldapUser->getFirstAttribute('mail');
+
+            if (count($accountsToDisable) < self::DISABLE_ALLOWED_LIMIT) {
+                // Remove account from LDAP
+                if ($ldapUser->delete()) {
+                    // User successfully deleted
+                    $userDeleted[] = new BisDirResponse(
+                        "User '" . $email . "' successfully deleted from LDAP",
+                        BisDirResponseStatus::DONE,
+                        BisDirResponseType::DELETE,
+                        $data
+                    );
+                } else {
+                    // User can't be deleted
+                    $userDeleted[] = new BisDirResponse(
+                        "Unable to delete the user '" . $email . "' in LDAP",
+                        BisDirResponseStatus::FAILED,
+                        BisDirResponseType::DELETE,
+                        $data
+                    );
+                }
+            } else {
+                $userDeleted[] = new BisDirResponse(
+                    'The amount of accounts to be deactivated exceeds the authorized limit [' . self::DISABLE_ALLOWED_LIMIT . '] !',
+                    BisDirResponseStatus::EXCEPTION,
+                    BisDirResponseType::DISABLE,
+                    $data
+                );
             }
         }
 
@@ -642,7 +660,7 @@ class BisDir
 
             // Rename user to rewrite uid & dn
             $newRdn = 'uid=' . $newEmail;
-            $ldapUser->rename($newRdn);
+            $ldapUser->rename($newRdn, null);
         }
 
         return $ldapUser;

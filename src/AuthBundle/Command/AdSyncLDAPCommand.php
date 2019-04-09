@@ -73,18 +73,20 @@ class AdSyncLDAPCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $adAccount = $this->activeDirectory
-            ->getUser($input->getArgument('email'));
+        $email = $input->getArgument('email');
+        if (!empty($email)) {
+            $adAccount = $this->activeDirectory
+                ->getUser($email);
+            $output->writeln('User: ' . $adAccount->getEmail() . ' - ' . $adAccount->getDisplayName());
+            $responses = $this->bisDir
+                ->synchronize($adAccount);
 
-        $responses = $this->bisDir
-            ->synchronize($adAccount);
-
-        $output->writeln('User: ' . $adAccount->getEmail() . ' - ' . $adAccount->getDisplayName());
-        foreach ($responses as $response) {
-            $output->writeln('Message: ' . $response->getMessage());
-            $output->writeln('Status: ' . $response->getStatus());
-            $output->writeln('Type: ' . $response->getType());
-            $output->writeln('Data: ' . json_encode($response->getData()));
+            foreach ($responses as $response) {
+                $output->writeln('Message: ' . $response->getMessage());
+                $output->writeln('Status: ' . $response->getStatus());
+                $output->writeln('Type: ' . $response->getType());
+                $output->writeln('Data: ' . json_encode($response->getData()));
+            }
         }
     }
 }
