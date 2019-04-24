@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\Blameable;
-use App\Entity\Traits\Timestampable;
+use App\Entity\Traits\BlameableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class IncidentSeverity implements EntityInterface
 {
     // Traits
-    use Blameable;
-    use Timestampable;
+    use BlameableTrait;
+    use TimestampableTrait;
 
     /**
      * @ORM\Id
@@ -25,18 +25,21 @@ class IncidentSeverity implements EntityInterface
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $label;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Incident", mappedBy="severity")
+     *
      * @var ArrayCollection
      */
     private $incidents;
@@ -59,6 +62,7 @@ class IncidentSeverity implements EntityInterface
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -70,6 +74,7 @@ class IncidentSeverity implements EntityInterface
     public function setLabel($label)
     {
         $this->label = $label;
+
         return $this;
     }
 

@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
  * Class BisDir
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class BisDir
@@ -36,18 +37,26 @@ class BisDir
      */
     private $passwordEncoder;
 
-    public function __construct(
-        PasswordEncoderInterface $passwordEncoder,
-        string $hosts,
-        string $baseDn,
-        string $adminUsername,
-        string $adminPassword,
-        string $accountSuffix = '',
-        int $port = 636,
-        bool $followReferrals = true,
-        bool $useTls = true,
-        bool $useSsl = true
-    ) {
+    /**
+     * BisDir constructor.
+     *
+     * @param PasswordEncoderInterface $passwordEncoder
+     * @param string                   $hosts
+     * @param string                   $baseDn
+     * @param string                   $adminUsername
+     * @param string                   $adminPassword
+     * @param string                   $accountSuffix
+     * @param int                      $port
+     * @param bool                     $followReferrals
+     * @param bool                     $useTls
+     * @param bool                     $useSsl
+     *
+     * @throws \Adldap\Configuration\ConfigurationException
+     *
+     * @phpcs:disable Generic.Files.LineLength
+     */
+    public function __construct(PasswordEncoderInterface $passwordEncoder, string $hosts, string $baseDn, string $adminUsername, string $adminPassword, string $accountSuffix = '', int $port = 636, bool $followReferrals = true, bool $useTls = true, bool $useSsl = true)
+    {
         $config = new DomainConfiguration(
             [
                 'hosts' => explode(',', $hosts),
@@ -87,11 +96,14 @@ class BisDir
 
         if ($user instanceof Entry) {
             return $user;
-        } elseif ($userBtc instanceof Entry) {
+        }
+        if ($userBtc instanceof Entry) {
             return $userBtc;
-        } elseif ($userEnabel instanceof Entry) {
+        }
+        if ($userEnabel instanceof Entry) {
             return $userEnabel;
         }
+
         return null;
     }
 
@@ -179,7 +191,7 @@ class BisDir
     {
         $entry = $this->getUser($email);
 
-        if ($entry !== null) {
+        if (null !== $entry) {
             $passwordEncoded = $this->passwordEncoder->encodePassword($password);
             $entry->setAttribute('userPassword', $passwordEncoded);
             if ($entry->save()) {
@@ -190,6 +202,7 @@ class BisDir
                     BisDirHelper::getDataEntry($entry, ['password' => $password])
                 );
             }
+
             return new BisDirResponse(
                 "Unable to synchronize password for user '" . $email . "' in LDAP",
                 BisDirResponseStatus::FAILED,
@@ -224,12 +237,13 @@ class BisDir
         $logs = [];
 
         // Create user in LDAP
-        if ($ldapUser === null) {
+        if (null === $ldapUser) {
             $log = $this->createEntry($adAccount);
             $logs[] = $log;
-            if ($log->getStatus() === BisDirResponseStatus::DONE && $password !== null) {
+            if ($log->getStatus() === BisDirResponseStatus::DONE && null !== $password) {
                 $logs[] = $this->synchronize($adAccount, $password);
             }
+
             return $logs;
         }
 
@@ -238,7 +252,7 @@ class BisDir
         // Move user in LDAP
         $logs[] = $this->moveUser($adAccount, $ldapUser);
 
-        if ($password !== null) {
+        if (null !== $password) {
             // Sync password in LDAP
             $logs[] = $this->syncPassword($adAccount->getEmail(), $password);
         }
@@ -260,9 +274,10 @@ class BisDir
         $logs = [];
 
         // Create user in LDAP
-        if ($ldapUser === null) {
+        if (null === $ldapUser) {
             $log = $this->createEntryFromBis($bisPersonView);
             $logs[] = $log;
+
             return $logs;
         }
 
@@ -295,7 +310,7 @@ class BisDir
         ];
         $ldapUser = $this->getUser($adAccount->getEmail());
 
-        if ($ldapUser !== null) {
+        if (null !== $ldapUser) {
             $entry = $this->bisDir->make()->entry();
             $entry = BisDirHelper::adAccountToLdapEntry($adAccount, $entry);
             $diffData = [];
@@ -327,6 +342,7 @@ class BisDir
                         BisDirHelper::getDataAdUser($adAccount, ['diff' => $diffData])
                     );
                 }
+
                 return new BisDirResponse(
                     "Unable to update user '" . $adAccount->getEmail() . "' in LDAP",
                     BisDirResponseStatus::FAILED,
@@ -334,6 +350,7 @@ class BisDir
                     BisDirHelper::getDataAdUser($adAccount, ['diff' => $diffData])
                 );
             }
+
             return new BisDirResponse(
                 "User '" . $adAccount->getEmail() . "' already up to date in LDAP",
                 BisDirResponseStatus::NOTHING_TO_DO,
@@ -341,6 +358,7 @@ class BisDir
                 BisDirHelper::getDataAdUser($adAccount)
             );
         }
+
         return new BisDirResponse(
             "Unable to find a user for '" . $adAccount->getEmail() . "' in LDAP",
             BisDirResponseStatus::EXCEPTION,
@@ -369,7 +387,7 @@ class BisDir
         ];
         $ldapUser = $this->getUser($bisPersonView->getEmail());
 
-        if ($ldapUser !== null) {
+        if (null !== $ldapUser) {
             $entry = $this->bisDir->make()->entry();
             $entry = BisDirHelper::bisPersonViewToLdapEntry($bisPersonView, $entry);
             $diffData = [];
@@ -401,6 +419,7 @@ class BisDir
                         BisDirHelper::getDataBisPersonView($bisPersonView, ['diff' => $diffData])
                     );
                 }
+
                 return new BisDirResponse(
                     "Unable to update user '" . $bisPersonView->getEmail() . "' in LDAP",
                     BisDirResponseStatus::FAILED,
@@ -408,6 +427,7 @@ class BisDir
                     BisDirHelper::getDataBisPersonView($bisPersonView, ['diff' => $diffData])
                 );
             }
+
             return new BisDirResponse(
                 "User '" . $bisPersonView->getEmail() . "' already up to date in LDAP",
                 BisDirResponseStatus::NOTHING_TO_DO,
@@ -415,6 +435,7 @@ class BisDir
                 BisDirHelper::getDataBisPersonView($bisPersonView)
             );
         }
+
         return new BisDirResponse(
             "Unable to find a user for '" . $bisPersonView->getEmail() . "' in LDAP",
             BisDirResponseStatus::EXCEPTION,
@@ -480,7 +501,7 @@ class BisDir
      * Move a user / Change DN
      *
      * @param BisPersonView $bisPersonView
-     * @param Entry         $entry The LDAP entry
+     * @param Entry         $entry         The LDAP entry
      *
      * @return BisDirResponse
      */
@@ -536,6 +557,7 @@ class BisDir
      * @param bisPersonView[] $bisPersons List of active users
      *
      * @return BisDirResponse[]
+     *
      * @throws \Adldap\Models\ModelDoesNotExistException
      */
     public function disableFromBis($bisPersons)
@@ -557,7 +579,7 @@ class BisDir
                 if (!in_array($email, $bisPersons)) {
                     // Retrieve LDAP account by email
                     $ldapUser = $this->getUser($email);
-                    if ($ldapUser !== null) {
+                    if (null !== $ldapUser) {
                         $accountsToDisable[] = $ldapUser;
                     } else {
                         // User not found
@@ -614,6 +636,7 @@ class BisDir
      * @param bisPersonView[] $bisPersons List of active users
      *
      * @return BisDirResponse[]
+     *
      * @throws \Adldap\Models\ModelDoesNotExistException
      */
     public function enableFromBis($bisPersons)
@@ -629,7 +652,7 @@ class BisDir
             if (!empty($email) && (strpos($email, '@enabel.be') !== false)) {
                 // Retrieve LDAP account by email
                 $ldapUser = $this->getUser($email);
-                if ($ldapUser === null) {
+                if (null === $ldapUser) {
                     // Create LDAP account
                     $userEnabled[] = $this->createEntryFromBis($bisPersonView);
                 } else {
@@ -651,7 +674,7 @@ class BisDir
     {
         $ldapUser = $this->getUser($email);
 
-        if ($ldapUser !== null) {
+        if (null !== $ldapUser) {
             // Change attribute
             $ldapUser
                 ->setAttribute('mail', $newEmail)

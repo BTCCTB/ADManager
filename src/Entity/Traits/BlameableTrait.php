@@ -10,13 +10,16 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Trait Blameable
  *
  * @package App\Entity\Traits
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
-trait Blameable
+trait BlameableTrait
 {
     /**
      * @var null|User
+     *
      * @Gedmo\Blameable(on="create")
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
@@ -24,7 +27,9 @@ trait Blameable
 
     /**
      * @var null|User
+     *
      * @Gedmo\Blameable(on="update")
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="updated_by_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
@@ -33,7 +38,7 @@ trait Blameable
     /**
      * @return User|null
      */
-    public function getCreatedBy(): ? User
+    public function getCreatedBy():  ? User
     {
         return $this->createdBy;
     }
@@ -53,7 +58,7 @@ trait Blameable
     /**
      * @return User|null
      */
-    public function getUpdatedBy() : ? User
+    public function getUpdatedBy() :  ? User
     {
         return $this->updatedBy;
     }

@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\Timestampable;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class SecurityAudit
  *
  * @package App\Entity
+ *
  * @ORM\Table(name="security_audit")
  * @ORM\Entity(repositoryClass="App\Repository\SecurityAuditRepository")
  *
@@ -17,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SecurityAudit implements EntityInterface
 {
     // Traits
-    use Timestampable;
+    use TimestampableTrait;
 
     /**
      * @ORM\Id
@@ -81,6 +82,7 @@ class SecurityAudit implements EntityInterface
     public function setAction($action)
     {
         $this->action = $action;
+
         return $this;
     }
 
@@ -92,6 +94,7 @@ class SecurityAudit implements EntityInterface
     public function setLoggedAt($loggedAt)
     {
         $this->loggedAt = $loggedAt;
+
         return $this;
     }
 
@@ -103,6 +106,7 @@ class SecurityAudit implements EntityInterface
     public function setObjectId($objectId)
     {
         $this->objectId = $objectId;
+
         return $this;
     }
 
@@ -114,6 +118,7 @@ class SecurityAudit implements EntityInterface
     public function setObjectClass($objectClass)
     {
         $this->objectClass = $objectClass;
+
         return $this;
     }
 
@@ -125,6 +130,7 @@ class SecurityAudit implements EntityInterface
     public function setData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -136,6 +142,7 @@ class SecurityAudit implements EntityInterface
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 }

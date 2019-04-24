@@ -30,6 +30,10 @@ class IncidentSeverityController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function create(Request $request)
     {
@@ -53,6 +57,10 @@ class IncidentSeverityController extends AbstractController
 
     /**
      * @Route("/{id}", name="show", methods={"GET"})
+     *
+     * @param IncidentSeverity $incidentSeverity
+     *
+     * @return Response
      */
     public function show(IncidentSeverity $incidentSeverity)
     {
@@ -63,6 +71,11 @@ class IncidentSeverityController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
+     *
+     * @param Request          $request
+     * @param IncidentSeverity $incidentSeverity
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function edit(Request $request, IncidentSeverity $incidentSeverity)
     {
@@ -83,6 +96,11 @@ class IncidentSeverityController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     *
+     * @param Request          $request
+     * @param IncidentSeverity $incidentSeverity
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function delete(Request $request, IncidentSeverity $incidentSeverity)
     {

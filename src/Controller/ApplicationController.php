@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class ApplicationController
  *
  * @package Controller
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @IsGranted("ROLE_USER")
  */
 class ApplicationController extends AbstractController
@@ -35,10 +37,13 @@ class ApplicationController extends AbstractController
     /**
      * @Route("/", name="homepage")
      * @Route("/my-apps", name="application-my-apps")
-     * @param ApplicationRepository $applicationRepository
+     *
+     * @param CategoryRepository $categoryRepository
+     * @param BisPersonView      $bisPersonView
      *
      * @return Response
-     * @throws \Doctrine\ORM\Query\QueryException
+     *
+     * @throws \Exception
      */
     public function myApps(CategoryRepository $categoryRepository, BisPersonView $bisPersonView): Response
     {
@@ -66,9 +71,11 @@ class ApplicationController extends AbstractController
 
     /**
      * @Route("/admin/application", name="application_index")
+     *
      * @param ApplicationRepository $applicationRepository
      *
      * @return Response
+     *
      * @throws \Doctrine\ORM\Query\QueryException
      */
     public function index(ApplicationRepository $applicationRepository): Response

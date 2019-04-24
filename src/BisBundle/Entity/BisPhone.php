@@ -9,18 +9,21 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Class BisPhone
  *
  * @package BisBundle\Entity
+ *
  * @ORM\Entity(repositoryClass="BisBundle\Repository\BisPhoneRepository")
  * @ORM\Table(name="view_bis_phone")
+ *
  * @UniqueEntity(fields={"id"})
  *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
 class BisPhone
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="bigint")
      * @ORM\Id
@@ -57,7 +60,7 @@ class BisPhone
     private $nickname;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
@@ -121,6 +124,7 @@ class BisPhone
     public function setId(int $id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -132,6 +136,7 @@ class BisPhone
     public function setEmail(String $email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -143,6 +148,7 @@ class BisPhone
     public function setFirstname(String $firstname)
     {
         $this->firstname = $firstname;
+
         return $this;
     }
 
@@ -154,6 +160,7 @@ class BisPhone
     public function setLastname(String $lastname)
     {
         $this->lastname = $lastname;
+
         return $this;
     }
 
@@ -165,6 +172,7 @@ class BisPhone
     public function setActive(bool $active)
     {
         $this->active = $active;
+
         return $this;
     }
 
@@ -176,6 +184,7 @@ class BisPhone
     public function setTelephone(String $telephone)
     {
         $this->telephone = $telephone;
+
         return $this;
     }
 
@@ -187,6 +196,7 @@ class BisPhone
     public function setSex(String $sex)
     {
         $this->sex = $sex;
+
         return $this;
     }
 
@@ -198,6 +208,7 @@ class BisPhone
     public function setLanguage(String $language)
     {
         $this->language = $language;
+
         return $this;
     }
 
@@ -209,6 +220,7 @@ class BisPhone
     public function setFunction(String $function)
     {
         $this->function = $function;
+
         return $this;
     }
 
@@ -220,6 +232,7 @@ class BisPhone
     public function setMobile(String $mobile)
     {
         $this->mobile = $mobile;
+
         return $this;
     }
 
@@ -233,6 +246,7 @@ class BisPhone
         if ($this->getCountryWorkplace() !== null && $this->getCountryWorkplace() instanceof BisCountry) {
             return $this->getCountryWorkplace()->getCouIsocode3letters();
         }
+
         return null;
     }
 
@@ -243,12 +257,14 @@ class BisPhone
             "title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
             "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>";
         }
+
         return null;
     }
 
     public function setCountryWorkplace(String $countryWorkplace)
     {
         $this->countryWorkplace = $countryWorkplace;
+
         return $this;
     }
 
@@ -260,6 +276,7 @@ class BisPhone
     public function setType(String $type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -268,6 +285,7 @@ class BisPhone
         if (!empty($this->getNickname())) {
             return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getNickname()));
         }
+
         return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
     }
 
@@ -279,6 +297,7 @@ class BisPhone
     public function setNickname(String $nickname)
     {
         $this->nickname = $nickname;
+
         return $this;
     }
 }

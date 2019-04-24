@@ -30,7 +30,7 @@ class AdInitAccountCommand extends Command
     /**
      * AdResetAccountCommand constructor.
      *
-     * @param ActiveDirectory             $activeDirectory Active directory Service
+     * @param ActiveDirectory             $activeDirectory             Active directory Service
      *
      * @param ActiveDirectoryNotification $activeDirectoryNotification
      * @param BisDir                      $bisDir
@@ -66,6 +66,7 @@ class AdInitAccountCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     *
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */

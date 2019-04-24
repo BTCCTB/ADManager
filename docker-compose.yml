@@ -1,40 +1,63 @@
-db:
-  image: mariadb
-  volumes:
-    - ./.db/data:/var/lib/mysql/
-    - ./.db/log:/var/log/mysql/
-    - ./.db/conf:/etc/mysql/conf.d/
-  environment:
-    MYSQL_DATABASE: admanager
-    MYSQL_USER: admanager
-    MYSQL_PASSWORD: admanager
-    MYSQL_ROOT_PASSWORD: toor
-  ports:
-    - 3306:3306
+version: '3'
+services:
+  apache:
+    image: enabel/docker-httpd
+    ports:
+      - 8000:8080
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - php
 
-bis:
-  image: mariadb
-  volumes:
-    - ~/Projects/BIS/.db/data:/var/lib/mysql/
-    - ~/Projects/BIS/.db/log:/var/log/mysql/
-    - ~/Projects/BIS/.db/conf:/etc/mysql/conf.d/
-  environment:
-    MYSQL_DATABASE: bis
-    MYSQL_USER: bisreader
-    MYSQL_PASSWORD: 'elephpant401'
-    MYSQL_ROOT_PASSWORD: toor
-  ports:
-    - 3307:3306
+  mariadb:
+    image: mariadb
+    volumes:
+      - .docker/data/db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_password
+    ports:
+      - 3306:3306
 
-phpmyadmin:
-  image: phpmyadmin/phpmyadmin
-  links: 
-    - db
-    - bis
-  environment:
-    PMA_HOSTS: db,bis
-    PMA_USER: root
-    PMA_PASSWORD: toor
-  restart: always
-  ports:
-    - 8080:80
+  php:
+    image: enabel/docker-php
+    volumes:
+      - .:/var/www/html
+    environment:
+      - maildev_host=maildev
+    depends_on:
+      - maildev
+      - mariadb
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb,bis
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: toor
+    ports:
+      - 8080:80
+    links:
+      - mariadb
+
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - 8001:80
+
+  bis:
+    image: mariadb
+    volumes:
+      - ~/Projects/BIS/.db/data:/var/lib/mysql/
+      - ~/Projects/BIS/.db/log:/var/log/mysql/
+      - ~/Projects/BIS/.db/conf:/etc/mysql/conf.d/
+    environment:
+      MYSQL_DATABASE: bis
+      MYSQL_USER: bisreader
+      MYSQL_PASSWORD: 'elephpant401'
+      MYSQL_ROOT_PASSWORD: toor
+    ports:
+      - 3307:3306

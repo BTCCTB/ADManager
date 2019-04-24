@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\Blameable;
-use App\Entity\Traits\Timestampable;
+use App\Entity\Traits\BlameableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -12,13 +12,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="application")
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
+ *
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  */
 class Application implements EntityInterface
 {
     // Traits
-    use Timestampable;
-    use Blameable;
+    use TimestampableTrait;
+    use BlameableTrait;
 
     /**
      * @var int

@@ -16,6 +16,7 @@ use Doctrine\ORM\NonUniqueResultException;
  * Class BisPersonViewRepository
  *
  * @package BisBundle\Entity
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class BisPersonViewRepository extends EntityRepository
@@ -85,7 +86,7 @@ class BisPersonViewRepository extends EntityRepository
 
         $personData = $query->getOneOrNullResult();
 
-        if ($personData !== null) {
+        if (null !== $personData) {
             $bisPersonView
                 ->setId($personData->getPerId())
                 ->setFirstname($personData->getPerFirstname())
@@ -121,14 +122,14 @@ class BisPersonViewRepository extends EntityRepository
                     ->getQuery();
                 $conJobData = $query->getOneOrNullResult();
 
-                if ($conJobData !== null) {
+                if (null !== $conJobData) {
                     $query = $bisJobRepository->createQueryBuilder('bj')
                         ->where('bj.jobId = :jobId')
                         ->setParameter('jobId', $conJobData->getFkJobId())
                         ->getQuery();
                     $jobData = $query->getOneOrNullResult();
 
-                    if ($jobData !== null) {
+                    if (null !== $jobData) {
                         $bisPersonView
                             ->setFunction($jobData->getJobFunction())
                             ->setCountryWorkplace($bisCountryRepository->findOneBy(['couIsocode3letters' => $jobData->getJobCountryWorkplace()]))

@@ -13,8 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class ContactController
  *
  * @package App\Controller
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @Route("/contact", name="contact_")
+ *
  * @IsGranted("ROLE_USER")
  */
 class ContactController extends AbstractController
@@ -33,12 +36,15 @@ class ContactController extends AbstractController
     /**
      * @Route("/my-country", name="own_country")
      *
+     * @param BisPersonView $bisPersonView
+     *
      * @return Response
      */
     public function myCountry(BisPersonView $bisPersonView)
     {
         $user = $bisPersonView->getUser($this->getUser()->getEmail());
         $contacts = $this->phoneDirectory->getByCountry($user->getCountry());
+
         return $this->render(
             'Contact/myCountry.html.twig',
             [

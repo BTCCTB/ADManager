@@ -11,6 +11,7 @@ use BisBundle\Entity\BisPersonView;
  * Class BisDirHelper
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class BisDirHelper
@@ -37,7 +38,7 @@ class BisDirHelper
      * Convert a Active Directory account to a LDAP entry
      *
      * @param User  $adAccount The Active Directory account
-     * @param Entry $entry The LDAP entry
+     * @param Entry $entry     The LDAP entry
      *
      * @return Entry The LDAP entry
      */
@@ -61,6 +62,7 @@ class BisDirHelper
         if (!empty($adAccount->getDescription())) {
             $entry->setAttribute('title', $adAccount->getDescription());
         }
+
         return $entry;
     }
 
@@ -68,7 +70,7 @@ class BisDirHelper
      * Convert a Active Directory account to a LDAP entry
      *
      * @param BisPersonView $bisPersonView
-     * @param Entry         $entry The LDAP entry
+     * @param Entry         $entry         The LDAP entry
      *
      * @return Entry The LDAP entry
      */
@@ -92,6 +94,7 @@ class BisDirHelper
         if (!empty($bisPersonView->getDescription())) {
             $entry->setAttribute('title', $bisPersonView->getDescription());
         }
+
         return $entry;
     }
 

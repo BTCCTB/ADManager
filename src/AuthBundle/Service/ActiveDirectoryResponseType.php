@@ -6,6 +6,7 @@ namespace AuthBundle\Service;
  * Class ActiveDirectoryResponseType
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class ActiveDirectoryResponseType

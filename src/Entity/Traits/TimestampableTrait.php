@@ -11,21 +11,25 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Trait Timestampable
  *
  * @package App\Entity\Traits
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
-trait Timestampable
+trait TimestampableTrait
 {
     /**
      * @var DateTime|null
      *
      * @Gedmo\Timestampable(on="create")
+     *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     protected $createdAt;
 
     /**
      * @var DateTime|null
+     *
      * @Gedmo\Timestampable(on="update")
+     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     protected $updatedAt;
@@ -49,7 +53,7 @@ trait Timestampable
      *
      * @return DateTime|null
      */
-    public function getCreatedAt(): ? DateTime
+    public function getCreatedAt():  ? DateTime
     {
         return $this->createdAt;
     }
@@ -73,7 +77,7 @@ trait Timestampable
      *
      * @return DateTime|null
      */
-    public function getUpdatedAt() : ? DateTime
+    public function getUpdatedAt() :  ? DateTime
     {
         return $this->updatedAt;
     }

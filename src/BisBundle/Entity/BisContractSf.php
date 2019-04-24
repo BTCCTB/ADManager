@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class BisContractSf
  *
  * @package BisBundle\Entity
+ *
  * @ORM\Entity(repositoryClass="BisBundle\Repository\BisContractSfRepository")
  * @ORM\Table(name="bis_contract_sf")
  *
@@ -16,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 class BisContractSf
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="con_id", type="bigint")
      * @ORM\Id
@@ -25,7 +26,7 @@ class BisContractSf
     private $conId;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="con_per_id", type="bigint")
      * @ORM\OneToOne(targetEntity="BisBundle\Entity\BisPersonSf", mappedBy="perId")
@@ -67,6 +68,7 @@ class BisContractSf
     public function setConId($conId)
     {
         $this->conId = $conId;
+
         return $this;
     }
 
@@ -78,6 +80,7 @@ class BisContractSf
     public function setConPerId($conPerId)
     {
         $this->conPerId = $conPerId;
+
         return $this;
     }
 
@@ -89,6 +92,7 @@ class BisContractSf
     public function setConType($conType)
     {
         $this->conType = $conType;
+
         return $this;
     }
 
@@ -100,6 +104,7 @@ class BisContractSf
     public function setConDateStart($conDateStart)
     {
         $this->conDateStart = $conDateStart;
+
         return $this;
     }
 
@@ -111,6 +116,7 @@ class BisContractSf
     public function setConDateStop($conDateStop)
     {
         $this->conDateStop = $conDateStop;
+
         return $this;
     }
 
@@ -122,6 +128,7 @@ class BisContractSf
     public function setConActive($conActive)
     {
         $this->conActive = $conActive;
+
         return $this;
     }
 
@@ -133,6 +140,7 @@ class BisContractSf
     public function setConLastUpdated($conLastUpdated)
     {
         $this->conLastUpdated = $conLastUpdated;
+
         return $this;
     }
 }

@@ -25,8 +25,8 @@ class AdSyncBisToLDAPCommand extends Command
     /**
      * AdResetAccountCommand constructor.
      *
-     * @param BisPersonView   $bisPersonView
-     * @param BisDir          $bisDir
+     * @param BisPersonView $bisPersonView
+     * @param BisDir        $bisDir
      */
     public function __construct(BisPersonView $bisPersonView, BisDir $bisDir)
     {
@@ -59,6 +59,7 @@ class AdSyncBisToLDAPCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
@@ -68,7 +69,7 @@ class AdSyncBisToLDAPCommand extends Command
         $bisPersonView = $this->bisPersonView
             ->getUser($input->getArgument('email'));
 
-        if ($bisPersonView !== null) {
+        if (null !== $bisPersonView) {
             $responses = $this->bisDir
                 ->synchronizeFromBis($bisPersonView);
 

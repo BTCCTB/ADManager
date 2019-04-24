@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Class BisJobgroupSf
  *
  * @package BisBundle\Entity
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @ORM\Entity
  * @ORM\Table(name="bis_jobgroup_sf")
  */
@@ -36,6 +38,7 @@ class BisJobgroupSf
     public function setFkJobId($fkJobId)
     {
         $this->fkJobId = $fkJobId;
+
         return $this;
     }
 
@@ -47,6 +50,7 @@ class BisJobgroupSf
     public function setFkGroId($fkGroId)
     {
         $this->fkGroId = $fkGroId;
+
         return $this;
     }
 }

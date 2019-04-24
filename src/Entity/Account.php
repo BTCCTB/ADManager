@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\Timestampable;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -11,7 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="account")
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
+ *
  * @UniqueEntity(fields={"email"}, message="It looks this user has already an account")
+ *
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  *
  * @author Damien Lagae <damienlagae@gmail.com>
@@ -19,77 +21,101 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Account implements EntityInterface
 {
     // Traits
-    use Timestampable;
+    use TimestampableTrait;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @var integer
+     *
+     * @var int
      */
     private $employeeId;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @Assert\NotBlank()
+     *
      * @var string
      */
     private $userPrincipalName;
     /**
      * @ORM\Column(type="string")
+     *
      * @Assert\NotBlank()
+     *
      * @Gedmo\Versioned
+     *
      * @var string
      */
     private $accountName;
     /**
      * @ORM\Column(type="string", unique=true)
+     *
      * @Assert\Email()
+     *
      * @Gedmo\Versioned
+     *
      * @var string
      */
     private $email;
     /**
      * @ORM\Column(type="string")
+     *
      * @Assert\Email()
+     *
      * @Gedmo\Versioned
+     *
      * @var string
      */
     private $emailContact;
     /**
      * @ORM\Column(type="string")
+     *
      * @Assert\NotBlank()
+     *
      * @Gedmo\Versioned
+     *
      * @var string
      */
     private $firstname;
     /**
      * @ORM\Column(type="string")
+     *
      * @Assert\NotBlank()
+     *
      * @Gedmo\Versioned
+     *
      * @var string
      */
     private $lastname;
     /**
      * @ORM\Column(type="string")
+     *
      * @Assert\NotBlank()
+     *
      * @Gedmo\Versioned
+     *
      * @var string
      */
     private $token;
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string
      */
     private $generatedPassword;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var \Bool
      */
     private $isActive;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @var \DateTime
      */
     private $lastLoginAt = null;
@@ -107,6 +133,7 @@ class Account implements EntityInterface
     public function setEmployeeId($employeeId)
     {
         $this->employeeId = $employeeId;
+
         return $this;
     }
 
@@ -118,6 +145,7 @@ class Account implements EntityInterface
     public function setUserPrincipalName($userPrincipalName)
     {
         $this->userPrincipalName = $userPrincipalName;
+
         return $this;
     }
 
@@ -129,6 +157,7 @@ class Account implements EntityInterface
     public function setAccountName($accountName)
     {
         $this->accountName = $accountName;
+
         return $this;
     }
 
@@ -140,6 +169,7 @@ class Account implements EntityInterface
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -151,6 +181,7 @@ class Account implements EntityInterface
     public function setEmailContact($emailContact)
     {
         $this->emailContact = $emailContact;
+
         return $this;
     }
 
@@ -162,6 +193,7 @@ class Account implements EntityInterface
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
+
         return $this;
     }
 
@@ -173,6 +205,7 @@ class Account implements EntityInterface
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
+
         return $this;
     }
 
@@ -184,6 +217,7 @@ class Account implements EntityInterface
     public function setToken($token)
     {
         $this->token = $token;
+
         return $this;
     }
 
@@ -195,6 +229,7 @@ class Account implements EntityInterface
     public function setGeneratedPassword($generatedPassword)
     {
         $this->generatedPassword = $generatedPassword;
+
         return $this;
     }
 
@@ -206,6 +241,7 @@ class Account implements EntityInterface
     public function setActive($active)
     {
         $this->isActive = $active;
+
         return $this;
     }
 
@@ -217,6 +253,7 @@ class Account implements EntityInterface
     public function setLastLoginAt($lastLoginAt)
     {
         $this->lastLoginAt = $lastLoginAt;
+
         return $this;
     }
 

@@ -9,6 +9,7 @@ use Gedmo\Loggable\Entity\MappedSuperclass\AbstractLogEntry;
  * Class LoggableEntry
  *
  * @package App\Entity
+ *
  * @ORM\Table(name="loggable_entry")
  * @ORM\Entity(repositoryClass="App\Repository\LoggableEntryRepository")
  *

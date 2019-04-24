@@ -67,6 +67,7 @@ class AdSyncBisToADCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
@@ -76,7 +77,7 @@ class AdSyncBisToADCommand extends Command
         $bisPersonView = $this->bisPersonView
             ->getUser($input->getArgument('email'));
 
-        if ($bisPersonView !== null) {
+        if (null !== $bisPersonView) {
             $responses = $this->activeDirectory
                 ->synchronizeFromBis($bisPersonView);
 

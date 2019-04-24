@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Adldap\Models\User as AdUser;
-use App\Entity\Traits\Timestampable;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,9 +15,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class User
  *
  * @package AuthBundle\Entity
+ *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
+ *
  * @UniqueEntity(fields={"email"}, message="It looks this user has already an account")
+ *
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  *
  * @author Damien Lagae <damienlagae@gmail.com>
@@ -25,76 +28,95 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements EntityInterface, UserInterface, EquatableInterface
 {
     // Traits
-    use Timestampable;
+    use TimestampableTrait;
 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     * @var integer
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string
      */
     private $password;
 
     /**
      * @Assert\NotBlank(groups={"Create"})
+     *
      * @var string
      */
     private $plainPassword;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
+     *
      * @Gedmo\Versioned()
+     *
      * @var string[]
      */
     private $roles = [];
 
     /**
      * @ORM\Column(type="string", unique=true)
+     *
      * @Gedmo\Versioned()
+     *
      * @Assert\NotBlank()
      * @Assert\Email()
+     *
      * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @Gedmo\Versioned()
+     *
      * @Assert\NotBlank()
+     *
      * @var string
      */
     private $accountName;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @Gedmo\Versioned()
+     *
      * @var string
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @Gedmo\Versioned()
+     *
      * @var string
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @Gedmo\Versioned()
+     *
      * @Assert\NotBlank()
-     * @var boolean
+     *
+     * @var bool
      */
     private $isActive = true;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     *
      * @var \DateTime
      */
     private $expiredAt = null;
@@ -114,6 +136,7 @@ class User implements EntityInterface, UserInterface, EquatableInterface
         if (!in_array('ROLE_USER', $roles)) {
             $roles[] = 'ROLE_USER';
         }
+
         return $roles;
     }
 
@@ -125,6 +148,7 @@ class User implements EntityInterface, UserInterface, EquatableInterface
     public function setRoles(array $roles): User
     {
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -149,6 +173,7 @@ class User implements EntityInterface, UserInterface, EquatableInterface
     public function setPassword(string $password): User
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -203,11 +228,13 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
     /**
      * @param string $plainPassword
+     *
      * @return self
      */
     public function setPlainPassword(string $plainPassword): User
     {
         $this->plainPassword = $plainPassword;
+
         return $this;
     }
 
@@ -221,11 +248,13 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
     /**
      * @param string $email
+     *
      * @return self
      */
     public function setEmail(string $email): User
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -245,6 +274,7 @@ class User implements EntityInterface, UserInterface, EquatableInterface
     public function setAccountName(string $accountName): User
     {
         $this->accountName = $accountName;
+
         return $this;
     }
 
@@ -258,11 +288,13 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
     /**
      * @param string $firstname
+     *
      * @return self
      */
     public function setFirstname(string $firstname): User
     {
         $this->firstname = $firstname;
+
         return $this;
     }
 
@@ -276,11 +308,13 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
     /**
      * @param string $lastname
+     *
      * @return self
      */
     public function setLastname(string $lastname): User
     {
         $this->lastname = $lastname;
+
         return $this;
     }
 
@@ -294,11 +328,13 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
     /**
      * @param bool $isActive
+     *
      * @return self
      */
     public function setActive(bool $isActive): User
     {
         $this->isActive = $isActive;
+
         return $this;
     }
 
@@ -312,11 +348,13 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
     /**
      * @param \DateTime $expiredAt
+     *
      * @return self
      */
     public function setExpiredAt(\DateTime $expiredAt): User
     {
         $this->expiredAt = $expiredAt;
+
         return $this;
     }
 

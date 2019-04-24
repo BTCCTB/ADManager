@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\Blameable;
-use App\Entity\Traits\Timestampable;
+use App\Entity\Traits\BlameableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -11,13 +11,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IncidentRepository")
+ *
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  */
 class Incident implements EntityInterface
 {
     // Traits
-    use Blameable;
-    use Timestampable;
+    use BlameableTrait;
+    use TimestampableTrait;
 
     /**
      * @ORM\Id
@@ -28,31 +29,42 @@ class Incident implements EntityInterface
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", length=100, nullable=false)
+     *
      * @Assert\NotBlank()
+     *
      * @Gedmo\Versioned
      */
     private $title;
 
     /**
      * @var string
+     *
      * @ORM\Column(type="text", nullable=false)
+     *
      * @Assert\NotBlank()
+     *
      * @Gedmo\Versioned
      */
     private $description;
 
     /**
      * @var \DateTime
+     *
      * @ORM\Column(type="datetime", nullable=false)
+     *
      * @Assert\NotBlank()
+     *
      * @Gedmo\Versioned
      */
     private $startDate;
 
     /**
      * @var \DateTime
+     *
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Versioned
      */
     private $endDate;
@@ -60,12 +72,14 @@ class Incident implements EntityInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\IncidentSeverity", inversedBy="incidents")
      * @ORM\JoinColumn(nullable=true)
+     *
      * @Gedmo\Versioned
      */
     private $severity;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Application", cascade={"persist"})
+     *
      * @var ArrayCollection
      */
     private $applications;
@@ -89,6 +103,7 @@ class Incident implements EntityInterface
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -100,6 +115,7 @@ class Incident implements EntityInterface
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -111,6 +127,7 @@ class Incident implements EntityInterface
     public function setStartDate($startDate)
     {
         $this->startDate = $startDate;
+
         return $this;
     }
 
@@ -122,6 +139,7 @@ class Incident implements EntityInterface
     public function setEndDate($endDate)
     {
         $this->endDate = $endDate;
+
         return $this;
     }
 
@@ -133,12 +151,14 @@ class Incident implements EntityInterface
     public function setSeverity($severity)
     {
         $this->severity = $severity;
+
         return $this;
     }
 
     public function addApplication(Application $application)
     {
         $this->applications[] = $application;
+
         return $this;
     }
 

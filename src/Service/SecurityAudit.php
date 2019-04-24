@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
  * Class SecurityAudit
  *
  * @package App\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class SecurityAudit

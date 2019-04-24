@@ -25,8 +25,8 @@ class AdCrontaskLdapCommand extends Command
     /**
      * AdCrontaskLdapCommand constructor.
      *
-     * @param BisPersonView               $bisPersonView
-     * @param BisDir                      $bisDir
+     * @param BisPersonView $bisPersonView
+     * @param BisDir        $bisDir
      */
     public function __construct(BisPersonView $bisPersonView, BisDir $bisDir)
     {
@@ -58,6 +58,7 @@ class AdCrontaskLdapCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     *
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
