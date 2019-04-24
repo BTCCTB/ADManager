@@ -52,6 +52,7 @@
     name: Synchronize person between GO4HR and ActiveDirectory (1pm)
     minute: "0"
     hour: "13"
+    day: "1-5"
     state: present
     user: root
     job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_noon.log"
@@ -62,6 +63,7 @@
     name: Synchronize person between GO4HR and ActiveDirectory (1am)
     minute: "0"
     hour: "1"
+    day: "1-5"
     state: present
     user: root
     job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
@@ -72,6 +74,7 @@
     name: Synchronize person between GO4HR and ActiveDirectory (7am)
     minute: "0"
     hour: "7"
+    day: "1-5"
     state: present
     user: root
     job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
@@ -83,7 +86,8 @@
     name: Cleanup entry/person who are no longer in GO4HR (2am)
     minute: "0"
     hour: "2"
-    state: present
+    day: "1-5"
+    state: absent
     user: root
     job: "{{ release_console_path }} ad:crontask:ldap --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
