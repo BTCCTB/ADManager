@@ -31,23 +31,6 @@ services:
       - maildev
       - mariadb
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: mariadb,bis
-      PMA_PORT: 3306
-      PMA_USER: root
-      PMA_PASSWORD: toor
-    ports:
-      - 8080:80
-    links:
-      - mariadb
-
-  maildev:
-    image: djfarrelly/maildev
-    ports:
-      - 8001:80
-
   bis:
     image: mariadb
     volumes:
@@ -61,3 +44,21 @@ services:
       MYSQL_ROOT_PASSWORD: toor
     ports:
       - 3307:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOSTS: bis,mariadb
+      PMA_USER: root
+      PMA_PASSWORD: toor
+    ports:
+      - 8080:80
+    links:
+      - mariadb
+      - bis
+
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - 8001:80
+
