@@ -2088,17 +2088,17 @@
         },
         {
             "name": "jms/i18n-routing-bundle",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "target-dir": "JMS/I18nRoutingBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSI18nRoutingBundle.git",
-                "reference": "712a76f6fc30127bd73b662a72f59c546201c995"
+                "reference": "f9f653d1aff48ee85c3477ba4a92f859c064b4a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSI18nRoutingBundle/zipball/712a76f6fc30127bd73b662a72f59c546201c995",
-                "reference": "712a76f6fc30127bd73b662a72f59c546201c995",
+                "url": "https://api.github.com/repos/schmittjoh/JMSI18nRoutingBundle/zipball/f9f653d1aff48ee85c3477ba4a92f859c064b4a3",
+                "reference": "f9f653d1aff48ee85c3477ba4a92f859c064b4a3",
                 "shasum": ""
             },
             "require": {
@@ -2140,7 +2140,7 @@
                 "routing",
                 "translation"
             ],
-            "time": "2017-12-06T09:20:21+00:00"
+            "time": "2019-05-05T18:42:08+00:00"
         },
         {
             "name": "monolog/monolog",
