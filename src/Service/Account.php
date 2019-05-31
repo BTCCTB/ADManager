@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
  * Class Account
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class Account
@@ -83,6 +84,7 @@ class Account
      * @param BisPersonView $bisPersonView
      *
      * @return integer 0: no action, 1: creation, 2: update
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */

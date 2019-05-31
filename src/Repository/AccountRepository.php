@@ -50,7 +50,7 @@ class AccountRepository extends ServiceEntityRepository
     public function setLastLogin(String $email)
     {
         $user = $this->findByEmail($email);
-        if ($user !== null) {
+        if (null !== $user) {
             $user->setLastLoginAt(new \DateTime());
             $this->_em->persist($user);
             $this->_em->flush();
@@ -60,7 +60,7 @@ class AccountRepository extends ServiceEntityRepository
     public function setGeneratedPassword(String $email, String $password)
     {
         $user = $this->findByEmail($email);
-        if ($user !== null) {
+        if (null !== $user) {
             $user->setGeneratedPassword($password);
             $this->_em->persist($user);
             $this->_em->flush();
@@ -72,6 +72,7 @@ class AccountRepository extends ServiceEntityRepository
      * @param String  $newEmail
      *
      * @return Account
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */

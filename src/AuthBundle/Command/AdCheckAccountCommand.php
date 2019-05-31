@@ -68,6 +68,7 @@ class AdCheckAccountCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
@@ -122,13 +123,13 @@ class AdCheckAccountCommand extends Command
             $ldap = "/";
             $bis = "/";
             $sync = "<fg=red>\xF0\x9F\x97\xB4</>";
-            if ($adAccount !== null) {
+            if (null !== $adAccount) {
                 $ad = $adAccount->getFirstAttribute($adAttributes);
             }
-            if ($ldapAccount !== null) {
+            if (null !== $ldapAccount) {
                 $ldap = $ldapAccount->getFirstAttribute($fieldLdap[$field]);
             }
-            if ($bisPerson !== null) {
+            if (null !== $bisPerson) {
                 $bis = $bisPerson->getAttribute($fieldBis[$field]);
             }
 
@@ -144,7 +145,7 @@ class AdCheckAccountCommand extends Command
             ];
         }
 
-        if ($bisPerson !== null) {
+        if (null !== $bisPerson) {
             $output->writeln('BIS: ' . $bisPerson->getEmail() . ' - ' . $bisPerson->getDisplayName());
         }
 

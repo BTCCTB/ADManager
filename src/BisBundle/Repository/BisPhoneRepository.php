@@ -9,27 +9,12 @@ use Doctrine\ORM\EntityRepository;
  * Class BisPhoneRepository
  *
  * @package BisBundle\Entity
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class BisPhoneRepository extends EntityRepository
 {
 
-    private function getBaseQuery()
-    {
-        $repository = $this->_em->getRepository(BisPhone::class);
-
-        return $repository->createQueryBuilder('bp')
-            ->where("bp.countryWorkplace != ''")
-            ->andWhere('bp.email IS NOT NULL')
-            ->andWhere('bp.email <> :empty')
-            ->andWhere('bp.mobile IS NOT NULL OR bp.telephone IS NOT NULL')
-            ->andWhere('bp.mobile <> :empty OR bp.telephone <> :empty')
-            ->andWhere('bp.id NOT IN (:ids)')
-            ->setParameter('ids', BisPersonViewRepository::getMemberOtTheBoard())
-            ->setParameter('empty', '')
-            ->orderBy('bp.lastname', 'ASC')
-            ->addOrderBy('bp.firstname', 'ASC');
-    }
     /**
      * Get phone directory by country
      *
@@ -80,5 +65,22 @@ class BisPhoneRepository extends EntityRepository
         return $this->getBaseQuery()
             ->getQuery()
             ->getResult();
+    }
+
+    private function getBaseQuery()
+    {
+        $repository = $this->_em->getRepository(BisPhone::class);
+
+        return $repository->createQueryBuilder('bp')
+            ->where("bp.countryWorkplace != ''")
+            ->andWhere('bp.email IS NOT NULL')
+            ->andWhere('bp.email <> :empty')
+            ->andWhere('bp.mobile IS NOT NULL OR bp.telephone IS NOT NULL')
+            ->andWhere('bp.mobile <> :empty OR bp.telephone <> :empty')
+            ->andWhere('bp.id NOT IN (:ids)')
+            ->setParameter('ids', BisPersonViewRepository::getMemberOtTheBoard())
+            ->setParameter('empty', '')
+            ->orderBy('bp.lastname', 'ASC')
+            ->addOrderBy('bp.firstname', 'ASC');
     }
 }

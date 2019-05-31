@@ -2,7 +2,7 @@
 
 <!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
@@ -12,38 +12,38 @@
         <server name="KERNEL_CLASS" value="App\Kernel" />
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
-        <env name="DATABASE_URL" value="mysql://db_user:db_password@127.0.0.1:3306/db_name"/>
-        <env name="DATABASE_BIS_URL" value="mysql://db_user:db_password@127.0.0.1:3306/db_name"/>
+        <env name="DATABASE_URL" value="mysql://root:toor@127.0.0.1:3306/admanager"/>
+        <env name="DATABASE_BIS_URL" value="mysql://root:toot@127.0.0.1:3306/bis"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
 
         <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <env name="MAILER_URL" value="null://localhost"/>
+        <env name="MAILER_URL" value="smtp://localhost:1025"/>
         <!-- ###- symfony/swiftmailer-bundle ### -->
 
         <!-- ###+ symfony/framework-bundle ### -->
         <env name="APP_ENV" value="test"/>
-        <env name="APP_SECRET" value="09aacd4f12c90ad887f149bcc6178587"/>
+        <env name="APP_SECRET" value="09aacd4f12c90ad887f149bcc6176587"/>
         <!-- ###- symfony/framework-bundle ### -->
 
         <!-- ###+ ActiveDirectory ### -->
-        <env name="DOMAIN_CONTROLLERS" value="dc1,dc2" />
-        <env name="BASE_DN" value="dc=domain,dc=local" />
-        <env name="ADMIN_USERNAME" value="admin" />
-        <env name="ADMIN_PASSWORD" value="secret" />
-        <env name="ACCOUNT_SUFFIX" value="domain.local" />
+        <env name="DOMAIN_CONTROLLERS" value="" />
+        <env name="BASE_DN" value="" />
+        <env name="ADMIN_USERNAME" value="" />
+        <env name="ADMIN_PASSWORD" value="" />
+        <env name="ACCOUNT_SUFFIX" value="" />
         <!-- ###- ActiveDirectory ### -->
 
         <!-- ###+ MailNotification ### -->
-        <env name="MAIL_DOMAIN" value="domain.net" />
-        <env name="NOTIFICATION_FROM" value="no-reply@domain.net" />
-        <env name="NOTIFICATION_TO" value="helpdesk@domain.net,admin@domain.net" />
+        <env name="MAIL_DOMAIN" value="enabel.be" />
+        <env name="NOTIFICATION_FROM" value="" />
+        <env name="NOTIFICATION_TO" value="" />
         <!-- ###- MailNotification ### -->
 
         <!-- ###+ LDAP ### -->
-        <env name="BIS_DIR_HOSTS" value="ldap.domain.local" />
-        <env name="BIS_DIR_BASE_DN" value="dc=domain,dc=net" />
-        <env name="BIS_DIR_ADMIN_USERNAME" value="cn=admin,dc=domain,dc=net" />
-        <env name="BIS_DIR_ADMIN_PASSWORD" value="secret" />
+        <env name="BIS_DIR_HOSTS" value="" />
+        <env name="BIS_DIR_BASE_DN" value="dc=enabel,dc=be" />
+        <env name="BIS_DIR_ADMIN_USERNAME" value="" />
+        <env name="BIS_DIR_ADMIN_PASSWORD" value="" />
         <!-- ###- LDAP ### -->
 
     </php>
@@ -66,13 +66,7 @@
     </filter>
 
     <logging>
-        <log type="coverage-html" target="var/log/tests/report" lowUpperBound="35"
-             highLowerBound="70"/>
-        <log type="coverage-clover" target="var/log/tests/coverage.xml"/>
-        <log type="coverage-php" target="var/log/tests/coverage.serialized"/>
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
-        <log type="junit" target="var/log/tests/logfile.xml"/>
-        <log type="testdox-html" target="var/log/tests/testdox.html"/>
-        <log type="testdox-text" target="var/log/tests/testdox.txt"/>
+        <log type="coverage-clover" target="./var/coverage.xml"/>
     </logging>
+
 </phpunit>

@@ -10,11 +10,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Class BisPersonView
  *
  * @package BisBundle\Entity
+ *
  * @ORM\Entity(repositoryClass="BisBundle\Repository\BisPersonViewRepository")
  * @ORM\Table(name="bis_person_view")
+ *
  * @UniqueEntity(fields={"per_email"})
  *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
@@ -24,7 +27,7 @@ class BisPersonView
     const COMPANY = 'Enabel';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="per_id", type="bigint")
      * @ORM\Id
@@ -61,7 +64,7 @@ class BisPersonView
     private $perNickname;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="per_active", type="boolean", nullable=false)
      */
@@ -144,6 +147,7 @@ class BisPersonView
     public function setId($perId)
     {
         $this->perId = $perId;
+
         return $this;
     }
 
@@ -155,6 +159,7 @@ class BisPersonView
     public function setEmail($perEmail)
     {
         $this->perEmail = $perEmail;
+
         return $this;
     }
 
@@ -166,6 +171,7 @@ class BisPersonView
     public function setFirstname($perFirstname)
     {
         $this->perFirstname = $perFirstname;
+
         return $this;
     }
 
@@ -177,6 +183,7 @@ class BisPersonView
     public function setLastname($perLastname)
     {
         $this->perLastname = $perLastname;
+
         return $this;
     }
 
@@ -188,6 +195,7 @@ class BisPersonView
     public function setActive($perActive)
     {
         $this->perActive = $perActive;
+
         return $this;
     }
 
@@ -199,6 +207,7 @@ class BisPersonView
     public function setTelephone($perTelephone)
     {
         $this->perTelephone = $perTelephone;
+
         return $this;
     }
 
@@ -219,6 +228,7 @@ class BisPersonView
     public function setSex($perSex)
     {
         $this->perSex = $perSex;
+
         return $this;
     }
 
@@ -230,6 +240,7 @@ class BisPersonView
     public function setLanguage($perLanguage)
     {
         $this->perLanguage = $perLanguage;
+
         return $this;
     }
 
@@ -241,6 +252,7 @@ class BisPersonView
     public function setFunction($perFunction)
     {
         $this->perFunction = $perFunction;
+
         return $this;
     }
 
@@ -252,6 +264,7 @@ class BisPersonView
     public function setMobile($perMobile)
     {
         $this->perMobile = $perMobile;
+
         return $this;
     }
 
@@ -265,6 +278,7 @@ class BisPersonView
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
             return $this->getCountryWorkplace()->getCouName();
         }
+
         return null;
     }
 
@@ -273,6 +287,7 @@ class BisPersonView
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
             return $this->getCountryWorkplace()->getCouIsocode3letters();
         }
+
         return null;
     }
 
@@ -283,12 +298,14 @@ class BisPersonView
             "title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
             "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>";
         }
+
         return null;
     }
 
     public function setCountryWorkplace($perCountryWorkplace)
     {
         $this->perCountryWorkplace = $perCountryWorkplace;
+
         return $this;
     }
 
@@ -300,6 +317,7 @@ class BisPersonView
     public function setDateContractStart($perDateContractStart)
     {
         $this->perDateContractStart = $perDateContractStart;
+
         return $this;
     }
 
@@ -311,6 +329,7 @@ class BisPersonView
     public function setDateContractStop($perDateContractStop)
     {
         $this->perDateContractStop = $perDateContractStop;
+
         return $this;
     }
 
@@ -322,6 +341,7 @@ class BisPersonView
     public function setJobClass($jobClass)
     {
         $this->jobClass = $jobClass;
+
         return $this;
     }
 
@@ -333,6 +353,7 @@ class BisPersonView
     public function setGeneratedPassword($generatedPassword)
     {
         $this->generatedPassword = $generatedPassword;
+
         return $this;
     }
 
@@ -346,8 +367,10 @@ class BisPersonView
         if ($this->getUsername() !== false && strpos($this->getUsername(), '.') !== false) {
             $username = explode('.', $this->getUsername());
             $login = $username[0][0] . substr($username[1], 0, 7) . $this->getId();
+
             return strtolower($login);
         }
+
         return false;
     }
 
@@ -361,6 +384,7 @@ class BisPersonView
         if ($this->getUsername() !== false) {
             return $this->getUsername() . self::MAIN_DOMAIN;
         }
+
         return false;
     }
 
@@ -369,6 +393,7 @@ class BisPersonView
         if (!empty($this->getEmail()) && strpos($this->getEmail(), '@') !== false) {
             return substr($this->getEmail(), 0, strpos($this->getEmail(), '@'));
         }
+
         return false;
     }
 
@@ -377,6 +402,7 @@ class BisPersonView
         if (!empty($this->getNickname())) {
             return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getNickname()));
         }
+
         return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
     }
 
@@ -390,6 +416,7 @@ class BisPersonView
         if (!empty($this->getDateContractStop())) {
             return $this->getDateContractStop()->format("Y-m-d");
         }
+
         return null;
     }
 
@@ -398,6 +425,7 @@ class BisPersonView
         if (!empty($this->getDateContractStart())) {
             return $this->getDateContractStart()->format("Y-m-d");
         }
+
         return null;
     }
 
@@ -432,35 +460,30 @@ class BisPersonView
         switch ($key) {
             case 'per_id':
                 return $this->getId();
-                break;
             case 'per_firstname':
                 return $this->getFirstname();
-                break;
             case 'per_lastname':
                 return $this->getLastname();
-                break;
             case 'per_email':
                 return $this->getEmail();
-                break;
             case 'displayname':
                 return $this->getDisplayName();
-                break;
             case 'per_sex':
                 return $this->getSex();
-                break;
             case 'per_function':
                 return $this->getFunction();
-                break;
             case 'c':
                 if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
                     return $this->getCountryWorkplace()->getCouIsocode2letters();
                 }
-                break;
+
+                return null;
             case 'co':
                 if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
                     return $this->getCountryWorkplace()->getCouName();
                 }
-                break;
+
+                return null;
         }
 
         return null;
@@ -534,6 +557,7 @@ class BisPersonView
     public function setNickname($perNickname)
     {
         $this->perNickname = $perNickname;
+
         return $this;
     }
 }

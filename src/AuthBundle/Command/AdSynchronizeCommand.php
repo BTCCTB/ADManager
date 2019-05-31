@@ -25,7 +25,7 @@ class AdSynchronizeCommand extends Command
     /**
      * AdFixNameCommand constructor.
      *
-     * @param ActiveDirectory             $activeDirectory Active directory Service
+     * @param ActiveDirectory             $activeDirectory             Active directory Service
      *
      * @param ActiveDirectoryNotification $activeDirectoryNotification
      */
@@ -59,6 +59,7 @@ class AdSynchronizeCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     *
      * @throws \Adldap\AdldapException
      */
     protected function execute(InputInterface $input, OutputInterface $output)

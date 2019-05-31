@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
  * Class BisPersonView
  *
  * @package BisBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class BisPersonView
@@ -56,7 +57,7 @@ class BisPersonView
      */
     public function getCountryUsers(String $country = null)
     {
-        if ($country !== null) {
+        if (null !== $country) {
             return $this->repository->getUsersByCountry($country);
         }
 

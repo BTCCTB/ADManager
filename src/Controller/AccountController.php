@@ -29,8 +29,11 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AccountController
  *
  * @package Controller
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @Route("/account")
+ *
  * @IsGranted("ROLE_USER")
  */
 class AccountController extends AbstractController
@@ -63,7 +66,9 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/my", name="my_account")
+     *
      * @throws \LogicException
+     *
      * @IsGranted("ROLE_USER")
      */
     public function myAction()
@@ -88,7 +93,9 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/", name="account_list", methods={"GET"})
+     *
      * @IsGranted("ROLE_ADMIN")
+     *
      * @param AccountRepository $accountRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -102,9 +109,11 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/change-password", name="account_change_password", methods={"GET","POST"})
+     *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Adldap\AdldapException
      */
     public function changeAction(Request $request)
@@ -118,7 +127,7 @@ class AccountController extends AbstractController
             $data = $form->getData();
             if ($this->activeDirectory->checkCredentials($user->getEmail(), $data['current_password'])) {
                 $passwordCheck = ActiveDirectoryHelper::checkPasswordComplexity($data['password']);
-                if ($passwordCheck === true) {
+                if (true === $passwordCheck) {
                     if ($this->activeDirectory->changePassword($user->getEmail(), $data['password'])) {
                         if ($this->bisDir->syncPassword($user->getEmail(), $data['password'])) {
                             $this->securityAudit->changePassword(
@@ -126,6 +135,7 @@ class AccountController extends AbstractController
                                 $user
                             );
                             $this->addFlash('success', 'Password successfully changed !');
+
                             return $this->redirectToRoute('homepage');
                         }
                     } else {
@@ -145,10 +155,13 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/disable/{employeeID}", name="ad_disable_account", methods={"GET"})
+     *
      * @IsGranted("ROLE_SUPER_ADMIN")
+     *
      * @param integer $employeeID The employee ID
      *
      * @return RedirectResponse
+     *
      * @throws \LogicException
      */
     public function disableAction($employeeID): RedirectResponse
@@ -168,10 +181,13 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/enable/{employeeID}", name="ad_enable_account", methods={"GET"})
+     *
      * @IsGranted("ROLE_ADMIN")
+     *
      * @param integer $employeeID The employee ID
      *
      * @return RedirectResponse
+     *
      * @throws \LogicException
      */
     public function enableAction($employeeID): RedirectResponse
@@ -189,13 +205,16 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/reset/{employeeID}", name="account_reset_password", methods={"GET"})
+     *
      * @IsGranted("ROLE_ADMIN")
-     * @param integer                     $employeeID The employee ID     *
+     *
+     * @param integer                     $employeeID                  The employee ID     *
      * @param AccountRepository           $accountRepository
      *
      * @param ActiveDirectoryNotification $activeDirectoryNotification
      *
      * @return RedirectResponse
+     *
      * @throws \Adldap\AdldapException
      */
     public function resetAction($employeeID, AccountRepository $accountRepository, ActiveDirectoryNotification $activeDirectoryNotification): RedirectResponse
@@ -218,10 +237,13 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/check/{id}", name="account_check_password", methods={"GET","POST"})
+     *
      * @ParamConverter("id", class="App:Account")
+     *
      * @IsGranted("ROLE_ADMIN")
-     * @param Account         $account The account to test
-     * @param Request         $request The request (Form data)
+     *
+     * @param Account $account The account to test
+     * @param Request $request The request (Form data)
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -246,9 +268,12 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/detail/{id}", name="account_detail", methods={"GET"})
+     *
      * @ParamConverter("id", class="App:Account")
+     *
      * @IsGranted("ROLE_ADMIN")
-     * @param Account       $account The account to test     *
+     *
+     * @param Account       $account       The account to test     *
      * @param BisPersonView $bisPersonView
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -261,6 +286,7 @@ class AccountController extends AbstractController
             $bisData = $bisPersonView->getUserData($account->getEmail());
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
+
             return $this->redirectToRoute('account_list');
         }
 
@@ -269,17 +295,21 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/change-email/{id}", name="account_change_email", methods={"GET","POST"})
+     *
      * @ParamConverter("id", class="App:Account")
+     *
      * @IsGranted("ROLE_ADMIN")
      *
-     * @param Account           $account The account to test
+     * @param Account           $account           The account to test
      * @param Request           $request
      * @param UserRepository    $userRepository
      * @param AccountRepository $accountRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function changeEmailAction(Account $account, Request $request, UserRepository $userRepository, AccountRepository $accountRepository)
@@ -303,7 +333,7 @@ class AccountController extends AbstractController
                     // Apply email change in AD
                     $adUser = $this->activeDirectory->findAndChangeEmail($account->getEmail(), $email, $data['keep_proxy']);
 
-                    if ($adUser !== null && $adUser->getEmail() == $email) {
+                    if (null !== $adUser && $adUser->getEmail() == $email) {
                         // Apply email change in LDAP
                         $this->bisDir->findAndChangeEmail($account->getEmail(), $email);
                         // Apply email change in User DB
@@ -312,15 +342,15 @@ class AccountController extends AbstractController
                         $account = $accountRepository->changeEmail($account, $email);
 
                         return $this->redirectToRoute('account_detail', ['id' => $account->getEmployeeId()]);
-                    } else {
-                        $form->addError(new FormError('The email address can\' t be changed'));
                     }
+                    $form->addError(new FormError('The email address can\' t be changed'));
                 } else {
                     $form->get('new_email')->addError(new FormError('The new email address must be a valid Enabel email address [firstname.lastname@enabel.be]'));
                 }
             }
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
+
             return $this->redirectToRoute('account_list');
         }
 

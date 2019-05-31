@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Class BisGroupSf
  *
  * @package BisBundle\Entity
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @ORM\Entity
  * @ORM\Table(name="bis_group_sf")
  */
@@ -55,6 +57,7 @@ class BisGroupSf
     public function setGroCode($groCode)
     {
         $this->groCode = $groCode;
+
         return $this;
     }
 
@@ -66,6 +69,7 @@ class BisGroupSf
     public function setGroName($groName)
     {
         $this->groName = $groName;
+
         return $this;
     }
 
@@ -77,6 +81,7 @@ class BisGroupSf
     public function setGroType($groType)
     {
         $this->groType = $groType;
+
         return $this;
     }
 
@@ -88,6 +93,7 @@ class BisGroupSf
     public function setGroParentCode($groParentCode)
     {
         $this->groParentCode = $groParentCode;
+
         return $this;
     }
 
@@ -99,6 +105,7 @@ class BisGroupSf
     public function setGroActive($groActive)
     {
         $this->groActive = $groActive;
+
         return $this;
     }
 
@@ -110,6 +117,7 @@ class BisGroupSf
     public function setGroLastUpdated($groLastUpdated)
     {
         $this->groLastUpdated = $groLastUpdated;
+
         return $this;
     }
 }

@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Class BisJobSf
  *
  * @package BisBundle\Entity
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @ORM\Entity
  * @ORM\Table(name="bis_job_sf")
  */
@@ -66,6 +68,7 @@ class BisJobSf
     public function setJobId($jobId)
     {
         $this->jobId = $jobId;
+
         return $this;
     }
 
@@ -77,6 +80,7 @@ class BisJobSf
     public function setJobGroup($jobGroup)
     {
         $this->jobGroup = $jobGroup;
+
         return $this;
     }
 
@@ -88,6 +92,7 @@ class BisJobSf
     public function setJobFunction($jobFunction)
     {
         $this->jobFunction = $jobFunction;
+
         return $this;
     }
 
@@ -99,6 +104,7 @@ class BisJobSf
     public function setJobCountryWorkplace($jobCountryWorkplace)
     {
         $this->jobCountryWorkplace = $jobCountryWorkplace;
+
         return $this;
     }
 
@@ -110,6 +116,7 @@ class BisJobSf
     public function setJobClass($jobClass)
     {
         $this->jobClass = $jobClass;
+
         return $this;
     }
 
@@ -121,6 +128,7 @@ class BisJobSf
     public function setJobCityWorkplace($jobCityWorkplace)
     {
         $this->jobCityWorkplace = $jobCityWorkplace;
+
         return $this;
     }
 
@@ -132,6 +140,7 @@ class BisJobSf
     public function setJobManagerId($jobManagerId)
     {
         $this->jobManagerId = $jobManagerId;
+
         return $this;
     }
 
@@ -143,6 +152,7 @@ class BisJobSf
     public function setJobLastUpdated($jobLastUpdated)
     {
         $this->jobLastUpdated = $jobLastUpdated;
+
         return $this;
     }
 }

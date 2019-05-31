@@ -1,51 +1,21 @@
 <?xml version="1.0"?>
-<ruleset name="Symfony3 ruleset"
+<ruleset name="Symfony ruleset"
          xmlns="http://pmd.sf.net/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
          xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
     <description>
-        Custom ruleset for Symfony 3.x
+        Custom ruleset for Symfony
     </description>
 
     <rule ref="rulesets/codesize.xml" >
         <!-- configured below -->
         <exclude name="ExcessiveParameterList" />
-        <exclude name="CyclomaticComplexity" />
-        <exclude name="ExcessiveClassLength" />
-        <exclude name="TooManyMethods" />
-        <exclude name="TooManyPublicMethods" />
-        <exclude name="ExcessiveClassComplexity" />
     </rule>
     <!-- Increase maximum mumber of parameters for a new object -->
     <rule ref="rulesets/codesize.xml/ExcessiveParameterList">
         <properties>
             <property name="minimum" value="15" description="Maximum number of acceptable parameters." />
-        </properties>
-    </rule>
-    <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
-        <properties>
-            <property name="reportLevel" value="30" description="The Cyclomatic Complexity reporting threshold"/>
-        </properties>
-    </rule>
-    <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
-        <properties>
-            <property name="minimum" value="2000" description="The class size reporting threshold" />
-        </properties>
-    </rule>
-    <rule ref="rulesets/codesize.xml/TooManyMethods">
-        <properties>
-            <property name="maxmethods" value="40" description="The method count reporting threshold" />
-        </properties>
-    </rule>
-    <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
-        <properties>
-            <property name="maxmethods" value="35" description="The method count reporting threshold" />
-        </properties>
-    </rule>
-    <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
-        <properties>
-            <property name="maximum" value="100" description="The maximum WMC tolerable for a class" />
         </properties>
     </rule>
 
@@ -56,7 +26,7 @@
     <!-- Increase maximum mumber of dependencies for coupling between objects rule -->
     <rule ref="rulesets/design.xml/CouplingBetweenObjects">
         <properties>
-            <property name="minimum" value="30" description="Maximum number of acceptable dependencies." />
+            <property name="minimum" value="25" description="Maximum number of acceptable dependencies." />
         </properties>
     </rule>
 
@@ -69,19 +39,26 @@
         <!-- configured below -->
         <exclude name="ShortVariable" />
         <exclude name="LongVariable" />
+        <exclude name="ShortMethodName" />
         <!-- allow getters for bool methods -->
         <exclude name="BooleanGetMethodName" />
     </rule>
     <!-- Exclude $em, $id and $i from the short variables rule -->
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
-            <property name="exceptions" value="id,i,em,ad,dn,ou,to,c" />
+            <property name="exceptions" value="id,i,em,ad,dn,ou,to" />
         </properties>
     </rule>
     <!-- Allow a longer length for long variables rule -->
     <rule ref="rulesets/naming.xml/LongVariable">
         <properties>
             <property name="maximum" description="The variable length reporting threshold" value="30"/>
+        </properties>
+    </rule>
+    <!-- Exclude up() from the short method name rule -->
+    <rule ref="rulesets/naming.xml/ShortMethodName">
+        <properties>
+            <property name="exceptions" value="up" />
         </properties>
     </rule>
 

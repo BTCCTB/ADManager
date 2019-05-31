@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Class BisPersonSf
  *
  * @package BisBundle\Entity
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @ORM\Entity(repositoryClass="BisBundle\Repository\BisPersonSfRepository")
  * @ORM\Table(name="bis_person_sf")
  */
@@ -99,6 +101,7 @@ class BisPersonSf
     public function setPerId($perId)
     {
         $this->perId = $perId;
+
         return $this;
     }
 
@@ -110,6 +113,7 @@ class BisPersonSf
     public function setPerEmail($perEmail)
     {
         $this->perEmail = $perEmail;
+
         return $this;
     }
 
@@ -121,6 +125,7 @@ class BisPersonSf
     public function setPerPersonalEmail($perPersonalEmail)
     {
         $this->perPersonalEmail = $perPersonalEmail;
+
         return $this;
     }
 
@@ -132,6 +137,7 @@ class BisPersonSf
     public function setPerFirstname($perFirstname)
     {
         $this->perFirstname = $perFirstname;
+
         return $this;
     }
 
@@ -143,6 +149,7 @@ class BisPersonSf
     public function setPerLastname($perLastname)
     {
         $this->perLastname = $perLastname;
+
         return $this;
     }
 
@@ -154,6 +161,7 @@ class BisPersonSf
     public function setPerNickname($perNickname)
     {
         $this->perNickname = $perNickname;
+
         return $this;
     }
 
@@ -165,6 +173,7 @@ class BisPersonSf
     public function setPerActive($perActive)
     {
         $this->perActive = $perActive;
+
         return $this;
     }
 
@@ -176,6 +185,7 @@ class BisPersonSf
     public function setPerLastUpdated($perLastUpdated)
     {
         $this->perLastUpdated = $perLastUpdated;
+
         return $this;
     }
 
@@ -187,6 +197,7 @@ class BisPersonSf
     public function setPerTelephone($perTelephone)
     {
         $this->perTelephone = $perTelephone;
+
         return $this;
     }
 
@@ -198,6 +209,7 @@ class BisPersonSf
     public function setPerSkype($perSkype)
     {
         $this->perSkype = $perSkype;
+
         return $this;
     }
 
@@ -209,6 +221,7 @@ class BisPersonSf
     public function setPerGender($perGender)
     {
         $this->perGender = $perGender;
+
         return $this;
     }
 
@@ -220,6 +233,7 @@ class BisPersonSf
     public function setPerMobile($perMobile)
     {
         $this->perMobile = $perMobile;
+
         return $this;
     }
 
@@ -231,6 +245,7 @@ class BisPersonSf
     public function setPerMotherTongue($perMotherTongue)
     {
         $this->perMotherTongue = $perMotherTongue;
+
         return $this;
     }
 
@@ -242,6 +257,7 @@ class BisPersonSf
     public function setPerUsualLang($perUsualLang)
     {
         $this->perUsualLang = $perUsualLang;
+
         return $this;
     }
 
@@ -253,6 +269,7 @@ class BisPersonSf
     public function setPerImage($perImage)
     {
         $this->perImage = $perImage;
+
         return $this;
     }
 }

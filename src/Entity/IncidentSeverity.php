@@ -25,18 +25,21 @@ class IncidentSeverity implements EntityInterface
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $label;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Incident", mappedBy="severity")
+     *
      * @var ArrayCollection
      */
     private $incidents;
@@ -59,6 +62,7 @@ class IncidentSeverity implements EntityInterface
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -70,6 +74,7 @@ class IncidentSeverity implements EntityInterface
     public function setLabel($label)
     {
         $this->label = $label;
+
         return $this;
     }
 

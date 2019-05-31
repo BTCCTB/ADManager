@@ -7,21 +7,21 @@ parameters:
             no_check_all: true
         git_conflict: ~
         securitychecker: ~
+        clover_coverage:
+            clover_file: ./var/coverage.xml
+            level: 1
         phpcs:
             standard: "phpcs.xml"
-            ignore_patterns: ['ansible', 'bin', 'config', 'docs', 'public', '*/DataFixtures', '*/Migrations', 'templates', 'tests', 'var', 'vendor']
-        phplint:
-            exclude: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
         phpmd:
             ruleset: ['codesize.xml']
-            exclude: ['ansible', 'bin', 'config', 'docs', 'public', '*/DataFixtures', '*/Migrations', 'templates', 'tests', 'var', 'vendor']
-        phpparser:
-            kind: php7
-            ignore_patterns: ['app', 'bin', 'build', 'tests', 'var', 'vendor', 'web']
-            visitors:
-                forbidden_function_calls:
-                    blacklist:
-                        - 'var_dump'
-                        - 'exit'
+            exclude: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/AuthBundle/Service']
+#        phpcpd:
+#            directory: '.'
+#            exclude: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/AuthBundle/Service']
+#            min_lines: 5
+#            min_tokens: 70
+        phpunitbridge:
+            always_execute: false
         phpversion:
-            project: '7.0'
+            project: '7.2'
+        yamllint: ~

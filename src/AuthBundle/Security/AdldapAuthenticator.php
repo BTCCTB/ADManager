@@ -32,7 +32,9 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
  * Class AdldapAuthenticator
  *
  * @package AuthBundle\Security
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class AdldapAuthenticator implements AuthenticatorInterface
@@ -74,17 +76,12 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @param BisDir               $bisDir          The ldap [BisDir] connection service
      * @param LoggerInterface      $logger          The logger service
      * @param Account              $account         The account service
+     *
+     * @phpcs:disable Generic.Files.LineLength
+     *
      */
-    public function __construct(
-        FormFactoryInterface $formFactory,
-        EntityManager $em,
-        RouterInterface $router,
-        UserPasswordEncoder $passwordEncoder,
-        ActiveDirectory $activeDirectory,
-        BisDir $bisDir,
-        LoggerInterface $logger,
-        Account $account
-    ) {
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, RouterInterface $router, UserPasswordEncoder $passwordEncoder, ActiveDirectory $activeDirectory, BisDir $bisDir, LoggerInterface $logger, Account $account)
+    {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->router = $router;
@@ -115,6 +112,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @param Request $request Th request
      *
      * @return mixed
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function getCredentials(Request $request)
@@ -147,7 +145,9 @@ class AdldapAuthenticator implements AuthenticatorInterface
      *
      * @return bool
      *
-     * @throws AuthenticationException
+     * @throws \Adldap\Auth\BindException
+     * @throws \Adldap\Auth\PasswordRequiredException
+     * @throws \Adldap\Auth\UsernameRequiredException
      */
     public function checkCredentials($credentials, UserInterface $user): bool
     {
@@ -158,10 +158,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
             $username = str_replace('@btcctb.org', '@enabel.be', $username);
         }
 
-        if ($this->activeDirectory->checkUserExistByUsername($username) !== false) {
+        if (false !== $this->activeDirectory->checkUserExistByUsername($username)) {
             $adAccount = $this->activeDirectory->getUser($username);
             $ldapUser = $this->bisDir->getUser($adAccount->getEmail());
-            if ($ldapUser === null) {
+            if (null === $ldapUser) {
                 $this->bisDir->synchronize($adAccount, $password);
             }
             $log = $this->bisDir->syncPassword($adAccount->getEmail(), $password);
@@ -170,9 +170,10 @@ class AdldapAuthenticator implements AuthenticatorInterface
             }
             $this->logger->info($log->getMessage());
             $checkCredentials = $this->activeDirectory->checkCredentials($username, $password);
-            if ($checkCredentials === true) {
+            if (true === $checkCredentials) {
                 $this->account->updateCredentials($adAccount, $password);
             }
+
             return $checkCredentials;
         } else {
             if ($this->passwordEncoder->isPasswordValid($user, $password)) {
@@ -183,6 +184,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
                 }
                 dump($log->getMessage());
                 $this->logger->info($log->getMessage());
+
                 return true;
             } else {
                 throw new BadCredentialsException('Invalid password');
@@ -198,6 +200,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @param string         $providerKey
      *
      * @return RedirectResponse
+     *
      * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
@@ -227,6 +230,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         $url = $this->router->generate('security_login');
+
         return new RedirectResponse($url);
     }
 
@@ -255,17 +259,19 @@ class AdldapAuthenticator implements AuthenticatorInterface
 
         if (null === $username) {
             throw new UsernameNotFoundException('Username can\'t be empty!');
-        } elseif (strpos($username, '@btcctb.org')) {
+        }
+
+        if (strpos($username, '@btcctb.org')) {
             $username = str_replace('@btcctb.org', '@enabel.be', $username);
         }
 
         $user = $this->em->getRepository('App:User')
             ->findOneBy(['email' => $username]);
 
-        if ($user === null) {
+        if (null === $user) {
             $adUser = $this->activeDirectory->getUser($username);
 
-            if ($adUser !== null) {
+            if (null !== $adUser) {
                 $user = new User();
                 $user->createFromAD($adUser);
                 $this->em->persist($user);
@@ -275,7 +281,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $user = $this->em->getRepository('App:User')
             ->findOneBy(['email' => $username]);
 
-        if ($user === null) {
+        if (null === $user) {
             throw new UsernameNotFoundException('User not found!');
         }
 
@@ -292,6 +298,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $url = $this->router->generate('security_login');
+
         return new RedirectResponse($url);
     }
 
@@ -316,6 +323,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
      * @param string        $providerKey The provider (i.e. firewall) key
      *
      * @return PostAuthenticationGuardToken
+     *
      * @throws \InvalidArgumentException
      */
     public function createAuthenticatedToken(UserInterface $user, $providerKey)

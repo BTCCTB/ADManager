@@ -6,6 +6,7 @@ namespace AuthBundle\Service;
  * Class ActiveDirectoryResponse
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class ActiveDirectoryResponse
@@ -44,6 +45,7 @@ class ActiveDirectoryResponse
     public function setMessage($message)
     {
         $this->message = $message;
+
         return $this;
     }
 
@@ -55,6 +57,7 @@ class ActiveDirectoryResponse
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -66,6 +69,7 @@ class ActiveDirectoryResponse
     public function setData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -77,6 +81,7 @@ class ActiveDirectoryResponse
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 }

@@ -6,6 +6,7 @@ namespace AuthBundle\Service;
  * Class BisDirResponse
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class BisDirResponse
@@ -43,6 +44,7 @@ class BisDirResponse
     public function setMessage($message)
     {
         $this->message = $message;
+
         return $this;
     }
 
@@ -54,6 +56,7 @@ class BisDirResponse
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -65,6 +68,7 @@ class BisDirResponse
     public function setData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -76,6 +80,7 @@ class BisDirResponse
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 }

@@ -1,11 +1,11 @@
 {
     "name": "enabel/password",
     "description": "A php application for Active Directory Manipulation",
-    "license": "GPL-2.0",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Damien Lagae",
-            "email": "damienlagae@gmail.com"
+            "email": "damien.lagae@enabel.be"
         }
     ],
     "type": "project",
@@ -30,7 +30,6 @@
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "doctrine/orm": "^2.5",
-        "enabel/twb-crud-maker-bundle": "^1.0",
         "fzaninotto/faker": "^1.7",
         "guzzlehttp/psr7": "^1.4",
         "jms/i18n-routing-bundle": "^3.0",
@@ -41,37 +40,38 @@
         "sensio/framework-extra-bundle": "^5.0",
         "stof/doctrine-extensions-bundle": "^1.3",
         "symfony/apache-pack": "^1.0",
-        "symfony/asset": "^4.0",
-        "symfony/console": "^4.0",
-        "symfony/dotenv": "^4.0",
-        "symfony/flex": "^1.0",
-        "symfony/form": "^4.0",
-        "symfony/framework-bundle": "^4.0",
-        "symfony/maker-bundle": "^1.2",
-        "symfony/monolog-bundle": "^3.1.0",
+        "symfony/asset": "4.2.*",
+        "symfony/console": "4.2.*",
+        "symfony/dotenv": "4.2.*",
+        "symfony/flex": "^1.1",
+        "symfony/form": "4.2.*",
+        "symfony/framework-bundle": "4.2.*",
+        "symfony/http-client": "4.3.*",
+        "symfony/monolog-bundle": "^3.1",
         "symfony/polyfill-apcu": "^1.0",
-        "symfony/profiler-pack": "^1.0",
-        "symfony/security-bundle": "^4.0",
-        "symfony/security-csrf": "^4.0",
+        "symfony/security-bundle": "4.2.*",
+        "symfony/security-csrf": "4.2.*",
         "symfony/swiftmailer-bundle": "^3.1",
-        "symfony/templating": "^4.0",
-        "symfony/translation": "^4.0",
-        "symfony/twig-bundle": "^4.0",
-        "symfony/validator": "^4.0",
-        "symfony/web-server-bundle": "^4.0",
-        "symfony/yaml": "^4.0",
-        "twig/twig": "^1.0||^2.0"
+        "symfony/templating": "4.2.*",
+        "symfony/translation": "4.2.*",
+        "symfony/twig-bundle": "4.2.*",
+        "symfony/validator": "4.2.*",
+        "symfony/yaml": "4.2.*"
     },
     "require-dev": {
+        "escapestudios/symfony2-coding-standard": "^3.5",
         "jakub-onderka/php-console-highlighter": "^0.4",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "phpmd/phpmd": "^2.6",
         "phpro/grumphp": "^0.15",
+        "sebastian/phpcpd": "^4.1",
         "sensiolabs/security-checker": "^5.0",
         "squizlabs/php_codesniffer": "^3.0",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
-        "symfony/phpunit-bridge": "^4.0"
+        "symfony/maker-bundle": "^1.2",
+        "symfony/profiler-pack": "*",
+        "symfony/test-pack": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -84,24 +84,36 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "serve":[
-            "docker-compose start",
-            "bin/console server:run"
+        "docker:serve": [
+            "docker-compose up -d",
+            "symfony serve"
         ],
-        "stop":[
-            "docker-compose stop"
+        "docker:stop": [
+            "docker-compose stop",
+            "symfony server:stop"
         ],
-        "db-init":[
-            "bin/console doctrine:database:drop --if-exists --force",
-            "bin/console doctrine:database:create",
-            "bin/console doctrine:migrations:migrate"
+        "docker:cleanup": [
+            "docker-compose rm"
         ],
-        "db-migrate":[
-            "bin/console doctrine:migrations:migrate"
+        "db:init": [
+            "./bin/console doctrine:database:drop --if-exists --force",
+            "./bin/console doctrine:database:create",
+            "./bin/console doctrine:migrations:migrate -q"
         ],
-        "test":[
-            "bin/phpunit"
+        "db:migrate": [
+            "./bin/console doctrine:migrations:migrate -q"
+        ],
+        "db:diff": [
+            "./bin/console doctrine:migrations:diff"
         ]
+    },
+    "scripts-descriptions": {
+        "docker:serve": "Start the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
+        "docker:stop": "Stop the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
+        "docker:cleanup": "Remove the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker",
+        "db:init": "Initialize the database in the mariadb docker instance",
+        "db:migrate": "Execute doctrine migrations in the mariadb docker instance",
+        "db:diff": "Check the database schema & create migration if needed"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -115,14 +127,10 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": true
-        },
-        "scripts-description":{
-            "serve": "Start docker & internal php server",
-            "stop": "Stop docker",
-            "db-init": "Create database & schema",
-            "db-migrate": "Execute the last doctrine migration",
-            "test": "Execute the phpunit test"
+            "allow-contrib": true,
+            "require": "4.3.*"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

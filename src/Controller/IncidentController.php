@@ -30,6 +30,10 @@ class IncidentController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function create(Request $request)
     {
@@ -53,6 +57,10 @@ class IncidentController extends AbstractController
 
     /**
      * @Route("/{id}", name="show", methods={"GET"})
+     *
+     * @param Incident $incident
+     *
+     * @return Response
      */
     public function show(Incident $incident)
     {
@@ -63,6 +71,11 @@ class IncidentController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     *
+     * @param Request  $request
+     * @param Incident $incident
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function edit(Request $request, Incident $incident)
     {
@@ -83,6 +96,11 @@ class IncidentController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     *
+     * @param Request  $request
+     * @param Incident $incident
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function delete(Request $request, Incident $incident)
     {

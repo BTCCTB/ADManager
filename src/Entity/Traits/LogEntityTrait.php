@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Trait LogEntityTrait
  *
  * @package App\Entity\Traits
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  *
  * @property \App\Entity\User|null $user
@@ -20,30 +21,35 @@ trait LogEntityTrait
 {
     /**
      * @var DateTime
+     *
      * @ORM\Column(name="time", type="datetime", nullable=false)
      */
     protected $time;
 
     /**
      * @var DateTime
+     *
      * @ORM\Column(name="`date`", type="date", nullable=false)
      */
     protected $date;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="agent", type="text", nullable=false)
      */
     protected $agent;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="http_host", type="string", length=255, nullable=false)
      */
     protected $httpHost;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="client_ip", type="string", length=255, nullable=false)
      */
     private $clientIp;

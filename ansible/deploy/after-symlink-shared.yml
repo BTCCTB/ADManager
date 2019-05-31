@@ -13,7 +13,7 @@
 - name: Set up infrastructure-related parameters
   template:
     src: '{{ playbook_dir }}/templates/.env.j2'
-    dest: '{{ ansistrano_release_path.stdout }}/.env'
+    dest: '{{ ansistrano_release_path.stdout }}/.env.{{ application_env }}.local'
 
 - name: Send notification message via Slack all options
   slack:
@@ -33,6 +33,12 @@
     optimize_autoloader: yes
     working_dir: '{{ ansistrano_release_path.stdout }}'
     executable: '{{ php_path }}'
+
+- name: Compile .env files for staging/production use
+  command: "{{ php_path }} {{ composer_path }} dump-env {{ application_env }}"
+  args:
+    chdir: '{{ ansistrano_release_path.stdout }}'
+  when: application_env != 'dev'
 
 - name: Send notification message via Slack all options
   slack:

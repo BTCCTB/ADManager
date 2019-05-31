@@ -6,15 +6,17 @@ use App\Entity\Traits\Blameable;
 use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * Application
  *
  * @ORM\Table(name="application")
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
+ *
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  */
-class Application implements EntityInterface
+class Application implements EntityInterface, Translatable
 {
     // Traits
     use Timestampable;
@@ -39,23 +41,20 @@ class Application implements EntityInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Translatable
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="link", type="string", length=255, unique=true)
+     *
+     * @Gedmo\Translatable
      */
     private $link;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="link_fr", type="string", length=255, nullable=true, unique=true)
-     */
-    private $linkFr;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="link_nl", type="string", length=255, nullable=true, unique=true)
-     */
-    private $linkNl;
 
     /**
      * @var bool
@@ -63,6 +62,24 @@ class Application implements EntityInterface
      * @ORM\Column(name="enable", type="boolean", options={"default"=1})
      */
     private $enable;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $icon;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="applications")
+     */
+    private $category;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     * and it is not necessary because globally locale can be set in listener
+     */
+    private $locale;
 
     /**
      * Get id
@@ -98,16 +115,14 @@ class Application implements EntityInterface
         return $this->name;
     }
 
-    /**
-     * Set link
-     *
-     * @param string $link
-     *
-     * @return Application
-     */
-    public function setLink($link)
+    public function getDescription()
     {
-        $this->link = $link;
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -123,51 +138,17 @@ class Application implements EntityInterface
     }
 
     /**
-     * Set linkFr
+     * Set link
      *
-     * @param string $linkFr
+     * @param String $link The link
      *
-     * @return Application
+     * @return $this
      */
-    public function setLinkFr($linkFr)
+    public function setLink($link)
     {
-        $this->linkFr = $linkFr;
+        $this->link = $link;
 
         return $this;
-    }
-
-    /**
-     * Get linkFr
-     *
-     * @return string
-     */
-    public function getLinkFr()
-    {
-        return $this->linkFr;
-    }
-
-    /**
-     * Set linkNl
-     *
-     * @param string $linkNl
-     *
-     * @return Application
-     */
-    public function setLinkNl($linkNl)
-    {
-        $this->linkNl = $linkNl;
-
-        return $this;
-    }
-
-    /**
-     * Get linkNl
-     *
-     * @return string
-     */
-    public function getLinkNl()
-    {
-        return $this->linkNl;
     }
 
     /**
@@ -192,5 +173,34 @@ class Application implements EntityInterface
     public function isEnable()
     {
         return $this->enable;
+    }
+
+    public function getCategory():  ? Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(? Category $category) : self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getIcon() :  ? string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(string $icon) : self
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

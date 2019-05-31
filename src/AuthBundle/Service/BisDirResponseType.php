@@ -6,6 +6,7 @@ namespace AuthBundle\Service;
  * Class BisDirResponseType
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class BisDirResponseType

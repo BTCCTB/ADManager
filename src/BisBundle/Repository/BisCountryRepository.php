@@ -19,6 +19,7 @@ class BisCountryRepository extends EntityRepository
      * @param string $isoCode3 The iso code 3 letter of the country
      *
      * @return mixed
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getIso2Code($isoCode3)
@@ -37,6 +38,7 @@ class BisCountryRepository extends EntityRepository
         if (null !== $country) {
             return $country->getCouIsocode2letters();
         }
+
         return false;
     }
 
@@ -46,6 +48,7 @@ class BisCountryRepository extends EntityRepository
      * @param string $isoCode2 The iso code 2 letter of the country
      *
      * @return mixed
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getIso3Code($isoCode2)
@@ -64,6 +67,7 @@ class BisCountryRepository extends EntityRepository
         if (null !== $country) {
             return $country->getCouIsocode3letters();
         }
+
         return false;
     }
 }

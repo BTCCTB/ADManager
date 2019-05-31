@@ -32,7 +32,7 @@ class AdSyncPhoneCommand extends Command
     /**
      * AdSyncPhoneCommand constructor.
      *
-     * @param ActiveDirectory             $activeDirectory Active directory Service
+     * @param ActiveDirectory             $activeDirectory             Active directory Service
      * @param ActiveDirectoryNotification $activeDirectoryNotification
      * @param BisPersonView               $bisPersonView
      */
@@ -68,6 +68,7 @@ class AdSyncPhoneCommand extends Command
      * @param OutputInterface $output
      *
      * @return void null or 0 if everything went fine, or an error code
+     *
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
@@ -84,7 +85,7 @@ class AdSyncPhoneCommand extends Command
         foreach ($bisPersons as $bisPerson) {
             if (!empty($bisPerson->getEmail())) {
                 $adAccount = $this->activeDirectory->getUser($bisPerson->getEmail());
-                if ($adAccount !== null) {
+                if (null !== $adAccount) {
                     $logs[] = $this->activeDirectory->syncPhone($adAccount, $bisPerson);
                 }
             }

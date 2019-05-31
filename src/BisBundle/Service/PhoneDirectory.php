@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
  * Class PhoneDirectory
  *
  * @package BisBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class PhoneDirectory

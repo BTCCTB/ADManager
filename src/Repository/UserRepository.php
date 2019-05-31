@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
  * Class UserRepository
  *
  * @package App\Repository
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class UserRepository extends EntityRepository
@@ -18,6 +19,7 @@ class UserRepository extends EntityRepository
      * @param String $newEmail
      *
      * @return null|User
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -25,7 +27,7 @@ class UserRepository extends EntityRepository
     {
         $user = $this->findOneBy(['accountName' => $accountName]);
 
-        if ($user !== null) {
+        if (null !== $user) {
             $user->setEmail($newEmail);
             $this->_em->persist($user);
             $this->_em->flush();

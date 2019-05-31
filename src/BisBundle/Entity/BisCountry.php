@@ -10,9 +10,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Class BisCountry
  *
  * @package BisBundle\Entity
+ *
  * @ORM\Entity(repositoryClass="BisBundle\Repository\BisCountryRepository")
  * @ORM\Table(name="bis_country")
+ *
  * @UniqueEntity(fields={"private $cou_isocode_int"})
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  *
  * @SuppressWarnings(PHPMD.TooManyFields)
@@ -21,14 +24,16 @@ class BisCountry
 {
 
     /**
-     * @var integer
+     * @var int
+     *
      * @ORM\Column(name="cou_id", type="bigint")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $couId;
 
     /**
-     * @var integer
+     * @var int
+     *
      * @ORM\Column(name="cou_isocode_int", type="integer")
      */
     private $couIsocodeInt;
@@ -150,6 +155,7 @@ class BisCountry
     public function setCouId($couId)
     {
         $this->couId = $couId;
+
         return $this;
     }
 
@@ -161,6 +167,7 @@ class BisCountry
     public function setCouIsocodeInt($couIsocodeInt)
     {
         $this->couIsocodeInt = $couIsocodeInt;
+
         return $this;
     }
 
@@ -172,6 +179,7 @@ class BisCountry
     public function setCouIsocode2letters($couIsocode2letters)
     {
         $this->couIsocode2letters = $couIsocode2letters;
+
         return $this;
     }
 
@@ -183,6 +191,7 @@ class BisCountry
     public function setCouIsocode3letters($couIsocode3letters)
     {
         $this->couIsocode3letters = $couIsocode3letters;
+
         return $this;
     }
 
@@ -194,6 +203,7 @@ class BisCountry
     public function setCouName($couName)
     {
         $this->couName = $couName;
+
         return $this;
     }
 
@@ -205,6 +215,7 @@ class BisCountry
     public function setCouNavisioncode($couNavisioncode)
     {
         $this->couNavisioncode = $couNavisioncode;
+
         return $this;
     }
 
@@ -216,6 +227,7 @@ class BisCountry
     public function setCouLastupdated($couLastupdated)
     {
         $this->couLastupdated = $couLastupdated;
+
         return $this;
     }
 
@@ -227,6 +239,7 @@ class BisCountry
     public function setCouIsiban($couIsiban)
     {
         $this->couIsiban = $couIsiban;
+
         return $this;
     }
 
@@ -238,6 +251,7 @@ class BisCountry
     public function setCouMaskiban($couMaskiban)
     {
         $this->couMaskiban = $couMaskiban;
+
         return $this;
     }
 
@@ -249,6 +263,7 @@ class BisCountry
     public function setCouIsbic($couIsbic)
     {
         $this->couIsbic = $couIsbic;
+
         return $this;
     }
 
@@ -260,6 +275,7 @@ class BisCountry
     public function setCouMask($couMask)
     {
         $this->couMask = $couMask;
+
         return $this;
     }
 
@@ -271,6 +287,7 @@ class BisCountry
     public function setCouDevise($couDevise)
     {
         $this->couDevise = $couDevise;
+
         return $this;
     }
 
@@ -282,6 +299,7 @@ class BisCountry
     public function setCouMaskpostalcode($couMaskpostalcode)
     {
         $this->couMaskpostalcode = $couMaskpostalcode;
+
         return $this;
     }
 
@@ -293,6 +311,7 @@ class BisCountry
     public function setCouCapital($couCapital)
     {
         $this->couCapital = $couCapital;
+
         return $this;
     }
 
@@ -304,6 +323,7 @@ class BisCountry
     public function setCouLatitude($couLatitude)
     {
         $this->couLatitude = $couLatitude;
+
         return $this;
     }
 
@@ -315,6 +335,7 @@ class BisCountry
     public function setCouLongitude($couLongitude)
     {
         $this->couLongitude = $couLongitude;
+
         return $this;
     }
 
@@ -326,6 +347,7 @@ class BisCountry
     public function setCouCallingCode($couCallingCode)
     {
         $this->couCallingCode = $couCallingCode;
+
         return $this;
     }
 
@@ -337,6 +359,7 @@ class BisCountry
     public function setCouRegion($couRegion)
     {
         $this->couRegion = $couRegion;
+
         return $this;
     }
 
@@ -348,6 +371,7 @@ class BisCountry
     public function setCouSubregion($couSubregion)
     {
         $this->couSubregion = $couSubregion;
+
         return $this;
     }
 
@@ -359,6 +383,7 @@ class BisCountry
     public function setCouPartner($couPartner)
     {
         $this->couPartner = $couPartner;
+
         return $this;
     }
 

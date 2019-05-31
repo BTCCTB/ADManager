@@ -22,6 +22,7 @@ class ApplicationRepository extends ServiceEntityRepository
 
     /**
      * @return Application[]
+     *
      * @throws \Doctrine\ORM\Query\QueryException
      */
     public function findAllApplications()

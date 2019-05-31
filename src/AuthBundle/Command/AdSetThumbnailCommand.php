@@ -3,14 +3,15 @@
 namespace AuthBundle\Command;
 
 use AuthBundle\Service\ActiveDirectory;
-use AuthBundle\Service\BisDir;
+use AuthBundle\Service\SuccessFactorApi;
 use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdSyncLDAPCommand extends Command
+class AdSetThumbnailCommand extends Command
 {
     /**
      * @var ActiveDirectory
@@ -18,28 +19,27 @@ class AdSyncLDAPCommand extends Command
     private $activeDirectory;
 
     /**
-     * @var BisDir
-     */
-    private $bisDir;
-
-    /**
      * @var BisPersonView
      */
     private $bisPersonView;
+    /**
+     * @var SuccessFactorApi
+     */
+    private $SFApi;
 
     /**
-     * AdResetAccountCommand constructor.
+     * AdFixAttributesCommand constructor.
      *
-     * @param ActiveDirectory $activeDirectory Active directory Service
+     * @param ActiveDirectory  $activeDirectory Active directory Service
      *
-     * @param BisPersonView   $bisPersonView
-     * @param BisDir          $bisDir
+     * @param BisPersonView    $bisPersonView
+     * @param SuccessFactorApi $SFApi
      */
-    public function __construct(ActiveDirectory $activeDirectory, BisPersonView $bisPersonView, BisDir $bisDir)
+    public function __construct(ActiveDirectory $activeDirectory, BisPersonView $bisPersonView, SuccessFactorApi $SFApi)
     {
         $this->activeDirectory = $activeDirectory;
-        $this->bisDir = $bisDir;
         $this->bisPersonView = $bisPersonView;
+        $this->SFApi = $SFApi;
         parent::__construct();
     }
 
@@ -50,8 +50,8 @@ class AdSyncLDAPCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:sync:ldap')
-            ->setDescription('Sync the AD account with LDAP account')
+        $this->setName('ad:set:thumbnail')
+            ->setDescription('Get picture from GO4HR API & set this as AD thumbnail')
             ->addArgument('email', InputArgument::REQUIRED, 'User email [@enabel.be]?');
     }
 
@@ -74,20 +74,32 @@ class AdSyncLDAPCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $email = $input->getArgument('email');
-        if (!empty($email)) {
-            $adAccount = $this->activeDirectory
-                ->getUser($email);
-            $output->writeln('User: ' . $adAccount->getEmail() . ' - ' . $adAccount->getDisplayName());
-            $responses = $this->bisDir
-                ->synchronize($adAccount);
+        $table = new Table($output);
+        $table->setHeaders([
+            'Account',
+            'ID',
+            'API Status',
+            'AD Status',
+        ]);
+        $data = [];
+        $status = null;
 
-            foreach ($responses as $response) {
-                $output->writeln('Message: ' . $response->getMessage());
-                $output->writeln('Status: ' . $response->getStatus());
-                $output->writeln('Type: ' . $response->getType());
-                $output->writeln('Data: ' . json_encode($response->getData()));
-            }
+        $adAccount = $this->activeDirectory->getUser($input->getArgument('email'));
+        $userID = $adAccount->getEmployeeId();
+        $thumbnailFromSF = $this->SFApi->getUserPicture($userID);
+        if (null !== $thumbnailFromSF) {
+            $adAccount->setThumbnail($thumbnailFromSF);
+            $status = $adAccount->save();
         }
+
+        $data[] = [
+            $input->getArgument('email'),
+            $userID,
+            $thumbnailFromSF !== null,
+            $status,
+        ];
+
+        $table->setRows($data);
+        $table->render();
     }
 }

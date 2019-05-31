@@ -11,6 +11,7 @@ use BisBundle\Entity\BisPersonView;
  * Class ActiveDirectoryHelper
  *
  * @package AuthBundle\Service
+ *
  * @author  Damien Lagae <damienlagae@gmail.com>
  */
 class ActiveDirectoryHelper
@@ -21,9 +22,10 @@ class ActiveDirectoryHelper
      * @param BisPersonView      $bisPersonView BIS person data
      * @param User               $user          AD user data
      *
-     * @param OrganizationalUnit $unit The user OrganizationalUnit
+     * @param OrganizationalUnit $unit          The user OrganizationalUnit
      *
      * @return User The AD user account.
+     *
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public static function bisPersonToAdUser(BisPersonView $bisPersonView, User $user, OrganizationalUnit $unit): User
@@ -88,6 +90,7 @@ class ActiveDirectoryHelper
      * @param string $password
      *
      * @return bool|string
+     *
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public static function checkPasswordComplexity(string $password)
@@ -166,7 +169,7 @@ class ActiveDirectoryHelper
     {
         $organizationalUnit = new DistinguishedName();
         $organizationalUnit->setBase('dc=ad4dev,dc=local');
-        if ($countryIso3 === 'BEL') {
+        if ('BEL' === $countryIso3) {
             $organizationalUnit->addOu('Users');
             $organizationalUnit->addOu('Enabel-Belgium');
         } else {
@@ -266,10 +269,11 @@ class ActiveDirectoryHelper
     /**
      * Convert a BIS Person data to update a user of Active Directory
      *
-     * @param BisPersonView      $bisPersonView BIS person data
-     * @param User               $user          AD user data
+     * @param BisPersonView $bisPersonView BIS person data
+     * @param User          $user          AD user data
      *
      * @return array The AD user account and data diff
+     *
      * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
