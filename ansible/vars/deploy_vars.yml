@@ -37,3 +37,8 @@ slack_channel: "#dev"
 
 # Loco vars
 loco_api_key: "{{ vault_loco_api_key }}"
+
+# SuccessFactor vars
+sf_api_user: "{{ vault_sf_api_user }}"
+sf_api_password: "{{ vault_sf_api_password }}"
+sf_api_company: "C0000960484P"

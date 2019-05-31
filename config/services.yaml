@@ -17,6 +17,9 @@ parameters:
     env(BIS_DIR_BASE_DN): ''
     env(BIS_DIR_ADMIN_USERNAME): ''
     env(BIS_DIR_ADMIN_PASSWORD): ''
+    env(SF_API_USER): ''
+    env(SF_API_PASSWORD): ''
+    env(SF_API_COMPANY): ''
 
 services:
     # default configuration for services in *this* file
@@ -133,4 +136,8 @@ services:
         factory: 'doctrine.orm.entity_manager:getRepository'
         arguments: ['App\Entity\User']
 
+    App\Service\SuccessFactorApi:
+        autowire: true
+        arguments: ['%env(resolve:SF_API_USER)%', '%env(resolve:SF_API_PASSWORD)%', '%env(resolve:SF_API_COMPANY)%']
+        public: true
 

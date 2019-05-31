@@ -34,18 +34,20 @@
                             {#<img src="https://dummyimage.com/200x200/fff/000.png&text={{ application.name }}" style="width: 60%;" class="card-img-top" >#}
                             <div class="card-body">
                                 <h5 class="card-title">{{ application.name }}</h5>
-                                {#<p class="card-text">I am a {{ application.category }}</p>#}
-                                {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}
-                                    {% if application.linkFr is not empty %}
-                                        <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.fr.label'|trans|upper }}</a>
-                                    {% endif %}
-                                    {% if application.linkNl is not empty %}
-                                        <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.nl.label'|trans|upper }}</a>
-                                    {% endif %}
-                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.en.label'|trans|upper }}</a>
-                                {% else %}
-                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> {{ 'application.btn.link.label'|trans|upper }}</a>
+                                {%  if application.description is not empty %}
+                                <p class="card-text">{{ application.description }}</p>
                                 {% endif %}
+{#                                {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}#}
+{#                                    {% if application.linkFr is not empty %}#}
+{#                                        <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.fr.label'|trans|upper }}</a>#}
+{#                                    {% endif %}#}
+{#                                    {% if application.linkNl is not empty %}#}
+{#                                        <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.nl.label'|trans|upper }}</a>#}
+{#                                    {% endif %}#}
+{#                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.en.label'|trans|upper }}</a>#}
+{#                                {% else %}#}
+                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> {{ 'application.btn.link.label'|trans|upper }}</a>
+{#                                {% endif %}#}
                             </div>
                         </div>
                 {% endfor %}
