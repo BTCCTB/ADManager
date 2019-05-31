@@ -2,7 +2,8 @@
 .env.local.php
 .env.*.local
 /public/bundles/
-/var/
+/var/*
+!/var/log/.gitkeep
 /vendor/
 ###< symfony/framework-bundle ###
 
