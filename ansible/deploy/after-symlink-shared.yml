@@ -31,6 +31,7 @@
     command: install
     arguments: --classmap-authoritative
     optimize_autoloader: yes
+    no_dev: no
     working_dir: '{{ ansistrano_release_path.stdout }}'
     executable: '{{ php_path }}'
 
