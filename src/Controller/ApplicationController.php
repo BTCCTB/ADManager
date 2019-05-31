@@ -45,7 +45,41 @@ class ApplicationController extends AbstractController
      *
      * @throws \Exception
      */
-    public function myApps(CategoryRepository $categoryRepository, BisPersonView $bisPersonView): Response
+    public function myApps(ApplicationRepository $applicationRepository, BisPersonView $bisPersonView): Response
+    {
+        $applications = $applicationRepository->findAllApplications();
+
+        $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
+
+        $now = new \DateTime('now');
+        $passwordLastSet = new \DateTime();
+        $passwordLastSet->setTimestamp($user->getPasswordLastSetTimestamp());
+
+        $passwordAges = $passwordLastSet->diff($now)->format('%a');
+
+        return $this->render(
+            'Application/myApps.html.twig',
+            [
+                'applications' => $applications,
+                'passwordAges' => $passwordAges,
+                'user' => $user,
+                'starters' => $bisPersonView->getStarters(),
+                'finishers' => $bisPersonView->getFinishers(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/category/apps", name="application-by-category")
+     *
+     * @param CategoryRepository $categoryRepository
+     * @param BisPersonView      $bisPersonView
+     *
+     * @return Response
+     *
+     * @throws \Exception
+     */
+    public function appsByCategory(CategoryRepository $categoryRepository, BisPersonView $bisPersonView): Response
     {
         $categories = $categoryRepository->findAll();
 
@@ -58,7 +92,7 @@ class ApplicationController extends AbstractController
         $passwordAges = $passwordLastSet->diff($now)->format('%a');
 
         return $this->render(
-            'Application/myApps.html.twig',
+            'Application/appsByCategory.html.twig',
             [
                 'categories' => $categories,
                 'passwordAges' => $passwordAges,

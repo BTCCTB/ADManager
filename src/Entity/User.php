@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Adldap\Models\User as AdUser;
-use App\Entity\Traits\TimestampableTrait;
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements EntityInterface, UserInterface, EquatableInterface
 {
     // Traits
-    use TimestampableTrait;
+    use Timestampable;
 
     /**
      * @ORM\Id

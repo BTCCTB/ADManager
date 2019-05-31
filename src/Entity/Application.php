@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\BlameableTrait;
-use App\Entity\Traits\TimestampableTrait;
+use App\Entity\Traits\Blameable;
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
@@ -19,8 +19,8 @@ use Gedmo\Translatable\Translatable;
 class Application implements EntityInterface, Translatable
 {
     // Traits
-    use TimestampableTrait;
-    use BlameableTrait;
+    use Timestampable;
+    use Blameable;
 
     /**
      * @var int

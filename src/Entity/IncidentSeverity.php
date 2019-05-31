@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\BlameableTrait;
-use App\Entity\Traits\TimestampableTrait;
+use App\Entity\Traits\Blameable;
+use App\Entity\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class IncidentSeverity implements EntityInterface
 {
     // Traits
-    use BlameableTrait;
-    use TimestampableTrait;
+    use Blameable;
+    use Timestampable;
 
     /**
      * @ORM\Id

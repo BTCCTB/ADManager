@@ -84,39 +84,33 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "docker:build": [
-            "docker-compose build"
-        ],
         "docker:serve": [
-            "docker-compose up -d"
+            "docker-compose up -d",
+            "symfony serve"
         ],
         "docker:stop": [
-            "docker-compose stop"
+            "docker-compose stop",
+            "symfony server:stop"
         ],
         "docker:cleanup": [
             "docker-compose rm"
         ],
         "db:init": [
-            "docker-compose run php bin/console doctrine:database:drop --if-exists --force",
-            "docker-compose run php bin/console doctrine:database:create",
-            "docker-compose run php bin/console doctrine:migrations:migrate"
+            "./bin/console doctrine:database:drop --if-exists --force",
+            "./bin/console doctrine:database:create",
+            "./bin/console doctrine:migrations:migrate -q"
         ],
         "db:migrate": [
-            "docker-compose run php bin/console doctrine:migrations:migrate"
+            "./bin/console doctrine:migrations:migrate -q"
         ],
         "db:diff": [
-            "docker-compose run php bin/console doctrine:migrations:diff"
-        ],
-        "docker:sf:console": [
-            "docker-compose run php bin/console -n"
+            "./bin/console doctrine:migrations:diff"
         ]
     },
     "scripts-descriptions": {
-        "docker:build": "Build the full stack [Apache/PHP/MariaDB/SSO/phpmyadmin/maildev] instance with docker",
-        "docker:serve": "Start the full stack [Apache/PHP/MariaDB/SSO/phpmyadmin/maildev] instance with docker",
-        "docker:stop": "Stop the full stack [Apache/PHP/MariaDB/SSO/phpmyadmin/maildev] instance with docker",
-        "docker:cleanup": "Remove the full stack [Apache/PHP/MariaDB/SSO/phpmyadmin/maildev] instance with docker",
-        "docker:sf:console": "Execute the bin/console from Symfony in the php docker instance",
+        "docker:serve": "Start the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
+        "docker:stop": "Stop the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
+        "docker:cleanup": "Remove the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker",
         "db:init": "Initialize the database in the mariadb docker instance",
         "db:migrate": "Execute doctrine migrations in the mariadb docker instance",
         "db:diff": "Check the database schema & create migration if needed"

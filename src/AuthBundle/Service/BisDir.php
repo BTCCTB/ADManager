@@ -74,9 +74,9 @@ class BisDir
         );
 
         $adldap = new Adldap();
-        $adldap->addProvider($config, 'ldap');
+        $adldap->addProvider($config);
 
-        $this->bisDir = $adldap->connect('ldap');
+        $this->bisDir = $adldap;
         $this->baseDn = $baseDn;
         $this->passwordEncoder = $passwordEncoder;
     }
@@ -90,18 +90,10 @@ class BisDir
      */
     public function getUser(string $email)
     {
-        $user = $this->bisDir->search()->findBy('uid', $email);
-        $userEnabel = $this->bisDir->search()->findBy('uid', str_replace('@btcctb.org', '@enabel.be', $email));
-        $userBtc = $this->bisDir->search()->findBy('uid', str_replace('@enabel.be', '@btcctb.org', $email));
+        $user = $this->bisDir->connect()->search()->findBy('uid', $email);
 
         if ($user instanceof Entry) {
             return $user;
-        }
-        if ($userBtc instanceof Entry) {
-            return $userBtc;
-        }
-        if ($userEnabel instanceof Entry) {
-            return $userEnabel;
         }
 
         return null;
@@ -115,6 +107,7 @@ class BisDir
     public function getAllUsers(): array
     {
         return $this->bisDir
+            ->connect()
             ->search()
             ->whereEquals('objectClass', 'inetOrgPerson')
             ->paginate(10000)
@@ -130,7 +123,7 @@ class BisDir
      */
     public function createEntry(User $adAccount): BisDirResponse
     {
-        $entry = $this->bisDir->make()->entry();
+        $entry = $this->bisDir->connect()->make()->entry();
         $entry = BisDirHelper::adAccountToLdapEntry($adAccount, $entry);
 
         if ($entry->save()) {
@@ -159,7 +152,7 @@ class BisDir
      */
     public function createEntryFromBis(BisPersonView $bisPersonView): BisDirResponse
     {
-        $entry = $this->bisDir->make()->entry();
+        $entry = $this->bisDir->connect()->make()->entry();
         $entry = BisDirHelper::bisPersonViewToLdapEntry($bisPersonView, $entry);
 
         if ($entry->save()) {
@@ -311,7 +304,7 @@ class BisDir
         $ldapUser = $this->getUser($adAccount->getEmail());
 
         if (null !== $ldapUser) {
-            $entry = $this->bisDir->make()->entry();
+            $entry = $this->bisDir->connect()->make()->entry();
             $entry = BisDirHelper::adAccountToLdapEntry($adAccount, $entry);
             $diffData = [];
             foreach ($attributes as $attribute) {
@@ -388,7 +381,7 @@ class BisDir
         $ldapUser = $this->getUser($bisPersonView->getEmail());
 
         if (null !== $ldapUser) {
-            $entry = $this->bisDir->make()->entry();
+            $entry = $this->bisDir->connect()->make()->entry();
             $entry = BisDirHelper::bisPersonViewToLdapEntry($bisPersonView, $entry);
             $diffData = [];
             foreach ($attributes as $attribute) {

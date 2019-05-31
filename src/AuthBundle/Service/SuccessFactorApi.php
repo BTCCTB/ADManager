@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace AuthBundle\Service;
 
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -11,7 +11,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 /**
  * Class SuccessFactorApi
  *
- * @package App\Service
+ * @package AuthBundle\Service
  *
  * @author  Damien Lagae <damien.lagae@enabel.be>
  */

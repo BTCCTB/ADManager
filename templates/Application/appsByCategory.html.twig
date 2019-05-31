@@ -23,9 +23,13 @@
         <div class="col-lg-12 col-xs-12">
         {% endif %}
             <div class="row">
+                {% for category in categories %}
                 <div class="col-lg-12">
-                    <div class="card-columns">
-                {% for application in applications %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                        <h4>{{ category.name }}</h4>
+                        <div class="card-columns">
+                {% for application in category.applications %}
                         <div class="card text-center">
                             {#<img src="https://dummyimage.com/200x200/fff/000.png&text={{ application.name }}" style="width: 60%;" class="card-img-top" >#}
                             <div class="card-body">
@@ -47,8 +51,11 @@
                             </div>
                         </div>
                 {% endfor %}
+                        </div>
                     </div>
-                </div>
+                    </div>
+            </div>
+                {% endfor %}
             </div>
         </div>
         {% if starters is not empty %}

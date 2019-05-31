@@ -136,7 +136,7 @@ services:
         factory: 'doctrine.orm.entity_manager:getRepository'
         arguments: ['App\Entity\User']
 
-    App\Service\SuccessFactorApi:
+    AuthBundle\Service\SuccessFactorApi:
         autowire: true
         arguments: ['%env(resolve:SF_API_USER)%', '%env(resolve:SF_API_PASSWORD)%', '%env(resolve:SF_API_COMPANY)%']
         public: true

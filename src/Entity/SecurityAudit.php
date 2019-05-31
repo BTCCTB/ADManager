@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SecurityAudit implements EntityInterface
 {
     // Traits
-    use TimestampableTrait;
+    use Timestampable;
 
     /**
      * @ORM\Id

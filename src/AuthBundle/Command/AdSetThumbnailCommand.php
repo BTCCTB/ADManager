@@ -2,8 +2,8 @@
 
 namespace AuthBundle\Command;
 
-use App\Service\SuccessFactorApi;
 use AuthBundle\Service\ActiveDirectory;
+use AuthBundle\Service\SuccessFactorApi;
 use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;

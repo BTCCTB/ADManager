@@ -1,14 +1,5 @@
 version: '3'
 services:
-  apache:
-    image: enabel/docker-httpd
-    ports:
-      - 8000:8080
-    volumes:
-      - .:/var/www/html
-    depends_on:
-      - php
-
   mariadb:
     image: mariadb
     volumes:
@@ -20,16 +11,6 @@ services:
       MYSQL_PASSWORD: db_password
     ports:
       - 3306:3306
-
-  php:
-    image: enabel/docker-php
-    volumes:
-      - .:/var/www/html
-    environment:
-      - maildev_host=maildev
-    depends_on:
-      - maildev
-      - mariadb
 
   bis:
     image: mariadb

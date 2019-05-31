@@ -95,9 +95,9 @@ class ActiveDirectory
         );
 
         $adldap = new Adldap();
-        $adldap->addProvider($config, 'AD');
+        $adldap->addProvider($config);
 
-        $this->activeDirectory = $adldap->connect('AD');
+        $this->activeDirectory = $adldap;
         $this->em = $em;
         $this->baseDn = $baseDn;
         $this->accountService = $accountService;
@@ -138,7 +138,7 @@ class ActiveDirectory
     {
         $user = $this->getUser($email);
 
-        return $this->activeDirectory->auth()->attempt($user->getUserPrincipalName(), $password);
+        return $this->activeDirectory->connect()->auth()->attempt($user->getUserPrincipalName(), $password);
     }
 
     /**
@@ -176,7 +176,7 @@ class ActiveDirectory
     public function checkUserExistByUsername($username)
     {
 
-        $user = $this->activeDirectory->search()->findBy('userprincipalname', $username);
+        $user = $this->activeDirectory->connect()->search()->findBy('userprincipalname', $username);
 
         if ($user instanceof User) {
             return $user;
@@ -195,17 +195,10 @@ class ActiveDirectory
     public function checkUserExistByEmail($email)
     {
 
-        $user = $this->activeDirectory->search()->findBy('mail', $email);
-        $userEnabel = $this->activeDirectory->search()->findBy('mail', str_replace('@btcctb.org', '@enabel.be', $email));
-        $userBtc = $this->activeDirectory->search()->findBy('mail', str_replace('@enabel.be', '@btcctb.org', $email));
+        $user = $this->activeDirectory->connect()->search()->findBy('mail', $email);
+
         if ($user instanceof User) {
             return $user;
-        }
-        if ($userEnabel instanceof User) {
-            return $userEnabel;
-        }
-        if ($userBtc instanceof User) {
-            return $userBtc;
         }
 
         return false;
@@ -221,7 +214,7 @@ class ActiveDirectory
     public function checkUserExistByEmployeeID($employeeID)
     {
 
-        $user = $this->activeDirectory->search()->findBy('employeeid', $employeeID);
+        $user = $this->activeDirectory->connect()->search()->findBy('employeeid', $employeeID);
 
         if ($user instanceof User) {
             return $user;
@@ -262,7 +255,7 @@ class ActiveDirectory
         $fieldDn->addDc('ad4dev')->addDc('local');
         $fieldDn->addOu('Enabel-World');
 
-        return $this->activeDirectory
+        return $this->activeDirectory->connect()
             ->search()
             ->users()
             ->whereEquals('objectClass', 'user')
@@ -286,7 +279,7 @@ class ActiveDirectory
         $hqDn->addDc('ad4dev')->addDc('local');
         $hqDn->addOu('Users')->addOu('Enabel-Brussels');
 
-        return $this->activeDirectory
+        return $this->activeDirectory->connect()
             ->search()
             ->users()
             ->whereEquals('objectClass', 'user')
@@ -394,7 +387,7 @@ class ActiveDirectory
             $name = 'Users';
         }
 
-        $organizationalUnit = $this->activeDirectory->search()->ous()->findBy('name', $name);
+        $organizationalUnit = $this->activeDirectory->connect()->search()->ous()->findBy('name', $name);
 
         if ($organizationalUnit instanceof OrganizationalUnit) {
             return $organizationalUnit;
@@ -421,7 +414,7 @@ class ActiveDirectory
         /**
          * @var User[] $members
          */
-        $members = $this->activeDirectory->search()->users()->setDn($ou->getDn())->paginate(10000)->getResults();
+        $members = $this->activeDirectory->connect()->search()->users()->setDn($ou->getDn())->paginate(10000)->getResults();
         foreach ($members as $member) {
             if ($user->getDn() === $member->getDn()) {
                 return true;
@@ -438,7 +431,7 @@ class ActiveDirectory
      */
     public function createCountryOu($name)
     {
-        $ou = $this->activeDirectory->make()->ou();
+        $ou = $this->activeDirectory->connect()->make()->ou();
         $ou->setName($name);
 
         $dn = new DistinguishedName();
@@ -1398,7 +1391,7 @@ class ActiveDirectory
 
     public function createEmptyUser()
     {
-        return $this->activeDirectory->make()->user();
+        return $this->activeDirectory->connect()->make()->user();
     }
 
     /**
@@ -1496,7 +1489,7 @@ class ActiveDirectory
     private function createUser(BisPersonView $bisUser): ActiveDirectoryResponse
     {
         // Init a new Active Directory user
-        $user = $this->activeDirectory->make()->user();
+        $user = $this->activeDirectory->connect()->make()->user();
 
         // Get the correct organizational unit
         $organizationalUnit = $this->checkOuExistByName($bisUser->getCountry());
