@@ -13,13 +13,19 @@ doctrine:
             default:
                 driver: 'pdo_mysql'
                 server_version: '5.5'
-                charset: utf8mb4
+                charset: utf8
                 url: '%env(resolve:DATABASE_URL)%'
+                default_table_options:
+                    charset: utf8
+                    collate: utf8_unicode_ci
             bis:
                 driver: 'pdo_mysql'
                 server_version: '5.5'
-                charset: utf8mb4
+                charset: utf8
                 url: '%env(resolve:DATABASE_BIS_URL)%'
+                default_table_options:
+                    charset: utf8
+                    collate: utf8_unicode_ci
                 schema_filter: ~^(?!view_)~
                 mapping_types:
                      enum: string
@@ -36,6 +42,18 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity'
                         prefix: 'App\Entity'
                         alias: App
+                    gedmo_translatable:
+                        type: annotation
+                        prefix: Gedmo\Translatable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                        alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_translator:
+                        type: annotation
+                        prefix: Gedmo\Translator\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+                        alias: GedmoTranslator # (optional) it will default to the name set for the mapping
+                        is_bundle: false
                 dql:
                     datetime_functions:
                         year: DoctrineExtensions\Query\Mysql\Year
