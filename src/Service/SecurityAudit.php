@@ -33,7 +33,7 @@ class SecurityAudit
             ->setObjectId($account->getObjectId())
             ->setObjectClass($account->getObjectClass())
             ->setData([
-                'message' => $authUser->getIdentity() . ' ask a new password for ' . $account->getIdentity() . '',
+                'message' => $authUser->getIdentity() . ' asked a new password for ' . $account->getIdentity() . '',
             ])
             ->setUsername($authUser->getUsername());
 

@@ -225,7 +225,7 @@ class AccountController extends AbstractController
         $resetPassword = $this->activeDirectory->initAccount($user);
 
         if ($resetPassword->getStatus() === ActiveDirectoryResponseStatus::DONE) {
-            $activeDirectoryNotification->notifyInitialization($resetPassword);
+//            $activeDirectoryNotification->notifyInitialization($resetPassword);
             $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized!');
         } else {
