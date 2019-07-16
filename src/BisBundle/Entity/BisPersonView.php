@@ -544,7 +544,7 @@ class BisPersonView
         //return str_replace('@enabel.be', '@btcctb.org', $this->getEmail());
     }
 
-    public function getBusinessRoles()
+    public function getDivision()
     {
         return $this->getJobClass();
     }

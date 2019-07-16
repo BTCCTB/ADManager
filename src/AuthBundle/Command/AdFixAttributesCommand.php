@@ -79,28 +79,28 @@ class AdFixAttributesCommand extends Command
         $table = new Table($output);
         $table->setHeaders([
             'Account',
-            'Old value',
-            'New value',
+//            'Old value',
+            //            'New value',
             'Status',
         ]);
-        $data = [];
+        $data = $this->activeDirectory->fixAttributes();
 
-        if (empty($input->getArgument('email'))) {
-            foreach ($this->activeDirectory->getAllUsers('cn') as $adAccount) {
-                $oldValue = $adAccount->getProxyAddresses();
-                $newValue = $this->fixProxyAddresses($oldValue);
-                $adAccount->setProxyAddresses($newValue);
-                $status = $adAccount->save();
-                $data[] = $this->fixAttributesResultAsLog($adAccount, $oldValue, $newValue, $status);
-            }
-        } else {
-            $adAccount = $this->activeDirectory->getUser($input->getArgument('email'));
-            $oldValue = $adAccount->getProxyAddresses();
-            $newValue = $this->fixProxyAddresses($oldValue);
-            $adAccount->setProxyAddresses($newValue);
-            $status = $adAccount->save();
-            $data[] = $this->fixAttributesResultAsLog($adAccount, $oldValue, $newValue, $status);
-        }
+//        if (empty($input->getArgument('email'))) {
+        //            foreach ($this->activeDirectory->getAllUsers('cn') as $adAccount) {
+        //                $oldValue = $adAccount->getAttribute('division');
+        //                $newValue = $this->fixProxyAddresses($oldValue);
+        //                $adAccount->setProxyAddresses($newValue);
+        //                $status = $adAccount->save();
+        //                $data[] = $this->fixAttributesResultAsLog($adAccount, $oldValue, $newValue, $status);
+        //            }
+        //        } else {
+        //            $adAccount = $this->activeDirectory->getUser($input->getArgument('email'));
+        //            $oldValue = $adAccount->getProxyAddresses();
+        //            $newValue = $this->fixProxyAddresses($oldValue);
+        //            $adAccount->setProxyAddresses($newValue);
+        //            $status = $adAccount->save();
+        //            $data[] = $this->fixAttributesResultAsLog($adAccount, $oldValue, $newValue, $status);
+        //        }
 
         $table->setRows($data);
         $table->render();

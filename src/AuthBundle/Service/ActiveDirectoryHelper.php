@@ -42,7 +42,7 @@ class ActiveDirectoryHelper
 //        if (!empty($bisPersonView->getBusinessCategory())) {
         //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
         //        }
-        $user->setAttribute('businessRoles', $bisPersonView->getBusinessRoles());
+        $user->setAttribute('division', $bisPersonView->getDivision());
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
 //        $user->setCountry($bisPersonView->getCountry());
@@ -205,7 +205,7 @@ class ActiveDirectoryHelper
                 'FirstName' => $bisPersonView->getFirstname(),
                 'LastName' => $bisPersonView->getLastname(),
                 'Initials' => $bisPersonView->getInitials(),
-                'businessRoles' => $bisPersonView->getBusinessRoles(),
+                'division' => $bisPersonView->getDivision(),
                 'Department' => $bisPersonView->getDepartment(),
                 'Company' => $bisPersonView->getCompany(),
                 'Country' => $bisPersonView->getCountry(),
@@ -249,7 +249,7 @@ class ActiveDirectoryHelper
                 'FirstName' => $adUser->getFirstName(),
                 'LastName' => $adUser->getLastName(),
                 'Initials' => $adUser->getInitials(),
-                'businessRoles' => $adUser->getAttribute('businessRoles'),
+                'division' => $adUser->getAttribute('division'),
                 'Department' => $adUser->getDepartment(),
                 'Company' => 'Enabel',
                 'Country' => $adUser->getCountry(),
@@ -325,8 +325,8 @@ class ActiveDirectoryHelper
 //        if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('businessCategory')) {
         //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
         //        }
-        if ($bisPersonView->getBusinessRoles() !== $user->getFirstAttribute('businessRoles')) {
-            $user->setAttribute('businessRoles', $bisPersonView->getBusinessRoles());
+        if ($bisPersonView->getDivision() !== $user->getFirstAttribute('division')) {
+            $user->setAttribute('division', $bisPersonView->getDivision());
         }
         if ($bisPersonView->getDepartment() !== $user->getDepartment()) {
             $diffData['department'] = [
@@ -516,7 +516,7 @@ class ActiveDirectoryHelper
      *
      * @return mixed|String
      */
-    public static function cleanUpPhoneNumber(? String $phoneNumber)
+    public static function cleanUpPhoneNumber( ? String $phoneNumber)
     {
         if (empty($phoneNumber)) {
             return null;
@@ -538,7 +538,7 @@ class ActiveDirectoryHelper
             'givenname',
             'sn',
             'initials',
-            'businessRoles',
+            'division',
             'company',
             'department',
             'c',

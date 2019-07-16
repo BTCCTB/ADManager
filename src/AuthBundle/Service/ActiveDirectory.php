@@ -600,7 +600,7 @@ class ActiveDirectory
         foreach ($users as $user) {
             $adAccount = $this->checkUserExistByEmail($user->getEmail());
             if (false !== $adAccount) {
-                $adAccount->setAttribute('businessRoles', $user->getJobClass());
+                $adAccount->setAttribute('division', $user->getJobClass());
                 if (!$adAccount->save()) {
                     $logs[] = [
                         'user' => $adAccount->getUserPrincipalName(),
