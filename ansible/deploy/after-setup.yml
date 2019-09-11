@@ -58,7 +58,7 @@
 
 - name: Composer | Check
   stat:
-    path: /usr/local/bin/composer
+    path: "{{ composer_path }}"
   register: composer_stat
 
 - name: Composer | Download
@@ -70,13 +70,13 @@
 - name: Composer | Install
   shell: cat /tmp/installer | {{ php_path }} --  --filename=composer --install-dir=/usr/local/bin
   args:
-    creates: /usr/local/bin/composer
+    creates: "{{ composer_path }}"
   when: not composer_stat.stat.exists
 
 - name: Composer | Set permissions
   become: true
   file:
-    path: /usr/local/bin/composer
+    path: "{{ composer_path }}"
     mode: "a+x"
   when: not composer_stat.stat.exists
 
