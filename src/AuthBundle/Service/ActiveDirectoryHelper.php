@@ -42,6 +42,7 @@ class ActiveDirectoryHelper
 //        if (!empty($bisPersonView->getBusinessCategory())) {
         //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
         //        }
+        $user->setFirstAttribute('preferredLanguage', $bisPersonView->getPreferredLanguage());
         $user->setAttribute('businessRoles', $bisPersonView->getBusinessRoles());
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
@@ -516,7 +517,7 @@ class ActiveDirectoryHelper
      *
      * @return mixed|String
      */
-    public static function cleanUpPhoneNumber(? String $phoneNumber)
+    public static function cleanUpPhoneNumber( ? String $phoneNumber)
     {
         if (empty($phoneNumber)) {
             return null;

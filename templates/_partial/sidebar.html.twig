@@ -9,8 +9,10 @@
     </ul>
     {% if is_granted('ROLE_ADMIN') %}
     <ul class="nav nav-pills flex-column">
+        <h6 class="dropdown-header"><i class="fa fa-users"></i> {{ 'main.menu.admin.accounts.label'|trans }}</h6>
         <li class="nav-item">
-            <a class="nav-link {% if app.request.get('_route') == 'account_list' %}active{% endif %}" href="{{ path('account_list') }}">{{ 'main.menu.admin.accounts.label'|trans }}</a>
+            <a class="nav-link {% if app.request.get('_route') == 'account_list' %}active{% endif %}" href="{{ path('account_list') }}"><i class="fa fa-table"></i> {{ 'main.menu.admin.account.list.label'|trans }}</a>
+            <a class="nav-link {% if app.request.get('_route') == 'account_password_changed_ago' %}active{% endif %}" href="{{ path('account_password_changed_ago') }}"><i class="fa fa-user-secret"></i> {{ 'main.menu.admin.account.passwordAgo.label'|trans }}</a>
         </li>
     </ul>
 

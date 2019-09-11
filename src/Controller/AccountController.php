@@ -108,6 +108,22 @@ class AccountController extends AbstractController
     }
 
     /**
+     * @Route("/password-ago", name="account_password_changed_ago", methods={"GET"})
+     *
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @param AccountRepository $accountRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function passwordAgoAction(ActiveDirectory $activeDirectory)
+    {
+        $accounts = $activeDirectory->getAllUsers('email');
+
+        return $this->render('Account/passwordAgo.html.twig', ['accounts' => $accounts]);
+    }
+
+    /**
      * @Route("/change-password", name="account_change_password", methods={"GET","POST"})
      *
      * @param Request $request
