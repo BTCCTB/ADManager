@@ -141,3 +141,8 @@ services:
         arguments: ['%env(resolve:SF_API_USER)%', '%env(resolve:SF_API_PASSWORD)%', '%env(resolve:SF_API_COMPANY)%']
         public: true
 
+    App\Twig\AdExtensions:
+        autowire: true
+        autoconfigure: true
+        tags: ['twig.extension']
+

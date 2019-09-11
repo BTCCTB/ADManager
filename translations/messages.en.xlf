@@ -214,7 +214,7 @@
     <unit id="G30ur4w" name="application.new_collegues.title.h3">
       <segment>
         <source>application.new_collegues.title.h3</source>
-        <target>New collegues</target>
+        <target>New colleagues</target>
       </segment>
     </unit>
     <unit id="HL4Bmh." name="application.new_collegues.start_date">
@@ -233,6 +233,18 @@
       <segment>
         <source>contact.my_country.title.h3</source>
         <target>My country contacts</target>
+      </segment>
+    </unit>
+    <unit id="NxOF8ZD" name="main.menu.admin.account.passwordAgo.label">
+      <segment>
+        <source>main.menu.admin.account.passwordAgo.label</source>
+        <target>Password last set</target>
+      </segment>
+    </unit>
+    <unit id="zaZRAox" name="main.menu.admin.account.list.label">
+      <segment>
+        <source>main.menu.admin.account.list.label</source>
+        <target>Liste</target>
       </segment>
     </unit>
   </file>

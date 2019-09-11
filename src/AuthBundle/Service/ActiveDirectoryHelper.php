@@ -42,7 +42,9 @@ class ActiveDirectoryHelper
 //        if (!empty($bisPersonView->getBusinessCategory())) {
         //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
         //        }
+
         $user->setAttribute('division', $bisPersonView->getDivision());
+        $user->setFirstAttribute('preferredLanguage', $bisPersonView->getPreferredLanguage());
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
 //        $user->setCountry($bisPersonView->getCountry());
