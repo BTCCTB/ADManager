@@ -7,9 +7,9 @@ parameters:
             no_check_all: true
         git_conflict: ~
         securitychecker: ~
-        clover_coverage:
-            clover_file: ./var/coverage.xml
-            level: 1
+#        clover_coverage:
+#            clover_file: ./var/coverage.xml
+#            level: 1
         phpcs:
             standard: "phpcs.xml"
         phpmd:
