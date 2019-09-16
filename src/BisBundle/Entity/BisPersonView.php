@@ -520,6 +520,9 @@ class BisPersonView
         return $this->getDomainAccount();
     }
 
+    /**
+     * @return string|null
+     */
     public function getOrganizationalUnit()
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
