@@ -114,8 +114,13 @@ class AdExpiredAccountCommand extends Command
 
             // Set new password in AD
             if ($adAccount !== null) {
+                $employeeId = $adAccount->getEmployeeId();
+                if (empty($employeeId)) {
+                    $employeeId = (int) md5($email);
+                }
                 $adAccount
                     ->setPassword($password)
+                    ->setEmployeeId($employeeId)
                 ;
                 if ($adAccount->save()) {
                     $adChanges = "Password updated!";
@@ -123,6 +128,7 @@ class AdExpiredAccountCommand extends Command
                     // Set new password in passwordAccount
                     if (empty($accountInfo)) {
                         $accountInfo = new Account();
+
                         $accountInfo
                             ->setEmployeeId($adAccount->getEmployeeId())
                             ->setAccountName($adAccount->getAccountName())
