@@ -135,12 +135,16 @@ class AdExpiredAccountCommand extends Command
                             ->setToken($accountInfo->generateToken($adAccount->getEmail(), $password))
                             ->setActive(true)
                         ;
+                        $this->em->persist($accountInfo);
+                        $this->em->flush();
                     } else {
                         $accountInfo
                             ->setGeneratedPassword($password)
                             ->setToken($accountInfo->generateToken($adAccount->getEmail(), $password))
                             ->setActive(true)
                         ;
+                        $this->em->persist($accountInfo);
+                        $this->em->flush();
                     }
                     if ($ldapAccount !== null) {
                         $passwordEncoded = $this->passwordEncoder->encodePassword($password, '');
