@@ -149,7 +149,7 @@ class ActiveDirectoryHelper
         // Number
         $sets[] = '23456789';
         // Special chars
-        $sets[] = '!@#$%&*?';
+        $sets[] = '.-_!*?';
 
         $all = '';
         $password = '';
