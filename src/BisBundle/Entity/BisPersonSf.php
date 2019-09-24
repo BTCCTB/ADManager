@@ -2,6 +2,7 @@
 
 namespace BisBundle\Entity;
 
+use App\Entity\Account;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -107,24 +108,24 @@ class BisPersonSf
 
     public function getPerEmail()
     {
-        return $this->perEmail;
+        return Account::cleanUpEmail($this->perEmail);
     }
 
     public function setPerEmail($perEmail)
     {
-        $this->perEmail = $perEmail;
+        $this->perEmail = Account::cleanUpEmail($perEmail);
 
         return $this;
     }
 
     public function getPerPersonalEmail()
     {
-        return $this->perPersonalEmail;
+        return Account::cleanUpEmail($this->perPersonalEmail);
     }
 
     public function setPerPersonalEmail($perPersonalEmail)
     {
-        $this->perPersonalEmail = $perPersonalEmail;
+        $this->perPersonalEmail = Account::cleanUpEmail($perPersonalEmail);
 
         return $this;
     }

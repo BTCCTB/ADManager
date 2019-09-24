@@ -2,6 +2,7 @@
 
 namespace BisBundle\Entity;
 
+use App\Entity\Account;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -153,12 +154,12 @@ class BisPersonView
 
     public function getEmail()
     {
-        return $this->perEmail;
+        return Account::cleanUpEmail($this->perEmail);
     }
 
     public function setEmail($perEmail)
     {
-        $this->perEmail = $perEmail;
+        $this->perEmail = Account::cleanUpEmail($perEmail);
 
         return $this;
     }
