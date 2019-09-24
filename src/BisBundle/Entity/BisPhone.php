@@ -2,6 +2,7 @@
 
 namespace BisBundle\Entity;
 
+use AuthBundle\Service\ActiveDirectoryHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -176,19 +177,19 @@ class BisPhone
         return $this;
     }
 
-    public function getTelephone(): string
+    public function getTelephone():  ? string
     {
-        return $this->telephone;
+        return ActiveDirectoryHelper::cleanUpPhoneNumber($this->telephone);
     }
 
     public function setTelephone(String $telephone)
     {
-        $this->telephone = $telephone;
+        $this->telephone = ActiveDirectoryHelper::cleanUpPhoneNumber($telephone);
 
         return $this;
     }
 
-    public function getSex(): string
+    public function getSex() : string
     {
         return $this->sex;
     }
@@ -224,19 +225,19 @@ class BisPhone
         return $this;
     }
 
-    public function getMobile(): string
+    public function getMobile():  ? string
     {
-        return $this->mobile;
+        return ActiveDirectoryHelper::cleanUpPhoneNumber($this->mobile);
     }
 
     public function setMobile(String $mobile)
     {
-        $this->mobile = $mobile;
+        $this->mobile = ActiveDirectoryHelper::cleanUpPhoneNumber($mobile);
 
         return $this;
     }
 
-    public function getCountryWorkplace(): BisCountry
+    public function getCountryWorkplace() : BisCountry
     {
         return $this->countryWorkplace;
     }

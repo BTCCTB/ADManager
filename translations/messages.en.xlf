@@ -247,5 +247,119 @@
         <target>Liste</target>
       </segment>
     </unit>
+    <unit id="g7NCiSN" name="contact.hq.title.h3">
+      <segment>
+        <source>contact.hq.title.h3</source>
+        <target>Enabel HQ contacts</target>
+      </segment>
+    </unit>
+    <unit id="jcOp6Uw" name="contact.field.title.h3">
+      <segment>
+        <source>contact.field.title.h3</source>
+        <target>Enabel field contacts</target>
+      </segment>
+    </unit>
+    <unit id="prYdXIi" name="contact.all.title.h3">
+      <segment>
+        <source>contact.all.title.h3</source>
+        <target>Enabel contacts</target>
+      </segment>
+    </unit>
+    <unit id="oh3AGd_" name="main.menu.admin.contact.label">
+      <segment>
+        <source>main.menu.admin.contact.label</source>
+        <target>Contacts</target>
+      </segment>
+    </unit>
+    <unit id="dsOGXc8" name="main.menu.admin.contact.own.label">
+      <segment>
+        <source>main.menu.admin.contact.own.label</source>
+        <target>My country</target>
+      </segment>
+    </unit>
+    <unit id="_OWqgyb" name="main.menu.admin.contact.field.label">
+      <segment>
+        <source>main.menu.admin.contact.field.label</source>
+        <target>Enabel Field</target>
+      </segment>
+    </unit>
+    <unit id="xKQ8Mh_" name="main.menu.admin.contact.hq.label">
+      <segment>
+        <source>main.menu.admin.contact.hq.label</source>
+        <target>Enabel HQ</target>
+      </segment>
+    </unit>
+    <unit id="b2nY1eQ" name="main.menu.admin.contact.all.label">
+      <segment>
+        <source>main.menu.admin.contact.all.label</source>
+        <target>All</target>
+      </segment>
+    </unit>
+    <unit id="inyLZ.6" name="Accounts">
+      <segment>
+        <source>Accounts</source>
+        <target>Accounts</target>
+      </segment>
+    </unit>
+    <unit id="n3.AuJJ" name="User password last set">
+      <segment>
+        <source>User password last set</source>
+        <target>User password last set</target>
+      </segment>
+    </unit>
+    <unit id="wa2PNYo" name="DN">
+      <segment>
+        <source>DN</source>
+        <target>DN</target>
+      </segment>
+    </unit>
+    <unit id="ZHz6kbI" name="Firstname">
+      <segment>
+        <source>Firstname</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="htiPHRy" name="Lastname">
+      <segment>
+        <source>Lastname</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="lpzL089" name="Email">
+      <segment>
+        <source>Email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="pP5lJk7" name="Language">
+      <segment>
+        <source>Language</source>
+        <target>Language</target>
+      </segment>
+    </unit>
+    <unit id="y6rTz0p" name="Mobile">
+      <segment>
+        <source>Mobile</source>
+        <target>Mobile</target>
+      </segment>
+    </unit>
+    <unit id="8UnoM8L" name="Bad pwd count">
+      <segment>
+        <source>Bad pwd count</source>
+        <target>Bad pwd count</target>
+      </segment>
+    </unit>
+    <unit id="5bH1jUS" name="Password last set">
+      <segment>
+        <source>Password last set</source>
+        <target>Password last set</target>
+      </segment>
+    </unit>
+    <unit id="DTlgLcO" name="Last login">
+      <segment>
+        <source>Last login</source>
+        <target>Last login</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

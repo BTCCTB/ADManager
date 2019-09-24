@@ -17,4 +17,16 @@
     </ul>
 
     {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="dropdown-divider"></div>
+    <ul class="nav nav-pills flex-column">
+        <h6 class="dropdown-header"><i class="fa fa-phone"></i> {{ 'main.menu.admin.contact.label'|trans }}</h6>
+        <li class="nav-item">
+            <a class="nav-link btn-outline-danger {% if app.request.get('_route') == 'contact_own_country' %}active{% endif %}" href="{{ path('contact_own_country') }}"><i class="fa fa-flag"></i> {{ 'main.menu.admin.contact.own.label'|trans }}</a>
+            <a class="nav-link btn-outline-danger {% if app.request.get('_route') == 'contact_hq' %}active{% endif %}" href="{{ path('contact_hq') }}"><i class="fa fa-home"></i> {{ 'main.menu.admin.contact.hq.label'|trans }}</a>
+{#            <a class="nav-link {% if app.request.get('_route') == 'contact_field' %}active{% endif %}" href="{{ path('contact_field') }}"><i class="fa fa-home"></i> {{ 'main.menu.admin.contact.field.label'|trans }}</a>#}
+            <a class="nav-link btn-outline-danger {% if app.request.get('_route') == 'contact_all' %}active{% endif %}" href="{{ path('contact_all') }}"><i class="fa fa-globe"></i> {{ 'main.menu.admin.contact.all.label'|trans }}</a>
+        </li>
+    </ul>
+    {% endif %}
 </nav>

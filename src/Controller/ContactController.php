@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ContactController
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/contact", name="contact_")
  *
- * @IsGranted("ROLE_USER")
+ * @IsGranted("ROLE_ADMIN")
  */
 class ContactController extends AbstractController
 {
@@ -27,10 +28,15 @@ class ContactController extends AbstractController
      * @var PhoneDirectory
      */
     private $phoneDirectory;
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
 
-    public function __construct(PhoneDirectory $phoneDirectory)
+    public function __construct(PhoneDirectory $phoneDirectory, TranslatorInterface $translator)
     {
         $this->phoneDirectory = $phoneDirectory;
+        $this->translator = $translator;
     }
 
     /**
@@ -46,9 +52,64 @@ class ContactController extends AbstractController
         $contacts = $this->phoneDirectory->getByCountry($user->getCountry());
 
         return $this->render(
-            'Contact/myCountry.html.twig',
+            'Contact/listing.html.twig',
             [
                 'contacts' => $contacts,
+                'title' => $this->translator->trans('contact.my_country.title.h3'),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/", name="all")
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $contacts = $this->phoneDirectory->getAll();
+
+        return $this->render(
+            'Contact/listing.html.twig',
+            [
+                'contacts' => $contacts,
+                'title' => $this->translator->trans('contact.all.title.h3'),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/hq", name="hq")
+     *
+     * @return Response
+     */
+    public function hq()
+    {
+        $contacts = $this->phoneDirectory->getHQ();
+
+        return $this->render(
+            'Contact/listing.html.twig',
+            [
+                'contacts' => $contacts,
+                'title' => $this->translator->trans('contact.hq.title.h3'),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/field", name="field")
+     *
+     * @return Response
+     */
+    public function field()
+    {
+        $contacts = $this->phoneDirectory->getField();
+
+        return $this->render(
+            'Contact/listing.html.twig',
+            [
+                'contacts' => $contacts,
+                'title' => $this->translator->trans('contact.field.title.h3'),
             ]
         );
     }
