@@ -84,7 +84,7 @@
     "post-update-cmd": [
       "@auto-scripts"
     ],
-    "docker:serve": [
+    "docker:start": [
       "docker-compose up -d",
       "symfony serve"
     ],
@@ -108,7 +108,7 @@
     ]
   },
   "scripts-descriptions": {
-    "docker:serve": "Start the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
+    "docker:start": "Start the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
     "docker:stop": "Stop the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
     "docker:cleanup": "Remove the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker",
     "db:init": "Initialize the database in the mariadb docker instance",
