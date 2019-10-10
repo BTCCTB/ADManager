@@ -74,8 +74,8 @@ class ActiveDirectoryHelper
         }
         // For HQ only set HomeDrive & login script
         if ($user->getCountry() === 'BE') {
-            $user->setHomeDirectory(getenv('HOME_BASE_DIRECTORY') . $user->getAccountName());
-            $user->setHomeDrive(getenv('HOME_DRIVE'));
+//            $user->setHomeDirectory(getenv('HOME_BASE_DIRECTORY') . $user->getAccountName());
+            //            $user->setHomeDrive(getenv('HOME_DRIVE'));
             $user->setScriptPath("login.bat");
         }
 
@@ -173,7 +173,7 @@ class ActiveDirectoryHelper
         $organizationalUnit->setBase('dc=ad4dev,dc=local');
         if ('BEL' === $countryIso3) {
             $organizationalUnit->addOu('Users');
-            $organizationalUnit->addOu('Enabel-Belgium');
+            $organizationalUnit->addOu('Enabel-Brussels');
         } else {
             $organizationalUnit->addOu($countryIso3);
             $organizationalUnit->addOu('Enabel-World');

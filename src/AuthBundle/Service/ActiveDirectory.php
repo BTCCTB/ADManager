@@ -1550,7 +1550,7 @@ class ActiveDirectory
                 "Unable to create this user '" . $bisUser->getEmail() . "'",
                 ActiveDirectoryResponseStatus::FAILED,
                 ActiveDirectoryResponseType::CREATE,
-                ActiveDirectoryHelper::getDataBisUser($bisUser)
+                ActiveDirectoryHelper::getDataBisUser($bisUser, [['exception' => $e->getTraceAsString()]])
             );
         }
 

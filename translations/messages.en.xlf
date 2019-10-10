@@ -295,5 +295,77 @@
         <target>All</target>
       </segment>
     </unit>
+    <unit id="Z8kNoaT" name="Show detail">
+      <segment>
+        <source>Show detail</source>
+        <target>Show detail</target>
+      </segment>
+    </unit>
+    <unit id="inyLZ.6" name="Accounts">
+      <segment>
+        <source>Accounts</source>
+        <target>Accounts</target>
+      </segment>
+    </unit>
+    <unit id="zYd6EbR" name="User accounts">
+      <segment>
+        <source>User accounts</source>
+        <target>User accounts</target>
+      </segment>
+    </unit>
+    <unit id="ZHz6kbI" name="Firstname">
+      <segment>
+        <source>Firstname</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="htiPHRy" name="Lastname">
+      <segment>
+        <source>Lastname</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="lpzL089" name="Email">
+      <segment>
+        <source>Email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="1JkqMxP" name="Initial password">
+      <segment>
+        <source>Initial password</source>
+        <target>Initial password</target>
+      </segment>
+    </unit>
+    <unit id="DTlgLcO" name="Last login">
+      <segment>
+        <source>Last login</source>
+        <target>Last login</target>
+      </segment>
+    </unit>
+    <unit id=".4BZ3Gd" name="Actions">
+      <segment>
+        <source>Actions</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id=".y7CYYu" name="Change email">
+      <segment>
+        <source>Change email</source>
+        <target>Change email</target>
+      </segment>
+    </unit>
+    <unit id="2xvEhkD" name="Test password">
+      <segment>
+        <source>Test password</source>
+        <target>Test password</target>
+      </segment>
+    </unit>
+    <unit id="4O3_s6c" name="Reset password">
+      <segment>
+        <source>Reset password</source>
+        <target>Reset password</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
