@@ -44,7 +44,7 @@ class ActiveDirectoryHelper
         //        }
 
         $user->setAttribute('division', $bisPersonView->getDivision());
-        $user->setFirstAttribute('preferredLanguage', $bisPersonView->getPreferredLanguage());
+        $user->setAttribute('preferredLanguage', strtolower($bisPersonView->getPreferredLanguage()));
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
 //        $user->setCountry($bisPersonView->getCountry());
@@ -219,6 +219,7 @@ class ActiveDirectoryHelper
                 'OrganizationalUnit' => $bisPersonView->getOrganizationalUnit(),
                 'StartDate' => $info->startDate,
                 'EndDate' => $info->endDate,
+                'PreferredLanguage' => $bisPersonView->getPreferredLanguage(),
             ],
             $extraData
         );
@@ -263,6 +264,7 @@ class ActiveDirectoryHelper
                 'OrganizationalUnit' => $adUser->getDnBuilder()->removeCn($adUser->getCommonName()),
                 'StartDate' => $info->startDate,
                 'EndDate' => $info->endDate,
+                'PreferredLanguage' => $adUser->getAttribute('preferredLanguage'),
             ],
             $extraData
         );
@@ -495,17 +497,26 @@ class ActiveDirectoryHelper
                 $user->setScriptPath(null);
             }
         }
+        if ($bisPersonView->getAttribute('preferredLanguage') !== $user->getFirstAttribute('preferredLanguage')) {
+            $diffData['c'] = [
+                'attribute' => 'preferredLanguage',
+                'value' => $bisPersonView->getAttribute('preferredLanguage'),
+                'original' => $user->getFirstAttribute('preferredLanguage'),
+            ];
+            $user->setAttribute('preferredLanguage', strtolower($bisPersonView->getAttribute('preferredLanguage')));
+        }
 
         return [$user, $diffData];
     }
 
-/**
- * Get the current date in desired format
- *
- * @param string $format Date format [optional][default: Y-m-d]
- *
- * @return string The current date
- */
+    /**
+     * Get the current date in desired format
+     *
+     * @param string $format Date format [optional][default: Y-m-d]
+     *
+     * @return string The current date
+     * @throws \Exception
+     */
     public static function today($format = 'Y-m-d'): string
     {
         $date = new \DateTime();
@@ -557,6 +568,7 @@ class ActiveDirectoryHelper
             'homedrive',
             'scriptpath',
             'Distinguishedname',
+            'preferredLanguage',
         ];
 
         // Compare data

@@ -1203,6 +1203,67 @@ class ActiveDirectory
     }
 
     /**
+     * Sync language from GO4HR to AD
+     *
+     * @param User          $adAccount The AD User
+     * @param BisPersonView $bisPerson The BIS User [GO4HR]
+     *
+     * @return ActiveDirectoryResponse
+     */
+    public function syncLang(User $adAccount, BisPersonView $bisPerson)
+    {
+        $diffData = [];
+
+        // Get new language
+        $lang = strtolower($bisPerson->getPreferredLanguage());
+        // Get current language
+        $oldLang = $adAccount->getAttribute('preferredLanguage');
+
+        // Update language if necessary
+        if (!empty($lang)) {
+            if ($lang !== $oldLang) {
+                $diffData['preferredLanguage'] = [
+                    'attribute' => 'preferredLanguage',
+                    'value' => $lang,
+                    'original' => $oldLang,
+                ];
+                $adAccount->setAttribute('preferredLanguage', $lang);
+            }
+        }
+
+        // Save all these modification
+        if (!empty($diffData)) {
+            if ($adAccount->save()) {
+                return new ActiveDirectoryResponse(
+                    "User '" . $adAccount->getEmail() . "' successfully updated in Active Directory",
+                    ActiveDirectoryResponseStatus::DONE,
+                    ActiveDirectoryResponseType::UPDATE,
+                    ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+                );
+            }
+
+            return new ActiveDirectoryResponse(
+                "User '" . $adAccount->getEmail() . "' can't be disabled in Active Directory",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::UPDATE,
+                ActiveDirectoryHelper::getDataAdUser($adAccount, ['diff' => $diffData])
+            );
+        }
+
+        return new ActiveDirectoryResponse(
+            "User '" . $adAccount->getEmail() . "' already up to date in Active Directory",
+            ActiveDirectoryResponseStatus::NOTHING_TO_DO,
+            ActiveDirectoryResponseType::UPDATE,
+            ActiveDirectoryHelper::getDataAdUser(
+                $adAccount,
+                [
+                    'preferredLanguage' => $lang,
+                ]
+            )
+        );
+    }
+
+    /**
      * Sync phone number & mobile from GO4HR to AD
      *
      * @param User          $adAccount The AD User

@@ -485,6 +485,9 @@ class BisPersonView
                 }
 
                 return null;
+
+            case 'preferredLanguage':
+                return $this->getPreferredLanguage();
         }
 
         return null;
