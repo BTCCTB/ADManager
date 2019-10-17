@@ -1217,7 +1217,7 @@ class ActiveDirectory
         // Get new language
         $lang = strtolower($bisPerson->getPreferredLanguage());
         // Get current language
-        $oldLang = $adAccount->getAttribute('preferredLanguage');
+        $oldLang = $adAccount->getFirstAttribute('preferredLanguage');
 
         // Update language if necessary
         if (!empty($lang)) {

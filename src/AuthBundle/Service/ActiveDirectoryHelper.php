@@ -219,7 +219,7 @@ class ActiveDirectoryHelper
                 'OrganizationalUnit' => $bisPersonView->getOrganizationalUnit(),
                 'StartDate' => $info->startDate,
                 'EndDate' => $info->endDate,
-                'PreferredLanguage' => $bisPersonView->getPreferredLanguage(),
+                'preferredLanguage' => $bisPersonView->getPreferredLanguage(),
             ],
             $extraData
         );
@@ -264,7 +264,7 @@ class ActiveDirectoryHelper
                 'OrganizationalUnit' => $adUser->getDnBuilder()->removeCn($adUser->getCommonName()),
                 'StartDate' => $info->startDate,
                 'EndDate' => $info->endDate,
-                'PreferredLanguage' => $adUser->getAttribute('preferredLanguage'),
+                'preferredLanguage' => $adUser->getFirstAttribute('preferredLanguage'),
             ],
             $extraData
         );
@@ -498,7 +498,7 @@ class ActiveDirectoryHelper
             }
         }
         if ($bisPersonView->getAttribute('preferredLanguage') !== $user->getFirstAttribute('preferredLanguage')) {
-            $diffData['c'] = [
+            $diffData['preferredLanguage'] = [
                 'attribute' => 'preferredLanguage',
                 'value' => $bisPersonView->getAttribute('preferredLanguage'),
                 'original' => $user->getFirstAttribute('preferredLanguage'),
