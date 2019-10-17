@@ -543,7 +543,7 @@ class BisPersonView
 
     public function getPreferredLanguage()
     {
-        return $this->getLanguage();
+        return strtolower($this->getLanguage());
     }
 
     public function getBusinessCategory()
