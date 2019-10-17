@@ -12,6 +12,7 @@
     <exclude-pattern>*/Resources/*</exclude-pattern>
     <exclude-pattern>*/Migrations/*</exclude-pattern>
     <exclude-pattern>*/DataFixtures/*</exclude-pattern>
+    <exclude-pattern>*/templates/*</exclude-pattern>
 
     <!-- Symfony follows the standards defined in the PSR-0, PSR-1 and PSR-2 documents. -->
     <!-- Include the whole PSR-1 standard -->

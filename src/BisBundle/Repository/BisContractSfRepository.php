@@ -3,6 +3,7 @@
 namespace BisBundle\Repository;
 
 use BisBundle\Entity\BisContractSf;
+use BisBundle\Entity\BisPersonSf;
 use Doctrine\ORM\EntityRepository;
 
 /**

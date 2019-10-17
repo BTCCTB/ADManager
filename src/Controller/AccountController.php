@@ -342,7 +342,7 @@ class AccountController extends AbstractController
                 $emailStringRule .= '((?:[a-z][a-z]+))'; // Lastname
                 $emailStringRule .= '(@enabel\\.be)'; // Fully Qualified Domain Name
 
-                if ($c = preg_match_all("/" . $emailStringRule . "/is", $data['new_email'], $matches)) {
+                if ($catch = preg_match_all("/" . $emailStringRule . "/is", $data['new_email'], $matches)) {
                     // sanitize email
                     $email = strtolower(trim($data['new_email']));
 

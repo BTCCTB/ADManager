@@ -518,7 +518,7 @@ class ActiveDirectoryHelper
      *
      * @return mixed|String
      */
-    public static function cleanUpPhoneNumber( ? String $phoneNumber)
+    public static function cleanUpPhoneNumber($phoneNumber)
     {
         if (empty($phoneNumber)) {
             return null;
