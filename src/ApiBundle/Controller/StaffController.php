@@ -23,6 +23,9 @@ class StaffController extends AbstractController
      */
     public function starters(SerializerInterface $serializer, BisPersonView $bisPersonView, $format = "json", $limit = 15)
     {
+        if ($limit >= 15) {
+            $limit = 15;
+        }
         $starters = $bisPersonView->getStarters($limit);
         $data = $serializer->serialize($starters, $format, ['groups' => 'starters']);
         $response = new Response($data);
@@ -41,6 +44,9 @@ class StaffController extends AbstractController
      */
     public function finishers(SerializerInterface $serializer, BisPersonView $bisPersonView, $format = "json", $limit = 15)
     {
+        if ($limit >= 15) {
+            $limit = 15;
+        }
         $finishers = $bisPersonView->getFinishers($limit);
         $data = $serializer->serialize($finishers, $format, ['groups' => 'starters']);
         $response = new Response($data);
