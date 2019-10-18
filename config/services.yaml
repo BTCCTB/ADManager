@@ -34,7 +34,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,BisBundle,AuthBundle}'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,BisBundle,AuthBundle,ApiBundle}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -149,4 +149,12 @@ services:
     AuthBundle\Command\AdExpiredAccountCommand:
         arguments:
             $passwordEncoder: "@auth.ldap.password_encoder"
+
+    Api\:
+        resource: '../src/ApiBundle/*'
+        exclude: '../src/ApiBundle/{Entity,Migrations,Tests}'
+
+    Api\Controller\:
+        resource: '../src/ApiBundle/Controller'
+        tags: ['controller.service_arguments']
 

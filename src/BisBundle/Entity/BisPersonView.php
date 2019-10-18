@@ -6,6 +6,8 @@ use App\Entity\Account;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class BisPersonView
@@ -152,6 +154,10 @@ class BisPersonView
         return $this;
     }
 
+    /**
+     * @SerializedName("email")
+     * @Groups({"starters","finishers"})
+     */
     public function getEmail()
     {
         return Account::cleanUpEmail($this->perEmail);
@@ -283,6 +289,9 @@ class BisPersonView
         return null;
     }
 
+    /**
+     * @Groups({"starters","finishers"})
+     */
     public function getCountry()
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
@@ -398,6 +407,10 @@ class BisPersonView
         return false;
     }
 
+    /**
+     * @SerializedName("displayName")
+     * @Groups({"starters","finishers"})
+     */
     public function getDisplayName()
     {
         if (!empty($this->getNickname())) {
@@ -412,6 +425,10 @@ class BisPersonView
         return ucfirst(strtolower($this->getFirstname())) . ' ' . strtoupper($this->getLastname());
     }
 
+    /**
+     * @SerializedName("endDate")
+     * @Groups({"finishers"})
+     */
     public function getPrettyDateContractStop()
     {
         if (!empty($this->getDateContractStop())) {
@@ -421,6 +438,10 @@ class BisPersonView
         return null;
     }
 
+    /**
+     * @SerializedName("startDate")
+     * @Groups({"starters"})
+     */
     public function getPrettyDateContractStart()
     {
         if (!empty($this->getDateContractStart())) {
@@ -541,6 +562,10 @@ class BisPersonView
         return $this->getId();
     }
 
+    /**
+     * @SerializedName("language")
+     * @Groups({"starters","finishers"})
+     */
     public function getPreferredLanguage()
     {
         return strtolower($this->getLanguage());

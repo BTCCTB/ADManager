@@ -278,6 +278,15 @@
     "php-translation/symfony-storage": {
         "version": "1.0.1"
     },
+    "phpdocumentor/reflection-common": {
+        "version": "2.0.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "4.3.2"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.0.1"
+    },
     "phpmd/phpmd": {
         "version": "2.6.0"
     },
@@ -533,6 +542,9 @@
     "symfony/property-access": {
         "version": "v4.0.4"
     },
+    "symfony/property-info": {
+        "version": "v4.3.5"
+    },
     "symfony/routing": {
         "version": "4.0",
         "recipe": {
@@ -562,6 +574,12 @@
     },
     "symfony/security-http": {
         "version": "v4.2.0"
+    },
+    "symfony/serializer": {
+        "version": "v4.3.5"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.2"
     },
     "symfony/stopwatch": {
         "version": "v4.0.4"

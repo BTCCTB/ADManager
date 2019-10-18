@@ -17,7 +17,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields={"private $cou_isocode_int"})
  *
  * @author  Damien Lagae <damienlagae@gmail.com>
- *
  * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class BisCountry

@@ -41,6 +41,7 @@ security:
                 target: security_login
 
     access_control:
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/.*/translation/, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
