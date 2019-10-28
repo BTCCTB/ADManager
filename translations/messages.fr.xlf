@@ -223,5 +223,77 @@
         <target>Date de début</target>
       </segment>
     </unit>
+    <unit id="1yyLjoH" name="main.menu.contact.my_country.label">
+      <segment>
+        <source>main.menu.contact.my_country.label</source>
+        <target>Mon pays</target>
+      </segment>
+    </unit>
+    <unit id="RWTbiCy" name="contact.my_country.title.h3">
+      <segment>
+        <source>contact.my_country.title.h3</source>
+        <target>Mes contacts pays</target>
+      </segment>
+    </unit>
+    <unit id="NxOF8ZD" name="main.menu.admin.account.passwordAgo.label">
+      <segment>
+        <source>main.menu.admin.account.passwordAgo.label</source>
+        <target>Dernier mot de passe défini</target>
+      </segment>
+    </unit>
+    <unit id="zaZRAox" name="main.menu.admin.account.list.label">
+      <segment>
+        <source>main.menu.admin.account.list.label</source>
+        <target>Liste</target>
+      </segment>
+    </unit>
+    <unit id="g7NCiSN" name="contact.hq.title.h3">
+      <segment>
+        <source>contact.hq.title.h3</source>
+        <target>Contacts Enabel HQ</target>
+      </segment>
+    </unit>
+    <unit id="jcOp6Uw" name="contact.field.title.h3">
+      <segment>
+        <source>contact.field.title.h3</source>
+        <target>Contacts Enabel terrain</target>
+      </segment>
+    </unit>
+    <unit id="prYdXIi" name="contact.all.title.h3">
+      <segment>
+        <source>contact.all.title.h3</source>
+        <target>Contacts Enabel</target>
+      </segment>
+    </unit>
+    <unit id="oh3AGd_" name="main.menu.admin.contact.label">
+      <segment>
+        <source>main.menu.admin.contact.label</source>
+        <target>Contacts</target>
+      </segment>
+    </unit>
+    <unit id="dsOGXc8" name="main.menu.admin.contact.own.label">
+      <segment>
+        <source>main.menu.admin.contact.own.label</source>
+        <target>Mon pays</target>
+      </segment>
+    </unit>
+    <unit id="_OWqgyb" name="main.menu.admin.contact.field.label">
+      <segment>
+        <source>main.menu.admin.contact.field.label</source>
+        <target>Enabel terrain</target>
+      </segment>
+    </unit>
+    <unit id="xKQ8Mh_" name="main.menu.admin.contact.hq.label">
+      <segment>
+        <source>main.menu.admin.contact.hq.label</source>
+        <target>Enabel HQ</target>
+      </segment>
+    </unit>
+    <unit id="b2nY1eQ" name="main.menu.admin.contact.all.label">
+      <segment>
+        <source>main.menu.admin.contact.all.label</source>
+        <target>Tout Enabel</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

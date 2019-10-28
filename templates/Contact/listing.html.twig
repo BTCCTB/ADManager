@@ -19,6 +19,16 @@
                         <span class="contactNickname text-hide">{{ contact.nickname }}</span>
                     </p>
                     <p class="contactFunction">{{ contact.function }}</p>
+
+                    <p class="contactPhone">
+                        {% if contact.mobile is not empty  %}
+                        <a href="tel:{{ contact.mobile|replace({' ': '', '(0)':''}) }}"><i class="fa fa-mobile"></i> {{ contact.mobile }}</a>
+                        <span class="contactPhone text-hide">{{ contact.mobile|replace({' ': '', '(0)':''}) }}</span>
+                        {% else %}
+                        <a href="tel:{{ contact.telephone|replace({' ': '', '(0)':''}) }}"><i class="fa fa-phone"></i> {{ contact.telephone }}</a>
+                        <span class="contactPhone text-hide">{{ contact.telephone|replace({' ': '', '(0)':''}) }}</span>
+                        {% endif %}
+                    </p>
                 </div>
                 <a data-toggle="collapse" data-target="#collapse{{ contact.id }}" aria-expanded="false" aria-controls="collapseExample">
                     <div class="arrow">
@@ -40,20 +50,6 @@
                                 <td>
                                     <a href="callto:{{ contact.email }}">{{ contact.email }}</a>
                                     <span class="contactSkype text-hide">{{ contact.email }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Phone:</td>
-                                <td>
-                                    <a href="tel:{{ contact.telephone|replace({' ': '', '(0)':''}) }}">{{ contact.telephone }}</a>
-                                    <span class="contactPhone text-hide">{{ contact.telephone|replace({' ': '', '(0)':''}) }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Mobile:</td>
-                                <td>
-                                    <a href="tel:{{ contact.mobile|replace({' ': '', '(0)':''}) }}">{{ contact.mobile }}</a>
-                                    <span class="contactMobile text-hide">{{ contact.mobile|replace({' ': '', '(0)':''}) }}</span>
                                 </td>
                             </tr>
                             </tbody>

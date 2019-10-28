@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use AuthBundle\Service\ActiveDirectory;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -13,10 +14,21 @@ use Twig\TwigFilter;
  */
 class AdExtensions extends AbstractExtension
 {
+    /**
+     * @var ActiveDirectory
+     */
+    private $ad;
+
+    public function __construct(ActiveDirectory $ad)
+    {
+        $this->ad = $ad;
+    }
+
     public function getFilters()
     {
         return [
             new TwigFilter('adTimestamp', [$this, 'adTimestampToUnix']),
+            new TwigFilter('userCountry', [$this, 'getUserCountry']),
         ];
     }
 
@@ -25,5 +37,16 @@ class AdExtensions extends AbstractExtension
         $winSecs = (int) ($win32Time / 10000000); // divide by 10 000 000 to get seconds
         $unixTimestamp = ($winSecs - 11644473600); // 1.1.1600 -> 1.1.1970 difference in seconds
         return $unixTimestamp;
+    }
+
+    public function getUserCountry($email)
+    {
+        $user = $this->ad->getUser($email);
+
+        if ($user != null) {
+            return $user->getCountry();
+        }
+
+        return null;
     }
 }

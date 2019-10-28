@@ -12,6 +12,17 @@
 </li>
 {% endif %}
 
+<li class="nav-item dropdown {% if (app.request.get('_route') == 'contact_all') or (app.request.get('_route') == 'contact_own_country') or (app.request.get('_route') == 'contact_hq') %}active{% endif %}">
+    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-phone"></i> {{ 'main.menu.admin.contact.label'|trans }}<span class="caret"></span></a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        {% if app.user.username|userCountry != 'BE' %}
+        <a href="{{ path('contact_own_country') }}" class="dropdown-item {% if (app.request.get('_route') == 'contact_own_country') %}active{% endif %}"><i class="flag-icon flag-icon-{{ app.user.username|userCountry|lower }}"></i> {{ 'main.menu.admin.contact.own.label'|trans }}</a>
+        {% endif %}
+        <a href="{{ path('contact_hq') }}" class="dropdown-item {% if (app.request.get('_route') == 'contact_hq') %}active{% endif %}"><i class="flag-icon flag-icon-be"></i> {{ 'main.menu.admin.contact.hq.label'|trans }}</a>
+        <a href="{{ path('contact_all') }}" class="dropdown-item {% if (app.request.get('_route') == 'contact_all') %}active{% endif %}"><i class="fa fa-globe"></i> {{ 'main.menu.admin.contact.all.label'|trans }}</a>
+    </div>
+</li>
+
 {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
     {#<ul class="navbar-nav">#}
         {#<li class="nav-item dropdown">#}

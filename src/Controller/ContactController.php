@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  *
  * @Route("/contact", name="contact_")
  *
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
  */
 class ContactController extends AbstractController
 {
