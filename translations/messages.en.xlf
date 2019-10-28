@@ -295,5 +295,11 @@
         <target>All Enabel</target>
       </segment>
     </unit>
+    <unit id="Z8kNoaT" name="Show detail">
+      <segment>
+        <source>Show detail</source>
+        <target>Show detail</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

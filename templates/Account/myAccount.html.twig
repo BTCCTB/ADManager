@@ -12,7 +12,10 @@
             <h5 class="card-title">{{ user.description }}</h5>
             <p class="card-text">
                 <i class="fa fa-envelope" aria-hidden="true"></i> {{ user.userprincipalname }}
-                {% if user.telephoneNumber is not empty %}
+                {% if user.mobileNumber is not empty %}
+                <br>
+                <i class="fa fa-mobile" aria-hidden="true"></i> {{ user.mobileNumber }}
+                {% elseif user.telephoneNumber is not empty %}
                 <br>
                 <i class="fa fa-phone" aria-hidden="true"></i> {{ user.telephoneNumber }}
                 {% endif %}
