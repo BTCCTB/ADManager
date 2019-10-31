@@ -17,7 +17,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  *
  * @author  Damien Lagae <damienlagae@gmail.com>
  *
- * @Route("/contact", name="contact_")
+ * @Route("/contacts", name="contact_")
+ * @Route("/contact", name="contact_old_")
  *
  * @IsGranted("ROLE_USER")
  */
