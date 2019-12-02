@@ -369,7 +369,10 @@ class BisPersonView
 
     public function getFullName()
     {
-        return $this->getFirstname() . ' ' . strtoupper($this->getLastname());
+        if ($this->getFirstname() !== '-') {
+            return $this->getFirstname() . ' ' . strtoupper($this->getLastname());
+        }
+        return strtoupper($this->getLastname());
     }
 
     public function getLogin()
@@ -417,12 +420,20 @@ class BisPersonView
             return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getNickname()));
         }
 
-        return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
+        if ($this->getFirstname() !== '-') {
+            return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
+        }
+
+        return strtoupper($this->getLastname());
     }
 
     public function getCommonName()
     {
-        return ucfirst(strtolower($this->getFirstname())) . ' ' . strtoupper($this->getLastname());
+        if ($this->getFirstname() !== '-') {
+            return ucfirst(strtolower($this->getFirstname())) . ' ' . strtoupper($this->getLastname());
+        }
+
+        return strtoupper($this->getLastname());
     }
 
     /**

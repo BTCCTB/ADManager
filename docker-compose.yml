@@ -6,11 +6,13 @@ services:
       - .docker/data/db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: toor
-      MYSQL_DATABASE: db_name
+      MYSQL_DATABASE: admanager
       MYSQL_USER: db_user
       MYSQL_PASSWORD: db_password
     ports:
       - 3306:3306
+    labels:
+      com.symfony.server.service-prefix: 'DATABASE'
 
   bis:
     image: mariadb
@@ -38,9 +40,10 @@ services:
       - mariadb
       - bis
 
-  maildev:
-    image: djfarrelly/maildev
+  mailcatcher:
+    image: schickling/mailcatcher
     ports:
-      - 1080:80
-      - 1025:25
-
+      - 1080:1080
+      - 1025:1025
+    labels:
+      com.symfony.server.service-prefix: 'MAILER'
