@@ -579,7 +579,21 @@ class BisPersonView
      */
     public function getPreferredLanguage()
     {
-        return strtolower($this->getLanguage());
+        //Add a exception for IT user in English
+        $userIDs = [38248, 38038, 37847, 38229];
+        if (in_array($this->getEmployeeId(), $userIDs, false)) {
+            return 'en-US';
+        }
+
+        switch ($this->getPreferredLanguage()) {
+            case 'FR':
+                return 'fr-FR';
+            case 'NL':
+                return 'nl-NL';
+            case 'EN':
+            default:
+                return 'en-US';
+        }
     }
 
     public function getBusinessCategory()
