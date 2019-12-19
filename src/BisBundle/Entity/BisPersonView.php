@@ -581,11 +581,11 @@ class BisPersonView
     {
         //Add a exception for IT user in English
         $userIDs = [38248, 38038, 37847, 38229];
-        if (in_array($this->getEmployeeId(), $userIDs, false)) {
+        if (in_array($this->getId(), $userIDs, false)) {
             return 'en-US';
         }
 
-        switch ($this->getPreferredLanguage()) {
+        switch ($this->getLanguage()) {
             case 'FR':
                 return 'fr-FR';
             case 'NL':

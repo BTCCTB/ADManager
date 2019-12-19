@@ -419,7 +419,11 @@ class ActiveDirectoryHelper
         }
 
         // Clean phone number
-        $telephone = self::cleanUpPhoneNumber($bisPersonView->getTelephone());
+        if ($user->getCountry() !== 'BE') {
+            $telephone = self::cleanUpPhoneNumber($bisPersonView->getTelephone());
+        } else {
+            $telephone = null;
+        }
         // Update phone number if necessary
         if ($telephone !== $user->getTelephoneNumber()) {
             $diffData['TelephoneNumber'] = [
