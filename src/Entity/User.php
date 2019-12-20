@@ -414,4 +414,9 @@ class User implements EntityInterface, UserInterface, EquatableInterface
 
         return false;
     }
+
+    public function __toString()
+    {
+        return $this->getIdentity();
+    }
 }

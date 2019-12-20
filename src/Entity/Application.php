@@ -203,4 +203,9 @@ class Application implements EntityInterface, Translatable
     {
         $this->locale = $locale;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

@@ -403,5 +403,95 @@
         <target>Reset password</target>
       </segment>
     </unit>
+    <unit id="fozSBW2" name="Title">
+      <segment>
+        <source>Title</source>
+        <target>Title</target>
+      </segment>
+    </unit>
+    <unit id="Um4Ah8w" name="Description">
+      <segment>
+        <source>Description</source>
+        <target>Description</target>
+      </segment>
+    </unit>
+    <unit id="gWlpMQG" name="Start date">
+      <segment>
+        <source>Start date</source>
+        <target>Start date</target>
+      </segment>
+    </unit>
+    <unit id="ifaDJWD" name="Year">
+      <segment>
+        <source>Year</source>
+        <target>Year</target>
+      </segment>
+    </unit>
+    <unit id="MQylA_8" name="Month">
+      <segment>
+        <source>Month</source>
+        <target>Month</target>
+      </segment>
+    </unit>
+    <unit id="jyNk4Ru" name="Day">
+      <segment>
+        <source>Day</source>
+        <target>Day</target>
+      </segment>
+    </unit>
+    <unit id="8AY7gIc" name="Hour">
+      <segment>
+        <source>Hour</source>
+        <target>Hour</target>
+      </segment>
+    </unit>
+    <unit id="S3hmW_x" name="Minute">
+      <segment>
+        <source>Minute</source>
+        <target>Minute</target>
+      </segment>
+    </unit>
+    <unit id="FDA6oMS" name="End date">
+      <segment>
+        <source>End date</source>
+        <target>End date</target>
+      </segment>
+    </unit>
+    <unit id="d1tb_WR" name="Created at">
+      <segment>
+        <source>Created at</source>
+        <target>Created at</target>
+      </segment>
+    </unit>
+    <unit id="PCEFPeg" name="Updated at">
+      <segment>
+        <source>Updated at</source>
+        <target>Updated at</target>
+      </segment>
+    </unit>
+    <unit id="Xp_YEg2" name="Severity">
+      <segment>
+        <source>Severity</source>
+        <target>Severity</target>
+      </segment>
+    </unit>
+    <unit id="mOM7DzE" name="Applications">
+      <segment>
+        <source>Applications</source>
+        <target>Applications</target>
+      </segment>
+    </unit>
+    <unit id="N0zZ0iD" name="Created by">
+      <segment>
+        <source>Created by</source>
+        <target>Created by</target>
+      </segment>
+    </unit>
+    <unit id="IPDEcp3" name="Updated by">
+      <segment>
+        <source>Updated by</source>
+        <target>Updated by</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

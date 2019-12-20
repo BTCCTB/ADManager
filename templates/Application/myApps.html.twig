@@ -31,7 +31,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ application.name }}</h5>
                                 {%  if application.description is not empty %}
-                                <p class="card-text">{{ application.description }}</p>
+                                <p class="card-text text-left small">{{ application.description|raw }}</p>
                                 {% endif %}
 {#                                {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}#}
 {#                                    {% if application.linkFr is not empty %}#}
