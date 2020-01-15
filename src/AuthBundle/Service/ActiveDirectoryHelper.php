@@ -45,6 +45,7 @@ class ActiveDirectoryHelper
 
         $user->setAttribute('division', $bisPersonView->getDivision());
         $user->setAttribute('preferredLanguage', strtolower($bisPersonView->getPreferredLanguage()));
+        $user->setAttribute('language', strtolower($bisPersonView->getLanguage()));
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
 //        $user->setCountry($bisPersonView->getCountry());
@@ -220,6 +221,7 @@ class ActiveDirectoryHelper
                 'StartDate' => $info->startDate,
                 'EndDate' => $info->endDate,
                 'preferredLanguage' => $bisPersonView->getPreferredLanguage(),
+                'language' => $bisPersonView->getLanguage(),
             ],
             $extraData
         );
@@ -265,6 +267,7 @@ class ActiveDirectoryHelper
                 'StartDate' => $info->startDate,
                 'EndDate' => $info->endDate,
                 'preferredLanguage' => $adUser->getFirstAttribute('preferredLanguage'),
+                'language' => $adUser->getFirstAttribute('language'),
             ],
             $extraData
         );
@@ -509,6 +512,14 @@ class ActiveDirectoryHelper
             ];
             $user->setAttribute('preferredLanguage', strtolower($bisPersonView->getAttribute('preferredLanguage')));
         }
+        if ($bisPersonView->getAttribute('language') !== $user->getFirstAttribute('language')) {
+            $diffData['language'] = [
+                'attribute' => 'language',
+                'value' => $bisPersonView->getAttribute('language'),
+                'original' => $user->getFirstAttribute('language'),
+            ];
+            $user->setAttribute('language', strtolower($bisPersonView->getAttribute('language')));
+        }
 
         return [$user, $diffData];
     }
@@ -573,6 +584,7 @@ class ActiveDirectoryHelper
             'scriptpath',
             'Distinguishedname',
             'preferredLanguage',
+            'language',
         ];
 
         // Compare data

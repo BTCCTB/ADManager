@@ -239,9 +239,21 @@ class BisPersonView
         return $this;
     }
 
+    /**
+     * @SerializedName("language")
+     * @Groups({"starters","finishers"})
+     */
     public function getLanguage()
     {
-        return $this->perLanguage;
+        switch ($this->perLanguage) {
+            case 'FR':
+                return 'fr';
+            case 'NL':
+                return 'nl';
+            case 'EN':
+            default:
+                return 'en';
+        }
     }
 
     public function setLanguage($perLanguage)
@@ -518,6 +530,9 @@ class BisPersonView
 
                 return null;
 
+            case 'language':
+                return $this->getLanguage();
+
             case 'preferredLanguage':
                 return $this->getPreferredLanguage();
         }
@@ -573,10 +588,6 @@ class BisPersonView
         return $this->getId();
     }
 
-    /**
-     * @SerializedName("language")
-     * @Groups({"starters","finishers"})
-     */
     public function getPreferredLanguage()
     {
         //Add a exception for IT user in English
