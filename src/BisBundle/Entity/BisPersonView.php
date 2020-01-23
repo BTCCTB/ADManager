@@ -597,11 +597,11 @@ class BisPersonView
         }
 
         switch ($this->getLanguage()) {
-            case 'FR':
+            case 'fr':
                 return 'fr-fr';
-            case 'NL':
+            case 'nl':
                 return 'nl-nl';
-            case 'EN':
+            case 'en':
             default:
                 return 'en-us';
         }
