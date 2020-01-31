@@ -223,5 +223,11 @@
         <target>Begin datum</target>
       </segment>
     </unit>
+    <unit id="Z8kNoaT" name="Show detail">
+      <segment>
+        <source>Show detail</source>
+        <target>Meer info</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

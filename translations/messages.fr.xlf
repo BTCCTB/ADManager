@@ -295,5 +295,17 @@
         <target>Tout Enabel</target>
       </segment>
     </unit>
+    <unit id="Z8kNoaT" name="Show detail">
+      <segment>
+        <source>Show detail</source>
+        <target>Voir les détails</target>
+      </segment>
+    </unit>
+    <unit id="XkcCw9o" name="btn.contact.own.country.label">
+      <segment>
+        <source>btn.contact.own.country.label</source>
+        <target>Contacts de mon pays</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

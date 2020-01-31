@@ -40,8 +40,9 @@
                                     <i class="fa fa-phone" aria-hidden="true"></i> {{ user.telephoneNumber }}
                                 {% endif %}
                             </p>
-                            <div class="btn-group pull-right" role="group" aria-label="Actions">
+                            <div class="btn-group" role="group" aria-label="Actions">
                                 <a href="{{ url('account_change_password') }}" class="btn btn-warning"><i class="fa fa-key"></i> {{ 'btn.change.password.label'|trans }}</a>
+                                <a href="{{ url('contact_own_country') }}" class="btn btn-info"><i class="fa fa-phone"></i> {{ 'btn.contact.own.country.label'|trans }} <i class="flag-icon flag-icon-{{ app.user.username|userCountry|lower }}"></i></a>
                             </div>
                         </div>
                     </div>
