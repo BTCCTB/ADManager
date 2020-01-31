@@ -1,21 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ 'main.menu.application.label'|trans }}</h1>
-    {#<h3>{{ 'application.title.h3'|trans }}</h3>#}
-    {% include '_partial/flash.html.twig' %}
-    {% if passwordAges > 70 %}
-    {%  if passwordAges > 80 %}
-    <div class="alert alert-danger" role="alert">
-    {%  elseif passwordAges > 70 %}
-    <div class="alert alert-warning" role="alert">
-    {% endif %}
-        {{ 'my.account.label.lastset'|trans }}:
-        <time class="timeago" datetime="{{ user.passwordLastSetTimestamp|date("Y-m-d H:i:s") }}">{{ user.passwordLastSetTimestamp|date("d/m/Y") }}</time>
-        <br/><small>{{ 'my.account.label.password.recommendation'|trans }}</small>
-    </div>
-    {% endif %}
-    {#{% for row in applications|batch(6) %}#}
     <div class="row">
         {% if starters is not empty %}
         <div class="col-lg-9 col-xs-12">
@@ -23,30 +8,60 @@
         <div class="col-lg-12 col-xs-12">
         {% endif %}
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-columns">
-                {% for application in applications %}
-                        <div class="card text-center">
-                            {#<img src="https://dummyimage.com/200x200/fff/000.png&text={{ application.name }}" style="width: 60%;" class="card-img-top" >#}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ application.name }}</h5>
-                                {%  if application.description is not empty %}
-                                <p class="card-text text-left small">{{ application.description|raw }}</p>
+                <div class="col-md-12">
+                    {% include '_partial/flash.html.twig' %}
+                    <h1>{{ 'main.menu.account.label'|trans }}</h1>
+                    {%  if passwordAges > 80 %}
+                    <div class="alert alert-danger" role="alert">
+                    {%  elseif passwordAges > 70 %}
+                    <div class="alert alert-warning" role="alert">
+                    {%  else %}
+                    <div class="alert alert-primary" role="alert">
+                    {% endif %}
+                        {{ 'my.account.label.lastset'|trans }}:
+                        <time class="timeago" datetime="{{ user.passwordLastSetTimestamp|date("Y-m-d H:i:s") }}">{{ user.passwordLastSetTimestamp|date("d/m/Y") }}</time>
+                        <br/><small>{{ 'my.account.label.password.recommendation'|trans }}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <h4 class="card-header">
+                            <i class="flag-icon flag-icon-{{ country|lower }}" title="{{ user.department }}" alt="{{ user.department }}"></i> {{ user.firstname }} {{ user.lastname }}
+                        </h4>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user.description }}</h5>
+                            <p class="card-text">
+                                <i class="fa fa-envelope" aria-hidden="true"></i> {{ user.userprincipalname }}
+                                {% if user.mobileNumber is not empty %}
+                                    <br>
+                                    <i class="fa fa-mobile" aria-hidden="true"></i> {{ user.mobileNumber }}
+                                {% elseif user.telephoneNumber is not empty %}
+                                    <br>
+                                    <i class="fa fa-phone" aria-hidden="true"></i> {{ user.telephoneNumber }}
                                 {% endif %}
-{#                                {% if (application.linkFr is not empty) or (application.linkNl is not empty) %}#}
-{#                                    {% if application.linkFr is not empty %}#}
-{#                                        <a href="{{ application.linkFr }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.fr.label'|trans|upper }}</a>#}
-{#                                    {% endif %}#}
-{#                                    {% if application.linkNl is not empty %}#}
-{#                                        <a href="{{ application.linkNl }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.nl.label'|trans|upper }}</a>#}
-{#                                    {% endif %}#}
-{#                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary">{{ 'application.btn.link.en.label'|trans|upper }}</a>#}
-{#                                {% else %}#}
-                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> {{ 'application.btn.link.label'|trans|upper }}</a>
-{#                                {% endif %}#}
+                            </p>
+                            <div class="btn-group pull-right" role="group" aria-label="Actions">
+                                <a href="{{ url('account_change_password') }}" class="btn btn-warning"><i class="fa fa-key"></i> {{ 'btn.change.password.label'|trans }}</a>
                             </div>
                         </div>
-                {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ 'main.menu.application.label'|trans }}</h1>
+                    <div class="card-columns">
+                        {% for application in applications %}
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ application.name }}</h5>
+                                    {%  if application.description is not empty %}
+                                        <p class="card-text text-left small">{{ application.description|raw }}</p>
+                                    {% endif %}
+                                    <a href="{{ application.link }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> {{ 'application.btn.link.label'|trans|upper }}</a>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -57,27 +72,27 @@
                 <ul class="list-group col-lg-12">
                     <li class="list-group-item list-group-item-info"><i class="fa fa-users" aria-hidden="true"></i> {{ 'application.new_collegues.title.h3'|trans }}</li>
                     {% for collegue in starters %}
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <span>{{ collegue.countryFlag|raw }} {{ collegue.displayName }}
-                        <br>
-                        <small>
-                            {{ 'application.new_collegues.start_date'|trans }}: {{ collegue.DateContractStart|date('d/m/Y') }}<br>
-                            <i class="fa fa-briefcase" aria-hidden="true"></i> {{ collegue.function }}
-                        </small>
-                            </span>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
                         <span>
+                            {{ collegue.countryFlag|raw }} {{ collegue.displayName }}
+                            <br>
+                            <small>
+                                {{ 'application.new_collegues.start_date'|trans }}: {{ collegue.DateContractStart|date('d/m/Y') }}<br>
+                                <i class="fa fa-briefcase" aria-hidden="true"></i> {{ collegue.function }}
+                            </small>
+                        </span>
+                            <span>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('account_detail', {'id': collegue.employeeId }) }}" class="btn btn-outline-success btn-sm"><i class="fa fa-eye"></i> {{ 'Show detail'|trans }}</a>
                             {% endif %}
                         </span>
-                    </li>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
         {% endif %}
     </div>
-    {#{% endfor %}#}
 {% endblock %}
 
 {% block title %}

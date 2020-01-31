@@ -65,33 +65,6 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/my", name="my_account")
-     *
-     * @throws \LogicException
-     *
-     * @IsGranted("ROLE_USER")
-     */
-    public function myAction()
-    {
-        $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
-
-        $now = new \DateTime('now');
-        $passwordLastSet = new \DateTime();
-        $passwordLastSet->setTimestamp($user->getPasswordLastSetTimestamp());
-
-        $passwordAges = $passwordLastSet->diff($now)->format('%a');
-
-        return $this->render(
-            'Account/myAccount.html.twig',
-            [
-                'user' => $user,
-                'country' => $user->getFirstAttribute('c'),
-                'passwordAges' => $passwordAges,
-            ]
-        );
-    }
-
-    /**
      * @Route("/", name="account_list", methods={"GET"})
      *
      * @IsGranted("ROLE_ADMIN")

@@ -37,6 +37,7 @@ class ApplicationController extends AbstractController
     /**
      * @Route("/", name="homepage")
      * @Route("/my-apps", name="application-my-apps")
+     * @Route("/account/my", name="my_account")
      *
      * @param CategoryRepository $categoryRepository
      * @param BisPersonView      $bisPersonView
@@ -63,6 +64,7 @@ class ApplicationController extends AbstractController
                 'applications' => $applications,
                 'passwordAges' => $passwordAges,
                 'user' => $user,
+                'country' => $user->getFirstAttribute('c'),
                 'starters' => $bisPersonView->getStarters(),
                 'finishers' => $bisPersonView->getFinishers(),
             ]
