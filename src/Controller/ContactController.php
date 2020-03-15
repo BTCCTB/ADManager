@@ -134,4 +134,44 @@ class ContactController extends AbstractController
         $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
         return $response;
     }
+
+    /**
+     * @Route("/hq/export", name="hq_export")
+     *
+     * @return Response
+     */
+    public function exportHQ()
+    {
+        $contacts = $this->phoneDirectory->getHQ();
+
+        $response = $this->render(
+            'Contact/exports.csv.twig',
+            [
+                'contacts' => $contacts,
+            ]
+        );
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        return $response;
+    }
+
+    /**
+     * @Route("/field/export", name="field_export")
+     *
+     * @return Response
+     */
+    public function exportField()
+    {
+        $contacts = $this->phoneDirectory->getField();
+
+        $response = $this->render(
+            'Contact/exports.csv.twig',
+            [
+                'contacts' => $contacts,
+            ]
+        );
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        return $response;
+    }
 }

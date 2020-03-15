@@ -7,9 +7,21 @@
 <div class="row">
     <div class="col-sm-12">
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('contact_export') }}" class="btn btn-dark"><i class="fa fa-download"></i> {{ 'contact.export.all'|trans }}</a><br><br>
+            <div class="row">
+                <div class="col-sm-5 text-right">
+                    <div class="btn-group" role="group" aria-label="Exports">
+                        <a href="{{ path('contact_hq_export') }}" class="btn btn-outline-danger"><i class="flag-icon flag-icon-be"></i> {{ 'contact.export.hq'|trans }}</a>
+                        <a href="{{ path('contact_field_export') }}" class="btn btn-outline-danger"><i class="fa fa-flag"></i> {{ 'contact.export.field'|trans }}</a>
+                        <a href="{{ path('contact_export') }}" class="btn btn-outline-danger"><i class="fa fa-globe"></i> {{ 'contact.export.all'|trans }}</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <input type="text" class="form-control contactSearch" placeholder="Search for..."> <br>
+                </div>
+            </div>
+        {% else %}
+                <input type="text" class="form-control contactSearch" placeholder="Search for..."> <br>
         {% endif %}
-        <input type="text" class="form-control contactSearch" placeholder="Search for..."> <br>
     </div>
     {% for contact in contacts %}
         <div class="col-sm-3 contactCard">

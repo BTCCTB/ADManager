@@ -235,5 +235,17 @@
         <target>Exporteer alle contacten</target>
       </segment>
     </unit>
+    <unit id="xle4vaJ" name="contact.export.hq">
+      <segment>
+        <source>contact.export.hq</source>
+        <target>Exporteer HQ contacten</target>
+      </segment>
+    </unit>
+    <unit id="98t.c7T" name="contact.export.field">
+      <segment>
+        <source>contact.export.field</source>
+        <target>Exporteer Field contacten</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
