@@ -229,5 +229,11 @@
         <target>Meer info</target>
       </segment>
     </unit>
+    <unit id="xkEUTNw" name="contact.export.all">
+      <segment>
+        <source>contact.export.all</source>
+        <target>Exporteer alle contacten</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

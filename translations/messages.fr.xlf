@@ -307,5 +307,11 @@
         <target>Contacts de mon pays</target>
       </segment>
     </unit>
+    <unit id="xkEUTNw" name="contact.export.all">
+      <segment>
+        <source>contact.export.all</source>
+        <target>Exporter tous les contacts</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
