@@ -325,5 +325,11 @@
         <target>Exporter les contacts terrain</target>
       </segment>
     </unit>
+    <unit id="2dFPbTn" name="contact.export.resrep">
+      <segment>
+        <source>contact.export.resrep</source>
+        <target>Exporter les contacts ResRep</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

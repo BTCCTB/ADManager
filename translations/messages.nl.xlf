@@ -247,5 +247,11 @@
         <target>Exporteer Field contacten</target>
       </segment>
     </unit>
+    <unit id="2dFPbTn" name="contact.export.resrep">
+      <segment>
+        <source>contact.export.resrep</source>
+        <target>Exporteer ResRep contacten</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

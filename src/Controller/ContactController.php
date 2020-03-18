@@ -131,7 +131,7 @@ class ContactController extends AbstractController
             ]
         );
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export-all-enabel.csv"');
         return $response;
     }
 
@@ -151,7 +151,7 @@ class ContactController extends AbstractController
             ]
         );
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export-hq.csv"');
         return $response;
     }
 
@@ -171,7 +171,27 @@ class ContactController extends AbstractController
             ]
         );
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export-field.csv"');
+        return $response;
+    }
+
+    /**
+     * @Route("/resrep/export", name="resrep_export")
+     *
+     * @return Response
+     */
+    public function exportResRep()
+    {
+        $contacts = $this->phoneDirectory->getResRep();
+
+        $response = $this->render(
+            'Contact/exports.csv.twig',
+            [
+                'contacts' => $contacts,
+            ]
+        );
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export-resrep.csv"');
         return $response;
     }
 }

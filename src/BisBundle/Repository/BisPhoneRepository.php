@@ -55,6 +55,17 @@ class BisPhoneRepository extends EntityRepository
         return $this->getPhoneDirectoryByCountry('BEL');
     }
 
+    public function getResRepPhoneDirectory() :  ? array
+    {
+        return $this->getBaseQuery()
+            ->andWhere('bp.function LIKE :ResRepNl OR bp.function LIKE :ResRepFr OR bp.function LIKE :ResRepEn')
+            ->setParameter('ResRepFr', 'Représentant résident%')
+            ->setParameter('ResRepNl', 'Plaatselijk vertegenwoordiger%')
+            ->setParameter('ResRepEn', 'Resident Representative%')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * Get full phone directory
      *

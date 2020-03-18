@@ -43,4 +43,9 @@ class PhoneDirectory
     {
         return $this->repository->getHQPhoneDirectory();
     }
+
+    public function getResRep()
+    {
+        return $this->repository->getResRepPhoneDirectory();
+    }
 }
