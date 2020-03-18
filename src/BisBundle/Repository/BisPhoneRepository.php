@@ -24,9 +24,21 @@ class BisPhoneRepository extends EntityRepository
      */
     public function getPhoneDirectoryByCountry(string $country):  ? array
     {
-        return $this->getBaseQuery()
+        return $this->getBaseQueryWithPhone()
             ->andWhere('bp.countryWorkplace = :country')
             ->setParameter('country', $country)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get full phone directory
+     *
+     * @return BisPhone[]|null The directory or null if not found
+     */
+    public function getPhoneDirectory() :  ? array
+    {
+        return $this->getBaseQueryWithPhone()
             ->getQuery()
             ->getResult();
     }
@@ -38,7 +50,7 @@ class BisPhoneRepository extends EntityRepository
      */
     public function getFieldPhoneDirectory() :  ? array
     {
-        return $this->getBaseQuery()
+        return $this->getBaseQueryWithPhone()
             ->andWhere('bp.countryWorkplace != :country')
             ->setParameter('country', 'BEL')
             ->getQuery()
@@ -57,6 +69,39 @@ class BisPhoneRepository extends EntityRepository
 
     public function getResRepPhoneDirectory() :  ? array
     {
+        return $this->getBaseQueryWithPhone()
+            ->andWhere('bp.function LIKE :ResRepNl OR bp.function LIKE :ResRepFr OR bp.function LIKE :ResRepEn')
+            ->setParameter('ResRepFr', 'Représentant résident%')
+            ->setParameter('ResRepNl', 'Plaatselijk vertegenwoordiger%')
+            ->setParameter('ResRepEn', 'Resident Representative%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get full staff
+     *
+     * @return BisPhone[]|null The staff or null if not found
+     */
+    public function getStaff() :  ? array
+    {
+        return $this->getBaseQuery()
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get HQ Staff
+     *
+     * @return BisPhone[]|null The staff or null if not found
+     */
+    public function getHQStaff() :  ? array
+    {
+        return $this->getStaffByCountry('BEL');
+    }
+
+    public function getResRepStaff() :  ? array
+    {
         return $this->getBaseQuery()
             ->andWhere('bp.function LIKE :ResRepNl OR bp.function LIKE :ResRepFr OR bp.function LIKE :ResRepEn')
             ->setParameter('ResRepFr', 'Représentant résident%')
@@ -67,17 +112,49 @@ class BisPhoneRepository extends EntityRepository
     }
 
     /**
-     * Get full phone directory
+     * Get staff for field
      *
-     * @return BisPhone[]|null The directory or null if not found
+     * @return BisPhone[]|null The staff or null if not found
      */
-    public function getPhoneDirectory() :  ? array
+    public function getFieldStaff() :  ? array
     {
         return $this->getBaseQuery()
+            ->andWhere('bp.countryWorkplace != :country')
+            ->setParameter('country', 'BEL')
             ->getQuery()
             ->getResult();
     }
 
+    /**
+     * Get staff list by country
+     *
+     * @param string $country The country code [iso3letter] of the staff
+     *
+     * @return BisPhone[]|null The staff or null if not found
+     */
+    public function getStaffByCountry(string $country) :  ? array
+    {
+        return $this->getBaseQuery()
+            ->andWhere('bp.countryWorkplace = :country')
+            ->setParameter('country', $country)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getBaseQueryWithPhone()
+    {
+        return $this->getBaseQuery()
+            ->andWhere('bp.mobile IS NOT NULL OR bp.telephone IS NOT NULL')
+            ->andWhere('bp.mobile <> :empty OR bp.telephone <> :empty')
+            ->setParameter('empty', '');
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     private function getBaseQuery()
     {
         $repository = $this->_em->getRepository(BisPhone::class);
@@ -85,12 +162,10 @@ class BisPhoneRepository extends EntityRepository
         return $repository->createQueryBuilder('bp')
             ->where("bp.countryWorkplace != ''")
             ->andWhere('bp.email IS NOT NULL')
-            ->andWhere('bp.email <> :empty')
-            ->andWhere('bp.mobile IS NOT NULL OR bp.telephone IS NOT NULL')
-            ->andWhere('bp.mobile <> :empty OR bp.telephone <> :empty')
+            ->andWhere('bp.email <> :emptyMail')
             ->andWhere('bp.id NOT IN (:ids)')
             ->setParameter('ids', BisPersonViewRepository::getMemberOtTheBoard())
-            ->setParameter('empty', '')
+            ->setParameter('emptyMail', '')
             ->orderBy('bp.lastname', 'ASC')
             ->addOrderBy('bp.firstname', 'ASC');
     }

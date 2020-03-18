@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use BisBundle\Service\BisPersonView;
 use BisBundle\Service\PhoneDirectory;
+use BisBundle\Service\Staff;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,20 +25,26 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ContactController extends AbstractController
 {
-
     /**
      * @var PhoneDirectory
      */
     private $phoneDirectory;
+
     /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(PhoneDirectory $phoneDirectory, TranslatorInterface $translator)
+    /**
+     * @var Staff
+     */
+    private $staff;
+
+    public function __construct(PhoneDirectory $phoneDirectory, Staff $staff, TranslatorInterface $translator)
     {
         $this->phoneDirectory = $phoneDirectory;
         $this->translator = $translator;
+        $this->staff = $staff;
     }
 
     /**
@@ -122,7 +129,7 @@ class ContactController extends AbstractController
      */
     public function export()
     {
-        $contacts = $this->phoneDirectory->getAll();
+        $contacts = $this->staff->getAll();
 
         $response = $this->render(
             'Contact/exports.csv.twig',
@@ -142,7 +149,7 @@ class ContactController extends AbstractController
      */
     public function exportHQ()
     {
-        $contacts = $this->phoneDirectory->getHQ();
+        $contacts = $this->staff->getHQ();
 
         $response = $this->render(
             'Contact/exports.csv.twig',
@@ -162,7 +169,7 @@ class ContactController extends AbstractController
      */
     public function exportField()
     {
-        $contacts = $this->phoneDirectory->getField();
+        $contacts = $this->staff->getField();
 
         $response = $this->render(
             'Contact/exports.csv.twig',
@@ -182,7 +189,7 @@ class ContactController extends AbstractController
      */
     public function exportResRep()
     {
-        $contacts = $this->phoneDirectory->getResRep();
+        $contacts = $this->staff->getResRep();
 
         $response = $this->render(
             'Contact/exports.csv.twig',
