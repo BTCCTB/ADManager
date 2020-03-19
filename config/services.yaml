@@ -164,3 +164,9 @@ services:
         resource: '../src/ApiBundle/Controller'
         tags: ['controller.service_arguments']
 
+    App\Service\SmsGatewayMe:
+        autowire: true
+        arguments:
+            $apiToken: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
+            $deviceId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
+        public: true

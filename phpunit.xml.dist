@@ -46,6 +46,11 @@
         <env name="BIS_DIR_ADMIN_PASSWORD" value="" />
         <!-- ###- LDAP ### -->
 
+        <!-- ###+ SmsGatewayMe ### -->
+        <env name="SMS_GATEWAY_ME_API_TOKEN" value="123aze456rty789uiop" />
+        <env name="SMS_GATEWAY_ME_DEVICE_ID" value="9876543210" />
+        <!-- ###- SmsGatewayMe ### -->
+
     </php>
 
     <testsuites>

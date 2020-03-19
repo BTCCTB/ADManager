@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94dbe6206753aef802a35db4edda7749",
+    "content-hash": "037fba436c44e338f3a93f7ebd532a48",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -149,6 +149,7 @@
                 }
             ],
             "description": "CSS for vector based country flags",
+            "abandoned": true,
             "time": "2019-11-19T09:00:39+00:00"
         },
         {
@@ -3962,6 +3963,56 @@
                 "controllers"
             ],
             "time": "2019-12-27T08:57:19+00:00"
+        },
+        {
+            "name": "smsgatewayme/client",
+            "version": "v0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smsgatewayme/client-php.git",
+                "reference": "864f326ad6951599b487aab3cc350a966c5cbd86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smsgatewayme/client-php/zipball/864f326ad6951599b487aab3cc350a966c5cbd86",
+                "reference": "864f326ad6951599b487aab3cc350a966c5cbd86",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6.1",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SMSGatewayMe\\Client\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache v2"
+            ],
+            "authors": [
+                {
+                    "name": "SMS Gateway Me",
+                    "homepage": "https://smsgateway.me"
+                }
+            ],
+            "homepage": "https://smsgateway.me",
+            "keywords": [
+                "api",
+                "php",
+                "sdk",
+                "swagger"
+            ],
+            "time": "2018-05-16T00:13:09+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
