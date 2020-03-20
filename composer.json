@@ -34,6 +34,7 @@
     "fzaninotto/faker": "^1.7",
     "guzzlehttp/psr7": "^1.4",
     "jms/i18n-routing-bundle": "^3.0",
+    "misd/phone-number-bundle": "^1.3",
     "php-http/guzzle6-adapter": "^1.1",
     "php-http/httplug-bundle": "^1.14",
     "php-translation/loco-adapter": "^0.8",

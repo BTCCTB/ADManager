@@ -42,3 +42,7 @@ loco_api_key: "{{ vault_loco_api_key }}"
 sf_api_user: "{{ vault_sf_api_user }}"
 sf_api_password: "{{ vault_sf_api_password }}"
 sf_api_company: "C0000960484P"
+
+# SmsGateway.me vars
+sms_gateway_me_api_token: "{{ vault_sms_gateway_me_api_token }}"
+sms_gateway_me_device_id: "{{ vault_sms_gateway_me_device_id }}"
