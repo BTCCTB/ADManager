@@ -4,6 +4,9 @@ namespace AuthBundle\Security;
 
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
+/**
+ * @method bool needsRehash(string $encoded)
+ */
 class SHA1PasswordEncoder implements PasswordEncoderInterface
 {
     /**
@@ -31,5 +34,10 @@ class SHA1PasswordEncoder implements PasswordEncoderInterface
     public function isPasswordValid($encoded, $raw, $salt = null): bool
     {
         return $encoded === $this->encodePassword($raw, $salt);
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method bool needsRehash(string $encoded)
     }
 }
