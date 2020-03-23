@@ -41,7 +41,7 @@ class AdFixAccountCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:fix:account')
+        $this->setName('ad:account:fix')
             ->setDescription('Fix account')
             ->addArgument('email', InputArgument::OPTIONAL, 'User email [@enabel.be]?');
     }

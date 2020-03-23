@@ -50,7 +50,7 @@ class AdInitAccountCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:init:account')
+        $this->setName('ad:account:init')
             ->setDescription('Initialize the AD account with a new password');
     }
 

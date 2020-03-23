@@ -67,7 +67,7 @@ class AdCreateAccountCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:create:account')
+        $this->setName('ad:account:create')
             ->setDescription('Create the AD account with GO4HR data')
             ->addArgument('emails', InputArgument::REQUIRED, 'User email [@enabel.be]?');
     }

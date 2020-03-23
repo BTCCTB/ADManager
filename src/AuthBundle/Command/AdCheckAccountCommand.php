@@ -51,7 +51,7 @@ class AdCheckAccountCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:check:account')
+        $this->setName('ad:account:check')
             ->setDescription('Check the AD account with GO4HR data')
             ->addArgument('email', InputArgument::REQUIRED, 'User email [@enabel.be]?');
     }

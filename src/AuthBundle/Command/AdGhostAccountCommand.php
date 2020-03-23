@@ -34,7 +34,7 @@ class AdGhostAccountCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:ghost:account')
+        $this->setName('ad:account:ghost')
             ->setDescription('Check the AD account with GO4HR data and report Ghost AD account');
     }
 

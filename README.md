@@ -1,6 +1,5 @@
 # PasswordManager
 
-[![Build Status](https://travis-ci.org/BTCCTB/Password.svg?branch=master)](https://travis-ci.org/BTCCTB/Password)
 [![Build Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/build.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/build-status/)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/quality-score.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
 [![Code Coverage](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/coverage.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
@@ -9,10 +8,10 @@
 A php application for Active Directory Manipulation.
 
 ## Requirement
-* You need PHP 7.1 or newer, with session support.
+* You need PHP 7.2 or newer, with session support.
 * PasswordManager supports MySQL-compatible databases
     * MySQL 5.7 or newer
-    * MariaDB 5.5 or newer
+    * MariaDB 10.1 or newer
 * LDAP PHP extension enabled
 * and the [usual Symfony application requirements][1].
 
@@ -25,12 +24,13 @@ $ composer install
 ```
 
 ## Usage
-* Configure your own parameters file in `./app/config/parameters.yml` based on `./app/config/parameters.yml.dist`
+* Configure your own parameters file in `.env.local` based on `.env`
 
 Start the local server and initialize the database
 ```bash 
-$ composer serve
-$ composer db-init
+$ composer docker:start
+$ bin/console doctrine:database:create --if-not-exists
+$ bin/console doctrine:migration:migrate
 ```
 
 > **NOTE**
@@ -45,13 +45,13 @@ $ composer db-init
 * Start the local database/phpmyadmin (localhost:8080) instance with docker
 * Run the internal php server on localhost:8000
 ```bash 
-$ composer serve
+$ composer docker:start
 ```
 
 ### Stop the local server:
 * Stop the local database/phpmyadmin instance with docker
 ```bash
-$ composer stop
+$ composer docker:stop
 ```
 
 ### Initialize the database:
@@ -59,32 +59,21 @@ $ composer stop
 * Create the database
 * Create the schema with doctrine migration
 ```bash
-$ composer db-init
+$ bin/console doctrine:database:create --if-not-exists
+$ bin/console doctrine:migration:migrate
 ```
 
 ### Update the database schema
 * Execute the doctrine migration
 ```bash
-$ composer db-migrate
+$ bin/console doctrine:migration:migrate
 ```
 
 ### Testings
 * Execute the phpunit tests
 ```bash
-$ composer test
+$ bin/phpunit
 ```
-
-## TODO
-- [X] Latest Symfony Standard
-- [X] Configure AD Auth
-    - [X] ADLdap2
-    - [X] Guard Auth
-- [X] Import user in ldap
-- [X] Password generator
-- [X] Change password form
-- [ ] Reset password form ?
-- [X] List latest in/out
-- [X] Mail notification
 
 ## Contributing
 

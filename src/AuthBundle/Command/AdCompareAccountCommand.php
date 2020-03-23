@@ -50,7 +50,7 @@ class AdCompareAccountCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:compare:account')
+        $this->setName('ad:account:compare')
             ->setDescription('Compare the AD account with GO4HR data')
             ->addArgument('email', InputArgument::REQUIRED, 'User email [@enabel.be]?');
     }

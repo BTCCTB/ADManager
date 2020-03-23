@@ -30,7 +30,7 @@ class MailTestCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('mail:test')
+        $this->setName('ad:test:mail')
             ->setDescription('Test mail.');
     }
 
