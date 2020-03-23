@@ -1,10 +1,15 @@
 build:
     environment:
-        mariadb: 10.1
         php:
             version: 7.2
             ini:
                 'date.timezone': 'Europe/Brussels'
+
+    nodes:
+      my-node:
+        services:
+          mariadb: 10.1
+
     tests:
         override:
             -
