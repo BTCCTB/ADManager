@@ -6,9 +6,21 @@ build:
                 'date.timezone': 'Europe/Brussels'
 
     nodes:
-      my-node:
-        services:
-          mariadb: 10.1
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
+        my-node:
+            services:
+                mariadb: 10.1
+
+        coverage:
+            tests:
+                override:
+                    - command: 'vendor/bin/phpunit'
+                      coverage:
+                          file: 'var/coverage.xml'
+                          format: 'clover'
 
     dependencies:
         before:
@@ -20,11 +32,6 @@ build:
 
     tests:
         override:
-            -
-                command: 'vendor/bin/phpunit'
-                coverage:
-                    file: 'var/coverage.xml'
-                    format: 'php-clover'
             -
                 command: phpcs-run --standard=checkstyle.xml
                 use_website_config: false
