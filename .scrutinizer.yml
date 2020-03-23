@@ -10,7 +10,7 @@ build:
       tests:
         override:
           - php-scrutinizer-run
-    my-node:
+    docker:
       services:
         mariadb: 10.1
 
