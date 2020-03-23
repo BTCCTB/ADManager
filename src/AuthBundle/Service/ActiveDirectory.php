@@ -4,20 +4,20 @@ namespace AuthBundle\Service;
 
 use Adldap\Adldap;
 use Adldap\AdldapException;
+use Adldap\Auth\BindException;
+use Adldap\Auth\PasswordRequiredException;
+use Adldap\Auth\UsernameRequiredException;
 use Adldap\Configuration\DomainConfiguration;
-use Adldap\Connections\Provider;
 use Adldap\Models\Attributes\AccountControl;
 use Adldap\Models\Attributes\DistinguishedName;
 use Adldap\Models\OrganizationalUnit;
 use Adldap\Models\User;
-use Adldap\Models\UserPasswordPolicyException;
+use Adldap\Query\Collection;
 use Adldap\Schemas\ActiveDirectory as AdldapActiveDirectory;
 use App\Service\Account;
 use BisBundle\Entity\BisPersonView;
 use Doctrine\ORM\EntityManager;
-use Illuminate\Support\Collection;
 use Symfony\Component\Debug\Exception\ContextErrorException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
  * Class ActiveDirectory
@@ -33,7 +33,7 @@ class ActiveDirectory
     const DISABLE_ALLOWED_LIMIT = 30;
 
     /**
-     * @var Provider
+     * @var Adldap
      */
     private $activeDirectory;
 
@@ -130,9 +130,9 @@ class ActiveDirectory
      *
      * @return bool Returns true if the credentials are valid.
      *
-     * @throws \Adldap\Auth\BindException
-     * @throws \Adldap\Auth\PasswordRequiredException
-     * @throws \Adldap\Auth\UsernameRequiredException
+     * @throws BindException
+     * @throws PasswordRequiredException
+     * @throws UsernameRequiredException
      */
     public function checkCredentials(string $email, string $password): bool
     {
@@ -149,7 +149,7 @@ class ActiveDirectory
      *
      * @return bool Returns true if the password is updated.
      *
-     * @throws \Adldap\AdldapException
+     * @throws AdldapException
      */
     public function changePassword(string $email, string $password): bool
     {
@@ -331,48 +331,6 @@ class ActiveDirectory
         return false;
     }
 
-    public function getCountryStatUsers()
-    {
-        $stats = [];
-        $stats['HQ'] = count($this->getHqUsers());
-        $stats['Field'] = count($this->getFieldUsers());
-
-        return $stats;
-    }
-
-    /**
-     * Set default password & define account as normal
-     *
-     * @param String      $username The username [firstname.lastname@company.domain]
-     *
-     * @param String|null $password The new password
-     *
-     * @return bool
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     * @throws UserPasswordPolicyException
-     * @throws AdldapException
-     * TODO: Change return type to ActiveDirectoryResponse
-     */
-    public function resetAccount(String $username, String $password): bool
-    {
-        $user = $this->checkUserExistByUsername($username);
-        if (false !== $user) {
-            // Set account active
-            $user->setUserAccountControl(512);
-            if (null !== $password) {
-                if (true === ActiveDirectoryHelper::checkPasswordComplexity($password)) {
-                    $user->setPassword($password);
-                    $this->accountService->updateCredentials($user, $password);
-
-                    return $user->save();
-                }
-                throw new UserPasswordPolicyException('The password does not conform to the password policy!');
-            }
-        }
-        throw new UsernameNotFoundException('The username does not correspond to a valid user!');
-    }
-
     /**
      * Check if OU exist in AD
      *
@@ -427,7 +385,7 @@ class ActiveDirectory
     /**
      * @param string $name
      *
-     * @return \Adldap\Models\OrganizationalUnit|bool
+     * @return OrganizationalUnit|bool
      */
     public function createCountryOu($name)
     {
@@ -449,221 +407,11 @@ class ActiveDirectory
     }
 
     /**
-     * Update DisplayName in AD with GO4HR data
-     * TODO: Change return type to ActiveDirectoryResponse
-     */
-    public function fixDisplayName()
-    {
-        // Set no limit time & memory
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
-
-        // Error Log
-        $logs = [];
-
-        // Get BisPersonView Repository
-        $bisPersonView = $this->em->getRepository('BisBundle:BisPersonView');
-
-        $users = $this->getAllUsers('userprincipalname');
-        foreach ($users as $user) {
-            $email = $user->getEmail();
-            $state = '<comment>OK</comment>';
-            $bisUser = null;
-            if (!empty($email)) {
-                $bisUser = $bisPersonView->getUserByEmail($email);
-            }
-            if (!empty($bisUser)) {
-                if (strcmp($user->getDisplayName(), $bisUser->getDisplayName()) !== 0) {
-                    $user->setDisplayName($bisUser->getDisplayName());
-                    $user->setFirstName($bisUser->getFirstname());
-                    $user->setLastName($bisUser->getLastname());
-                    if (!$user->save()) {
-                        $state = '<error>FAILED</error>';
-                    }
-                    $logs[] = [
-                        'user' => $user->getUserPrincipalName(),
-                        'current' => $user->getDisplayName(),
-                        'new' => $bisUser->getDisplayName(),
-                        'state' => $state,
-                    ];
-                }
-            } else {
-                if (strtolower($user->getLastName()) === 'desk') {
-                    $newDn = strtoupper($user->getLastName()) . ', ' . ucfirst(strtolower($user->getFirstName()));
-                    $user->setDisplayName($newDn);
-                    if (!$user->save()) {
-                        $state = '<error>FAILED</error>';
-                    }
-                    $logs[] = [
-                        'user' => $user->getUserPrincipalName(),
-                        'current' => $user->getDisplayName(),
-                        'new' => $newDn,
-                        'state' => $state,
-
-                    ];
-                } elseif (strtolower($user->getFirstName()) === 'desk') {
-                    $newDn = strtoupper($user->getFirstName()) . ', ' . ucfirst(strtolower($user->getLastName()));
-                    $user->setDisplayName($newDn);
-                    if (!$user->save()) {
-                        $state = '<error>FAILED</error>';
-                    }
-                    $logs[] = [
-                        'user' => $user->getUserPrincipalName(),
-                        'current' => $user->getDisplayName(),
-                        'new' => $newDn,
-                        'state' => $state,
-
-                    ];
-                } elseif (!empty($user->getLastName()) && !empty($user->getFirstName())) {
-                    $newDn = strtoupper($user->getLastName()) . ', ' . ucfirst(strtolower($user->getFirstName()));
-                    $user->setDisplayName($newDn);
-                    if (!$user->save()) {
-                        $state = '<error>FAILED</error>';
-                    }
-                    $logs[] = [
-                        'user' => $user->getUserPrincipalName(),
-                        'current' => $user->getDisplayName(),
-                        'new' => $newDn,
-                        'state' => $state,
-
-                    ];
-                }
-            }
-        }
-
-        return $logs;
-    }
-
-    /**
-     * @return array
-     * TODO: Change return type to ActiveDirectoryResponse
-     */
-    public function fixProxyAddresses()
-    {
-        // Set no limit time & memory
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
-
-        // Error Log
-        $logs = [];
-
-        /**
-         * @var User[] $users
-         */
-        $users = $this->getAllUsers('userprincipalname');
-        foreach ($users as $user) {
-            $email = strtolower($user->getEmail());
-            $state = '<comment>OK</comment>';
-            if (!empty($email)) {
-                $proxyAddresses = $user->getProxyAddresses();
-                $emailPart = explode('@', $email);
-                if (!\in_array('SMTP:' . $emailPart[0] . '@enabel.be', $proxyAddresses, false)) {
-                    $proxyAddresses[] = 'SMTP:' . $emailPart[0] . '@enabel.be';
-                }
-//                if (!\in_array('smtp:' . $emailPart[0] . '@btcctb.org', $proxyAddresses, false)) {
-                //                    $proxyAddresses[] = 'smtp:' . $emailPart[0] . '@btcctb.org';
-                //                }
-                $user->setProxyAddresses($proxyAddresses);
-                if (!$user->save()) {
-                    $state = '<error>FAILED</error>';
-                }
-                $logs[] = [
-                    'user' => $user->getEmail(),
-                    'current' => json_encode($user->getProxyAddresses()),
-                    'new' => json_encode($proxyAddresses),
-                    'state' => $state,
-
-                ];
-            }
-        }
-
-        return $logs;
-    }
-
-    /**
-     * @return array
-     * TODO: Change return type to ActiveDirectoryResponse
-     */
-    public function fixAttributes()
-    {
-        // Set no limit time & memory
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
-
-        // Error Log
-        $logs = [];
-
-        /**
-         * @var BisPersonView[] $users
-         */
-        $users = $this->em->getRepository('BisBundle:BisPersonView')->findAll();
-        foreach ($users as $user) {
-            $adAccount = $this->checkUserExistByEmail($user->getEmail());
-            if (false !== $adAccount) {
-                $adAccount->setAttribute('division', $user->getJobClass());
-                if (!$adAccount->save()) {
-                    $logs[] = [
-                        'user' => $adAccount->getUserPrincipalName(),
-                        'state' => '<error>FAILED</error>',
-                    ];
-                }
-            } else {
-                $logs[] = [
-                    'user' => $user->getEmail(),
-                    'state' => '<error>NOT FOUND</error>',
-                ];
-            }
-        }
-
-        return $logs;
-    }
-
-    /**
-     * @return array
-     * TODO: Change return type to ActiveDirectoryResponse
-     */
-    public function fixUserPrincipalName()
-    {
-        // Set no limit time & memory
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
-
-        // Error Log
-        $logs = [];
-
-        /**
-         * @var User[] $users
-         */
-        $users = $this->getAllUsers('userprincipalname');
-        foreach ($users as $user) {
-            $email = strtolower($user->getEmail());
-            $state = '<comment>OK</comment>';
-            if (!empty($email)) {
-                $emailPart = explode('@', $email);
-                if ($user->getUserPrincipalName() !== $emailPart[0] . '@enabel.be') {
-                    $user->setUserPrincipalName($emailPart[0] . '@enabel.be');
-                    if (!$user->save()) {
-                        $state = '<error>FAILED</error>';
-                    }
-                    $logs[] = [
-                        'user' => $user->getUserPrincipalName(),
-                        'current' => $user->getUserPrincipalName(),
-                        'new' => $emailPart[0] . '@enabel.be',
-                        'state' => $state,
-                    ];
-                }
-            }
-        }
-
-        return $logs;
-    }
-
-    /**
-     * @param null $country
+     * @param string $country
      *
      * @return ActiveDirectoryResponse[]
      *
-     * @throws \Adldap\AdldapException
+     * @throws AdldapException
      */
     public function cronTaskSynchronize($country = null)
     {
@@ -893,7 +641,7 @@ class ActiveDirectory
 
         if (false !== $adAccount && !empty($bisUser)) {
             // Set BIS data in Active Directory format
-            list($adAccount, $diffData) = ActiveDirectoryHelper::bisPersonUpdateAdUser($bisUser, $adAccount);
+            [$adAccount, $diffData] = ActiveDirectoryHelper::bisPersonUpdateAdUser($bisUser, $adAccount);
             //$adAccount->setAccountName($original['samaccountname'][0]);
 
             if (!empty($diffData)) {
@@ -997,79 +745,6 @@ class ActiveDirectory
         );
     }
 
-/**
- * Move user in the 'Enabel-NoMail' Organizational Unit
- *
- * @param string $email
- *
- * @return ActiveDirectoryResponse
- */
-    public function noMail(string $email): ActiveDirectoryResponse
-    {
-        $ouName = 'Enabel-NoMail';
-        $adAccount = $this->checkUserExistByEmail($email);
-
-        if (false !== $adAccount) {
-            // Check Organizational Unit exist
-            $organizationalUnit = $this->checkOuExistByName($ouName);
-
-            if (false === $organizationalUnit) {
-                return new ActiveDirectoryResponse(
-                    "Organizational unit '" . $ouName . "' doesn't exist!",
-                    ActiveDirectoryResponseStatus::EXCEPTION,
-                    ActiveDirectoryResponseType::MOVE,
-                    ActiveDirectoryHelper::getDataAdUser(
-                        $adAccount,
-                        [
-                            'from' => $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName()),
-                            'to' => $ouName,
-                        ]
-                    )
-                );
-            }
-            $rdn = 'CN=' . $adAccount->getCommonName();
-            $oldOu = $adAccount->getDnBuilder()->removeCn($adAccount->getCommonName());
-            if (!$adAccount->move($rdn, $organizationalUnit->getDn())) {
-                $from = implode('/', array_reverse($oldOu->getComponents('ou')));
-                $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
-
-                return new ActiveDirectoryResponse(
-                    "User '" . $adAccount->getEmail() . "' can't be moved from '" . $from . "' to '" . $to . "'",
-                    ActiveDirectoryResponseStatus::FAILED,
-                    ActiveDirectoryResponseType::MOVE,
-                    ActiveDirectoryHelper::getDataAdUser(
-                        $adAccount,
-                        [
-                            'from' => $oldOu->get(),
-                            'to' => $organizationalUnit->getDn(),
-                        ]
-                    )
-                );
-            }
-            $from = implode('/', array_reverse($oldOu->getComponents('ou')));
-            $to = implode('/', array_reverse($organizationalUnit->getDnBuilder()->getComponents('ou')));
-
-            return new ActiveDirectoryResponse(
-                "User '" . $adAccount->getEmail() . "' moved from '" . $from . "' to '" . $to . "'",
-                ActiveDirectoryResponseStatus::DONE,
-                ActiveDirectoryResponseType::MOVE,
-                ActiveDirectoryHelper::getDataAdUser(
-                    $adAccount,
-                    [
-                        'from' => $oldOu->get(),
-                        'to' => $organizationalUnit->getDn(),
-                    ]
-                )
-            );
-        }
-
-        return new ActiveDirectoryResponse(
-            "AD user account with email '" . $email . "' doesn't exist!",
-            ActiveDirectoryResponseStatus::EXCEPTION,
-            ActiveDirectoryResponseType::MOVE
-        );
-    }
-
     /**
      * Intitalize a account with generated password.
      *
@@ -1081,42 +756,45 @@ class ActiveDirectory
      */
     public function initAccount(User $fieldUser)
     {
-        // Generate un new password
-        $password = ActiveDirectoryHelper::generatePassword();
-        // Set the generated password
-        $fieldUser->setPassword($password);
-        $this->accountService->updateCredentials($fieldUser, $password);
-        $this->accountService->setGeneratedPassword($fieldUser->getEmail(), $password);
+        if (!empty($fieldUser->getEmail())) {
+            // Generate un new password
+            $password = ActiveDirectoryHelper::generatePassword();
+            // Set the generated password
+            $fieldUser->setPassword($password);
+            $this->accountService->updateCredentials($fieldUser, $password);
+            $this->accountService->setGeneratedPassword($fieldUser->getEmail(), $password);
 
-        // Set default UserControl
-        if ($fieldUser->getCountry() !== 'BE') {
-            $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
-        } else {
-            $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            // Set default UserControl
+            if ($fieldUser->getCountry() !== 'BE') {
+                $fieldUser->setUserAccountControl(
+                    AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD
+                );
+            } else {
+                $fieldUser->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+            }
+
+            // Set email to correct account
+            $fieldUser->setEmail(str_replace('@btcctb.org', '@enabel.be', $fieldUser->getEmail()));
+
+            // Save all these modification
+            if ($fieldUser->save()) {
+                // Send a ActiveDirectoryResponse
+                return new ActiveDirectoryResponse(
+                    "Account '" . $fieldUser->getUserPrincipalName() . "' successfully initialized!",
+                    ActiveDirectoryResponseStatus::DONE,
+                    ActiveDirectoryResponseType::CREATE,
+                    ActiveDirectoryHelper::getDataAdUser(
+                        $fieldUser,
+                        [
+                            'password' => $password,
+                            'generatedpassword' => $password,
+                            'fullname' => $fieldUser->getCommonName(),
+                            'domainaccount' => $fieldUser->getUserPrincipalName(),
+                        ]
+                    )
+                );
+            }
         }
-
-        // Set email to correct account
-        $fieldUser->setEmail(str_replace('@btcctb.org', '@enabel.be', $fieldUser->getEmail()));
-
-        // Save all these modification
-        if ($fieldUser->save()) {
-            // Send a ActiveDirectoryResponse
-            return new ActiveDirectoryResponse(
-                "Account '" . $fieldUser->getUserPrincipalName() . "' successfully initialized!",
-                ActiveDirectoryResponseStatus::DONE,
-                ActiveDirectoryResponseType::CREATE,
-                ActiveDirectoryHelper::getDataAdUser(
-                    $fieldUser,
-                    [
-                        'password' => $password,
-                        'generatedpassword' => $password,
-                        'fullname' => $fieldUser->getCommonName(),
-                        'domainaccount' => $fieldUser->getUserPrincipalName(),
-                    ]
-                )
-            );
-        }
-
         return new ActiveDirectoryResponse(
             "Account '" . $fieldUser->getUserPrincipalName() . "' can not be initialized!",
             ActiveDirectoryResponseStatus::FAILED,
@@ -1546,7 +1224,7 @@ class ActiveDirectory
      *
      * @return ActiveDirectoryResponse
      *
-     * @throws \Adldap\AdldapException
+     * @throws AdldapException
      */
     private function createUser(BisPersonView $bisUser): ActiveDirectoryResponse
     {
@@ -1577,7 +1255,7 @@ class ActiveDirectory
 
         // Save the basic data of the user
         try {
-            if ($user->save()) {
+            if ($user->save() && !empty($user->getEmail())) {
                 // Generate a password
                 $password = ActiveDirectoryHelper::generatePassword();
                 $user->setPassword($password);
