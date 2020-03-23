@@ -12,6 +12,7 @@ build:
 
     dependencies:
         before:
+            - 'composer require phpunit/phpunit --dev'
             - 'composer install --no-interaction --no-scripts'
             - 'php bin/console doctrine:database:create --env=test'
             - 'php bin/console doctrine:migration:migrate -q --env=test'
@@ -20,7 +21,7 @@ build:
     tests:
         override:
             -
-                command: 'bin/phpunit'
+                command: 'vendor/bin/phpunit'
                 coverage:
                     file: 'var/coverage.xml'
                     format: 'php-clover'

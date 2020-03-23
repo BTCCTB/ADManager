@@ -76,9 +76,9 @@
     "squizlabs/php_codesniffer": "^3.0",
     "symfony/browser-kit": "^4.0",
     "symfony/css-selector": "^4.0",
-    "symfony/maker-bundle": "^1.2",
+    "symfony/maker-bundle": "^1.14",
     "symfony/profiler-pack": "*",
-    "symfony/test-pack": "*"
+    "symfony/test-pack": "^1.0"
   },
   "scripts": {
     "auto-scripts": {
@@ -93,14 +93,14 @@
     ],
     "docker:start": [
       "docker-compose up -d",
-      "symfony serve"
+      "symfony server:start -d"
     ],
     "docker:stop": [
-      "docker-compose stop",
+      "docker-compose down",
       "symfony server:stop"
     ],
     "docker:cleanup": [
-      "docker-compose rm"
+      "docker-compose down --volumes"
     ],
     "db:init": [
       "./bin/console doctrine:database:drop --if-exists --force",
