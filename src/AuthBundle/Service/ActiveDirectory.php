@@ -209,7 +209,7 @@ class ActiveDirectory
      *
      * @param integer $employeeID The employee ID [BIS ID]
      *
-     * @return bool|mixed
+     * @return bool|User
      */
     public function checkUserExistByEmployeeID($employeeID)
     {
@@ -1072,6 +1072,7 @@ class ActiveDirectory
 
     /**
      * Intitalize a account with generated password.
+     *
      * @param User $fieldUser
      *
      * @return ActiveDirectoryResponse

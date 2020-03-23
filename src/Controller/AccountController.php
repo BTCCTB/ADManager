@@ -11,6 +11,7 @@ use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
 use App\Service\SecurityAudit;
+use App\Service\SmsGatewayMe;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
@@ -206,17 +207,46 @@ class AccountController extends AbstractController
      *
      * @throws \Adldap\AdldapException
      */
-    public function resetAction($employeeID, AccountRepository $accountRepository, ActiveDirectoryNotification $activeDirectoryNotification): RedirectResponse
+    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsGatewayMe $smsGatewayMe): RedirectResponse
     {
         $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
         $account = $accountRepository->find($employeeID);
+        $userInfo = $bisPersonView->getUser($user->getUserPrincipalName());
+
+        if (empty($userInfo) || empty($userInfo->getMobile())) {
+            $this->addFlash('warning', 'Account [' . $user->getUserPrincipalName() . '] without mobile!');
+        }
 
         $resetPassword = $this->activeDirectory->initAccount($user);
 
         if ($resetPassword->getStatus() === ActiveDirectoryResponseStatus::DONE) {
 //            $activeDirectoryNotification->notifyInitialization($resetPassword);
+            $messages = [
+                'info' => [
+                    'fr' => "Votre mot de passe vient d'être modifié avec un mot de passe temporaire. " .
+                    "Changez-le UNIQUEMENT sur (https://password.enabel.be). " .
+                    "Vous recevrez ce mot de passe dans un second message. Enabel ICT",
+                    'nl' => "Uw wachtwoord is zojuist gewijzigd met een tijdelijk wachtwoord. " .
+                    "Wijzig het ENKEL op (https://password.enabel.be). " .
+                    "U ontvangt dit wachtwoord in een tweede bericht. Enabel ICT",
+                    'en' => "Your password has just been modified with a temporary password. " .
+                    "Change it ONLY at (https://password.enabel.be). " .
+                    "You will receive this password in a second message. Enabel ICT",
+                ],
+                'password' => [
+                    'fr' => "Mot de passe:    %%_PASSWORD_%%",
+                    'nl' => "Wachtword:    %%_PASSWORD_%%",
+                    'en' => "Password:    %%_PASSWORD_%%",
+                ],
+            ];
+
+            $smsGatewayMe->send($messages['info'][$userInfo->getLanguage()], $userInfo->getMobile());
+            $resetData = $resetPassword->getData();
+            $messagePassword = str_replace('%%_PASSWORD_%%', $resetData['generatedpassword'], $messages['password'][$userInfo->getLanguage()]);
+            $smsGatewayMe->send($messagePassword, $userInfo->getMobile());
+
             $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
-            $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized!');
+            $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized! [Password: ' . $resetData['generatedpassword'] . ']');
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
         }
