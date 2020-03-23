@@ -1,44 +1,49 @@
 build:
-    environment:
-        php:
-            version: 7.2
-            ini:
-                'date.timezone': 'Europe/Brussels'
+  environment:
+    php:
+      version: 7.2
+      ini:
+        'date.timezone': 'Europe/Brussels'
 
-    nodes:
-        analysis:
-            tests:
-                override:
-                    - php-scrutinizer-run
-        my-node:
-            services:
-                mariadb: 10.1
-
-        coverage:
-            tests:
-                override:
-                    - command: 'vendor/bin/phpunit'
-                      coverage:
-                          file: 'var/coverage.xml'
-                          format: 'clover'
-
-    dependencies:
-        before:
-            - 'composer require phpunit/phpunit --dev'
-            - 'composer install --no-interaction --no-scripts'
-            - 'php bin/console doctrine:database:create --env=test'
-            - 'php bin/console doctrine:migration:migrate -q --env=test'
-            - 'php bin/console doctrine:fixtures:load -n --env=test'
-
-    tests:
+  nodes:
+    analysis:
+      tests:
         override:
-            -
-                command: phpcs-run --standard=checkstyle.xml
-                use_website_config: false
+          - php-scrutinizer-run
+    my-node:
+      services:
+        mariadb: 10.1
+
+    coverage:
+      dependencies:
+        before:
+          - 'composer require phpunit/phpunit --dev'
+          - 'composer install --no-interaction --no-scripts'
+          - 'php bin/console doctrine:database:create --env=test'
+          - 'php bin/console doctrine:migration:migrate -q --env=test'
+          - 'php bin/console doctrine:fixtures:load -n --env=test'
+      tests:
+        override:
+          - command: 'vendor/bin/phpunit'
+            coverage:
+              file: 'var/coverage.xml'
+              format: 'clover'
+
+  dependencies:
+    before:
+      - 'composer install --no-interaction --no-scripts'
+      - 'php bin/console doctrine:database:create --env=test'
+      - 'php bin/console doctrine:migration:migrate -q --env=test'
+      - 'php bin/console doctrine:fixtures:load -n --env=test'
+
+  tests:
+    override:
+      - command: phpcs-run --standard=checkstyle.xml
+        use_website_config: false
 
 filter:
-    paths:
-        - 'src/*'
+  paths:
+    - 'src/*'
 
 tools:
     sensiolabs_security_checker: true
