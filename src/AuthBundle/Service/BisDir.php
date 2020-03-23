@@ -3,12 +3,12 @@
 namespace AuthBundle\Service;
 
 use Adldap\Adldap;
+use Adldap\Configuration\ConfigurationException;
 use Adldap\Configuration\DomainConfiguration;
 use Adldap\Connections\Provider;
 use Adldap\Models\Entry;
 use Adldap\Models\User;
 use Adldap\Schemas\OpenLDAP;
-use AuthBundle\AuthBundle;
 use BisBundle\Entity\BisPersonView;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
@@ -51,7 +51,7 @@ class BisDir
      * @param bool                     $useTls
      * @param bool                     $useSsl
      *
-     * @throws \Adldap\Configuration\ConfigurationException
+     * @throws ConfigurationException
      *
      * @phpcs:disable Generic.Files.LineLength
      */
@@ -256,7 +256,7 @@ class BisDir
     /**
      * @param BisPersonView $bisPersonView
      *
-     * @return BisDirResponse[]|BisDirResponse[][]
+     * @return BisDirResponse[]
      */
     public function synchronizeFromBis(BisPersonView $bisPersonView): array
     {
