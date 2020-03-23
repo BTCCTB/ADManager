@@ -3,6 +3,7 @@
 namespace BisBundle\Repository;
 
 use Adldap\Models\User;
+use AuthBundle\Service\ActiveDirectoryHelper;
 use BisBundle\Entity\BisConjobSf;
 use BisBundle\Entity\BisContractSf;
 use BisBundle\Entity\BisCountry;
@@ -261,6 +262,18 @@ class BisPersonViewRepository extends EntityRepository
         }
 
         return $activeUsers;
+    }
+
+    public function getUserMobileByEmail()
+    {
+        $usersMobile = [];
+
+        foreach ($this->findAll() as $bisPersonView) {
+            /* @var bisPersonView $bisPersonView */
+            $usersMobile[$bisPersonView->getEmail()] = ActiveDirectoryHelper::cleanUpPhoneNumber($bisPersonView->getMobile());
+        }
+
+        return $usersMobile;
     }
 
     public function getStarters(int $nbDays)

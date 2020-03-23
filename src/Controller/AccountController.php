@@ -74,11 +74,12 @@ class AccountController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(AccountRepository $accountRepository)
+    public function indexAction(AccountRepository $accountRepository, BisPersonView $bisPersonView)
     {
         $accounts = $accountRepository->findAllActive();
+        $mobiles = $bisPersonView->getUserMobileByEmail();
 
-        return $this->render('Account/index.html.twig', ['accounts' => $accounts]);
+        return $this->render('Account/index.html.twig', ['accounts' => $accounts, 'mobiles' => $mobiles]);
     }
 
     /**

@@ -16,7 +16,7 @@
             <th>{{ 'Firstname'|trans }}</th>
             <th>{{ 'Lastname'|trans }}</th>
             <th>{{ 'Email'|trans }}</th>
-            {#<th>{{ 'Account name'|trans }}</th>#}
+            <th>{{ 'Mobile'|trans }}</th>
             <th>{{ 'Initial password'|trans }}</th>
             <th>{{ 'Last login'|trans }}</th>
             <th class="text-right">{{ 'Actions'|trans }} </th>
@@ -29,7 +29,7 @@
                 <td>{{ account.firstname }}</td>
                 <td>{{ account.lastname }}</td>
                 <td>{{ account.email }}</td>
-                {#<td>{{ account.accountName }}</td>#}
+                <td>{{ mobiles[account.email]|default('NC') }}</td>
                 <td>{{ account.generatedPassword | default('Not generated') }}</td>
                 <td>{{ account.lastLoginAt|date('d/m/Y H:i')|default('00/00/0000 00:00') }}</td>
                 <td class="text-right">

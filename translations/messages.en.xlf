@@ -403,5 +403,11 @@
         <target>Detail user account</target>
       </segment>
     </unit>
+    <unit id="y6rTz0p" name="Mobile">
+      <segment>
+        <source>Mobile</source>
+        <target>Mobile</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

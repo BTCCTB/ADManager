@@ -74,6 +74,11 @@ class BisPersonView
         return $this->repository->getActiveUserByEmail();
     }
 
+    public function getUserMobileByEmail()
+    {
+        return $this->repository->getUserMobileByEmail();
+    }
+
     public function getStarters(int $nbDays = 15)
     {
         return $this->repository->getStarters($nbDays);
