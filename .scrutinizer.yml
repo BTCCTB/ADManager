@@ -1,6 +1,6 @@
 build:
     environment:
-        mysql: 5.7
+        mariadb: 10.1
         php:
             version: 7.2
             ini:
@@ -10,7 +10,7 @@ build:
             -
                 command: 'bin/phpunit'
                 coverage:
-                    file: './var/coverage.xml'
+                    file: 'var/coverage.xml'
                     format: 'clover'
             -
                 command: phpcs-run --standard=checkstyle.xml
