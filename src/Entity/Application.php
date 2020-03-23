@@ -64,11 +64,6 @@ class Application implements EntityInterface, Translatable
     private $enable;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $icon;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="applications")
      */
     private $category;
@@ -180,21 +175,9 @@ class Application implements EntityInterface, Translatable
         return $this->category;
     }
 
-    public function setCategory(? Category $category) : self
+    public function setCategory( ? Category $category) : self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getIcon() :  ? string
-    {
-        return $this->icon;
-    }
-
-    public function setIcon(string $icon) : self
-    {
-        $this->icon = $icon;
 
         return $this;
     }

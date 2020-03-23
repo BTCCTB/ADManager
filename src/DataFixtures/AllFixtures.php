@@ -34,13 +34,6 @@ class AllFixtures extends Fixture
             $application = new Application();
             $application->setName($this->faker->company);
             $application->setLink($this->faker->url);
-            if (($i % 2) !== 0) {
-                $application->setLinkFr($this->faker->url);
-            }
-            if (($i % 2) === 1) {
-                $application->setLinkFr($this->faker->url);
-                $application->setLinkNl($this->faker->url);
-            }
             $application->setEnable($this->faker->boolean(75));
             $em->persist($application);
         }
