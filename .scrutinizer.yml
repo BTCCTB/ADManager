@@ -8,12 +8,12 @@ build:
     tests:
         override:
             -
-                command: 'bin/phpunit --coverage-clover=clover.xml'
+                command: 'bin/phpunit'
                 coverage:
-                    file: 'clover.xml'
+                    file: './var/coverage.xml'
                     format: 'clover'
             -
-                command: phpcs-run
+                command: phpcs-run --standard=checkstyle.xml
                 use_website_config: false
 
 filter:
