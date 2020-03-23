@@ -10,13 +10,20 @@ build:
         services:
           mariadb: 10.1
 
+    dependencies:
+        before:
+            - 'composer install --no-interaction --no-scripts'
+            - 'php bin/console doctrine:database:create --env=test'
+            - 'php bin/console doctrine:schema:create --env=test'
+            - 'php bin/console doctrine:fixtures:load -n --env=test'
+
     tests:
         override:
             -
                 command: 'bin/phpunit'
                 coverage:
                     file: 'var/coverage.xml'
-                    format: 'clover'
+                    format: 'php-clover'
             -
                 command: phpcs-run --standard=checkstyle.xml
                 use_website_config: false
@@ -24,12 +31,6 @@ build:
 filter:
     paths:
         - 'src/*'
-
-before_commands:
-    - 'composer install --no-interaction --no-scripts'
-    - 'php bin/console doctrine:database:create --env=test'
-    - 'php bin/console doctrine:schema:create --env=test'
-    - 'php bin/console doctrine:fixtures:load -n --env=test'
 
 tools:
     sensiolabs_security_checker: true
