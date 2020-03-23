@@ -175,7 +175,7 @@ class Application implements EntityInterface, Translatable
         return $this->category;
     }
 
-    public function setCategory( ? Category $category) : self
+    public function setCategory(? Category $category) : self
     {
         $this->category = $category;
 

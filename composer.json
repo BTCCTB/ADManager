@@ -106,7 +106,7 @@
   "scripts-descriptions": {
     "docker:start": "Start the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
     "docker:stop": "Stop the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker and symfony built-in server",
-    "docker:cleanup": "Remove the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker",
+    "docker:cleanup": "Remove the full stack [MariaDB/SSO/phpmyadmin/maildev] instance with docker"
   },
   "conflict": {
     "symfony/symfony": "*"

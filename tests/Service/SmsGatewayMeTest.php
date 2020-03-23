@@ -30,19 +30,19 @@ class SmsGatewayMeTest extends WebTestCase
 
     public function testConfigurationSuccess()
     {
-        $this->assertSame(SmsGatewayMe::OK, $this->smsGatewayMe->ConfigureApiClient());
+        $this->assertSame(SmsGatewayMe::OK, $this->smsGatewayMe->configureApiClient());
     }
 
     public function testConfigurationWrongDevice()
     {
         $this->smsGatewayMe->setDeviceId(1234567890);
-        $this->assertSame(SmsGatewayMe::INVALID_DEVICE_ID, $this->smsGatewayMe->ConfigureApiClient());
+        $this->assertSame(SmsGatewayMe::INVALID_DEVICE_ID, $this->smsGatewayMe->configureApiClient());
     }
 
     public function testConfigurationWrongToken()
     {
         $this->smsGatewayMe->setApiToken('1234567890AZERTYUIOP');
-        $this->assertSame(SmsGatewayMe::INVALID_TOKEN, $this->smsGatewayMe->ConfigureApiClient());
+        $this->assertSame(SmsGatewayMe::INVALID_TOKEN, $this->smsGatewayMe->configureApiClient());
     }
 
     public function testSendSuccess()

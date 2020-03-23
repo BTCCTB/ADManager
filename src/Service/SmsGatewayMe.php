@@ -50,7 +50,7 @@ class SmsGatewayMe
      * @param null|string $apiToken API token for SMS Gateway Me
      * @param null|integer $deviceId The device id to send message
      */
-    public function __construct( ? string $apiToken,  ? int $deviceId)
+    public function __construct(? string $apiToken, ? int $deviceId)
     {
         $this->setApiToken($apiToken);
         $this->setDeviceId($deviceId);
@@ -66,7 +66,7 @@ class SmsGatewayMe
      */
     public function send(string $message, string $phoneNumber) : int
     {
-        if (self::OK === $this->ConfigureApiClient()) {
+        if (self::OK === $this->configureApiClient()) {
             try {
                 $number = PhoneNumberUtil::getInstance()->parse($phoneNumber, PhoneNumberUtil::UNKNOWN_REGION);
                 if (!PhoneNumberUtil::getInstance()->isValidNumber($number)) {
@@ -142,7 +142,7 @@ class SmsGatewayMe
      *
      * @return int Status code
      */
-    public function ConfigureApiClient(): int
+    public function configureApiClient(): int
     {
         $config = Configuration::getDefaultConfiguration();
         $config->setApiKey('Authorization', $this->apiToken);
