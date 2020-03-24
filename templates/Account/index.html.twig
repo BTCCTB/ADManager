@@ -37,7 +37,7 @@
                         <a href="{{ path('account_detail', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'Show detail'|trans }}</a>
                         <a href="{{ path('account_change_email', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-edit" aria-hidden="true"></i> {{ 'Change email'|trans }}</a>
                         <a href="{{ path('account_check_password', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-info"><i class="fa fa-medkit" aria-hidden="true"></i> {{ 'Test password'|trans }}</a>
-                        <a href="{{ path('account_reset_password', {'employeeID': account.employeeId }) }}" class="btn btn-sm btn-outline-warning"><i class="fa fa-redo-alt" aria-hidden="true"></i> {{ 'Reset password'|trans }}</a>
+                        <a href="{{ path('account_reset_password', {'employeeID': account.employeeId }) }}" class="btn btn-sm btn-outline-warning account_reset_password"><i class="fa fa-redo-alt" aria-hidden="true"></i> {{ 'Reset password'|trans }}</a>
                     {% endif %}
                 </td>
             </tr>
@@ -62,6 +62,16 @@
                 fixedHeader: true,
                 responsive: true,
                 stateSave: true
+            });
+            $('.account_reset_password').click(function() {
+                $(this).addClass('disabled');
+                $(this).blur();
+                var check =  confirm('are you sure you want to reset the password for this account?');
+                if(check === true){
+                }else{
+                    $(this).removeClass('disabled');
+                    return false;
+                }
             });
         });
     </script>

@@ -241,11 +241,14 @@ class AccountController extends AbstractController
                 ],
             ];
 
-            $smsGatewayMe->send($messages['info'][$userInfo->getLanguage()], $userInfo->getMobile());
             $resetData = $resetPassword->getData();
-            $messagePassword = str_replace('%%_PASSWORD_%%', $resetData['generatedpassword'], $messages['password'][$userInfo->getLanguage()]);
-            $smsGatewayMe->send($messagePassword, $userInfo->getMobile());
-
+            $language = 'en';
+            if ($userInfo !== null) {
+                $language = $userInfo->getLanguage();
+                $smsGatewayMe->send($messages['info'][$language], $userInfo->getMobile());
+                $messagePassword = str_replace('%%_PASSWORD_%%', $resetData['generatedpassword'], $messages['password'][$language]);
+                $smsGatewayMe->send($messagePassword, $userInfo->getMobile());
+            }
             $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized! [Password: ' . $resetData['generatedpassword'] . ']');
         } else {
