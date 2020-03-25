@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\SecurityAudit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method SecurityAudit|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,21 +14,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class SecurityAuditRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SecurityAudit::class);
     }
 
     /*
-    public function findBySomething($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->where('s.something = :value')->setParameter('value', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+public function findBySomething($value)
+{
+return $this->createQueryBuilder('s')
+->where('s.something = :value')->setParameter('value', $value)
+->orderBy('s.id', 'ASC')
+->setMaxResults(10)
+->getQuery()
+->getResult()
+;
+}
+ */
 }

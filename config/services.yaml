@@ -139,7 +139,7 @@ services:
             public: true
 
     App\Repository\UserRepository:
-        factory: 'doctrine.orm.entity_manager:getRepository'
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: ['App\Entity\User']
 
     AuthBundle\Service\SuccessFactorApi:
