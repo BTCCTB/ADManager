@@ -42,7 +42,7 @@ class SmsGatewayMe implements SmsInterface
      * @param null|string $apiToken API token for SMS Gateway Me
      * @param null|integer $deviceId The device id to send message
      */
-    public function __construct( ? string $apiToken,  ? int $deviceId)
+    public function __construct(? string $apiToken, ? int $deviceId)
     {
         $this->setApiToken($apiToken);
         $this->setDeviceId($deviceId);

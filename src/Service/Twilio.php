@@ -53,7 +53,6 @@ class Twilio implements SmsInterface
             } else {
                 error_log($sendMessage->errorMessage);
             }
-
         } catch (NumberParseException $e) {
             return self::INVALID_PHONE_NUMBER;
         }
