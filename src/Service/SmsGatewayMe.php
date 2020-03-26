@@ -18,16 +18,8 @@ use SMSGatewayMe\Client\Model\SendMessageRequest;
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
  */
-class SmsGatewayMe
+class SmsGatewayMe implements SmsInterface
 {
-    const OK = 200;
-    const SEND = 202;
-    const INVALID_REQUEST = 400;
-    const INVALID_TOKEN = 401;
-    const INVALID_PHONE_NUMBER = 404;
-    const INVALID_PHONE_NUMBER_TYPE = 406;
-    const NOT_SEND = 409;
-    const INVALID_DEVICE_ID = 412;
 
     /**
      * @var string
@@ -50,7 +42,7 @@ class SmsGatewayMe
      * @param null|string $apiToken API token for SMS Gateway Me
      * @param null|integer $deviceId The device id to send message
      */
-    public function __construct(? string $apiToken, ? int $deviceId)
+    public function __construct( ? string $apiToken,  ? int $deviceId)
     {
         $this->setApiToken($apiToken);
         $this->setDeviceId($deviceId);
@@ -114,7 +106,7 @@ class SmsGatewayMe
      *
      * @param integer $deviceId The device ID
      *
-     * @return $this
+     * @return SmsInterface
      */
     public function setDeviceId($deviceId)
     {
@@ -128,7 +120,7 @@ class SmsGatewayMe
      *
      * @param string $apiToken The api token
      *
-     * @return $this
+     * @return SmsInterface
      */
     public function setApiToken($apiToken)
     {

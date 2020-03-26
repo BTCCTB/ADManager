@@ -3,6 +3,7 @@
 namespace App\Tests\Service;
 
 use App\Service\SmsGatewayMe;
+use App\Service\SmsInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -13,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class SmsGatewayMeTest extends WebTestCase
 {
     /**
-     * @var SmsGatewayMe
+     * @var SmsInterface
      */
     private $smsGatewayMe;
 
