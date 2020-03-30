@@ -5,7 +5,6 @@ namespace App\Service;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
-use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use SMSGatewayMe\Client\ApiClient;
 use SMSGatewayMe\Client\ApiException;
 use SMSGatewayMe\Client\Api\DeviceApi;
@@ -37,24 +36,16 @@ class SmsGatewayMe implements SmsInterface
     private $apiClient;
 
     /**
-     * SmsGatewayMe constructor.
-     *
-     * @param null|string $apiToken API token for SMS Gateway Me
-     * @param null|integer $deviceId The device id to send message
+     * @inheritDoc
      */
-    public function __construct(? string $apiToken, ? int $deviceId)
+    public function __construct( ? string $accountId,  ? string $token,  ? string $from)
     {
-        $this->setApiToken($apiToken);
-        $this->setDeviceId($deviceId);
+        $this->setDeviceId((int) $accountId);
+        $this->setApiToken($token);
     }
 
     /**
-     * Send a message
-     *
-     * @param string $message The message
-     * @param string $phoneNumber The recipient
-     *
-     * @return integer The status code
+     * {@inheritDoc}
      */
     public function send(string $message, string $phoneNumber) : int
     {
@@ -83,12 +74,7 @@ class SmsGatewayMe implements SmsInterface
     }
 
     /**
-     * Send a message to a group
-     *
-     * @param string $message The message
-     * @param string[]  $phoneNumbers The list of recipients
-     *
-     * @return array The status for each recipient
+     * {@inheritDoc}
      */
     public function sendGroup(string $message, array $phoneNumbers) : array
     {
@@ -134,7 +120,7 @@ class SmsGatewayMe implements SmsInterface
      *
      * @return int Status code
      */
-    public function configureApiClient(): int
+    public function configureApiClient() : int
     {
         $config = Configuration::getDefaultConfiguration();
         $config->setApiKey('Authorization', $this->apiToken);
@@ -151,7 +137,7 @@ class SmsGatewayMe implements SmsInterface
                 case 401:
                     return self::INVALID_TOKEN;
                 case 400:
-                    return self::INVALID_DEVICE_ID;
+                    return self::INVALID_ACCOUNT_ID;
             }
         }
         return self::INVALID_REQUEST;

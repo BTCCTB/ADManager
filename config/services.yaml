@@ -167,15 +167,14 @@ services:
     App\Service\SmsGatewayMe:
         autowire: true
         arguments:
-            $apiToken: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
-            $deviceId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
+            $token: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
+            $accountId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
+            $from: ''
         public: true
-
-    Twilio\Rest\Client:
-        arguments:
-            $username: '%env(resolve:TWILIO_SID)%'
-            $password: '%env(resolve:TWILIO_TOKEN)%'
 
     App\Service\Twilio:
         arguments:
+            $token: '%env(resolve:TWILIO_TOKEN)%'
+            $accountId: '%env(resolve:TWILIO_SID)%'
             $from: '%env(resolve:TWILIO_NUMBER)%'
+        public: true
