@@ -1,6 +1,6 @@
 # PasswordManager
 
-[![Build Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/build.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/build-status/)
+[![Build Status](https://travis-ci.org/BTCCTB/Password.svg)](https://travis-ci.org/BTCCTB/Password)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/quality-score.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
 [![Code Coverage](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/coverage.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/code-intelligence.svg)](https://scrutinizer-ci.com/code-intelligence)
