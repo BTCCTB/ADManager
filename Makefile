@@ -23,7 +23,15 @@ wait: ## Sleep 5 seconds
 	sleep 5
 
 ## —— Composer 🧙‍♂️ ————————————————————————————————————————————————————————————
-install: composer.lock ## Install vendors according to the current composer.lock file
+./composer.phar: ## Download and install composer in the project (file is ignored)
+	$(EXEC_PHP) -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	$(EXEC_PHP) -r "if (hash_file('sha384', 'composer-setup.php') === 'e0012edf3e80b6978849f5eff0d4b4e4c79ff1609dd1e613307e16318854d24ae64f26d17af3ef0bf7cfb710ca74755a') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	$(EXEC_PHP) composer-setup.php
+	$(EXEC_PHP) -r "unlink('composer-setup.php');"
+
+get-composer: ./composer.phar ## Download and install composer in the project (file is ignored)
+
+install: get-composer composer.lock ## Install vendors according to the current composer.lock file
 	$(COMPOSER) install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
 update: composer.json ## Update vendors according to the composer.json file

@@ -10,6 +10,7 @@
 !/var/log/.gitkeep
 /vendor/
 /symfony
+/composer.phar
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

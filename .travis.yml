@@ -14,4 +14,4 @@ before_install:
 
 install: composer install
 
-script: ./bin/phpunit --exclude-group SMS --coverage-text
+script: ./bin/phpunit --exclude-group main --coverage-text
