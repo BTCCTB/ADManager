@@ -7,7 +7,7 @@ namespace App\Entity;
  *
  * @package App\Entity
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 interface EntityInterface
 {

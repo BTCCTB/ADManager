@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package BisBundle\Entity
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @ORM\Entity
  * @ORM\Table(name="bis_conjob_sf")

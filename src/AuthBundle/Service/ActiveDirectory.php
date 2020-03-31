@@ -24,7 +24,7 @@ use Symfony\Component\Debug\Exception\ContextErrorException;
  *
  * @package AuthBundle\Service
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */

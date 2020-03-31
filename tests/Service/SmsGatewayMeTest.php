@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * Class SmsGatewayMeTest
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
+ * @group SMS
  */
 class SmsGatewayMeTest extends WebTestCase
 {

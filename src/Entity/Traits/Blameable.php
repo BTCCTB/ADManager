@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Trait Blameable
  *
  * @package App\Entity\Traits
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 trait Blameable
 {
@@ -33,7 +33,7 @@ trait Blameable
     /**
      * @return User|null
      */
-    public function getCreatedBy(): ? User
+    public function getCreatedBy():  ? User
     {
         return $this->createdBy;
     }
@@ -43,7 +43,7 @@ trait Blameable
      *
      * @return $this
      */
-    public function setCreatedBy(? User $createdBy = null) : self
+    public function setCreatedBy( ? User $createdBy = null) : self
     {
         $this->createdBy = $createdBy;
 
@@ -53,7 +53,7 @@ trait Blameable
     /**
      * @return User|null
      */
-    public function getUpdatedBy() : ? User
+    public function getUpdatedBy() :  ? User
     {
         return $this->updatedBy;
     }
@@ -63,7 +63,7 @@ trait Blameable
      *
      * @return $this
      */
-    public function setUpdatedBy(? User $updatedBy = null) : self
+    public function setUpdatedBy( ? User $updatedBy = null) : self
     {
         $this->updatedBy = $updatedBy;
 

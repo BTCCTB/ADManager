@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Trait Timestampable
  *
  * @package App\Entity\Traits
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 trait Timestampable
 {
@@ -49,7 +49,7 @@ trait Timestampable
      *
      * @return DateTime|null
      */
-    public function getCreatedAt(): ? DateTime
+    public function getCreatedAt():  ? DateTime
     {
         return $this->createdAt;
     }
@@ -73,7 +73,7 @@ trait Timestampable
      *
      * @return DateTime|null
      */
-    public function getUpdatedAt() : ? DateTime
+    public function getUpdatedAt() :  ? DateTime
     {
         return $this->updatedAt;
     }

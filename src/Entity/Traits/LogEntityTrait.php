@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package App\Entity\Traits
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @property \App\Entity\User|null $user
  */
@@ -73,7 +73,7 @@ trait LogEntityTrait
     /**
      * @return User|null
      */
-    public function getUser(): ? User
+    public function getUser():  ? User
     {
         return $this->user;
     }

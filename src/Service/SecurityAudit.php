@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
  *
  * @package App\Service
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class SecurityAudit
 {

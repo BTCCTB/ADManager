@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @package Controller
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @Route("/account")
  *

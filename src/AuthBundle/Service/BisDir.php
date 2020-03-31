@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
  *
  * @package AuthBundle\Service
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class BisDir
 {

@@ -9,7 +9,7 @@ use Gedmo\Loggable\Entity\Repository\LogEntryRepository;
  *
  * @package App\Repository
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class LoggableEntryRepository extends LogEntryRepository
 {
