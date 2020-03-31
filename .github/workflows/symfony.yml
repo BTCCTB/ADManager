@@ -3,20 +3,23 @@ on:
   push:
     branches:
       - travis
+env:
+  APP_ENV: test
 jobs:
   symfony:
     name: Symfony (PHP ${{ matrix.php-versions }})
     # https://hub.docker.com/_/ubuntu/
     runs-on: ubuntu-18.04
     services:
-      # https://docs.docker.com/samples/library/mysql/
-      mysql:
-        image: mysql:5.7
+      mariadb:
+        image: mariadb:10.1
         env:
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: admanager
+          MYSQL_USER: db_user
+          MYSQL_PASSWORD: db_password
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       fail-fast: true
       matrix:
