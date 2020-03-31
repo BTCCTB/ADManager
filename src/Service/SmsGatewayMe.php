@@ -5,7 +5,6 @@ namespace App\Service;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
-use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use SMSGatewayMe\Client\ApiClient;
 use SMSGatewayMe\Client\ApiException;
 use SMSGatewayMe\Client\Api\DeviceApi;
@@ -18,16 +17,8 @@ use SMSGatewayMe\Client\Model\SendMessageRequest;
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
  */
-class SmsGatewayMe
+class SmsGatewayMe implements SmsInterface
 {
-    const OK = 200;
-    const SEND = 202;
-    const INVALID_REQUEST = 400;
-    const INVALID_TOKEN = 401;
-    const INVALID_PHONE_NUMBER = 404;
-    const INVALID_PHONE_NUMBER_TYPE = 406;
-    const NOT_SEND = 409;
-    const INVALID_DEVICE_ID = 412;
 
     /**
      * @var string
@@ -45,24 +36,16 @@ class SmsGatewayMe
     private $apiClient;
 
     /**
-     * SmsGatewayMe constructor.
-     *
-     * @param null|string $apiToken API token for SMS Gateway Me
-     * @param null|integer $deviceId The device id to send message
+     * @inheritDoc
      */
-    public function __construct(? string $apiToken, ? int $deviceId)
+    public function __construct( ? string $accountId,  ? string $token,  ? string $from)
     {
-        $this->setApiToken($apiToken);
-        $this->setDeviceId($deviceId);
+        $this->setDeviceId((int) $accountId);
+        $this->setApiToken($token);
     }
 
     /**
-     * Send a message
-     *
-     * @param string $message The message
-     * @param string $phoneNumber The recipient
-     *
-     * @return integer The status code
+     * {@inheritDoc}
      */
     public function send(string $message, string $phoneNumber) : int
     {
@@ -91,12 +74,7 @@ class SmsGatewayMe
     }
 
     /**
-     * Send a message to a group
-     *
-     * @param string $message The message
-     * @param string[]  $phoneNumbers The list of recipients
-     *
-     * @return array The status for each recipient
+     * {@inheritDoc}
      */
     public function sendGroup(string $message, array $phoneNumbers) : array
     {
@@ -114,7 +92,7 @@ class SmsGatewayMe
      *
      * @param integer $deviceId The device ID
      *
-     * @return $this
+     * @return SmsInterface
      */
     public function setDeviceId($deviceId)
     {
@@ -128,7 +106,7 @@ class SmsGatewayMe
      *
      * @param string $apiToken The api token
      *
-     * @return $this
+     * @return SmsInterface
      */
     public function setApiToken($apiToken)
     {
@@ -142,7 +120,7 @@ class SmsGatewayMe
      *
      * @return int Status code
      */
-    public function configureApiClient(): int
+    public function configureApiClient() : int
     {
         $config = Configuration::getDefaultConfiguration();
         $config->setApiKey('Authorization', $this->apiToken);
@@ -159,7 +137,7 @@ class SmsGatewayMe
                 case 401:
                     return self::INVALID_TOKEN;
                 case 400:
-                    return self::INVALID_DEVICE_ID;
+                    return self::INVALID_ACCOUNT_ID;
             }
         }
         return self::INVALID_REQUEST;
