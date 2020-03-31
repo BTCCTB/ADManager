@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @package AuthBundle\Tests\Controller
  * @author  Damien Lagae <damien.lagae@enabel.be>
  * @coversDefaultClass \AuthBundle\Controller\SecurityController
+ * @group main
  */
 class SecurityControllerTest extends WebTestCase
 {

@@ -58,7 +58,6 @@ class AccountController extends AbstractController
 
     public function __construct(ActiveDirectory $activeDirectory, BisDir $bisDir, AccountService $accountService, SecurityAudit $securityAudit)
     {
-
         $this->activeDirectory = $activeDirectory;
         $this->bisDir = $bisDir;
         $this->accountService = $accountService;

@@ -5,6 +5,12 @@ namespace AuthBundle\Tests\Form\Type;
 use AuthBundle\Form\Type\LoginForm;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+/**
+ * Class LoginFormTest
+ *
+ * @author Damien Lagae <damien.lagae@enabel.be>
+ * @group main
+ */
 class LoginFormTest extends TypeTestCase
 {
     public function testSubmitValidData()

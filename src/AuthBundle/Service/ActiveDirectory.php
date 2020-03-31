@@ -175,7 +175,6 @@ class ActiveDirectory
      */
     public function checkUserExistByUsername($username)
     {
-
         $user = $this->activeDirectory->connect()->search()->findBy('userprincipalname', $username);
 
         if ($user instanceof User) {
@@ -194,7 +193,6 @@ class ActiveDirectory
      */
     public function checkUserExistByEmail($email)
     {
-
         $user = $this->activeDirectory->connect()->search()->findBy('mail', $email);
 
         if ($user instanceof User) {
@@ -213,7 +211,6 @@ class ActiveDirectory
      */
     public function checkUserExistByEmployeeID($employeeID)
     {
-
         $user = $this->activeDirectory->connect()->search()->findBy('employeeid', $employeeID);
 
         if ($user instanceof User) {

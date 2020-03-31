@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * Class TwilioTest
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
- * @group SMS
+ * @group external
  */
 class TwilioTest extends WebTestCase
 {

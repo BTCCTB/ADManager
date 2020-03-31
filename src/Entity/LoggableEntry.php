@@ -17,5 +17,4 @@ use Gedmo\Loggable\Entity\MappedSuperclass\AbstractLogEntry;
  */
 class LoggableEntry extends AbstractLogEntry
 {
-
 }

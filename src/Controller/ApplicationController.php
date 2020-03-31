@@ -30,7 +30,6 @@ class ApplicationController extends AbstractController
 
     public function __construct(ActiveDirectory $activeDirectory)
     {
-
         $this->activeDirectory = $activeDirectory;
     }
 

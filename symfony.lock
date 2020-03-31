@@ -2,6 +2,12 @@
     "adldap2/adldap2": {
         "version": "v8.1.2"
     },
+    "amphp/amp": {
+        "version": "v2.4.1"
+    },
+    "amphp/byte-stream": {
+        "version": "v1.7.2"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -122,6 +128,12 @@
     "escapestudios/symfony2-coding-standard": {
         "version": "3.6.0"
     },
+    "felixfbecker/advanced-json-rpc": {
+        "version": "v3.1.1"
+    },
+    "felixfbecker/language-server-protocol": {
+        "version": "v1.4.0"
+    },
     "friendsofapi/localise.biz": {
         "version": "0.2.4"
     },
@@ -179,9 +191,6 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jean85/pretty-package-versions": {
-        "version": "1.2"
-    },
     "jms/i18n-routing-bundle": {
         "version": "3.0.2"
     },
@@ -203,29 +212,8 @@
     "monolog/monolog": {
         "version": "1.23.0"
     },
-    "nette/bootstrap": {
-        "version": "v3.0.0"
-    },
-    "nette/di": {
-        "version": "v3.0.1"
-    },
-    "nette/finder": {
-        "version": "v2.5.1"
-    },
-    "nette/neon": {
-        "version": "v3.0.0"
-    },
-    "nette/php-generator": {
-        "version": "v3.2.3"
-    },
-    "nette/robot-loader": {
-        "version": "v3.2.0"
-    },
-    "nette/schema": {
-        "version": "v1.0.0"
-    },
-    "nette/utils": {
-        "version": "v3.0.1"
+    "netresearch/jsonmapper": {
+        "version": "v1.6.0"
     },
     "nikic/php-parser": {
         "version": "v3.1.4"
@@ -238,6 +226,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "openlss/lib-array2xml": {
+        "version": "1.0.0"
     },
     "paragonie/random_compat": {
         "version": "v9.99.99"
@@ -326,11 +317,17 @@
     "phpro/grumphp": {
         "version": "v0.13.1"
     },
-    "phpstan/phpdoc-parser": {
-        "version": "0.3.5"
-    },
     "phpstan/phpstan": {
         "version": "0.11.16"
+    },
+    "phpstan/phpstan-doctrine": {
+        "version": "0.12.10"
+    },
+    "phpstan/phpstan-mockery": {
+        "version": "0.12.3"
+    },
+    "phpstan/phpstan-phpunit": {
+        "version": "0.12.6"
     },
     "phpunit/php-timer": {
         "version": "2.1.1"
@@ -358,6 +355,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
+    },
+    "sebastian/diff": {
+        "version": "3.0.2"
     },
     "sebastian/finder-facade": {
         "version": "1.2.2"
@@ -614,6 +614,15 @@
     "symfony/property-info": {
         "version": "v4.3.5"
     },
+    "symfony/requirements-checker": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "93d0ec48679f5e240d265088305c1ad775723f93"
+        }
+    },
     "symfony/routing": {
         "version": "4.0",
         "recipe": {
@@ -728,8 +737,17 @@
     "twilio/sdk": {
         "version": "6.1.0"
     },
+    "vimeo/psalm": {
+        "version": "3.10.1"
+    },
     "webmozart/assert": {
         "version": "1.3.0"
+    },
+    "webmozart/glob": {
+        "version": "4.1.0"
+    },
+    "webmozart/path-util": {
+        "version": "2.3.0"
     },
     "zendframework/zend-code": {
         "version": "3.3.0"

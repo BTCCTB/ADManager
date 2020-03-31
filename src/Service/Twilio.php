@@ -39,7 +39,7 @@ class Twilio implements SmsInterface
     /**
      * {@inheritDoc}
      */
-    public function __construct( ? String $accountId,  ? String $token,  ? String $from)
+    public function __construct(? String $accountId, ? String $token, ? String $from)
     {
         $this->setSID($accountId);
         $this->setToken($token);
@@ -84,9 +84,9 @@ class Twilio implements SmsInterface
 
         return self::NOT_SEND;
     }
-/**
- * @inheritDoc
- */
+    /**
+     * @inheritDoc
+     */
     public function sendGroup(string $message, array $phoneNumbers) : array
     {
         $status = [];
