@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - 7.2
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+before_install:
+  - composer self-update
+
+install: composer install
+
+script: ./bin/phpunit --coverage-text
