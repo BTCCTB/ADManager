@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package BisBundle\Entity
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @ORM\Entity(repositoryClass="BisBundle\Repository\BisPersonSfRepository")
  * @ORM\Table(name="bis_person_sf")

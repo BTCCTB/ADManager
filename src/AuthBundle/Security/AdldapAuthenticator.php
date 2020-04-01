@@ -33,7 +33,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
  *
  * @package AuthBundle\Security
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */

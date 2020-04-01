@@ -1,9 +1,6 @@
 # PasswordManager
 
-[![Build Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/build.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/build-status/)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/quality-score.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
-[![Code Coverage](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/coverage.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
-[![Code Intelligence Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/code-intelligence.svg)](https://scrutinizer-ci.com/code-intelligence)
+![Full CI process for Symfony](https://github.com/BTCCTB/Password/workflows/Full%20CI%20process%20for%20Symfony/badge.svg)
 
 A php application for Active Directory Manipulation.
 
@@ -20,7 +17,7 @@ execute this command to clone this repository and initialize the project:
 ```bash
 $ git clone git@github.com:BTCCTB/Password.git
 $ cd Password/
-$ composer install
+$ make install
 ```
 
 ## Usage
@@ -28,9 +25,7 @@ $ composer install
 
 Start the local server and initialize the database
 ```bash 
-$ composer docker:start
-$ bin/console doctrine:database:create --if-not-exists
-$ bin/console doctrine:migration:migrate
+$ make run
 ```
 
 > **NOTE**
@@ -40,39 +35,20 @@ $ bin/console doctrine:migration:migrate
 > For more details, see:
 > [configure a fully-featured web server][2]
 
-## Composer script
-### Start the local server:
-* Start the local database/phpmyadmin (localhost:8080) instance with docker
-* Run the internal php server on localhost:8000
+## Makefile 
+### Help:
 ```bash 
-$ composer docker:start
+$ make help
 ```
 
-### Stop the local server:
-* Stop the local database/phpmyadmin instance with docker
+### Deploy:
+To deploy on prod:
 ```bash
-$ composer docker:stop
+$ make depoy-prod
 ```
-
-### Initialize the database:
-* Drop the database if exists
-* Create the database
-* Create the schema with doctrine migration
+To deploy on stage:
 ```bash
-$ bin/console doctrine:database:create --if-not-exists
-$ bin/console doctrine:migration:migrate
-```
-
-### Update the database schema
-* Execute the doctrine migration
-```bash
-$ bin/console doctrine:migration:migrate
-```
-
-### Testings
-* Execute the phpunit tests
-```bash
-$ bin/phpunit
+$ make depoy-stage
 ```
 
 ## Contributing

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="BisBundle\Repository\BisContractSfRepository")
  * @ORM\Table(name="bis_contract_sf")
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class BisContractSf
 {

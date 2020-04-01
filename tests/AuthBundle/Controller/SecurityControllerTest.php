@@ -8,8 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * Class SecurityControllerTest
  *
  * @package AuthBundle\Tests\Controller
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  * @coversDefaultClass \AuthBundle\Controller\SecurityController
+ * @group main
  */
 class SecurityControllerTest extends WebTestCase
 {

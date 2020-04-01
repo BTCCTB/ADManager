@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *
  * @UniqueEntity(fields={"per_email"})
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)

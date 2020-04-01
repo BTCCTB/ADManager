@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @package App\Repository
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class UserRepository extends EntityRepository
 {
