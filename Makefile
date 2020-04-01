@@ -107,6 +107,9 @@ load-fixtures: ## Build the db, control the schema validity, load fixtures and c
 	$(SYMFONY) doctrine:fixtures:load -n
 
 ## —— Tests ✅ —————————————————————————————————————————————————————————————————
+phpunit.xml: ## Copy phpunit config template
+	cp phpunit.xml.dist phpunit.xml
+
 test: phpunit.xml ## Launch main functionnal and unit tests
 	./bin/phpunit --group=main --stop-on-failure
 
