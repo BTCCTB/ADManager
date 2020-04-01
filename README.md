@@ -1,6 +1,5 @@
 # PasswordManager
 
-[![Build Status](https://travis-ci.org/BTCCTB/Password.svg)](https://travis-ci.org/BTCCTB/Password)
 ![Full CI process for Symfony](https://github.com/BTCCTB/Password/workflows/Full%20CI%20process%20for%20Symfony/badge.svg)
 
 A php application for Active Directory Manipulation.
