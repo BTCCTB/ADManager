@@ -38,7 +38,7 @@ class SmsGatewayMe implements SmsInterface
     /**
      * @inheritDoc
      */
-    public function __construct( ? string $accountId,  ? string $token,  ? string $from)
+    public function __construct(? string $accountId, ? string $token, ? string $from)
     {
         $this->setDeviceId((int) $accountId);
         $this->setApiToken($token);

@@ -4,6 +4,12 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class IndexControllerTest
+ *
+ * @author Damien Lagae <damien.lagae@enabel.be>
+ * @group main
+ */
 class IndexControllerTest extends WebTestCase
 {
     public function testIndex()

@@ -13,9 +13,8 @@ use Gedmo\Loggable\Entity\MappedSuperclass\AbstractLogEntry;
  * @ORM\Table(name="loggable_entry")
  * @ORM\Entity(repositoryClass="App\Repository\LoggableEntryRepository")
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class LoggableEntry extends AbstractLogEntry
 {
-
 }

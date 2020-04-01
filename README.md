@@ -1,9 +1,7 @@
 # PasswordManager
 
-[![Build Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/build.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/build-status/)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/quality-score.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
-[![Code Coverage](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/coverage.png)](https://scrutinizer-ci.com/g/BTCCTB/Password/)
-[![Code Intelligence Status](https://scrutinizer-ci.com/g/BTCCTB/Password/badges/code-intelligence.svg)](https://scrutinizer-ci.com/code-intelligence)
+[![Build Status](https://travis-ci.org/BTCCTB/Password.svg)](https://travis-ci.org/BTCCTB/Password)
+![Full CI process for Symfony](https://github.com/BTCCTB/Password/workflows/Full%20CI%20process%20for%20Symfony/badge.svg)
 
 A php application for Active Directory Manipulation.
 

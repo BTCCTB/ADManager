@@ -7,7 +7,7 @@ namespace AuthBundle\Service;
  *
  * @package AuthBundle\Service
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class BisDirResponseStatus
 {

@@ -47,3 +47,12 @@ services:
       - 1025:1025
     labels:
       com.symfony.server.service-prefix: 'MAILER'
+
+  redis:
+    image: redis
+    volumes:
+      - .docker/data/redis:/data
+    ports:
+      - 6379:6379
+    labels:
+      com.symfony.server.service-prefix: 'REDIS'

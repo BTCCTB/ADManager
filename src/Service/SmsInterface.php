@@ -25,7 +25,7 @@ interface SmsInterface
      * @param null|string  $token The token for SMS services
      * @param null|string  $from      Phone number used for sending
      */
-    public function __construct( ? String $accountId,  ? String $token,  ? String $from);
+    public function __construct(? String $accountId, ? String $token, ? String $from);
 
     /**
      * Send a message

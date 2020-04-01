@@ -18,7 +18,7 @@ use Doctrine\ORM\NonUniqueResultException;
  *
  * @package BisBundle\Entity
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class BisPersonViewRepository extends EntityRepository
 {

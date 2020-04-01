@@ -9,6 +9,8 @@
 /var/*
 !/var/log/.gitkeep
 /vendor/
+/symfony
+/composer.phar
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -20,6 +22,8 @@
 ###> docker ###
 /.docker/data/db/*
 !/.docker/data/db/.gitkeep
+/.docker/data/redis/*
+!/.docker/data/redis/.gitkeep
 ###< docker ###
 
 ###> vagrant ###
@@ -50,3 +54,4 @@ yarn-error.log
 /.php_cs
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+

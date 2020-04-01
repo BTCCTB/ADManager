@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @package BisBundle\Entity
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class BisPhoneRepository extends EntityRepository
 {

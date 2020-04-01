@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  *
- * @author Damien Lagae <damienlagae@gmail.com>
+ * @author Damien Lagae <damien.lagae@enabel.be>
  */
 class User implements EntityInterface, UserInterface, EquatableInterface
 {

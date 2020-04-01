@@ -16,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  *
  * @package App\Controller
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @Route("/contacts", name="contact_")
  * @Route("/contact", name="contact_old_")
