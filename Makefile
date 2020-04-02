@@ -23,7 +23,7 @@ wait: ## Sleep 5 seconds
 	sleep 5
 
 ## —— Composer 🧙‍♂️ ————————————————————————————————————————————————————————————
-./composer.phar: ## Download and install composer in the project (file is ignored)
+./composer.phar:
 	$(EXEC_PHP) -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 	$(EXEC_PHP) -r "if (hash_file('sha384', 'composer-setup.php') === 'e0012edf3e80b6978849f5eff0d4b4e4c79ff1609dd1e613307e16318854d24ae64f26d17af3ef0bf7cfb710ca74755a') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 	$(EXEC_PHP) composer-setup.php
@@ -56,8 +56,26 @@ assets: purge ## Install the assets with symlinks in the public folder
 purge: ## Purge cache and logs
 	rm -rf var/cache/* var/logs/*
 
+create-migration: ## Creates a new migration based on database changes
+	$(SYMFONY) make:migration
+
+exec-migration: ## Execute a migration to a specified version or the latest available version.
+	$(SYMFONY) doctrine:migrations:migrate
+
+create-controller: ## Creates a new controller class
+	$(SYMFONY) make:controller
+
+create-entity: ## Creates or updates a Doctrine entity class
+	$(SYMFONY) make:entity
+
+create-form: ## Creates a new form class
+	$(SYMFONY) make:form
+
+create-voter: ## Creates a new security voter class
+	$(SYMFONY) make:voter
+
 ## —— Symfony binary 💻 ————————————————————————————————————————————————————————
-./symfony: ## Download and install the binary in the project (file is ignored)
+./symfony:
 	curl -sS https://get.symfony.com/cli/installer | bash
 	mv ~/.symfony/bin/symfony .
 
@@ -72,8 +90,6 @@ serve: ./symfony ## Serve the application with HTTPS support
 unserve: ./symfony ## Stop the web server
 	$(SYMFONY_BIN) server:stop
 
-# Snippet L70+12 => templates/blog/posts/_64.html.twig
-
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 up: docker-compose.yml ## Start the docker hub (MySQL,redis,phpmyadmin,mailcatcher)
 	$(DOCKER) -f docker-compose.yml up -d
@@ -87,7 +103,7 @@ dpsn: ## List Docker containers for the project
 	docker ps -a | grep "$(PROJECT)_"
 	@echo "--------------------------------------------------------------------------------------------------------------"
 
-## —— Project 🐝 ———————————————————————————————————————————————————————————————
+## —— Project 🛠———————————————————————————————————————————————————————————————
 run: up wait reload serve ## Start docker, load fixtures and start the web server
 
 reload: load-fixtures ## Reload fixtures
@@ -107,7 +123,7 @@ load-fixtures: ## Build the db, control the schema validity, load fixtures and c
 	$(SYMFONY) doctrine:fixtures:load -n
 
 ## —— Tests ✅ —————————————————————————————————————————————————————————————————
-phpunit.xml: ## Copy phpunit config template
+phpunit.xml:
 	cp phpunit.xml.dist phpunit.xml
 
 test: phpunit.xml ## Launch main functionnal and unit tests
