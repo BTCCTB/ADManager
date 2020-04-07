@@ -69,10 +69,10 @@
     job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
 
-- name: CRONTAB | AD Sync morning [7 am]
+- name: CRONTAB | AD Sync morning [7:30 am]
   cron:
-    name: Synchronize person between GO4HR and ActiveDirectory (7am)
-    minute: "0"
+    name: Synchronize person between GO4HR and ActiveDirectory (7:30am)
+    minute: "30"
     hour: "7"
     weekday: "1-5"
     state: present
