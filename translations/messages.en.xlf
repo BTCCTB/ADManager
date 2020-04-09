@@ -409,5 +409,125 @@
         <target>Mobile</target>
       </segment>
     </unit>
+    <unit id="uYtYQ7G" name="main.menu.message.create.label">
+      <segment>
+        <source>main.menu.message.create.label</source>
+        <target>main.menu.message.create.label</target>
+      </segment>
+    </unit>
+    <unit id="n3.AuJJ" name="User password last set">
+      <segment>
+        <source>User password last set</source>
+        <target>User password last set</target>
+      </segment>
+    </unit>
+    <unit id="wa2PNYo" name="DN">
+      <segment>
+        <source>DN</source>
+        <target>DN</target>
+      </segment>
+    </unit>
+    <unit id="pP5lJk7" name="Language">
+      <segment>
+        <source>Language</source>
+        <target>Language</target>
+      </segment>
+    </unit>
+    <unit id="8UnoM8L" name="Bad pwd count">
+      <segment>
+        <source>Bad pwd count</source>
+        <target>Bad pwd count</target>
+      </segment>
+    </unit>
+    <unit id="5bH1jUS" name="Password last set">
+      <segment>
+        <source>Password last set</source>
+        <target>Password last set</target>
+      </segment>
+    </unit>
+    <unit id="sWvAqQz" name="message.form.label.recipient">
+      <segment>
+        <source>message.form.label.recipient</source>
+        <target>message.form.label.recipient</target>
+      </segment>
+    </unit>
+    <unit id="Jz6aLb9" name="message.form.label.message">
+      <segment>
+        <source>message.form.label.message</source>
+        <target>message.form.label.message</target>
+      </segment>
+    </unit>
+    <unit id="NMoOdmC" name="Group">
+      <segment>
+        <source>Group</source>
+        <target>Group</target>
+      </segment>
+    </unit>
+    <unit id="RZw4mhy" name="All Enabel">
+      <segment>
+        <source>All Enabel</source>
+        <target>All Enabel</target>
+      </segment>
+    </unit>
+    <unit id="Y91AjM9" name="Enabel HQ">
+      <segment>
+        <source>Enabel HQ</source>
+        <target>Enabel HQ</target>
+      </segment>
+    </unit>
+    <unit id="GCAIudD" name="Enabel Field">
+      <segment>
+        <source>Enabel Field</source>
+        <target>Enabel Field</target>
+      </segment>
+    </unit>
+    <unit id="t_3LuVE" name="ResRep">
+      <segment>
+        <source>ResRep</source>
+        <target>ResRep</target>
+      </segment>
+    </unit>
+    <unit id="cB0CHQj" name="Country">
+      <segment>
+        <source>Country</source>
+        <target>Country</target>
+      </segment>
+    </unit>
+    <unit id="urg19ro" name="Enabel RDC">
+      <segment>
+        <source>Enabel RDC</source>
+        <target>Enabel RDC</target>
+      </segment>
+    </unit>
+    <unit id="Syd9brf" name="btn.message.lobel.send">
+      <segment>
+        <source>btn.message.lobel.send</source>
+        <target>btn.message.lobel.send</target>
+      </segment>
+    </unit>
+    <unit id="aWNde_A" name="Multilanguage">
+      <segment>
+        <source>Multilanguage</source>
+        <target>Multilanguage</target>
+      </segment>
+    </unit>
+    <unit id="njjUugK" name="message.form.label.message.nl">
+      <segment>
+        <source>message.form.label.message.nl</source>
+        <target>message.form.label.message.nl</target>
+      </segment>
+    </unit>
+    <unit id="IRKU5ij" name="message.form.label.message.fr">
+      <segment>
+        <source>message.form.label.message.fr</source>
+        <target>message.form.label.message.fr</target>
+      </segment>
+    </unit>
+    <unit id="Auequkh" name="message.form.label.multilanguage">
+      <segment>
+        <source>message.form.label.multilanguage</source>
+        <target>message.form.label.multilanguage</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

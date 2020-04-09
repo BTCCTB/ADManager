@@ -11,8 +11,7 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver: 'pdo_mysql'
-                server_version: '5.5'
+                server_version: 'mariadb-10.1.29'
                 charset: utf8
                 url: '%env(resolve:DATABASE_URL)%'
                 default_table_options:

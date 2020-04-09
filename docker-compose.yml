@@ -1,7 +1,7 @@
 version: '3'
 services:
   mariadb:
-    image: mariadb
+    image: mariadb:10.1
     volumes:
       - .docker/data/db:/var/lib/mysql
     environment:
@@ -15,7 +15,7 @@ services:
       com.symfony.server.service-prefix: 'DATABASE'
 
   bis:
-    image: mariadb
+    image: mysql:5.5
     volumes:
       - ~/Projects/BIS/.db/data:/var/lib/mysql/
       - ~/Projects/BIS/.db/log:/var/log/mysql/

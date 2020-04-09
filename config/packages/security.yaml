@@ -5,7 +5,8 @@ security:
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
-        ROLE_ADMIN: [ROLE_MANAGE_USER, ROLE_USER]
+        ROLE_ADMIN: [ROLE_MANAGE_USER, ROLE_SMS]
+        ROLE_SMS: [ROLE_USER]
         ROLE_USER: [IS_AUTHENTICATED]
 
     always_authenticate_before_granting: true
