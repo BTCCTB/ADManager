@@ -295,52 +295,22 @@
         <target>All Enabel</target>
       </segment>
     </unit>
-    <unit id="Z8kNoaT" name="Show detail">
-      <segment>
-        <source>Show detail</source>
-        <target>Show details</target>
-      </segment>
-    </unit>
-    <unit id="XkcCw9o" name="btn.contact.own.country.label">
-      <segment>
-        <source>btn.contact.own.country.label</source>
-        <target>My country contacts</target>
-      </segment>
-    </unit>
-    <unit id="xkEUTNw" name="contact.export.all">
-      <segment>
-        <source>contact.export.all</source>
-        <target>Export all contacts</target>
-      </segment>
-    </unit>
-    <unit id="xle4vaJ" name="contact.export.hq">
-      <segment>
-        <source>contact.export.hq</source>
-        <target>Export HQ contacts</target>
-      </segment>
-    </unit>
-    <unit id="98t.c7T" name="contact.export.field">
-      <segment>
-        <source>contact.export.field</source>
-        <target>Export field contacts</target>
-      </segment>
-    </unit>
-    <unit id="2dFPbTn" name="contact.export.resrep">
-      <segment>
-        <source>contact.export.resrep</source>
-        <target>Export ResRep contacts</target>
-      </segment>
-    </unit>
     <unit id="inyLZ.6" name="Accounts">
       <segment>
         <source>Accounts</source>
         <target>Accounts</target>
       </segment>
     </unit>
-    <unit id="zYd6EbR" name="User accounts">
+    <unit id="wa2PNYo" name="DN">
       <segment>
-        <source>User accounts</source>
-        <target>User accounts</target>
+        <source>DN</source>
+        <target>DN</target>
+      </segment>
+    </unit>
+    <unit id="n3.AuJJ" name="User password last set">
+      <segment>
+        <source>User password last set</source>
+        <target>User password last set</target>
       </segment>
     </unit>
     <unit id="ZHz6kbI" name="Firstname">
@@ -361,16 +331,52 @@
         <target>Email</target>
       </segment>
     </unit>
-    <unit id="1JkqMxP" name="Initial password">
+    <unit id="pP5lJk7" name="Language">
       <segment>
-        <source>Initial password</source>
-        <target>Initial password</target>
+        <source>Language</source>
+        <target>Language</target>
+      </segment>
+    </unit>
+    <unit id="y6rTz0p" name="Mobile">
+      <segment>
+        <source>Mobile</source>
+        <target>Mobile</target>
+      </segment>
+    </unit>
+    <unit id="8UnoM8L" name="Bad pwd count">
+      <segment>
+        <source>Bad pwd count</source>
+        <target>Bad pwd count</target>
+      </segment>
+    </unit>
+    <unit id="5bH1jUS" name="Password last set">
+      <segment>
+        <source>Password last set</source>
+        <target>Password last set</target>
       </segment>
     </unit>
     <unit id="DTlgLcO" name="Last login">
       <segment>
         <source>Last login</source>
         <target>Last login</target>
+      </segment>
+    </unit>
+    <unit id="Z8kNoaT" name="Show detail">
+      <segment>
+        <source>Show detail</source>
+        <target>Show details</target>
+      </segment>
+    </unit>
+    <unit id="zYd6EbR" name="User accounts">
+      <segment>
+        <source>User accounts</source>
+        <target>User accounts</target>
+      </segment>
+    </unit>
+    <unit id="1JkqMxP" name="Initial password">
+      <segment>
+        <source>Initial password</source>
+        <target>Initial password</target>
       </segment>
     </unit>
     <unit id=".4BZ3Gd" name="Actions">
@@ -403,64 +409,76 @@
         <target>Detail user account</target>
       </segment>
     </unit>
-    <unit id="y6rTz0p" name="Mobile">
+    <unit id="d1tb_WR" name="Created at">
       <segment>
-        <source>Mobile</source>
-        <target>Mobile</target>
+        <source>Created at</source>
+        <target>Created at</target>
+      </segment>
+    </unit>
+    <unit id="PCEFPeg" name="Updated at">
+      <segment>
+        <source>Updated at</source>
+        <target>Updated at</target>
+      </segment>
+    </unit>
+    <unit id="IPDEcp3" name="Updated by">
+      <segment>
+        <source>Updated by</source>
+        <target>Updated by</target>
+      </segment>
+    </unit>
+    <unit id="N0zZ0iD" name="Created by">
+      <segment>
+        <source>Created by</source>
+        <target>Created by</target>
+      </segment>
+    </unit>
+    <unit id="XkcCw9o" name="btn.contact.own.country.label">
+      <segment>
+        <source>btn.contact.own.country.label</source>
+        <target>My country contacts</target>
+      </segment>
+    </unit>
+    <unit id="xkEUTNw" name="contact.export.all">
+      <segment>
+        <source>contact.export.all</source>
+        <target>Export all contacts</target>
+      </segment>
+    </unit>
+    <unit id="xle4vaJ" name="contact.export.hq">
+      <segment>
+        <source>contact.export.hq</source>
+        <target>Export HQ contacts</target>
+      </segment>
+    </unit>
+    <unit id="98t.c7T" name="contact.export.field">
+      <segment>
+        <source>contact.export.field</source>
+        <target>Export field contacts</target>
+      </segment>
+    </unit>
+    <unit id="2dFPbTn" name="contact.export.resrep">
+      <segment>
+        <source>contact.export.resrep</source>
+        <target>Export ResRep contacts</target>
       </segment>
     </unit>
     <unit id="uYtYQ7G" name="main.menu.message.create.label">
       <segment>
         <source>main.menu.message.create.label</source>
-        <target>main.menu.message.create.label</target>
-      </segment>
-    </unit>
-    <unit id="n3.AuJJ" name="User password last set">
-      <segment>
-        <source>User password last set</source>
-        <target>User password last set</target>
-      </segment>
-    </unit>
-    <unit id="wa2PNYo" name="DN">
-      <segment>
-        <source>DN</source>
-        <target>DN</target>
-      </segment>
-    </unit>
-    <unit id="pP5lJk7" name="Language">
-      <segment>
-        <source>Language</source>
-        <target>Language</target>
-      </segment>
-    </unit>
-    <unit id="8UnoM8L" name="Bad pwd count">
-      <segment>
-        <source>Bad pwd count</source>
-        <target>Bad pwd count</target>
-      </segment>
-    </unit>
-    <unit id="5bH1jUS" name="Password last set">
-      <segment>
-        <source>Password last set</source>
-        <target>Password last set</target>
+        <target>Send a message</target>
       </segment>
     </unit>
     <unit id="sWvAqQz" name="message.form.label.recipient">
       <segment>
         <source>message.form.label.recipient</source>
-        <target>message.form.label.recipient</target>
+        <target>Recipient</target>
       </segment>
     </unit>
     <unit id="Jz6aLb9" name="message.form.label.message">
       <segment>
         <source>message.form.label.message</source>
-        <target>message.form.label.message</target>
-      </segment>
-    </unit>
-    <unit id="NMoOdmC" name="Group">
-      <segment>
-        <source>Group</source>
-        <target>Group</target>
+        <target>Message (in English)</target>
       </segment>
     </unit>
     <unit id="RZw4mhy" name="All Enabel">
@@ -469,22 +487,28 @@
         <target>All Enabel</target>
       </segment>
     </unit>
+    <unit id="NMoOdmC" name="Group">
+      <segment>
+        <source>Group</source>
+        <target>Group</target>
+      </segment>
+    </unit>
     <unit id="Y91AjM9" name="Enabel HQ">
       <segment>
         <source>Enabel HQ</source>
         <target>Enabel HQ</target>
       </segment>
     </unit>
-    <unit id="GCAIudD" name="Enabel Field">
-      <segment>
-        <source>Enabel Field</source>
-        <target>Enabel Field</target>
-      </segment>
-    </unit>
     <unit id="t_3LuVE" name="ResRep">
       <segment>
         <source>ResRep</source>
         <target>ResRep</target>
+      </segment>
+    </unit>
+    <unit id="GCAIudD" name="Enabel Field">
+      <segment>
+        <source>Enabel Field</source>
+        <target>Enabel Field</target>
       </segment>
     </unit>
     <unit id="cB0CHQj" name="Country">
@@ -499,34 +523,94 @@
         <target>Enabel RDC</target>
       </segment>
     </unit>
-    <unit id="Syd9brf" name="btn.message.lobel.send">
-      <segment>
-        <source>btn.message.lobel.send</source>
-        <target>btn.message.lobel.send</target>
-      </segment>
-    </unit>
-    <unit id="aWNde_A" name="Multilanguage">
-      <segment>
-        <source>Multilanguage</source>
-        <target>Multilanguage</target>
-      </segment>
-    </unit>
     <unit id="njjUugK" name="message.form.label.message.nl">
       <segment>
         <source>message.form.label.message.nl</source>
-        <target>message.form.label.message.nl</target>
+        <target>Message (in Dutch)</target>
       </segment>
     </unit>
     <unit id="IRKU5ij" name="message.form.label.message.fr">
       <segment>
         <source>message.form.label.message.fr</source>
-        <target>message.form.label.message.fr</target>
+        <target>Message (in French)</target>
       </segment>
     </unit>
     <unit id="Auequkh" name="message.form.label.multilanguage">
       <segment>
         <source>message.form.label.multilanguage</source>
-        <target>message.form.label.multilanguage</target>
+        <target>Multi-language</target>
+      </segment>
+    </unit>
+    <unit id="OxGojTV" name="message.log.all.title">
+      <segment>
+        <source>message.log.all.title</source>
+        <target>Log: All message</target>
+      </segment>
+    </unit>
+    <unit id="rLyIqF2" name="message.create.title">
+      <segment>
+        <source>message.create.title</source>
+        <target>Send a message</target>
+      </segment>
+    </unit>
+    <unit id="NFe6fk0" name="btn.message.label.send">
+      <segment>
+        <source>btn.message.label.send</source>
+        <target>Send</target>
+      </segment>
+    </unit>
+    <unit id="B5gpuMt" name="message.form.label.sender">
+      <segment>
+        <source>message.form.label.sender</source>
+        <target>Sender</target>
+      </segment>
+    </unit>
+    <unit id="h2Xp22e" name="Enabel ALG">
+      <segment>
+        <source>Enabel ALG</source>
+        <target>Enabel ALG</target>
+      </segment>
+    </unit>
+    <unit id="rxYKOx8" name="account.notfound.in.bis">
+      <segment>
+        <source>account.notfound.in.bis</source>
+        <target>Account not found in BIS/GO4HR</target>
+      </segment>
+    </unit>
+    <unit id="5G2N_ji" name="account.notfound.in.ad">
+      <segment>
+        <source>account.notfound.in.ad</source>
+        <target>Account not found in Active Directory</target>
+      </segment>
+    </unit>
+    <unit id="7g6VE5K" name="account.notfound.in.ldap">
+      <segment>
+        <source>account.notfound.in.ldap</source>
+        <target>Account not found in LDAP</target>
+      </segment>
+    </unit>
+    <unit id="Ww8J0Mi" name="main.menu.admin.message.label">
+      <segment>
+        <source>main.menu.admin.message.label</source>
+        <target>Message</target>
+      </segment>
+    </unit>
+    <unit id="O7wZyTB" name="main.menu.admin.message.log.label">
+      <segment>
+        <source>main.menu.admin.message.log.label</source>
+        <target>List of messages</target>
+      </segment>
+    </unit>
+    <unit id="lHrirk_" name="main.menu.admin.message.create.label">
+      <segment>
+        <source>main.menu.admin.message.create.label</source>
+        <target>Send a message</target>
+      </segment>
+    </unit>
+    <unit id="QJum5cG" name="Enabel BDI">
+      <segment>
+        <source>Enabel BDI</source>
+        <target>Enabel BDI</target>
       </segment>
     </unit>
   </file>

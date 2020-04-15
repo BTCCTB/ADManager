@@ -88,4 +88,9 @@ class BisPersonView
     {
         return $this->repository->getFinishers($nbDays);
     }
+
+    public function findById(int $id)
+    {
+        return $this->repository->find($id);
+    }
 }

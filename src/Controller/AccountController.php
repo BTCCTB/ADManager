@@ -289,23 +289,28 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/detail/{id}", name="account_detail", methods={"GET"})
-     *
-     * @ParamConverter("id", class="App:Account")
+     * @Route("/detail/{id}", name="account_detail", methods={"GET"}, requirements={"id":"\d+"})
      *
      * @IsGranted("ROLE_ADMIN")
      *
-     * @param Account       $account       The account to test     *
-     * @param BisPersonView $bisPersonView
+     * @param int               $id The account id
+     * @param BisPersonView     $bisPersonView
+     * @param AccountRepository $accountRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(Account $account, BisPersonView $bisPersonView)
+    public function detailAction(int $id, BisPersonView $bisPersonView, AccountRepository $accountRepository)
     {
-        if (!empty($account->getEmail())) {
-            $adUser = $this->activeDirectory->getUser($account->getEmail());
-            $ldapUser = $this->bisDir->getUser($account->getEmail());
-            $bisData = $bisPersonView->getUserData($account->getEmail());
+        if (!empty($id)) {
+            $bisData = $bisPersonView->findById($id);
+            $adUser = null;
+            $ldapUser = null;
+            $account = null;
+            if (!empty($bisData)) {
+                $adUser = $this->activeDirectory->getUser($bisData->getEmail());
+                $ldapUser = $this->bisDir->getUser($bisData->getEmail());
+                $account = $accountRepository->find($id);
+            }
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
 

@@ -10,7 +10,7 @@
     <unit id="1pjSy9y" name="my.account.label.lastset">
       <segment>
         <source>my.account.label.lastset</source>
-        <target>Dernier changement de mot de passe </target>
+        <target>Dernier changement de mot de passe</target>
       </segment>
     </unit>
     <unit id="Kd99AFq" name="login.title">
@@ -301,6 +301,30 @@
         <target>Voir les détails</target>
       </segment>
     </unit>
+    <unit id="d1tb_WR" name="Created at">
+      <segment>
+        <source>Created at</source>
+        <target>Créé à</target>
+      </segment>
+    </unit>
+    <unit id="PCEFPeg" name="Updated at">
+      <segment>
+        <source>Updated at</source>
+        <target>Mise à jour à</target>
+      </segment>
+    </unit>
+    <unit id="IPDEcp3" name="Updated by">
+      <segment>
+        <source>Updated by</source>
+        <target>Mis à jour par</target>
+      </segment>
+    </unit>
+    <unit id="N0zZ0iD" name="Created by">
+      <segment>
+        <source>Created by</source>
+        <target>Créé par</target>
+      </segment>
+    </unit>
     <unit id="XkcCw9o" name="btn.contact.own.country.label">
       <segment>
         <source>btn.contact.own.country.label</source>
@@ -329,6 +353,108 @@
       <segment>
         <source>contact.export.resrep</source>
         <target>Exporter les contacts ResRep</target>
+      </segment>
+    </unit>
+    <unit id="uYtYQ7G" name="main.menu.message.create.label">
+      <segment>
+        <source>main.menu.message.create.label</source>
+        <target>Nouveau message</target>
+      </segment>
+    </unit>
+    <unit id="sWvAqQz" name="message.form.label.recipient">
+      <segment>
+        <source>message.form.label.recipient</source>
+        <target>Destinataire</target>
+      </segment>
+    </unit>
+    <unit id="Jz6aLb9" name="message.form.label.message">
+      <segment>
+        <source>message.form.label.message</source>
+        <target>Message (en Anglais)</target>
+      </segment>
+    </unit>
+    <unit id="RZw4mhy" name="All Enabel">
+      <segment>
+        <source>All Enabel</source>
+        <target>Tout Enabel</target>
+      </segment>
+    </unit>
+    <unit id="NMoOdmC" name="Group">
+      <segment>
+        <source>Group</source>
+        <target>Groupe</target>
+      </segment>
+    </unit>
+    <unit id="Y91AjM9" name="Enabel HQ">
+      <segment>
+        <source>Enabel HQ</source>
+        <target>Enabel siège</target>
+      </segment>
+    </unit>
+    <unit id="t_3LuVE" name="ResRep">
+      <segment>
+        <source>ResRep</source>
+        <target>ResRep</target>
+      </segment>
+    </unit>
+    <unit id="GCAIudD" name="Enabel Field">
+      <segment>
+        <source>Enabel Field</source>
+        <target>Enabel Terrain</target>
+      </segment>
+    </unit>
+    <unit id="cB0CHQj" name="Country">
+      <segment>
+        <source>Country</source>
+        <target>Pays</target>
+      </segment>
+    </unit>
+    <unit id="urg19ro" name="Enabel RDC">
+      <segment>
+        <source>Enabel RDC</source>
+        <target>Enabel RDC</target>
+      </segment>
+    </unit>
+    <unit id="njjUugK" name="message.form.label.message.nl">
+      <segment>
+        <source>message.form.label.message.nl</source>
+        <target>Message (en Néérlandais)</target>
+      </segment>
+    </unit>
+    <unit id="IRKU5ij" name="message.form.label.message.fr">
+      <segment>
+        <source>message.form.label.message.fr</source>
+        <target>Message (en Français)</target>
+      </segment>
+    </unit>
+    <unit id="Auequkh" name="message.form.label.multilanguage">
+      <segment>
+        <source>message.form.label.multilanguage</source>
+        <target>multi-langue</target>
+      </segment>
+    </unit>
+    <unit id="OxGojTV" name="message.log.all.title">
+      <segment>
+        <source>message.log.all.title</source>
+        <target>Log: Tout les messages</target>
+      </segment>
+    </unit>
+    <unit id="rLyIqF2" name="message.create.title">
+      <segment>
+        <source>message.create.title</source>
+        <target>Créer un nouveau message</target>
+      </segment>
+    </unit>
+    <unit id="NFe6fk0" name="btn.message.label.send">
+      <segment>
+        <source>btn.message.label.send</source>
+        <target>Envoyer</target>
+      </segment>
+    </unit>
+    <unit id="B5gpuMt" name="message.form.label.sender">
+      <segment>
+        <source>message.form.label.sender</source>
+        <target>Expéditeur</target>
       </segment>
     </unit>
   </file>

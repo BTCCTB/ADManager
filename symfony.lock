@@ -123,7 +123,7 @@
         "version": "v1.4.0"
     },
     "friendsofapi/localise.biz": {
-        "version": "0.2.4"
+        "version": "1.0.1"
     },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
@@ -180,7 +180,7 @@
         "version": "v1.2.17"
     },
     "jms/i18n-routing-bundle": {
-        "version": "3.0.2"
+        "version": "3.0.3"
     },
     "justinrainbow/json-schema": {
         "version": "5.2.6"
@@ -261,7 +261,7 @@
         "version": "v1.0.2"
     },
     "php-http/multipart-stream-builder": {
-        "version": "1.0.0"
+        "version": "1.1.0"
     },
     "php-http/promise": {
         "version": "v1.0.0"
@@ -270,25 +270,40 @@
         "version": "1.1.0"
     },
     "php-translation/common": {
-        "version": "1.0.0"
+        "version": "3.0.1"
     },
     "php-translation/extractor": {
-        "version": "1.7.1"
+        "version": "2.0.1"
     },
     "php-translation/loco-adapter": {
-        "version": "0.8.0"
-    },
-    "php-translation/symfony-bundle": {
-        "version": "0.4",
+        "version": "0.8",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
-            "version": "0.4",
-            "ref": "ee15ad002114fba7b694a7fe429419b518d43bc4"
-        }
+            "version": "0.8",
+            "ref": "c97545d1c229338606d881294eceeb4cdc993777"
+        },
+        "files": [
+            "config/packages/php_translation_loco_adapter.yaml"
+        ]
+    },
+    "php-translation/symfony-bundle": {
+        "version": "0.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.10",
+            "ref": "7626dc2639039d9db29789b560171f2f2a9d8468"
+        },
+        "files": [
+            "config/packages/dev/php_translation.yaml",
+            "config/packages/php_translation.yaml",
+            "config/routes/dev/php_translation.yaml",
+            "config/routes/php_translation.yaml"
+        ]
     },
     "php-translation/symfony-storage": {
-        "version": "1.0.1"
+        "version": "2.2.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
@@ -674,8 +689,12 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "6bcd6c570c017ea6ae5a7a6a027c929fd3542cd8"
-        }
+            "ref": "2ad9d2545bce8ca1a863e50e92141f0b9d87ffcd"
+        },
+        "files": [
+            "config/packages/translation.yaml",
+            "translations/.gitignore"
+        ]
     },
     "symfony/translation-contracts": {
         "version": "v1.1.7"
@@ -691,6 +710,9 @@
             "version": "3.3",
             "ref": "f75ac166398e107796ca94cc57fa1edaa06ec47f"
         }
+    },
+    "symfony/twig-pack": {
+        "version": "v1.0.0"
     },
     "symfony/validator": {
         "version": "v4.0.4"
@@ -718,6 +740,9 @@
     },
     "tightenco/collect": {
         "version": "v5.6.33"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.0.3"
     },
     "twig/twig": {
         "version": "v2.4.4"
