@@ -11,7 +11,14 @@ parameters:
 #            clover_file: ./QA/coverage.xml
 #            level: 1
         phpcs:
-            standard: "checkstyle.xml"
+            standard: "./checkstyle.xml"
+            whitelist_patterns:
+              - '/^src\/(.*)/'
+            ignore_patterns:
+              - '*/Resources/*'
+              - '*/Migrations/*'
+              - '*/DataFixtures/*'
+              - '*/templates/*'
         phpmd:
             ruleset: ['codesize.xml']
             exclude: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Command', 'src/AuthBundle/Service']

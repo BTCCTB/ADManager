@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Adldap\Models\User as AdUser;
 use App\Entity\Traits\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -120,6 +122,16 @@ class User implements EntityInterface, UserInterface, EquatableInterface
      * @var \DateTime
      */
     private $expiredAt = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MessageLog", mappedBy="sender")
+     */
+    private $messageLogs;
+
+    public function __construct()
+    {
+        $this->messageLogs = new ArrayCollection();
+    }
 
     /**
      * Returns the roles granted to the user.
@@ -418,5 +430,36 @@ class User implements EntityInterface, UserInterface, EquatableInterface
     public function __toString()
     {
         return $this->getIdentity();
+    }
+
+    /**
+     * @return Collection|MessageLog[]
+     */
+    public function getMessageLogs(): Collection
+    {
+        return $this->messageLogs;
+    }
+
+    public function addMessageLog(MessageLog $messageLog): self
+    {
+        if (!$this->messageLogs->contains($messageLog)) {
+            $this->messageLogs[] = $messageLog;
+            $messageLog->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageLog(MessageLog $messageLog): self
+    {
+        if ($this->messageLogs->contains($messageLog)) {
+            $this->messageLogs->removeElement($messageLog);
+            // set the owning side to null (unless already changed)
+            if ($messageLog->getSender() === $this) {
+                $messageLog->setSender(null);
+            }
+        }
+
+        return $this;
     }
 }

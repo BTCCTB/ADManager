@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\EnabelGroupSms;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -67,7 +68,7 @@ class MessageLog
     /**
      * @var User|null
      * @Gedmo\Blameable(on="create")
-     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messageLogs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $sender;
@@ -162,21 +163,6 @@ class MessageLog
         return $this;
     }
 
-    public static function recipientList()
-    {
-        return [
-            'Group' => [
-                'All Enabel' => 'all',
-                'Enabel HQ' => 'hq',
-                'Enabel Field' => 'field',
-                'ResRep' => 'resrep',
-            ],
-            'Country' => [
-                'Enabel RDC' => '180',
-            ],
-        ];
-    }
-
     public function getRecipient():  ? array
     {
         return $this->recipient;
@@ -187,5 +173,10 @@ class MessageLog
         $this->recipient = $recipient;
 
         return $this;
+    }
+
+    public static function recipientList()
+    {
+        return EnabelGroupSms::getRecipientOptions();
     }
 }

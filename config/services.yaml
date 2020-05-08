@@ -178,3 +178,9 @@ services:
             $accountId: '%env(resolve:TWILIO_SID)%'
             $from: '%env(resolve:TWILIO_NUMBER)%'
         public: true
+
+    App\Twig\SmsExtensions:
+        autowire: true
+        autoconfigure: true
+        tags: ['twig.extension']
+

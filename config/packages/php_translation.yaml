@@ -1,5 +1,3 @@
-parameters:
-    locales: ["en","fr","nl"]
 translation:
     locales: '%locales%'
     edit_in_place:

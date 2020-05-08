@@ -33,12 +33,12 @@
     </rule>
     <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
         <properties>
-            <property name="maxmethods" value="20" description="The method count reporting threshold" />
+            <property name="maxmethods" value="30" description="The method count reporting threshold" />
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
         <properties>
-            <property name="reportLevel" value="20" description="The Cyclomatic Complexity reporting threshold" />
+            <property name="reportLevel" value="30" description="The Cyclomatic Complexity reporting threshold" />
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">

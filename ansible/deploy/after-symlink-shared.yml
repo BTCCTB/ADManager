@@ -122,7 +122,7 @@
     mode: "u=rxw,g=rxw,o=rw"
   with_items:
     - '{{ release_var_path }}'
-    - '{{ release_logs_path }}'
+    - '{{ release_log_path }}'
 
 - name: Send notification message via Slack all options
   slack:
@@ -154,12 +154,12 @@
   when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Configure SELinux LOG
-  action: "command semanage fcontext -a -t httpd_log_t '{{ release_logs_path }}(/.*)?'"
+  action: "command semanage fcontext -a -t httpd_log_t '{{ release_log_path }}(/.*)?'"
   when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"
 
 - name: Exec restorecon
   action: "command restorecon -Rv {{ item }}"
   with_items:
     - "{{ release_var_path }}"
-    - "{{ release_logs_path }}"
+    - "{{ release_log_path }}"
   when: "ansible_distribution == 'CentOS' and not selinux.stdout is search('Disabled')"

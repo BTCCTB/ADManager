@@ -147,7 +147,7 @@
         "version": "v2.4.33"
     },
     "giggsey/libphonenumber-for-php": {
-        "version": "8.12.0"
+        "version": "8.12.3"
     },
     "giggsey/locale": {
         "version": "1.8"
@@ -545,6 +545,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "8a2675c061737658bed85102e9241c752620e575"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v4.3.0"
     },
@@ -710,9 +722,6 @@
             "version": "3.3",
             "ref": "f75ac166398e107796ca94cc57fa1edaa06ec47f"
         }
-    },
-    "symfony/twig-pack": {
-        "version": "v1.0.0"
     },
     "symfony/validator": {
         "version": "v4.0.4"

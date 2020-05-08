@@ -1,0 +1,18 @@
+framework:
+    messenger:
+        failure_transport: failed
+        transports:
+            sms:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: sms
+                retry_strategy:
+                    max_retries: 3
+                    delay: 500
+            failed:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: failed
+
+        routing:
+            'App\Message\SmsMessage': sms

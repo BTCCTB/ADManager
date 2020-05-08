@@ -55,7 +55,7 @@
     weekday: "1-5"
     state: present
     user: root
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_noon.log"
+    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_noon.log"
   when: application_env == 'prod'
 
 - name: CRONTAB | AD Sync morning [1 am]
@@ -66,7 +66,7 @@
     weekday: "1-5"
     state: present
     user: root
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
+    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
 
 - name: CRONTAB | AD Sync morning [7:30 am]
@@ -77,7 +77,7 @@
     weekday: "1-5"
     state: present
     user: root
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
+    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
 
 
@@ -89,7 +89,7 @@
     weekday: "1-5"
     state: absent
     user: root
-    job: "{{ release_console_path }} ad:crontask:ldap --env={{ application_env }} > {{ release_logs_path }}/ad_sync_morning.log"
+    job: "{{ release_console_path }} ad:crontask:ldap --env={{ application_env }} > {{ release_log_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
 
 - name: Send notification message via Slack all options

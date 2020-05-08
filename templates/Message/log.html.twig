@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{ message.id }}</td>
                         <td>{{ message.sender.identity }}</td>
-                        <td>{{ message.recipient|length }}</td>
+                        <td>{{ message.recipient|smsGroup }}</td>
                         <td>{{ message.message }}</td>
                         <td>
                             <a href="{{ path('message_detail', {'id': message.id}) }}" class="btn btn-xs btn-outline-primary"><i class="fa fa-eye"></i> {{ 'message.label.detail' }}</a>
