@@ -613,5 +613,17 @@
         <target>Enabel BDI</target>
       </segment>
     </unit>
+    <unit id="h1xM7b5" name="message.label.action">
+      <segment>
+        <source>message.label.action</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="74kw8Oc" name="message.label.detail">
+      <segment>
+        <source>message.label.detail</source>
+        <target>Details</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

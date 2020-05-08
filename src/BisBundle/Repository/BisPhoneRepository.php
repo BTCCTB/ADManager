@@ -78,6 +78,20 @@ class BisPhoneRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getIctHqPhoneDirectory() :  ? array
+    {
+        return $this->getBaseQueryWithPhone()
+            ->andWhere('bp.function LIKE :infoFR OR bp.function LIKE :infoEN OR bp.function LIKE :help OR bp.function LIKE :chef')
+            ->andWhere('bp.countryWorkplace = :country')
+            ->setParameter('infoFR', 'Informaticien système%')
+            ->setParameter('infoEN', 'Informatician system%')
+            ->setParameter('help', '%ICT help%')
+            ->setParameter('chef', '%Information & Communication Management%')
+            ->setParameter('country', 'BEL')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * Get full staff
      *

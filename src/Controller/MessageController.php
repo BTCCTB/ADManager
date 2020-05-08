@@ -8,6 +8,7 @@ use App\Message\SmsMessage;
 use App\Repository\MessageLogRepository;
 use App\Service\EnabelGroupSms;
 use App\Service\SmsGatewayMe;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -66,39 +67,12 @@ class MessageController extends AbstractController
             foreach ($recipients as $recipient) {
                 if ($messageLog->getMultilanguage()) {
                     $contacts = $enabelGroupSms->getRecipientByLanguages($recipient);
-                    $phoneNumbers['EN'] = $contacts['EN']->map(function ($contact) {
-                        return $contact->getPhone();
-                    });
-                    $phoneNumbers['FR'] = $contacts['FR']->map(function ($contact) {
-                        return $contact->getPhone();
-                    });
-                    $phoneNumbers['NL'] = $contacts['NL']->map(function ($contact) {
-                        return $contact->getPhone();
-                    });
-
-                    if (!empty($phoneNumbers['EN']) && !empty($messageLog->getMessage())) {
-                        foreach ($phoneNumbers['EN'] as $phoneNumber) {
-                            $this->dispatchMessage(new SmsMessage($messageLog->getMessage(), $phoneNumber));
-                        }
-                    }
-                    if (!empty($phoneNumbers['FR']) && !empty($messageLog->getMessageFr())) {
-                        foreach ($phoneNumbers['FR'] as $phoneNumber) {
-                            $this->dispatchMessage(new SmsMessage($messageLog->getMessageFr(), $phoneNumber));
-                        }
-                    }
-                    if (!empty($phoneNumbers['NL']) && !empty($messageLog->getMessageNl())) {
-                        foreach ($phoneNumbers['NL'] as $phoneNumber) {
-                            $this->dispatchMessage(new SmsMessage($messageLog->getMessageNl(), $phoneNumber));
-                        }
-                    }
+                    $this->sendSMS($contacts['EN'], $messageLog->getMessage());
+                    $this->sendSMS($contacts['FR'], $messageLog->getMessageFr());
+                    $this->sendSMS($contacts['NL'], $messageLog->getMessageNl());
                 } else {
                     $contacts = $enabelGroupSms->getRecipients($recipient);
-                    $phoneNumbers = $contacts->map(function ($contact) {
-                        return $contact->getPhone();
-                    });
-                    foreach ($phoneNumbers as $phoneNumber) {
-                        $this->dispatchMessage(new SmsMessage($messageLog->getMessage(), $phoneNumber));
-                    }
+                    $this->sendSMS($contacts, $messageLog->getMessage());
                 }
             }
             $entityManager = $this->getDoctrine()->getManager();
@@ -139,5 +113,18 @@ class MessageController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    private function sendSMS(ArrayCollection $group, string $message)
+    {
+        $phoneNumbers = $group->map(function ($contact) {
+            return $contact->getPhone();
+        });
+
+        if (!empty($phoneNumbers)) {
+            foreach ($phoneNumbers as $phoneNumber) {
+                $this->dispatchMessage(new SmsMessage($message, $phoneNumber));
+            }
+        }
     }
 }

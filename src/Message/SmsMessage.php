@@ -34,5 +34,4 @@ class SmsMessage
     {
         return $this->recipient;
     }
-
 }

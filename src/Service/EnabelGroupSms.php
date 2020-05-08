@@ -64,6 +64,7 @@ class EnabelGroupSms
             'hq' => 'EnabelHQ',
             'field' => 'EnabelField',
             'resrep' => 'ResRep',
+            'ict_hq' => 'ICT HQ',
         ];
     }
 
@@ -126,6 +127,10 @@ class EnabelGroupSms
 
             case 'resrep':
                 $users = $this->phoneDirectory->getResRep();
+                break;
+
+            case 'ict_hq':
+                $users = $this->phoneDirectory->getIctHq();
                 break;
 
             case 'BDI':
