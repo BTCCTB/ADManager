@@ -90,6 +90,9 @@ serve: ./symfony ## Serve the application with HTTPS support
 unserve: ./symfony ## Stop the web server
 	$(SYMFONY_BIN) server:stop
 
+open: ./symfony ##Open the local project in a browser
+	$(SYMFONY_BIN) open:local
+
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 up: docker-compose.yml ## Start the docker hub (MySQL,redis,phpmyadmin,mailcatcher)
 	$(DOCKER) -f docker-compose.yml up -d
@@ -104,7 +107,7 @@ dpsn: ## List Docker containers for the project
 	@echo "--------------------------------------------------------------------------------------------------------------"
 
 ## —— Project 🛠———————————————————————————————————————————————————————————————
-run: up wait reload serve ## Start docker, load fixtures and start the web server
+run: up wait reload serve open ## Start docker, load fixtures and start the web server
 
 reload: load-fixtures ## Reload fixtures
 
