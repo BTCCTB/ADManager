@@ -685,5 +685,29 @@
         <target>Send a message [Person]</target>
       </segment>
     </unit>
+    <unit id="1Ak3tnW" name="Enabel Staff">
+      <segment>
+        <source>Enabel Staff</source>
+        <target>Enabel Staff</target>
+      </segment>
+    </unit>
+    <unit id="zaZ1gP9" name="AllEnabel">
+      <segment>
+        <source>AllEnabel</source>
+        <target>All Enabel</target>
+      </segment>
+    </unit>
+    <unit id="ERQWffZ" name="EnabelHQ">
+      <segment>
+        <source>EnabelHQ</source>
+        <target>Enabel HQ</target>
+      </segment>
+    </unit>
+    <unit id="6r_3ySR" name="EnabelField">
+      <segment>
+        <source>EnabelField</source>
+        <target>Enabel Field</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

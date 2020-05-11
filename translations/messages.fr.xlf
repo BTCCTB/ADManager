@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
     <unit id="DdLwEhz" name="my.account.label.password.recommendation">
       <segment>
@@ -455,6 +455,60 @@
       <segment>
         <source>message.form.label.sender</source>
         <target>Expéditeur</target>
+      </segment>
+    </unit>
+    <unit id="ERQWffZ" name="EnabelHQ">
+      <segment>
+        <source>EnabelHQ</source>
+        <target>Enabel Siège</target>
+      </segment>
+    </unit>
+    <unit id="6r_3ySR" name="EnabelField">
+      <segment>
+        <source>EnabelField</source>
+        <target>Enabel Terrain</target>
+      </segment>
+    </unit>
+    <unit id="zaZ1gP9" name="AllEnabel">
+      <segment>
+        <source>AllEnabel</source>
+        <target>Tout Enabel</target>
+      </segment>
+    </unit>
+    <unit id="UKnMwKA" name="main.menu.admin.message.create.person.label">
+      <segment>
+        <source>main.menu.admin.message.create.person.label</source>
+        <target>Envoyer un message [Personne]</target>
+      </segment>
+    </unit>
+    <unit id="BgzG80a" name="main.menu.admin.message.create.group.label">
+      <segment>
+        <source>main.menu.admin.message.create.group.label</source>
+        <target>Envoyer un message [Groupe]</target>
+      </segment>
+    </unit>
+    <unit id="O7wZyTB" name="main.menu.admin.message.log.label">
+      <segment>
+        <source>main.menu.admin.message.log.label</source>
+        <target>Liste des messages</target>
+      </segment>
+    </unit>
+    <unit id="Ww8J0Mi" name="main.menu.admin.message.label">
+      <segment>
+        <source>main.menu.admin.message.label</source>
+        <target>Message</target>
+      </segment>
+    </unit>
+    <unit id="gAu5Pm4" name="main.menu.homepage.label">
+      <segment>
+        <source>main.menu.homepage.label</source>
+        <target>Accueil</target>
+      </segment>
+    </unit>
+    <unit id="1Ak3tnW" name="Enabel Staff">
+      <segment>
+        <source>Enabel Staff</source>
+        <target>Personnel Enabel </target>
       </segment>
     </unit>
   </file>
