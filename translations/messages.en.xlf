@@ -649,5 +649,29 @@
         <target>Back</target>
       </segment>
     </unit>
+    <unit id="gAu5Pm4" name="main.menu.homepage.label">
+      <segment>
+        <source>main.menu.homepage.label</source>
+        <target>Home</target>
+      </segment>
+    </unit>
+    <unit id="oZH6_3Q" name="btn.intranet.label">
+      <segment>
+        <source>btn.intranet.label</source>
+        <target>Intranet</target>
+      </segment>
+    </unit>
+    <unit id="rsS3nEv" name="new_collegues.title.h3">
+      <segment>
+        <source>new_collegues.title.h3</source>
+        <target>New colleagues</target>
+      </segment>
+    </unit>
+    <unit id="Ep78Se3" name="new_collegues.start_date">
+      <segment>
+        <source>new_collegues.start_date</source>
+        <target>Start date</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
