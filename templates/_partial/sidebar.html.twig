@@ -1,7 +1,7 @@
 <nav class="col-sm-2 col-md-1 d-none d-sm-block bg-light sidebar">
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link {% if (app.request.get('_route') == 'homepage') or (app.request.get('_route') == 'application-my-apps') %}active{% endif %}" href="{{ path('application-my-apps') }}">{{ 'main.menu.application.label'|trans }}</a>
+            <a class="nav-link {% if (app.request.get('_route') == 'homepage') %}active{% endif %}" href="{{ path('homepage') }}"><i class="fa fa-home"></i> {{ 'main.menu.homepage.label'|trans }}</a>
         </li>
     </ul>
     {% if is_granted('ROLE_ADMIN') %}
