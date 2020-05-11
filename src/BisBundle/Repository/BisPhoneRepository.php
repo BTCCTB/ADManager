@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @package BisBundle\Entity
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class BisPhoneRepository extends EntityRepository
 {
@@ -74,6 +74,20 @@ class BisPhoneRepository extends EntityRepository
             ->setParameter('ResRepFr', 'Représentant résident%')
             ->setParameter('ResRepNl', 'Plaatselijk vertegenwoordiger%')
             ->setParameter('ResRepEn', 'Resident Representative%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getIctHqPhoneDirectory() :  ? array
+    {
+        return $this->getBaseQueryWithPhone()
+            ->andWhere('bp.function LIKE :infoFR OR bp.function LIKE :infoEN OR bp.function LIKE :help OR bp.function LIKE :chef')
+            ->andWhere('bp.countryWorkplace = :country')
+            ->setParameter('infoFR', 'Informaticien système%')
+            ->setParameter('infoEN', 'Informatician system%')
+            ->setParameter('help', '%ICT help%')
+            ->setParameter('chef', '%Information & Communication Management%')
+            ->setParameter('country', 'BEL')
             ->getQuery()
             ->getResult();
     }

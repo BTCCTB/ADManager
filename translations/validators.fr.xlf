@@ -11,5 +11,11 @@
         <target>Les champs de nouveau mot de passe doivent correspondre.</target>
       </segment>
     </unit>
+    <unit id="idjV1ct" name="Your message must be at least {{ limit }} characters long">
+      <segment>
+        <source>Your message must be at least {{ limit }} characters long</source>
+        <target>Votre message doit contenir au moins {{ limit }} caractères</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="security_audit")
  * @ORM\Entity(repositoryClass="App\Repository\SecurityAuditRepository")
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class SecurityAudit implements EntityInterface
 {

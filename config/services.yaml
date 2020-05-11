@@ -139,7 +139,7 @@ services:
             public: true
 
     App\Repository\UserRepository:
-        factory: 'doctrine.orm.entity_manager:getRepository'
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: ['App\Entity\User']
 
     AuthBundle\Service\SuccessFactorApi:
@@ -167,6 +167,20 @@ services:
     App\Service\SmsGatewayMe:
         autowire: true
         arguments:
-            $apiToken: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
-            $deviceId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
+            $token: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
+            $accountId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
+            $from: ''
         public: true
+
+    App\Service\Twilio:
+        arguments:
+            $token: '%env(resolve:TWILIO_TOKEN)%'
+            $accountId: '%env(resolve:TWILIO_SID)%'
+            $from: '%env(resolve:TWILIO_NUMBER)%'
+        public: true
+
+    App\Twig\SmsExtensions:
+        autowire: true
+        autoconfigure: true
+        tags: ['twig.extension']
+

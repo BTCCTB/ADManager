@@ -10,11 +10,14 @@
                     <i class="fa fa-address-card"></i> Personal information
                 </div>
                 <div class="card-body">
+                    {% if bisData is empty %}
+                    <span class="alert alert-danger">{{ 'account.notfound.in.bis'|trans }}</span>
+                    {% else %}
                     <table class="table table-borderless table-sm" style="border: 0px none">
                         <tbody>
                             <tr>
                                 <th>Employee ID</th>
-                                <td><a href="https://performancemanager5.successfactors.eu/xi/ui/pages/empfile/liveprofile.xhtml?selected_user={{ account.employeeId }}" target="_blank">{{ account.employeeId }}</a></td>
+                                <td><a href="https://performancemanager5.successfactors.eu/xi/ui/pages/empfile/liveprofile.xhtml?selected_user={{ bisData.employeeId }}" target="_blank">{{ bisData.employeeId }}</a></td>
                             </tr>
                             <tr>
                                 <th>Display name</th>
@@ -22,11 +25,11 @@
                             </tr>
                             <tr>
                                 <th>Firstname</th>
-                                <td>{{ account.firstname }}</td>
+                                <td>{{ account.firstname|default('NC') }}</td>
                             </tr>
                             <tr>
                                 <th>Lastname</th>
-                                <td>{{ account.lastname }}</td>
+                                <td>{{ account.lastname|default('NC') }}</td>
                             </tr>
                             <tr>
                                 <th>Genre</th>
@@ -40,7 +43,7 @@
                             </tr>
                             <tr>
                                 <th>Email</th>
-                                <td><a href="mailto:{{ account.email }}">{{ account.email }}</a></td>
+                                <td><a href="mailto:{{ bisData.email }}">{{ bisData.email }}</a></td>
                             </tr>
                             <tr>
                                 <th>Phone</th>
@@ -55,6 +58,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    {% endif %}
                 </div>
             </div>
             <br>
@@ -63,6 +67,9 @@
                     <i class="fa fa-envelope-open"></i> Email information
                 </div>
                 <div class="card-body">
+                    {% if bisData is empty %}
+                    <span class="alert alert-danger">{{ 'account.notfound.in.bis'|trans }}</span>
+                    {% else %}
                     <table class="table table-borderless table-sm" style="border: 0px none">
                         <tbody>
                         <tr>
@@ -71,10 +78,11 @@
                         </tr>
                         <tr>
                             <th>Proxy addresses</th>
-                            <td>{{ adData.proxyAddresses|join('<br>')|raw }}</td>
+                            <td>{{ adData.proxyAddresses|default('N.C.')|join('<br>')|raw }}</td>
                         </tr>
                         </tbody>
                     </table>
+                    {% endif %}
                 </div>
             </div>
             <br>
@@ -83,6 +91,9 @@
                     <i class="fa fa-briefcase"></i> Job information
                 </div>
                 <div class="card-body">
+                    {% if bisData is empty %}
+                    <span class="alert alert-danger">{{ 'account.notfound.in.bis'|trans }}</span>
+                    {% else %}
                     <table class="table table-borderless table-sm" style="border: 0px none">
                         <tbody>
                         <tr>
@@ -117,6 +128,7 @@
                         </tr>
                         </tbody>
                     </table>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -126,15 +138,18 @@
                     <i class="fa fa-user-circle"></i> Account information [AD]
                 </div>
                 <div class="card-body">
+                    {% if adData is empty %}
+                        <span class="alert alert-danger">{{ 'account.notfound.in.ad'|trans }}</span>
+                    {% else %}
                     <table class="table table-borderless table-sm" style="border: 0px none">
                         <tbody>
                             <tr>
                                 <th>Account</th>
-                                <td>{{ adData.userPrincipalName }} [{{ account.accountName }}]</td>
+                                <td>{{ adData.userPrincipalName|default('N.C.') }} [{{ account.accountName|default('N.C.') }}]</td>
                             </tr>
                             <tr>
                                 <th>DN</th>
-                                <td>{{ adData.distinguishedName }}</td>
+                                <td>{{ adData.distinguishedName|default('N.C.') }}</td>
                             </tr>
                             <tr>
                                 <th>Home Drive</th>
@@ -142,15 +157,15 @@
                             </tr>
                             <tr>
                                 <th>Bad password count</th>
-                                <td>{{ adData.badPasswordCount }}</td>
+                                <td>{{ adData.badPasswordCount|default('N.C.') }}</td>
                             </tr>
                             <tr>
                                 <th>Last login</th>
-                                <td>{{ account.lastLoginAt|date("d/m/Y H:i:s") }}</td>
+                                <td>{{ account.lastLoginAt|default('N.C.')|date("d/m/Y H:i:s") }}</td>
                             </tr>
                             <tr>
                                 <th>Password last set</th>
-                                <td>{{ adData.passwordLastSetTimestamp|date("d/m/Y H:i:s") }}</td>
+                                <td>{{ adData.passwordLastSetTimestamp|default('N.C.')|date("d/m/Y H:i:s") }}</td>
                             </tr>
                             <tr>
                                 <th>Status</th>
@@ -174,18 +189,19 @@
                             </tr>
                             <tr>
                                 <th>Personal token</th>
-                                <td><small>{{ account.token|raw }}</small></td>
+                                <td><small>{{ account.token|default('N.C.')|raw }}</small></td>
                             </tr>
                             <tr>
                                 <th>Creation date</th>
-                                <td>{{ adData.createdAtDate|date('d/m/Y H:i') }}</td>
+                                <td>{{ adData.createdAtDate|default('N.C.')|date('d/m/Y H:i') }}</td>
                             </tr>
                             <tr>
                                 <th>Modification date</th>
-                                <td>{{ adData.updatedAtDate|date('d/m/Y H:i') }}</td>
+                                <td>{{ adData.updatedAtDate|default('N.C.')|date('d/m/Y H:i') }}</td>
                             </tr>
                         </tbody>
                     </table>
+                    {% endif %}
                 </div>
             </div>
             <br>
@@ -194,6 +210,9 @@
                     <i class="fa fa-key"></i> Account information [LDAP]
                 </div>
                 <div class="card-body">
+                    {% if ldapData is empty %}
+                        <span class="alert alert-danger">{{ 'account.notfound.in.ldap'|trans }}</span>
+                    {% else %}
                     <table class="table table-borderless table-sm" style="border: 0px none">
                         <tbody>
                         <tr>
@@ -222,6 +241,7 @@
                         {% endif %}
                         </tbody>
                     </table>
+                    {% endif %}
                 </div>
             </div>
         </div>

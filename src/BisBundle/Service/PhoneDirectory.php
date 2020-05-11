@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @package BisBundle\Service
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class PhoneDirectory
 {
@@ -47,5 +47,10 @@ class PhoneDirectory
     public function getResRep()
     {
         return $this->repository->getResRepPhoneDirectory();
+    }
+
+    public function getIctHq()
+    {
+        return $this->repository->getIctHqPhoneDirectory();
     }
 }

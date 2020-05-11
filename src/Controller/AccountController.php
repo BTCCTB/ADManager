@@ -11,7 +11,7 @@ use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
 use App\Service\SecurityAudit;
-use App\Service\SmsGatewayMe;
+use App\Service\SmsInterface;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @package Controller
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @Route("/account")
  *
@@ -58,7 +58,6 @@ class AccountController extends AbstractController
 
     public function __construct(ActiveDirectory $activeDirectory, BisDir $bisDir, AccountService $accountService, SecurityAudit $securityAudit)
     {
-
         $this->activeDirectory = $activeDirectory;
         $this->bisDir = $bisDir;
         $this->accountService = $accountService;
@@ -208,7 +207,7 @@ class AccountController extends AbstractController
      *
      * @throws \Adldap\AdldapException
      */
-    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsGatewayMe $smsGatewayMe): RedirectResponse
+    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsInterface $smsGatewayMe): RedirectResponse
     {
         $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
         $account = $accountRepository->find($employeeID);
@@ -290,23 +289,28 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/detail/{id}", name="account_detail", methods={"GET"})
-     *
-     * @ParamConverter("id", class="App:Account")
+     * @Route("/detail/{id}", name="account_detail", methods={"GET"}, requirements={"id":"\d+"})
      *
      * @IsGranted("ROLE_ADMIN")
      *
-     * @param Account       $account       The account to test     *
-     * @param BisPersonView $bisPersonView
+     * @param int               $id The account id
+     * @param BisPersonView     $bisPersonView
+     * @param AccountRepository $accountRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(Account $account, BisPersonView $bisPersonView)
+    public function detailAction(int $id, BisPersonView $bisPersonView, AccountRepository $accountRepository)
     {
-        if (!empty($account->getEmail())) {
-            $adUser = $this->activeDirectory->getUser($account->getEmail());
-            $ldapUser = $this->bisDir->getUser($account->getEmail());
-            $bisData = $bisPersonView->getUserData($account->getEmail());
+        if (!empty($id)) {
+            $bisData = $bisPersonView->findById($id);
+            $adUser = null;
+            $ldapUser = null;
+            $account = null;
+            if (!empty($bisData)) {
+                $adUser = $this->activeDirectory->getUser($bisData->getEmail());
+                $ldapUser = $this->bisDir->getUser($bisData->getEmail());
+                $account = $accountRepository->find($id);
+            }
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
 

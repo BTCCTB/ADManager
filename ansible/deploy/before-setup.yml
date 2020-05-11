@@ -9,3 +9,4 @@
     channel: "{{ slack_channel }}"
     parse: 'none'
   delegate_to: localhost
+

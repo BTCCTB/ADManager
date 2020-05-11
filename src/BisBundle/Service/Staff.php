@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @package BisBundle\Service
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class Staff
 {

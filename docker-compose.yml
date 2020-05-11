@@ -1,7 +1,7 @@
 version: '3'
 services:
   mariadb:
-    image: mariadb
+    image: mariadb:10.1
     volumes:
       - .docker/data/db:/var/lib/mysql
     environment:
@@ -15,7 +15,7 @@ services:
       com.symfony.server.service-prefix: 'DATABASE'
 
   bis:
-    image: mariadb
+    image: mysql:5.5
     volumes:
       - ~/Projects/BIS/.db/data:/var/lib/mysql/
       - ~/Projects/BIS/.db/log:/var/log/mysql/
@@ -47,3 +47,12 @@ services:
       - 1025:1025
     labels:
       com.symfony.server.service-prefix: 'MAILER'
+
+  redis:
+    image: redis
+    volumes:
+      - .docker/data/redis:/data
+    ports:
+      - 6379:6379
+    labels:
+      com.symfony.server.service-prefix: 'REDIS'

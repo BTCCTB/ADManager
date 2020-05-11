@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
  *
  * @package BisBundle\Service
  *
- * @author  Damien Lagae <damienlagae@gmail.com>
+ * @author  Damien Lagae <damien.lagae@enabel.be>
  */
 class BisPersonView
 {
@@ -87,5 +87,10 @@ class BisPersonView
     public function getFinishers(int $nbDays = 15)
     {
         return $this->repository->getFinishers($nbDays);
+    }
+
+    public function findById(int $id)
+    {
+        return $this->repository->find($id);
     }
 }

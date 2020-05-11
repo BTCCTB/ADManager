@@ -1,57 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="bin/.phpunit/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/bootstrap.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
-        <server name="KERNEL_CLASS" value="App\Kernel" />
+        <server name="APP_ENV" value="test" force="true" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="7.5" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
-
-        <!-- ###+ doctrine/doctrine-bundle ### -->
-        <env name="DATABASE_URL" value="mysql://root:toor@127.0.0.1:3306/admanager"/>
-        <env name="DATABASE_BIS_URL" value="mysql://root:toot@127.0.0.1:3306/bis"/>
-        <!-- ###- doctrine/doctrine-bundle ### -->
-
-        <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <env name="MAILER_URL" value="smtp://localhost:1025"/>
-        <!-- ###- symfony/swiftmailer-bundle ### -->
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="test"/>
-        <env name="APP_SECRET" value="09aacd4f12c90ad887f149bcc6176587"/>
-        <!-- ###- symfony/framework-bundle ### -->
-
-        <!-- ###+ ActiveDirectory ### -->
-        <env name="DOMAIN_CONTROLLERS" value="" />
-        <env name="BASE_DN" value="" />
-        <env name="ADMIN_USERNAME" value="" />
-        <env name="ADMIN_PASSWORD" value="" />
-        <env name="ACCOUNT_SUFFIX" value="" />
-        <!-- ###- ActiveDirectory ### -->
-
-        <!-- ###+ MailNotification ### -->
-        <env name="MAIL_DOMAIN" value="enabel.be" />
-        <env name="NOTIFICATION_FROM" value="" />
-        <env name="NOTIFICATION_TO" value="" />
-        <!-- ###- MailNotification ### -->
-
-        <!-- ###+ LDAP ### -->
-        <env name="BIS_DIR_HOSTS" value="" />
-        <env name="BIS_DIR_BASE_DN" value="dc=enabel,dc=be" />
-        <env name="BIS_DIR_ADMIN_USERNAME" value="" />
-        <env name="BIS_DIR_ADMIN_PASSWORD" value="" />
-        <!-- ###- LDAP ### -->
-
-        <!-- ###+ SmsGatewayMe ### -->
-        <env name="SMS_GATEWAY_ME_API_TOKEN" value="123aze456rty789uiop" />
-        <env name="SMS_GATEWAY_ME_DEVICE_ID" value="9876543210" />
-        <!-- ###- SmsGatewayMe ### -->
-
     </php>
 
     <testsuites>
@@ -71,8 +33,12 @@
         </whitelist>
     </filter>
 
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
     <logging>
-        <log type="coverage-clover" target="./var/coverage.xml"/>
+        <log type="coverage-clover" target="./QA/coverage.xml"/>
     </logging>
 
 </phpunit>

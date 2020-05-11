@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @author Damien Lagae <damienlagae@gmail.com>
+ * @author Damien Lagae <damien.lagae@enabel.be>
  */
 class LoginForm extends AbstractType
 {

@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * @package AuthBundle\DependencyInjection
  *
- * @author Damien Lagae <damienlagae@gmail.com>
+ * @author Damien Lagae <damien.lagae@enabel.be>
  */
 class AuthExtension extends Extension
 {
