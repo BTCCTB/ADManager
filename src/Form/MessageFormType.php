@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\MessageLog;
+use App\Service\EnabelGroupSms;
+use BisBundle\Service\PhoneDirectory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,6 +14,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MessageFormType extends AbstractType
 {
+    /**
+     * @var PhoneDirectory
+     */
+    private $phoneDirectory;
+
+    public function __construct(PhoneDirectory $phoneDirectory)
+    {
+        $this->phoneDirectory = $phoneDirectory;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -20,7 +32,7 @@ class MessageFormType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'message.form.label.recipient',
-                    'choices' => MessageLog::recipientList(),
+                    'choices' => $options['recipient_choices'],
                     'multiple' => true,
                     'attr' => [
                         'class' => 'select2',
@@ -45,6 +57,7 @@ class MessageFormType extends AbstractType
                     'label' => 'message.form.label.message',
                     'attr' => [
                         'rows' => 4,
+                        'maxlength' => 150,
                     ],
                 ]
             )
@@ -55,6 +68,7 @@ class MessageFormType extends AbstractType
                     'label' => 'message.form.label.message.fr',
                     'attr' => [
                         'rows' => 4,
+                        'maxlength' => 150,
                         'class' => 'multi',
                     ],
                     'required' => false,
@@ -67,6 +81,7 @@ class MessageFormType extends AbstractType
                     'label' => 'message.form.label.message.nl',
                     'attr' => [
                         'rows' => 4,
+                        'maxlength' => 150,
                         'class' => 'multi',
                     ],
                     'required' => false,
@@ -79,6 +94,7 @@ class MessageFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => MessageLog::class,
+            'recipient_choices' => EnabelGroupSms::getAllRecipientOptions($this->phoneDirectory),
         ]);
     }
 }

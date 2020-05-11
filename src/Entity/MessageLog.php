@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Service\EnabelGroupSms;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -173,10 +172,5 @@ class MessageLog
         $this->recipient = $recipient;
 
         return $this;
-    }
-
-    public static function recipientList()
-    {
-        return EnabelGroupSms::getRecipientOptions();
     }
 }

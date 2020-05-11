@@ -673,5 +673,17 @@
         <target>Start date</target>
       </segment>
     </unit>
+    <unit id="BgzG80a" name="main.menu.admin.message.create.group.label">
+      <segment>
+        <source>main.menu.admin.message.create.group.label</source>
+        <target>Send a message [Group]</target>
+      </segment>
+    </unit>
+    <unit id="UKnMwKA" name="main.menu.admin.message.create.person.label">
+      <segment>
+        <source>main.menu.admin.message.create.person.label</source>
+        <target>Send a message [Person]</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

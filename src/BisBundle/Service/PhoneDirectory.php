@@ -53,4 +53,27 @@ class PhoneDirectory
     {
         return $this->repository->getIctHqPhoneDirectory();
     }
+
+    public function getContactByIds(array $arrayId)
+    {
+        return $this->repository->getStaffByIds($arrayId);
+    }
+
+    public function getContactById(int $id)
+    {
+        return $this->repository->getStaffById($id);
+    }
+
+    public function getRecipientOptions()
+    {
+        $recipients = [];
+        $persons = $this->getAll();
+        foreach ($persons as $person) {
+            if (!empty($person->getMobile())) {
+                $recipients[$person->getDisplayName()] = $person->getId();
+            }
+        }
+
+        return $recipients;
+    }
 }

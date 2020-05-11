@@ -82,7 +82,17 @@ class EnabelGroupSms
         return $partnerCountries;
     }
 
-    public static function getRecipientOptions()
+    public static function getAllRecipientOptions(PhoneDirectory $phoneDirectory)
+    {
+
+        return [
+            'Group' => array_flip(self::getGroups()),
+            'Country' => array_flip(self::getCountries()),
+            $phoneDirectory->getRecipientOptions(),
+        ];
+    }
+
+    public static function getGroupRecipientOptions()
     {
         return [
             'Group' => array_flip(self::getGroups()),
@@ -90,9 +100,16 @@ class EnabelGroupSms
         ];
     }
 
+    public static function getPersonRecipientOptions(PhoneDirectory $phoneDirectory)
+    {
+        return [
+            $phoneDirectory->getRecipientOptions(),
+        ];
+    }
+
     public function getName($groupCode)
     {
-        $groups = self::getCountries() + self::getGroups();
+        $groups = self::getCountries() + self::getGroups() + array_flip($this->phoneDirectory->getRecipientOptions());
 
         if (array_key_exists($groupCode, $groups)) {
             return $groups[$groupCode];
@@ -157,6 +174,9 @@ class EnabelGroupSms
             case 'UGA':
                 $users = $this->phoneDirectory->getByCountry($filter);
                 break;
+
+            default:
+                $users = $this->phoneDirectory->getContactById($filter);
         }
 
         foreach ($users as $user) {

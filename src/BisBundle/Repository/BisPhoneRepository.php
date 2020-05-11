@@ -92,6 +92,24 @@ class BisPhoneRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getStaffByIds(array $arrayIds) :  ? array
+    {
+        return $this->getBaseQueryWithPhone()
+            ->andWhere('bp.id in :ids')
+            ->setParameter('ids', $arrayIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStaffById(int $id) :  ? array
+    {
+        return $this->getBaseQueryWithPhone()
+            ->andWhere('bp.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * Get full staff
      *
