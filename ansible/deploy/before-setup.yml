@@ -9,3 +9,6 @@
     channel: "{{ slack_channel }}"
     parse: 'none'
   delegate_to: localhost
+
+- name: Stop sms workers
+  command: "{{ release_console_path }} messenger:stop-workers"
