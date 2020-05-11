@@ -108,7 +108,7 @@ class MessageController extends AbstractController
         $form = $this->createForm(MessageFormType::class, $messageLog);
 
         return $this->render(
-            'Message/create.html.twig',
+            'Message/details.html.twig',
             [
                 'form' => $form->createView(),
             ]

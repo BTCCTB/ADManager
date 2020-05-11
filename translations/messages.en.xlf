@@ -625,5 +625,29 @@
         <target>Details</target>
       </segment>
     </unit>
+    <unit id="_F_xE37" name="message.details.title">
+      <segment>
+        <source>message.details.title</source>
+        <target>Details</target>
+      </segment>
+    </unit>
+    <unit id="wI1o.Pk" name="main.menu.message.details.label">
+      <segment>
+        <source>main.menu.message.details.label</source>
+        <target>Details</target>
+      </segment>
+    </unit>
+    <unit id="0.AaMdt" name="message.label.back_to_list">
+      <segment>
+        <source>message.label.back_to_list</source>
+        <target>message.label.back_to_list</target>
+      </segment>
+    </unit>
+    <unit id="uBkHpvm" name="message.label.back">
+      <segment>
+        <source>message.label.back</source>
+        <target>Back</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
