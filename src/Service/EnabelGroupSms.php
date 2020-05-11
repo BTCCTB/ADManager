@@ -88,7 +88,7 @@ class EnabelGroupSms
         return [
             'Group' => array_flip(self::getGroups()),
             'Country' => array_flip(self::getCountries()),
-            $phoneDirectory->getRecipientOptions(),
+            'Enabel Staff' => $phoneDirectory->getRecipientOptions(),
         ];
     }
 
@@ -103,7 +103,7 @@ class EnabelGroupSms
     public static function getPersonRecipientOptions(PhoneDirectory $phoneDirectory)
     {
         return [
-            $phoneDirectory->getRecipientOptions(),
+            'Enabel Staff' => $phoneDirectory->getRecipientOptions(),
         ];
     }
 
