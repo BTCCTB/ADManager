@@ -27,7 +27,9 @@
     <li class="nav-item dropdown {% if (app.request.get('_route') == 'message_log') or (app.request.get('_route') == 'message_create') %}active{% endif %}">
         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment"></i> {{ 'main.menu.admin.message.label'|trans }}<span class="caret"></span></a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            {% if is_granted('ROLE_SMS_ADMIN') %}
             <a href="{{ path('message_log') }}" class="dropdown-item {% if (app.request.get('_route') == 'message_log') %}active{% endif %}"><i class="fa fa-comments"></i> {{ 'main.menu.admin.message.log.label'|trans }}</a>
+            {% endif %}
             <a href="{{ path('message_create_group') }}" class="dropdown-item {% if (app.request.get('_route') == 'message_create_group') %}active{% endif %}"><i class="fa fa-comment-alt"></i> {{ 'main.menu.admin.message.create.group.label'|trans }}</a>
             <a href="{{ path('message_create_person') }}" class="dropdown-item {% if (app.request.get('_route') == 'message_create_person') %}active{% endif %}"><i class="fa fa-comment"></i> {{ 'main.menu.admin.message.create.person.label'|trans }}</a>
         </div>

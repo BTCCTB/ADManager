@@ -27,6 +27,7 @@ class MessageController extends AbstractController
 {
     /**
      * @Route("/", name="log")
+     * @IsGranted("ROLE_SMS_ADMIN")
      */
     public function log(MessageLogRepository $messageLogRepository)
     {
