@@ -1,0 +1,25 @@
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="//use.fontawesome.com/releases/v5.0.8/css/all.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/btcflagicon/css/flag-icon.min.css') }}" />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+            {% if starters is not empty %}
+                <ul class="list-group">
+                    {% for collegue in starters %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <span>
+                                {{ collegue.countryFlag|raw }} {{ collegue.displayName }}
+                                <br>
+                                <small>
+                                    {{ 'new_collegues.start_date'|trans }}: {{ collegue.DateContractStart|date('d/m/Y') }}<br>
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i> {{ collegue.function }}
+                                </small>
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
+        </div>
+    </div>

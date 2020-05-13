@@ -46,3 +46,6 @@ sf_api_company: "C0000960484P"
 # SmsGateway.me vars
 sms_gateway_me_api_token: "{{ vault_sms_gateway_me_api_token }}"
 sms_gateway_me_device_id: "{{ vault_sms_gateway_me_device_id }}"
+
+# Api key for intranet iframe
+intranet_api_key: "{{ vault_intranet_api_key }}"
