@@ -35,4 +35,25 @@ class IframeController extends AbstractController
             return new Response("Unauthorized (invalid api key!)", Response::HTTP_FORBIDDEN);
         }
     }
+    /**
+     * @Route("/finishers/{key}", methods={"GET"}, name="api_iframe_finishers")
+     * @param BisPersonView $bisPersonView
+     *
+     * @return Response
+     */
+    public function finishers(BisPersonView $bisPersonView, string $key = null)
+    {
+        if (empty($key)) {
+            return new Response("Forbidden (no api key!)", Response::HTTP_FORBIDDEN);
+        } elseif ($key === $_ENV["INTRANET_API_KEY"]) {
+            return $this->render(
+                'Iframe/finishers.html.twig',
+                [
+                    'finishers' => $bisPersonView->getFinishers(),
+                ]
+            );
+        } else {
+            return new Response("Unauthorized (invalid api key!)", Response::HTTP_FORBIDDEN);
+        }
+    }
 }

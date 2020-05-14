@@ -709,5 +709,11 @@
         <target>Enabel Field</target>
       </segment>
     </unit>
+    <unit id="6r_3yER" name="new_collegues.end_date">
+          <segment>
+              <source>new_collegues.end_date</source>
+              <target>End date</target>
+          </segment>
+      </unit>
   </file>
 </xliff>
