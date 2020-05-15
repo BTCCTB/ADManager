@@ -11,7 +11,7 @@ use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
 use App\Service\SecurityAudit;
-use App\Service\SmsInterface;
+use App\Service\SmsGatewayMe;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
@@ -207,7 +207,7 @@ class AccountController extends AbstractController
      *
      * @throws \Adldap\AdldapException
      */
-    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsInterface $smsGatewayMe): RedirectResponse
+    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsGatewayMe $smsGatewayMe): RedirectResponse
     {
         $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
         $account = $accountRepository->find($employeeID);
