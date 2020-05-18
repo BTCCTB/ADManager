@@ -168,19 +168,8 @@ class AdldapAuthenticator implements AuthenticatorInterface
             }
 
             return $checkCredentials;
-        } else {
-            if ($this->passwordEncoder->isPasswordValid($user, $password)) {
-                $adAccount = $this->activeDirectory->getUser($username);
-                $log = $this->bisDir->syncPassword($adAccount->getEmail(), $password);
-                if ($log->getStatus() !== BisDirResponseStatus::DONE) {
-                    $this->logger->error($log->getMessage());
-                }
-                $this->logger->info($log->getMessage());
-                return true;
-            } else {
-                throw new BadCredentialsException('Invalid password');
-            }
         }
+        throw new BadCredentialsException('Invalid password');
     }
 
     /**
