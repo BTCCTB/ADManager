@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class UserRepository
@@ -34,5 +35,20 @@ class UserRepository extends EntityRepository
         }
 
         return $user;
+    }
+
+    public function syncAccount(\Adldap\Models\User $adAccount, String $password, UserInterface $user)
+    {
+        $user->eraseCredentials();
+        $user
+            ->setFirstname($adAccount->getFirstName())
+            ->setLastname($adAccount->getLastName())
+            ->setAccountName($adAccount->getAccountName())
+            ->setEmail($adAccount->getEmail())
+            ->setPlainPassword($password)
+        ;
+
+        $this->_em->persist($user);
+        $this->_em->flush();
     }
 }

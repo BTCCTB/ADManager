@@ -121,10 +121,6 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $form->handleRequest($request);
         $data = $form->getData();
 
-        if (strpos($data['_username'], '@btcctb.org')) {
-            $data['_username'] = str_replace('@btcctb.org', '@enabel.be', $data['_username']);
-        }
-
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $data['_username']
@@ -154,10 +150,6 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $password = $credentials['_password'];
         $username = $credentials['_username'];
 
-        if (strpos($username, '@btcctb.org')) {
-            $username = str_replace('@btcctb.org', '@enabel.be', $username);
-        }
-
         if (false !== $this->activeDirectory->checkUserExistByUsername($username)) {
             $adAccount = $this->activeDirectory->getUser($username);
             $ldapUser = $this->bisDir->getUser($adAccount->getEmail());
@@ -171,6 +163,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
             $this->logger->info($log->getMessage());
             $checkCredentials = $this->activeDirectory->checkCredentials($username, $password);
             if (true === $checkCredentials) {
+                $this->em->getRepository(User::class)->syncAccount($adAccount, $password, $user);
                 $this->account->updateCredentials($adAccount, $password);
             }
 
@@ -182,9 +175,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
                 if ($log->getStatus() !== BisDirResponseStatus::DONE) {
                     $this->logger->error($log->getMessage());
                 }
-                dump($log->getMessage());
                 $this->logger->info($log->getMessage());
-
                 return true;
             } else {
                 throw new BadCredentialsException('Invalid password');
@@ -259,10 +250,6 @@ class AdldapAuthenticator implements AuthenticatorInterface
 
         if (null === $username) {
             throw new UsernameNotFoundException('Username can\'t be empty!');
-        }
-
-        if (strpos($username, '@btcctb.org')) {
-            $username = str_replace('@btcctb.org', '@enabel.be', $username);
         }
 
         $user = $this->em->getRepository('App:User')
