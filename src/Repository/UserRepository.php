@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -46,6 +47,7 @@ class UserRepository extends EntityRepository
             ->setAccountName($adAccount->getAccountName())
             ->setEmail($adAccount->getEmail())
             ->setPlainPassword($password)
+            ->setUpdatedAt(new DateTime())
         ;
 
         $this->_em->persist($user);
