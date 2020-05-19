@@ -511,5 +511,105 @@
         <target>Personnel Enabel </target>
       </segment>
     </unit>
+    <unit id="MXmMXZT" name="external.p.notice">
+      <segment>
+        <source>external.p.notice</source>
+        <target>En utilisant ce formulaire, vous pouvez ajouter un utilisateur externe qui aura accès comme n'importe quel utilisateur Enabel.
+Un mot de passe sera généré automatiquement.
+Vous pouvez utiliser la fonction reset pour envoyé le mot de passe par SMS à l’utilisateur.
+Cet utilisateur sera placé dans l'unité organisationnel "/Enabel-Brussels/Users/AD-ONLY"  il peut être déplacé après création.
+La date d'expiration est obligatoire pour des raison de sécurité, car cette utilisateur ne passe pas par les scripts de désactivation automatique.</target>
+      </segment>
+    </unit>
+    <unit id="YU9y_GR" name="external.form.label.personalInformation">
+      <segment>
+        <source>external.form.label.personalInformation</source>
+        <target>Informations personnelle</target>
+      </segment>
+    </unit>
+    <unit id="s5xY0dp" name="external.form.label.firstname">
+      <segment>
+        <source>external.form.label.firstname</source>
+        <target>Prénom</target>
+      </segment>
+    </unit>
+    <unit id="o0STQVx" name="external.form.label.lastname">
+      <segment>
+        <source>external.form.label.lastname</source>
+        <target>Nom</target>
+      </segment>
+    </unit>
+    <unit id="XQnU69P" name="external.form.label.phone">
+      <segment>
+        <source>external.form.label.phone</source>
+        <target>Téléphone</target>
+      </segment>
+    </unit>
+    <unit id="_OxVcBQ" name="external.form.help.phone">
+      <segment>
+        <source>external.form.help.phone</source>
+        <target>Sera utilisé pour la réinitialisation</target>
+      </segment>
+    </unit>
+    <unit id="dNIjK2i" name="external.form.label.companyInformation">
+      <segment>
+        <source>external.form.label.companyInformation</source>
+        <target>Informations d'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="2EtfNNr" name="external.form.label.company">
+      <segment>
+        <source>external.form.label.company</source>
+        <target>Entreprise</target>
+      </segment>
+    </unit>
+    <unit id="x2d7.Ij" name="external.form.label.jobTitle">
+      <segment>
+        <source>external.form.label.jobTitle</source>
+        <target>Poste</target>
+      </segment>
+    </unit>
+    <unit id="1F4pbou" name="external.form.label.accountInformation">
+      <segment>
+        <source>external.form.label.accountInformation</source>
+        <target>Informations du compte</target>
+      </segment>
+    </unit>
+    <unit id="EuGPE2U" name="external.form.label.login">
+      <segment>
+        <source>external.form.label.login</source>
+        <target>Login</target>
+      </segment>
+    </unit>
+    <unit id="toMXlfx" name="external.form.help.login">
+      <segment>
+        <source>external.form.help.login</source>
+        <target>prénom.nom@enabel.be</target>
+      </segment>
+    </unit>
+    <unit id="cUv9K1r" name="external.form.label.expirationDate">
+      <segment>
+        <source>external.form.label.expirationDate</source>
+        <target>Date d'expiration</target>
+      </segment>
+    </unit>
+    <unit id="X5U1FqQ" name="external.form.btn.create">
+      <segment>
+        <source>external.form.btn.create</source>
+        <target>Ajouter</target>
+      </segment>
+    </unit>
+    <unit id="xFi8FEX" name="external.title.create">
+      <segment>
+        <source>external.title.create</source>
+        <target>Ajouter un utilisateur externe [AD-ONLY]</target>
+      </segment>
+    </unit>
+    <unit id="yFFCrOm" name="main.menu.admin.account.createExternal.label">
+      <segment>
+        <source>main.menu.admin.account.createExternal.label</source>
+        <target>Ajout d'externe</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

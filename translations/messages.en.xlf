@@ -709,11 +709,117 @@
         <target>Enabel Field</target>
       </segment>
     </unit>
-    <unit id="6r_3yER" name="new_collegues.end_date">
-          <segment>
-              <source>new_collegues.end_date</source>
-              <target>End date</target>
-          </segment>
-      </unit>
+    <unit id="bzNTpKl" name="new_collegues.end_date">
+      <segment>
+        <source>new_collegues.end_date</source>
+        <target>End date</target>
+      </segment>
+    </unit>
+    <unit id="yFFCrOm" name="main.menu.admin.account.createExternal.label">
+      <segment>
+        <source>main.menu.admin.account.createExternal.label</source>
+        <target>Add external</target>
+      </segment>
+    </unit>
+    <unit id="xFi8FEX" name="external.title.create">
+      <segment>
+        <source>external.title.create</source>
+        <target>Add external user [AD-ONLY]</target>
+      </segment>
+    </unit>
+    <unit id="s5xY0dp" name="external.form.label.firstname">
+      <segment>
+        <source>external.form.label.firstname</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="o0STQVx" name="external.form.label.lastname">
+      <segment>
+        <source>external.form.label.lastname</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="EuGPE2U" name="external.form.label.login">
+      <segment>
+        <source>external.form.label.login</source>
+        <target>Login</target>
+      </segment>
+    </unit>
+    <unit id="07ItPsU" name="external.form.label.email">
+      <segment>
+        <source>external.form.label.email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="XQnU69P" name="external.form.label.phone">
+      <segment>
+        <source>external.form.label.phone</source>
+        <target>Phone</target>
+      </segment>
+    </unit>
+    <unit id="x2d7.Ij" name="external.form.label.jobTitle">
+      <segment>
+        <source>external.form.label.jobTitle</source>
+        <target>Job title</target>
+      </segment>
+    </unit>
+    <unit id="2EtfNNr" name="external.form.label.company">
+      <segment>
+        <source>external.form.label.company</source>
+        <target>Company</target>
+      </segment>
+    </unit>
+    <unit id="cUv9K1r" name="external.form.label.expirationDate">
+      <segment>
+        <source>external.form.label.expirationDate</source>
+        <target>Expiration date</target>
+      </segment>
+    </unit>
+    <unit id="X5U1FqQ" name="external.form.btn.create">
+      <segment>
+        <source>external.form.btn.create</source>
+        <target>Add</target>
+      </segment>
+    </unit>
+    <unit id="_OxVcBQ" name="external.form.help.phone">
+      <segment>
+        <source>external.form.help.phone</source>
+        <target>Can be use to reset password</target>
+      </segment>
+    </unit>
+    <unit id="toMXlfx" name="external.form.help.login">
+      <segment>
+        <source>external.form.help.login</source>
+        <target>firstname.lastname@enabel.be</target>
+      </segment>
+    </unit>
+    <unit id="YU9y_GR" name="external.form.label.personalInformation">
+      <segment>
+        <source>external.form.label.personalInformation</source>
+        <target>Personal information</target>
+      </segment>
+    </unit>
+    <unit id="dNIjK2i" name="external.form.label.companyInformation">
+      <segment>
+        <source>external.form.label.companyInformation</source>
+        <target>Company information</target>
+      </segment>
+    </unit>
+    <unit id="1F4pbou" name="external.form.label.accountInformation">
+      <segment>
+        <source>external.form.label.accountInformation</source>
+        <target>Account information</target>
+      </segment>
+    </unit>
+    <unit id="MXmMXZT" name="external.p.notice">
+      <segment>
+        <source>external.p.notice</source>
+        <target>Using this form, you can add an external user who will have access as any Enabel user.
+A password will be generated automatically.
+You can use the reset function to send the password by SMS to the user.
+This user will be placed in the organizational unit "/Enabel-Brussels/Users/AD-ONLY" it can be moved after creation.
+The expiration date is mandatory for security reasons, because this user does not go through the automatic disabling scripts.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

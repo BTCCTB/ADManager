@@ -7,6 +7,7 @@ use App\Entity\Account;
 use App\Form\ActionAuthType;
 use App\Form\ChangeEmailType;
 use App\Form\ChangePasswordType;
+use App\Form\ExternalFormType;
 use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
@@ -24,6 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -71,7 +73,7 @@ class AccountController extends AbstractController
      *
      * @param AccountRepository $accountRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction(AccountRepository $accountRepository, BisPersonView $bisPersonView)
     {
@@ -88,7 +90,7 @@ class AccountController extends AbstractController
      *
      * @param AccountRepository $accountRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function passwordAgoAction(ActiveDirectory $activeDirectory)
     {
@@ -102,7 +104,7 @@ class AccountController extends AbstractController
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Adldap\AdldapException
      */
@@ -218,7 +220,6 @@ class AccountController extends AbstractController
         }
 
         $resetPassword = $this->activeDirectory->initAccount($user);
-
         if ($resetPassword->getStatus() === ActiveDirectoryResponseStatus::DONE) {
 //            $activeDirectoryNotification->notifyInitialization($resetPassword);
             $messages = [
@@ -267,7 +268,7 @@ class AccountController extends AbstractController
      * @param Account $account The account to test
      * @param Request $request The request (Form data)
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function checkPasswordAction(Account $account, Request $request)
     {
@@ -297,7 +298,7 @@ class AccountController extends AbstractController
      * @param BisPersonView     $bisPersonView
      * @param AccountRepository $accountRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function detailAction(int $id, BisPersonView $bisPersonView, AccountRepository $accountRepository)
     {
@@ -332,7 +333,7 @@ class AccountController extends AbstractController
      * @param UserRepository    $userRepository
      * @param AccountRepository $accountRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -382,5 +383,36 @@ class AccountController extends AbstractController
         }
 
         return $this->render('Account/changeEmail.html.twig', ['form' => $form->createView(), 'account' => $account, 'adData' => $adData]);
+    }
+
+    /**
+     * @Route("/external/create", name="account_create_external", methods={"GET","POST"})
+     *
+     * @param Request         $request
+     * @param ActiveDirectory $activeDirectory
+     *
+     * @return Response
+     */
+    public function createExternal(Request $request, ActiveDirectory $activeDirectory)
+    {
+        $form = $this->createForm(ExternalFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $adAccount = $activeDirectory->createExternal($form->getData());
+            if ($adAccount->getStatus() === ActiveDirectoryResponseStatus::DONE) {
+                $this->addFlash('success', $adAccount->getMessage());
+                return $this->redirectToRoute('homepage');
+            } else {
+                $this->addFlash('danger', $adAccount->getMessage());
+            }
+        }
+
+        return $this->render(
+            'Account/createExternal.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 }

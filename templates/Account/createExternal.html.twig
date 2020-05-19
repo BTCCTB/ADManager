@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include '_partial/flash.html.twig' %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{ 'external.title.create'|trans }}</h2>
+            <p>{{ 'external.p.notice'|trans|nl2br }}</p>
+            <hr>
+        </div>
+    </div>
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-4">
+            <fieldset class="form-block-well">
+                <legend class="form-block-legend">
+                    {{ 'external.form.label.personalInformation'|trans }}
+                </legend>
+                {{ form_row(form.firstname) }}
+                {{ form_row(form.lastname) }}
+                {{ form_row(form.phone) }}
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset class="form-block-well">
+                <legend class="form-block-legend">
+                    {{ 'external.form.label.companyInformation'|trans }}
+                </legend>
+                {{ form_row(form.company) }}
+                {{ form_row(form.jobTitle) }}
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset class="form-block-well">
+                <legend class="form-block-legend">
+                    {{ 'external.form.label.accountInformation'|trans }}
+                </legend>
+                {{ form_row(form.login) }}
+                {{ form_row(form.expirationDate) }}
+            </fieldset>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 1rem">
+        <div class="col-md-12">
+            <hr>
+            <center>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-user-plus"></i> {{ 'external.form.btn.create'|trans }}</button>
+            </center>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" />
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.fr.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.nl.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // you may need to change this code if you are not using Bootstrap Datepicker
+            $('.js-datepicker').datepicker({
+                format: "yyyy-mm-dd",
+                todayBtn: "linked",
+                clearBtn: true,
+                language: "{{  app.request.locale }}"
+            });
+            // $('.js-email').keyup(function() {
+            //     $('.js-login').val($('.js-email').val());
+            // })
+        });
+    </script>
+{% endblock %}
+
+{% block title %}
+    {{ 'external.title.create'|trans }} | {{ parent() }}
+{% endblock %}

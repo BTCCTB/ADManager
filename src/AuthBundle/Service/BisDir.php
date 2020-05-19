@@ -90,7 +90,7 @@ class BisDir
      */
     public function getUser(string $email)
     {
-        $user = $this->bisDir->connect()->search()->findBy('uid', $email);
+        $user = $this->bisDir->connect()->search()->findBy('mail', $email);
 
         if ($user instanceof Entry) {
             return $user;

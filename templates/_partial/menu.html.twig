@@ -3,11 +3,12 @@
 </li>
 
 {% if is_granted('ROLE_ADMIN') %}
-<li class="nav-item dropdown {% if (app.request.get('_route') == 'account_list') or (app.request.get('_route') == 'account_password_changed_ago-my-apps') %}active{% endif %}">
+<li class="nav-item dropdown {% if (app.request.get('_route') == 'account_list') or (app.request.get('_route') == 'account_password_changed_ago') or (app.request.get('_route') == 'account_create_external') %}active{% endif %}">
     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-users"></i> {{ 'main.menu.admin.accounts.label'|trans }}<span class="caret"></span></a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <a href="{{ path('account_list') }}" class="dropdown-item {% if (app.request.get('_route') == 'account_list') %}active{% endif %}"><i class="fa fa-table"></i> {{ 'main.menu.admin.account.list.label'|trans }}</a>
         <a href="{{ path('account_password_changed_ago') }}" class="dropdown-item {% if (app.request.get('_route') == 'account_password_changed_ago') %}active{% endif %}"><i class="fa fa-user-secret"></i> {{ 'main.menu.admin.account.passwordAgo.label'|trans }}</a>
+        <a href="{{ path('account_create_external') }}" class="dropdown-item {% if (app.request.get('_route') == 'account_create_external') %}active{% endif %}"><i class="fa fa-user-plus"></i> {{ 'main.menu.admin.account.createExternal.label'|trans }}</a>
     </div>
 </li>
 {% endif %}

@@ -879,6 +879,104 @@ class ActiveDirectory
     }
 
     /**
+     * Create a external user  with Active directory
+     *
+     * @return ActiveDirectoryResponse
+     *
+     * @throws AdldapException
+     */
+    public function createExternal(array $data)
+    {
+        // Check user exist in AD
+        $adAccount = $this->getUser($data['login']);
+
+        // Create user in AD
+        if (null === $adAccount) {
+            // Init a new Active Directory user
+            $user = $this->activeDirectory->connect()->make()->user();
+            // Get the correct organizational unit
+            $organizationalUnit = $this->checkOuExistByName('AD-ONLY');
+
+            // Set user data in Active Directory format
+            $user->setEmployeeId((int) time());
+            $user->setCommonName(ucfirst($data['firstname']) . ' ' . strtoupper($data['lastname']));
+            $user->setAccountName(substr($data['firstname'], 0, 1) . substr($data['lastname'], 0, 7) . '_ext');
+            $user->setDisplayName(ucfirst($data['firstname']) . ', ' . strtoupper($data['lastname']));
+            $user->setFirstName(ucfirst($data['firstname']));
+            $user->setLastName(strtoupper($data['lastname']));
+            $user->setCompany($data['company']);
+            $user->setAttribute('c', 'BE');
+            $user->setAttribute('co', 'Belgium');
+            $user->setAttribute('physicalDeliveryOfficeName', 'AD-ONLY');
+            $user->setAccountExpiry($data['expirationDate']->getTimestamp());
+
+            if (!empty($data['jobTitle'])) {
+                $user->setTitle($data['jobTitle']);
+            }
+            $user->setUserPrincipalName($data['login']);
+            $user->setEmail($data['login']);
+            // Get & clean phone info
+            $telephone = ActiveDirectoryHelper::cleanUpPhoneNumber($data['phone']);
+            if (!empty($telephone)) {
+                $user->setTelephoneNumber($telephone);
+            }
+            $dn = new DistinguishedName();
+            // Get or create the country OU
+            $dn->setBase($organizationalUnit->getDn());
+            $dn->addCn($user->getCommonName());
+            $user->setDn($dn);
+
+            // Save the basic data of the user
+            try {
+                if ($user->save() && !empty($user->getEmail())) {
+                    // Generate a password
+                    $password = ActiveDirectoryHelper::generatePassword();
+                    $user->setPassword($password);
+                    $this->accountService->updateCredentials($user, $password);
+                    $this->accountService->setGeneratedPassword($user->getEmail(), $password);
+                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                    if (!$user->save()) {
+                        return new ActiveDirectoryResponse(
+                            "User '" . $data['login'] . "' unable to enable and set '" . $password . "' as default password",
+                            ActiveDirectoryResponseStatus::EXCEPTION,
+                            ActiveDirectoryResponseType::CREATE,
+                            ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
+                        );
+                    }
+
+                    $this->bisDir->synchronize($user, $password);
+
+                    return new ActiveDirectoryResponse(
+                        "User '" . $data['login'] . "' created with password '" . $password . "'",
+                        ActiveDirectoryResponseStatus::DONE,
+                        ActiveDirectoryResponseType::CREATE,
+                        ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
+                    );
+                }
+            } catch (ContextErrorException $e) {
+                return new ActiveDirectoryResponse(
+                    "Unable to create this user '" . $data['login'] . "'",
+                    ActiveDirectoryResponseStatus::FAILED,
+                    ActiveDirectoryResponseType::CREATE,
+                    ActiveDirectoryHelper::getDataAdUser($user, [['exception' => $e->getTraceAsString()]])
+                );
+            }
+            return new ActiveDirectoryResponse(
+                "Unable to create this user '" . $data['login'] . "'",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::CREATE,
+                ActiveDirectoryHelper::getDataAdUser($user)
+            );
+        }
+        return new ActiveDirectoryResponse(
+            "This user '" . $data['login'] . "' already exist",
+            ActiveDirectoryResponseStatus::FAILED,
+            ActiveDirectoryResponseType::CREATE,
+            $data
+        );
+    }
+
+    /**
      * Sync language from GO4HR to AD
      *
      * @param User          $adAccount The AD User

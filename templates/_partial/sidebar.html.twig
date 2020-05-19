@@ -10,6 +10,7 @@
         <li class="nav-item">
             <a class="nav-link {% if app.request.get('_route') == 'account_list' %}active{% endif %}" href="{{ path('account_list') }}"><i class="fa fa-table"></i> {{ 'main.menu.admin.account.list.label'|trans }}</a>
             <a class="nav-link {% if app.request.get('_route') == 'account_password_changed_ago' %}active{% endif %}" href="{{ path('account_password_changed_ago') }}"><i class="fa fa-user-secret"></i> {{ 'main.menu.admin.account.passwordAgo.label'|trans }}</a>
+            <a class="nav-link {% if app.request.get('_route') == 'account_create_external' %}active{% endif %}" href="{{ path('account_create_external') }}"><i class="fa fa-user-plus"></i> {{ 'main.menu.admin.account.createExternal.label'|trans }}</a>
         </li>
     </ul>
 
