@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
   <file id="messages.fr">
     <unit id="DdLwEhz" name="my.account.label.password.recommendation">
       <segment>
@@ -209,6 +209,16 @@
       <segment>
         <source>change.password.form.repeat.password.label</source>
         <target>Répéter le nouveau mot de passe</target>
+      </segment>
+    </unit>
+    <unit id="OqkX43e" name="change.password.form.new.password.invalid">
+      <notes>
+        <note>parameters:</note>
+        <note> '{{ value }}': array</note>
+      </notes>
+      <segment>
+        <source>change.password.form.new.password.invalid</source>
+        <target>Les champs de nouveau mot de passe doivent correspondre.</target>
       </segment>
     </unit>
     <unit id="G30ur4w" name="application.new_collegues.title.h3">
@@ -433,6 +443,12 @@
         <target>multi-langue</target>
       </segment>
     </unit>
+    <unit id="idjV1ct" name="Your message must be at least {{ limit }} characters long">
+      <segment>
+        <source>Your message must be at least {{ limit }} characters long</source>
+        <target>Votre message doit contenir au moins {{ limit }} caractères</target>
+      </segment>
+    </unit>
     <unit id="OxGojTV" name="message.log.all.title">
       <segment>
         <source>message.log.all.title</source>
@@ -457,6 +473,48 @@
         <target>Expéditeur</target>
       </segment>
     </unit>
+    <unit id="Ww8J0Mi" name="main.menu.admin.message.label">
+      <segment>
+        <source>main.menu.admin.message.label</source>
+        <target>Message</target>
+      </segment>
+    </unit>
+    <unit id="O7wZyTB" name="main.menu.admin.message.log.label">
+      <segment>
+        <source>main.menu.admin.message.log.label</source>
+        <target>Liste des messages</target>
+      </segment>
+    </unit>
+    <unit id="gAu5Pm4" name="main.menu.homepage.label">
+      <segment>
+        <source>main.menu.homepage.label</source>
+        <target>Accueil</target>
+      </segment>
+    </unit>
+    <unit id="BgzG80a" name="main.menu.admin.message.create.group.label">
+      <segment>
+        <source>main.menu.admin.message.create.group.label</source>
+        <target>Envoyer un message [Groupe]</target>
+      </segment>
+    </unit>
+    <unit id="UKnMwKA" name="main.menu.admin.message.create.person.label">
+      <segment>
+        <source>main.menu.admin.message.create.person.label</source>
+        <target>Envoyer un message [Personne]</target>
+      </segment>
+    </unit>
+    <unit id="1Ak3tnW" name="Enabel Staff">
+      <segment>
+        <source>Enabel Staff</source>
+        <target>Personnel Enabel</target>
+      </segment>
+    </unit>
+    <unit id="zaZ1gP9" name="AllEnabel">
+      <segment>
+        <source>AllEnabel</source>
+        <target>Tout Enabel</target>
+      </segment>
+    </unit>
     <unit id="ERQWffZ" name="EnabelHQ">
       <segment>
         <source>EnabelHQ</source>
@@ -469,62 +527,16 @@
         <target>Enabel Terrain</target>
       </segment>
     </unit>
-    <unit id="zaZ1gP9" name="AllEnabel">
+    <unit id="yFFCrOm" name="main.menu.admin.account.createExternal.label">
       <segment>
-        <source>AllEnabel</source>
-        <target>Tout Enabel</target>
+        <source>main.menu.admin.account.createExternal.label</source>
+        <target>Ajout d'externe</target>
       </segment>
     </unit>
-    <unit id="UKnMwKA" name="main.menu.admin.message.create.person.label">
+    <unit id="xFi8FEX" name="external.title.create">
       <segment>
-        <source>main.menu.admin.message.create.person.label</source>
-        <target>Envoyer un message [Personne]</target>
-      </segment>
-    </unit>
-    <unit id="BgzG80a" name="main.menu.admin.message.create.group.label">
-      <segment>
-        <source>main.menu.admin.message.create.group.label</source>
-        <target>Envoyer un message [Groupe]</target>
-      </segment>
-    </unit>
-    <unit id="O7wZyTB" name="main.menu.admin.message.log.label">
-      <segment>
-        <source>main.menu.admin.message.log.label</source>
-        <target>Liste des messages</target>
-      </segment>
-    </unit>
-    <unit id="Ww8J0Mi" name="main.menu.admin.message.label">
-      <segment>
-        <source>main.menu.admin.message.label</source>
-        <target>Message</target>
-      </segment>
-    </unit>
-    <unit id="gAu5Pm4" name="main.menu.homepage.label">
-      <segment>
-        <source>main.menu.homepage.label</source>
-        <target>Accueil</target>
-      </segment>
-    </unit>
-    <unit id="1Ak3tnW" name="Enabel Staff">
-      <segment>
-        <source>Enabel Staff</source>
-        <target>Personnel Enabel </target>
-      </segment>
-    </unit>
-    <unit id="MXmMXZT" name="external.p.notice">
-      <segment>
-        <source>external.p.notice</source>
-        <target>En utilisant ce formulaire, vous pouvez ajouter un utilisateur externe qui aura accès comme n'importe quel utilisateur Enabel.
-Un mot de passe sera généré automatiquement.
-Vous pouvez utiliser la fonction reset pour envoyé le mot de passe par SMS à l’utilisateur.
-Cet utilisateur sera placé dans l'unité organisationnel "/Enabel-Brussels/Users/AD-ONLY"  il peut être déplacé après création.
-La date d'expiration est obligatoire pour des raison de sécurité, car cette utilisateur ne passe pas par les scripts de désactivation automatique.</target>
-      </segment>
-    </unit>
-    <unit id="YU9y_GR" name="external.form.label.personalInformation">
-      <segment>
-        <source>external.form.label.personalInformation</source>
-        <target>Informations personnelle</target>
+        <source>external.title.create</source>
+        <target>Ajouter un utilisateur externe [AD-ONLY]</target>
       </segment>
     </unit>
     <unit id="s5xY0dp" name="external.form.label.firstname">
@@ -539,28 +551,16 @@ La date d'expiration est obligatoire pour des raison de sécurité, car cette ut
         <target>Nom</target>
       </segment>
     </unit>
+    <unit id="EuGPE2U" name="external.form.label.login">
+      <segment>
+        <source>external.form.label.login</source>
+        <target>Login</target>
+      </segment>
+    </unit>
     <unit id="XQnU69P" name="external.form.label.phone">
       <segment>
         <source>external.form.label.phone</source>
         <target>Téléphone</target>
-      </segment>
-    </unit>
-    <unit id="_OxVcBQ" name="external.form.help.phone">
-      <segment>
-        <source>external.form.help.phone</source>
-        <target>Sera utilisé pour la réinitialisation</target>
-      </segment>
-    </unit>
-    <unit id="dNIjK2i" name="external.form.label.companyInformation">
-      <segment>
-        <source>external.form.label.companyInformation</source>
-        <target>Informations d'entreprise</target>
-      </segment>
-    </unit>
-    <unit id="2EtfNNr" name="external.form.label.company">
-      <segment>
-        <source>external.form.label.company</source>
-        <target>Entreprise</target>
       </segment>
     </unit>
     <unit id="x2d7.Ij" name="external.form.label.jobTitle">
@@ -569,22 +569,10 @@ La date d'expiration est obligatoire pour des raison de sécurité, car cette ut
         <target>Poste</target>
       </segment>
     </unit>
-    <unit id="1F4pbou" name="external.form.label.accountInformation">
+    <unit id="2EtfNNr" name="external.form.label.company">
       <segment>
-        <source>external.form.label.accountInformation</source>
-        <target>Informations du compte</target>
-      </segment>
-    </unit>
-    <unit id="EuGPE2U" name="external.form.label.login">
-      <segment>
-        <source>external.form.label.login</source>
-        <target>Login</target>
-      </segment>
-    </unit>
-    <unit id="toMXlfx" name="external.form.help.login">
-      <segment>
-        <source>external.form.help.login</source>
-        <target>prénom.nom@enabel.be</target>
+        <source>external.form.label.company</source>
+        <target>Entreprise</target>
       </segment>
     </unit>
     <unit id="cUv9K1r" name="external.form.label.expirationDate">
@@ -599,16 +587,44 @@ La date d'expiration est obligatoire pour des raison de sécurité, car cette ut
         <target>Ajouter</target>
       </segment>
     </unit>
-    <unit id="xFi8FEX" name="external.title.create">
+    <unit id="_OxVcBQ" name="external.form.help.phone">
       <segment>
-        <source>external.title.create</source>
-        <target>Ajouter un utilisateur externe [AD-ONLY]</target>
+        <source>external.form.help.phone</source>
+        <target>Sera utilisé pour la réinitialisation</target>
       </segment>
     </unit>
-    <unit id="yFFCrOm" name="main.menu.admin.account.createExternal.label">
+    <unit id="toMXlfx" name="external.form.help.login">
       <segment>
-        <source>main.menu.admin.account.createExternal.label</source>
-        <target>Ajout d'externe</target>
+        <source>external.form.help.login</source>
+        <target>prénom.nom@enabel.be</target>
+      </segment>
+    </unit>
+    <unit id="YU9y_GR" name="external.form.label.personalInformation">
+      <segment>
+        <source>external.form.label.personalInformation</source>
+        <target>Informations personnelle</target>
+      </segment>
+    </unit>
+    <unit id="dNIjK2i" name="external.form.label.companyInformation">
+      <segment>
+        <source>external.form.label.companyInformation</source>
+        <target>Informations d'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="1F4pbou" name="external.form.label.accountInformation">
+      <segment>
+        <source>external.form.label.accountInformation</source>
+        <target>Informations du compte</target>
+      </segment>
+    </unit>
+    <unit id="MXmMXZT" name="external.p.notice">
+      <segment>
+        <source>external.p.notice</source>
+        <target>En utilisant ce formulaire, vous pouvez ajouter un utilisateur externe qui aura accès comme n'importe quel utilisateur Enabel.
+Un mot de passe sera généré automatiquement.
+Vous pouvez utiliser la fonction reset pour envoyé le mot de passe par SMS à l’utilisateur.
+Cet utilisateur sera placé dans l'unité organisationnel "/Enabel-Brussels/Users/AD-ONLY"  il peut être déplacé après création.
+La date d'expiration est obligatoire pour des raison de sécurité, car cette utilisateur ne passe pas par les scripts de désactivation automatique.</target>
       </segment>
     </unit>
   </file>

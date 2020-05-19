@@ -211,6 +211,16 @@
         <target>Repeat new password</target>
       </segment>
     </unit>
+    <unit id="OqkX43e" name="change.password.form.new.password.invalid">
+      <notes>
+        <note>parameters:</note>
+        <note> '{{ value }}': array</note>
+      </notes>
+      <segment>
+        <source>change.password.form.new.password.invalid</source>
+        <target>The new password fields must match.</target>
+      </segment>
+    </unit>
     <unit id="G30ur4w" name="application.new_collegues.title.h3">
       <segment>
         <source>application.new_collegues.title.h3</source>
@@ -539,6 +549,12 @@
       <segment>
         <source>message.form.label.multilanguage</source>
         <target>Multi-language</target>
+      </segment>
+    </unit>
+    <unit id="idjV1ct" name="Your message must be at least {{ limit }} characters long">
+      <segment>
+        <source>Your message must be at least {{ limit }} characters long</source>
+        <target>Your message must be at least {{ limit }} characters long</target>
       </segment>
     </unit>
     <unit id="OxGojTV" name="message.log.all.title">
