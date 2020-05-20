@@ -437,7 +437,9 @@ class ActiveDirectory
 
             if ($adAccount instanceof User) {
                 // User is active?
-                $logs[] = $this->enableExistingAccount($adAccount);
+                if ($adAccount->isDisabled()) {
+                    $logs[] = $this->enableExistingAccount($adAccount);
+                }
                 $logs[] = $this->updateAccount($bisUser->getDomainAccount());
                 // Move this user in correct OU
                 $moved = $this->userNeedToMove($bisUser, $adAccount);

@@ -233,7 +233,7 @@ class BisDir
         if (null === $ldapUser) {
             $log = $this->createEntry($adAccount);
             $logs[] = $log;
-            if ($log->getStatus() === BisDirResponseStatus::DONE && null !== $password) {
+            if ($log->getStatus() === BisDirResponseStatus::DONE && !empty($password)) {
                 $logs[] = $this->synchronize($adAccount, $password);
             }
 
@@ -245,7 +245,7 @@ class BisDir
         // Move user in LDAP
         $logs[] = $this->moveUser($adAccount, $ldapUser);
 
-        if (null !== $password) {
+        if (!empty($password)) {
             // Sync password in LDAP
             $logs[] = $this->syncPassword($adAccount->getEmail(), $password);
         }
