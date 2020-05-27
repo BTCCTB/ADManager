@@ -44,6 +44,7 @@ class ActiveDirectoryHelper
         //        }
 
         $user->setAttribute('division', $bisPersonView->getDivision());
+        $user->setEmployeeType($bisPersonView->getEmployeeType());
         $user->setAttribute('preferredLanguage', strtolower($bisPersonView->getPreferredLanguage()));
         $user->setAttribute('language', strtolower($bisPersonView->getLanguage()));
         $user->setCompany($bisPersonView->getCompany());
@@ -202,6 +203,7 @@ class ActiveDirectoryHelper
         return array_merge(
             [
                 'EmployeeId' => $bisPersonView->getEmployeeId(),
+                'EmployeeType' => $bisPersonView->getEmployeeType(),
                 'CommonName' => $bisPersonView->getCommonName(),
                 'AccountName' => $bisPersonView->getAccountName(),
                 'DisplayName' => $bisPersonView->getDisplayName(),
@@ -296,6 +298,9 @@ class ActiveDirectoryHelper
             ];
             $user->setEmployeeId($bisPersonView->getEmployeeId());
         }
+        if ($bisPersonView->getEmployeeType() !== $user->getEmployeeType()) {
+            $user->setEmployeeType($bisPersonView->getEmployeeType());
+        }
 
         if ($bisPersonView->getDisplayName() !== $user->getDisplayName()) {
             $diffData['DisplayName'] = [
@@ -329,11 +334,13 @@ class ActiveDirectoryHelper
             ];
             $user->setInitials($bisPersonView->getInitials());
         }
-//        if ($bisPersonView->getBusinessCategory() !== $user->getFirstAttribute('businessCategory')) {
-        //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
-        //        }
-        if ($bisPersonView->getDivision() !== $user->getFirstAttribute('division')) {
-            $user->setAttribute('division', $bisPersonView->getDivision());
+        if ($bisPersonView->getCompany() !== $user->getCompany()) {
+            $diffData['company'] = [
+                'attribute' => 'company',
+                'value' => $bisPersonView->getCompany(),
+                'original' => $user->getCompany(),
+            ];
+            $user->setCompany($bisPersonView->getCompany());
         }
         if ($bisPersonView->getDepartment() !== $user->getDepartment()) {
             $diffData['department'] = [
@@ -343,13 +350,13 @@ class ActiveDirectoryHelper
             ];
             $user->setDepartment($bisPersonView->getDepartment());
         }
-        if ($bisPersonView->getCompany() !== $user->getCompany()) {
-            $diffData['company'] = [
-                'attribute' => 'company',
-                'value' => $bisPersonView->getCompany(),
-                'original' => $user->getCompany(),
+        if ($bisPersonView->getDivision() !== $user->getFirstAttribute('division')) {
+            $diffData['division'] = [
+                'attribute' => 'division',
+                'value' => $bisPersonView->getDivision(),
+                'original' => $user->getFirstAttribute('division'),
             ];
-            $user->setCompany($bisPersonView->getCompany());
+            $user->setAttribute('division', $bisPersonView->getDivision());
         }
         if ($bisPersonView->getAttribute('c') !== $user->getFirstAttribute('c')) {
             $diffData['c'] = [

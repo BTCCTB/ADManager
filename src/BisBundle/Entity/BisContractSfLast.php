@@ -3,64 +3,57 @@
 namespace BisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class BisContractSf
+ * Class BisContractSfLast
  *
- * @package BisBundle\Entity
+ * @ORM\Entity()
+ * @ORM\Table(name="view_bis_contract_sf_last")
  *
- * @ORM\Entity(repositoryClass="BisBundle\Repository\BisContractSfRepository")
- * @ORM\Table(name="bis_contract_sf")
+ * @UniqueEntity(fields={"con_id"})
  *
  * @author  Damien Lagae <damien.lagae@enabel.be>
  */
-class BisContractSf
+class BisContractSfLast
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="con_id", type="bigint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", name="con_id")
      */
     private $conId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisPersonView", inversedBy="contracts")
+     * @ORM\OneToOne(targetEntity="BisBundle\Entity\BisPersonView", inversedBy="lastestContract")
      * @ORM\JoinColumn(name="con_per_id", referencedColumnName="per_id", nullable=true)
+     * @var int
      */
     private $conPerId;
 
     /**
-     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisConjobSf", mappedBy="fkConId")
-     * @var BisConjobSf[]|null
-     */
-    private $conjobs;
-
-    /**
+     * @ORM\Column(type="string", name="con_type", length=30, nullable=true)
+     * @ORM\Id
      * @var string
-     *
-     * @ORM\Column(name="con_type", type="string", length=30, nullable=true)
      */
     private $conType;
 
     /**
-     * @ORM\Column(name="con_date_start", type="date")
+     * @ORM\Column(type="date", name="con_date_start")
      */
     private $conDateStart;
 
     /**
-     * @ORM\Column(name="con_date_stop", type="date", nullable=true)
+     * @ORM\Column(type="date", name="con_date_stop", nullable=true)
      */
     private $conDateStop;
 
     /**
-     * @ORM\Column(name="con_active", type="boolean")
+     * @ORM\Column(type="boolean", name="con_active")
      */
     private $conActive;
 
     /**
-     * @ORM\Column(name="con_last_updated", type="datetime", options={"default": 0})
+     * @ORM\Column(type="datetime", name="con_last_updated")
      */
     private $conLastUpdated;
 
@@ -76,14 +69,14 @@ class BisContractSf
         return $this;
     }
 
-    public function getConPerId()
+    public function getPerId()
     {
-        return $this->conPerId;
+        return $this->perId;
     }
 
-    public function setConPerId($conPerId)
+    public function setPerId($perId)
     {
-        $this->conPerId = $conPerId;
+        $this->perId = $perId;
 
         return $this;
     }
@@ -148,8 +141,15 @@ class BisContractSf
         return $this;
     }
 
-    public function getConjobs()
+    public function getConPerId()
     {
-        return $this->conjobs;
+        return $this->conPerId;
+    }
+
+    public function setConPerId($conPerId)
+    {
+        $this->conPerId = $conPerId;
+
+        return $this;
     }
 }

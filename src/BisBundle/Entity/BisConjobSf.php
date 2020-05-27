@@ -18,15 +18,17 @@ class BisConjobSf
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="fk_job_id")
-     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisJobSf")
+     * @ORM\JoinColumn(name="fk_job_id", referencedColumnName="job_id")
+     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisJobSf", inversedBy="conjobs")
+     * @var BisJobSf
      */
     private $fkJobId;
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="fk_con_id")
-     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisContractSf")
+     * @ORM\joinColumn(name="fk_con_id", referencedColumnName="con_id")
+     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisContractSf", inversedBy="conjobs")
+     * @var BisContractSf
      */
     private $fkConId;
 
@@ -34,6 +36,16 @@ class BisConjobSf
      * @ORM\Column(type="date", name="conjob_entry_date", nullable=true)
      */
     private $conjobEntryDate;
+
+    /**
+     * @ORM\Column(type="boolean", name="conjob_active", nullable=true)
+     */
+    private $conjobActive;
+
+    /**
+     * @ORM\Column(type="datetime", name="conjob_last_updated")
+     */
+    private $conjobLastUpdated;
 
     public function getFkJobId()
     {
@@ -67,6 +79,30 @@ class BisConjobSf
     public function setConjobEntryDate($conjobEntryDate)
     {
         $this->conjobEntryDate = $conjobEntryDate;
+
+        return $this;
+    }
+
+    public function getConjobActive()
+    {
+        return $this->conjobActive;
+    }
+
+    public function setConjobActive($conjobActive)
+    {
+        $this->conjobActive = $conjobActive;
+
+        return $this;
+    }
+
+    public function getConjobLastUpdated()
+    {
+        return $this->conjobLastUpdated;
+    }
+
+    public function setConjobLastUpdated($conjobLastUpdated)
+    {
+        $this->conjobLastUpdated = $conjobLastUpdated;
 
         return $this;
     }

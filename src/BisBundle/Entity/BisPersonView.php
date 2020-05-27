@@ -137,6 +137,30 @@ class BisPersonView
      */
     private $jobClass;
 
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisLevelSf", mappedBy="conPerId")
+     * @var BisLevelSf[]|null
+     */
+    private $levels;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisContractSf", mappedBy="conPerId")
+     * @var BisContractSf[]|null
+     */
+    private $contracts;
+
+    /**
+     * @ORM\OneToOne(targetEntity="BisBundle\Entity\BisContractSfLast", mappedBy="conPerId")
+     * @var BisContractSfLast|null
+     */
+    private $lastestContract;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisJobSf", mappedBy="jobManagerId")
+     * @var BisJobSf[]|null
+     */
+    private $jobs;
+
     /*
      * @var string
      */
@@ -292,14 +316,14 @@ class BisPersonView
         return $this->perCountryWorkplace;
     }
 
-    public function getDepartment()
-    {
-        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-            return $this->getCountryWorkplace()->getCouName();
-        }
-
-        return null;
-    }
+//    public function getDepartment()
+    //    {
+    //        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+    //            return $this->getCountryWorkplace()->getCouName();
+    //        }
+    //
+    //        return null;
+    //    }
 
     /**
      * @Groups({"starters","finishers"})
@@ -492,7 +516,8 @@ class BisPersonView
 
     public function getCompany()
     {
-        return self::COMPANY;
+//        return self::COMPANY;
+        return $this->getDepartment();
     }
 
     public function getFirstAttribute($key)
@@ -614,7 +639,8 @@ class BisPersonView
 
     public function getDivision()
     {
-        return $this->getJobClass();
+        //return $this->getJobClass();
+        return $this->getCell();
     }
 
     public function getNickname()
@@ -627,5 +653,105 @@ class BisPersonView
         $this->perNickname = $perNickname;
 
         return $this;
+    }
+
+    public function getEmployeeType()
+    {
+        return $this->getJobClass();
+    }
+
+    public function getLevels()
+    {
+        return $this->levels;
+    }
+
+    public function setLevels($levels)
+    {
+        $this->levels = $levels;
+
+        return $this;
+    }
+
+    public function getDepartment()
+    {
+        foreach ($this->levels as $level) {
+            if ($level->getGroType() == 'Departement') {
+                return $level->getGroName();
+            }
+        }
+        return null;
+    }
+
+    public function getService()
+    {
+        foreach ($this->levels as $level) {
+            if ($level->getGroType() == 'Service') {
+                return $level->getGroName();
+            }
+        }
+        return null;
+    }
+
+    public function getCell()
+    {
+        foreach ($this->levels as $level) {
+            if ($level->getGroType() == 'Cell') {
+                return $level->getGroName();
+            }
+        }
+        return null;
+    }
+
+    public function getContracts()
+    {
+        return $this->contracts;
+    }
+
+    public function getLastestContract()
+    {
+        return $this->lastestContract;
+    }
+
+    public function getJobs()
+    {
+        return $this->jobs;
+    }
+
+    public function getManager()
+    {
+        if ($this->getLastestContract() instanceof BisContractSfLast) {
+            foreach ($this->getContracts() as $contract) {
+                if ($contract->getConId() == $this->getLastestContract()->getConId()) {
+                    foreach ($contract->getConjobs() as $conjob) {
+                        if ($conjob->getConjobActive()) {
+                            $job = $conjob->getFkJobId();
+                            return $job->getJobManagerId();
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public function getManagerId()
+    {
+        if ($this->getManager() instanceof BisPersonView) {
+            return $this->getManager()->getId();
+        }
+        return null;
+    }
+
+    public function getManagerEmail()
+    {
+        if ($this->getManager() instanceof BisPersonView) {
+            return $this->getManager()->getEmail();
+        }
+        return null;
+    }
+
+    public function getPostOfficeBox()
+    {
+        return $this->getManagerEmail();
     }
 }

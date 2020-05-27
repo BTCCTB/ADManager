@@ -49,9 +49,9 @@ class BisJobSf
     private $jobCityWorkplace;
 
     /**
-     * @ORM\Column(type="integer", name="job_manager_id", nullable=true)
-     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisPersonSf")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisPersonView", inversedBy="jobs")
+     * @ORM\JoinColumn(name="job_manager_id", referencedColumnName="per_id")
+     * @var BisPersonView
      */
     private $jobManagerId;
 
@@ -59,6 +59,12 @@ class BisJobSf
      * @ORM\Column(type="datetime", name="job_last_updated", options={"default": 0})
      */
     private $jobLastUpdated;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisConjobSf", mappedBy="fkJobId")
+     * @var BisConjobSf[]|null
+     */
+    private $conjobs;
 
     public function getJobId()
     {
@@ -154,5 +160,10 @@ class BisJobSf
         $this->jobLastUpdated = $jobLastUpdated;
 
         return $this;
+    }
+
+    public function getConjobs()
+    {
+        return $this->conjobs;
     }
 }
