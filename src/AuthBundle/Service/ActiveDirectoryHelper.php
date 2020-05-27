@@ -49,6 +49,7 @@ class ActiveDirectoryHelper
         $user->setAttribute('language', strtolower($bisPersonView->getLanguage()));
         $user->setCompany($bisPersonView->getCompany());
         $user->setDepartment($bisPersonView->getDepartment());
+        $user->setPostOfficeBox($bisPersonView->getManagerEmail());
 //        $user->setCountry($bisPersonView->getCountry());
         $user->setAttribute('c', $bisPersonView->getAttribute('c'));
         $user->setAttribute('co', $bisPersonView->getAttribute('co'));
@@ -211,6 +212,7 @@ class ActiveDirectoryHelper
                 'LastName' => $bisPersonView->getLastname(),
                 'Initials' => $bisPersonView->getInitials(),
                 'division' => $bisPersonView->getDivision(),
+                'manager' => $bisPersonView->getPostOfficeBox(),
                 'Department' => $bisPersonView->getDepartment(),
                 'Company' => $bisPersonView->getCompany(),
                 'Country' => $bisPersonView->getCountry(),
@@ -257,6 +259,7 @@ class ActiveDirectoryHelper
                 'LastName' => $adUser->getLastName(),
                 'Initials' => $adUser->getInitials(),
                 'division' => $adUser->getAttribute('division'),
+                'manager' => $adUser->getPostOfficeBox(),
                 'Department' => $adUser->getDepartment(),
                 'Company' => 'Enabel',
                 'Country' => $adUser->getCountry(),
@@ -357,6 +360,14 @@ class ActiveDirectoryHelper
                 'original' => $user->getFirstAttribute('division'),
             ];
             $user->setAttribute('division', $bisPersonView->getDivision());
+        }
+        if ($bisPersonView->getPostOfficeBox() !== $user->getPostOfficeBox()) {
+            $diffData['manager'] = [
+                'attribute' => 'manager',
+                'value' => $bisPersonView->getPostOfficeBox(),
+                'original' => $user->getPostOfficeBox(),
+            ];
+            $user->setPostOfficeBox($bisPersonView->getPostOfficeBox());
         }
         if ($bisPersonView->getAttribute('c') !== $user->getFirstAttribute('c')) {
             $diffData['c'] = [
@@ -574,6 +585,7 @@ class ActiveDirectoryHelper
             'sn',
             'initials',
             'division',
+            'postOfficeBox',
             'company',
             'department',
             'c',
