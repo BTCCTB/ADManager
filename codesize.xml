@@ -21,6 +21,7 @@
     <rule ref="rulesets/codesize.xml" >
         <!-- configured below -->
         <exclude name="ExcessiveParameterList" />
+        <exclude name="TooManyFields" />
         <exclude name="TooManyPublicMethods" />
         <exclude name="CyclomaticComplexity" />
         <exclude name="ExcessiveClassComplexity" />
@@ -29,6 +30,11 @@
     <rule ref="rulesets/codesize.xml/ExcessiveParameterList">
         <properties>
             <property name="maximum" value="15" description="Maximum number of acceptable parameters." />
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/TooManyFields">
+        <properties>
+            <property name="maxfields" value="20" description="The field count reporting threshold" />
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
