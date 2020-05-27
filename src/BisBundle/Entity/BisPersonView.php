@@ -155,12 +155,6 @@ class BisPersonView
      */
     private $lastestContract;
 
-    /**
-     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisJobSf", mappedBy="jobManagerId")
-     * @var BisJobSf[]|null
-     */
-    private $jobs;
-
     /*
      * @var string
      */
@@ -712,11 +706,6 @@ class BisPersonView
         return $this->lastestContract;
     }
 
-    public function getJobs()
-    {
-        return $this->jobs;
-    }
-
     public function getManager()
     {
         if ($this->getLastestContract() instanceof BisContractSfLast) {
@@ -736,16 +725,16 @@ class BisPersonView
 
     public function getManagerId()
     {
-        if ($this->getManager() instanceof BisPersonView) {
-            return $this->getManager()->getId();
+        if ($this->getManager() instanceof BisPersonSf) {
+            return $this->getManager()->getPerId();
         }
         return null;
     }
 
     public function getManagerEmail()
     {
-        if ($this->getManager() instanceof BisPersonView) {
-            return $this->getManager()->getEmail();
+        if ($this->getManager() instanceof BisPersonSf) {
+            return $this->getManager()->getPerEmail();
         }
         return null;
     }

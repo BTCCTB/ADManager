@@ -94,6 +94,12 @@ class BisPersonSf
      */
     private $perImage;
 
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisJobSf", mappedBy="jobManagerId")
+     * @var BisJobSf[]|null
+     */
+    private $jobs;
+
     public function getPerId()
     {
         return $this->perId;
@@ -272,5 +278,10 @@ class BisPersonSf
         $this->perImage = $perImage;
 
         return $this;
+    }
+
+    public function getJobs()
+    {
+        return $this->jobs;
     }
 }

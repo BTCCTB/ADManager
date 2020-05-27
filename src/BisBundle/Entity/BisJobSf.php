@@ -49,9 +49,9 @@ class BisJobSf
     private $jobCityWorkplace;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisPersonView", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisPersonSf", inversedBy="jobs")
      * @ORM\JoinColumn(name="job_manager_id", referencedColumnName="per_id")
-     * @var BisPersonView
+     * @var BisPersonSf
      */
     private $jobManagerId;
 
