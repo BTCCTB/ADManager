@@ -75,7 +75,7 @@
     minute: "30"
     hour: "7"
     weekday: "1-5"
-    state: present
+    state: absent
     user: root
     job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_morning.log"
   when: application_env == 'prod'
