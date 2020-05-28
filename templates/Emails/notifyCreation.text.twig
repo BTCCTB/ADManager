@@ -12,7 +12,7 @@ After verification, all that remains is to assign the O365 licenses.
     | Firstname:            {{ user.FirstName|default('unknow') }}
     | Lastname:             {{ user.LastName|default('unknow') }}
     | Email:                {{ user.Email }}
-    | Country workplace:    {{ user.Department|default('unknow') }} ({{ user.Country|default('unknow') }})
+    | Country workplace:    {{ user.Country|default('unknow') }}
     | Organizational Unit:  {{ user.OrganizationalUnit|default('unknow') }}
     | Generated password:   {{ user.password|default('not generated')|raw }}
     | Start date:           {{ user.StartDate|default('unknow') }}

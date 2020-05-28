@@ -98,16 +98,33 @@
                         <tbody>
                         <tr>
                             <th>Country workplace</th>
-                            <td>{{ bisData.countryFlag|raw }} {{ bisData.department }}</td>
+                            <td>{{ bisData.countryFlag|raw }} {{ bisData.countryWorkplace }}</td>
+                        </tr>
+                        <tr>
+                            <th>Type</th>
+                            <td>{{ bisData.employeeType }}</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>{{ bisData.department|default("N.C") }}</td>
+                        </tr>
+                        <tr>
+                            <th>Service</th>
+                            <td>{{ bisData.service|default("N.C") }}</td>
+                        </tr>
+                        <tr>
+                            <th>Cell</th>
+                            <td>{{ bisData.cell|default("N.C") }}</td>
                         </tr>
                         <tr>
                             <th>Function</th>
                             <td>{{ bisData.function }}</td>
                         </tr>
                         <tr>
-                            <th>Type</th>
-                            <td>{{ bisData.jobClass }}</td>
+                            <th>N+1</th>
+                            <td>{{ bisData.manager }}</td>
                         </tr>
+
                         <tr>
                             <th>In contract</th>
                             <td>

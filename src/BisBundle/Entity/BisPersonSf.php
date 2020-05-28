@@ -284,4 +284,22 @@ class BisPersonSf
     {
         return $this->jobs;
     }
+
+    public function getFullName()
+    {
+        if (!empty($this->getPerNickname())) {
+            return strtoupper($this->getPerLastname()) . ', ' . ucfirst(strtolower($this->getPerNickname()));
+        }
+
+        if ($this->getPerFirstname() !== '-') {
+            return strtoupper($this->getPerLastname()) . ', ' . ucfirst(strtolower($this->getPerFirstname()));
+        }
+
+        return strtoupper($this->getPerLastname());
+    }
+
+    public function __toString()
+    {
+        return $this->getFullName() . " [" . $this->getPerEmail() . "]";
+    }
 }
