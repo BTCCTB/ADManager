@@ -213,7 +213,7 @@ class ActiveDirectoryHelper
                 'Initials' => $bisPersonView->getInitials(),
                 'division' => $bisPersonView->getDivision(),
                 'manager' => $bisPersonView->getPostOfficeBox(),
-                'Department' => $bisPersonView->getDepartment(),
+                'Department' => $bisPersonView->getService(),
                 'Company' => $bisPersonView->getCompany(),
                 'Country' => $bisPersonView->getCountry(),
                 'Title' => $bisPersonView->getTitle(),
@@ -345,13 +345,13 @@ class ActiveDirectoryHelper
             ];
             $user->setCompany($bisPersonView->getCompany());
         }
-        if ($bisPersonView->getDepartment() !== $user->getDepartment()) {
+        if ($bisPersonView->getService() !== $user->getDepartment()) {
             $diffData['department'] = [
                 'attribute' => 'department',
-                'value' => $bisPersonView->getDepartment(),
+                'value' => $bisPersonView->getService(),
                 'original' => $user->getDepartment(),
             ];
-            $user->setDepartment($bisPersonView->getDepartment());
+            $user->setDepartment($bisPersonView->getService());
         }
         if ($bisPersonView->getDivision() !== $user->getFirstAttribute('division')) {
             $diffData['division'] = [
