@@ -676,7 +676,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
-        return '';
+        return null;
     }
 
     public function getService()
@@ -686,7 +686,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
-        return '';
+        return null;
     }
 
     public function getCell()
@@ -696,7 +696,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
-        return '';
+        return null;
     }
 
     public function getContracts()
@@ -723,7 +723,7 @@ class BisPersonView
                 }
             }
         }
-        return '';
+        return null;
     }
 
     public function getManagerId()
@@ -731,7 +731,7 @@ class BisPersonView
         if ($this->getManager() instanceof BisPersonSf) {
             return $this->getManager()->getPerId();
         }
-        return '';
+        return null;
     }
 
     public function getManagerEmail()
@@ -739,7 +739,7 @@ class BisPersonView
         if ($this->getManager() instanceof BisPersonSf) {
             return $this->getManager()->getPerEmail();
         }
-        return '';
+        return null;
     }
 
     public function getPostOfficeBox()
