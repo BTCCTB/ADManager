@@ -18,7 +18,7 @@
     ansistrano_deploy_via: git
 
     # Ansistrano - Variables used in the Git deployment strategy
-    ansistrano_git_repo: "git@github.com:btcctb/password.git"
+    ansistrano_git_repo: "git@github.com:enabel/password.git"
     ansistrano_git_branch: "{{ git_branch }}"
     ansistrano_git_identity_key_path: "{{ playbook_dir }}/.ssh/id_rsa"
 

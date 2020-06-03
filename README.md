@@ -1,6 +1,6 @@
 # PasswordManager
 
-![Full CI process for Symfony](https://github.com/BTCCTB/Password/workflows/Full%20CI%20process%20for%20Symfony/badge.svg)
+![Full CI process for Symfony](https://github.com/Enabel/Password/workflows/Full%20CI%20process%20for%20Symfony/badge.svg)
 
 A php application for Active Directory Manipulation.
 
@@ -15,7 +15,7 @@ A php application for Active Directory Manipulation.
 ## Installation
 execute this command to clone this repository and initialize the project:
 ```bash
-$ git clone git@github.com:BTCCTB/Password.git
+$ git clone git@github.com:Enabel/Password.git
 $ cd Password/
 $ make install
 ```

@@ -1,6 +1,6 @@
-# PasswordManager Contribution Guide
+# Contribution Guide
 
-Thank you for considering contributing to the PasswordManager project!
+Thank you for considering contributing to this project!
 
 ## Bug reports
 
@@ -10,19 +10,19 @@ However, if you file a bug report, your issue should contain a title and a clear
 
 Remember, bug reports are created in the hope that others with the same problem will be able to collaborate with you on solving it. Do not expect that the bug report will automatically see any activity or that others will jump to fix it. Creating a bug report serves to help yourself and others start on the path of fixing the problem.
 
-The PasswordManager source code is managed on GitHub
+This project source code is managed on GitHub
 
 ## Security Vulnerabilities
    
-If you discover a security vulnerability within PasswordManager, please send an email to Enabel at ict.helpdesk@enabel.be. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this project, please send an email to Enabel at ict.helpdesk@enabel.be. All security vulnerabilities will be promptly addressed.
 
 ## Coding Style
    
-PasswordManager follows the PSR-2 coding standard and the PSR-4 autoloading standard. 
+This project follows the PSR-2 coding standard and the PSR-4 autoloading standard. 
 
 ### PHPDoc
 
-Below is an example of a valid PasswordManager documentation block. Note that the @param attribute is followed by one space, the argument type, more spaces, and finally the variable name:
+Below is an example of a valid documentation block. Note that the @param attribute is followed by one space, the argument type, more spaces, and finally the variable name:
 
 ```php
 /**
@@ -40,8 +40,8 @@ public function bind($abstract, $concrete = null, $shared = false)
 ```
 ### PHP Code Sniffer
 
-Before committing your PR, check your code with our [coding standard](https://github.com/BTCCTB/PasswordManager/blob/master/phpcs.xml)
+Before committing your PR, check your code with our [coding standard](/checkstyle.xml)
 
 ### PHP Mess Detector
 
-Again before committing your PR, check your code with our [coding rules](https://github.com/BTCCTB/PasswordManager/blob/master/codesize.xml)
+Again before committing your PR, check your code with our [coding rules](/codesize.xml)
