@@ -554,6 +554,9 @@ class BisPersonView
 
             case 'preferredLanguage':
                 return $this->getPreferredLanguage();
+
+            case 'homedirectory':
+                return $this->getLogin();
         }
 
         return null;
@@ -673,7 +676,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
-        return null;
+        return '';
     }
 
     public function getService()
@@ -683,7 +686,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
-        return null;
+        return '';
     }
 
     public function getCell()
@@ -693,7 +696,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
-        return null;
+        return '';
     }
 
     public function getContracts()
@@ -720,7 +723,7 @@ class BisPersonView
                 }
             }
         }
-        return null;
+        return '';
     }
 
     public function getManagerId()
@@ -728,7 +731,7 @@ class BisPersonView
         if ($this->getManager() instanceof BisPersonSf) {
             return $this->getManager()->getPerId();
         }
-        return null;
+        return '';
     }
 
     public function getManagerEmail()
@@ -736,7 +739,7 @@ class BisPersonView
         if ($this->getManager() instanceof BisPersonSf) {
             return $this->getManager()->getPerEmail();
         }
-        return null;
+        return '';
     }
 
     public function getPostOfficeBox()

@@ -42,14 +42,21 @@ class ActiveDirectoryHelper
 //        if (!empty($bisPersonView->getBusinessCategory())) {
         //            $user->setAttribute('businessCategory', $bisPersonView->getBusinessCategory());
         //        }
-
-        $user->setAttribute('division', $bisPersonView->getDivision());
+        if (!empty($bisPersonView->getDivision())) {
+            $user->setAttribute('division', $bisPersonView->getDivision());
+        }
         $user->setEmployeeType($bisPersonView->getEmployeeType());
         $user->setAttribute('preferredLanguage', strtolower($bisPersonView->getPreferredLanguage()));
         $user->setAttribute('language', strtolower($bisPersonView->getLanguage()));
-        $user->setCompany($bisPersonView->getCompany());
-        $user->setDepartment($bisPersonView->getDepartment());
-        $user->setPostOfficeBox($bisPersonView->getManagerEmail());
+        if (!empty($bisPersonView->getCompany())) {
+            $user->setCompany($bisPersonView->getCompany());
+        }
+        if (!empty($bisPersonView->getDepartment())) {
+            $user->setDepartment($bisPersonView->getDepartment());
+        }
+        if (!empty($bisPersonView->getManagerEmail())) {
+            $user->setPostOfficeBox($bisPersonView->getManagerEmail());
+        }
 //        $user->setCountry($bisPersonView->getCountry());
         $user->setAttribute('c', $bisPersonView->getAttribute('c'));
         $user->setAttribute('co', $bisPersonView->getAttribute('co'));
@@ -587,7 +594,6 @@ class ActiveDirectoryHelper
             'division',
             'postOfficeBox',
             'company',
-            'department',
             'c',
             'co',
             'info',
