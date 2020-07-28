@@ -22,4 +22,4 @@
     ansistrano_before_symlink_tasks_file: '{{ playbook_dir }}/rollback/before-symlink.yml'
 
   roles:
-    - carlosbuenosvinos.ansistrano-rollback
+    - ansistrano.rollback
