@@ -2,6 +2,6 @@
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ identifier) }}">
     <button class="btn btn-outline-danger" type="submit">
-        <i class='fa fa-trash' aria-hidden="true"></i> {{ 'Delete' | trans }}
+        <i class='fas fa-trash' aria-hidden="true"></i> {{ 'Delete' | trans }}
     </button>
 </form>

@@ -34,10 +34,10 @@
                 <td>{{ account.lastLoginAt|date('d/m/Y H:i')|default('00/00/0000 00:00') }}</td>
                 <td class="text-right">
                     {% if account.employeeId is not empty %}
-                        <a href="{{ path('account_detail', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'Show detail'|trans }}</a>
-                        <a href="{{ path('account_change_email', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-edit" aria-hidden="true"></i> {{ 'Change email'|trans }}</a>
-                        <a href="{{ path('account_check_password', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-info"><i class="fa fa-medkit" aria-hidden="true"></i> {{ 'Test password'|trans }}</a>
-                        <a href="{{ path('account_reset_password', {'employeeID': account.employeeId }) }}" class="btn btn-sm btn-outline-warning account_reset_password"><i class="fa fa-redo-alt" aria-hidden="true"></i> {{ 'Reset password'|trans }}</a>
+                        <a href="{{ path('account_detail', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" aria-hidden="true"></i> {{ 'Show detail'|trans }}</a>
+                        <a href="{{ path('account_change_email', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-danger"><i class="fas fa-edit" aria-hidden="true"></i> {{ 'Change email'|trans }}</a>
+                        <a href="{{ path('account_check_password', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-info"><i class="fas fa-medkit" aria-hidden="true"></i> {{ 'Test password'|trans }}</a>
+                        <a href="{{ path('account_reset_password', {'employeeID': account.employeeId }) }}" class="btn btn-sm btn-outline-warning account_reset_password"><i class="fas fa-redo-alt" aria-hidden="true"></i> {{ 'Reset password'|trans }}</a>
                     {% endif %}
                 </td>
             </tr>

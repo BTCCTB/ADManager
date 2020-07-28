@@ -39,9 +39,9 @@ slack_channel: "#dev"
 loco_api_key: "{{ vault_loco_api_key }}"
 
 # SuccessFactor vars
-sf_api_user: "{{ vault_sf_api_user }}"
-sf_api_password: "{{ vault_sf_api_password }}"
-sf_api_company: "C0000960484P"
+sf_api_url: 'https://api012.successfactors.eu/odata/v2/'
+sf_api_token: '{{ vault_sf_api_token }}'
+sf_api_secret: '{{ vault_sf_api_secret }}'
 
 # SmsGateway.me vars
 sms_gateway_me_api_token: "{{ vault_sms_gateway_me_api_token }}"

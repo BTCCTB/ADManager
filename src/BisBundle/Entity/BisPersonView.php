@@ -714,10 +714,12 @@ class BisPersonView
         if ($this->getLastestContract() instanceof BisContractSfLast) {
             foreach ($this->getContracts() as $contract) {
                 if ($contract->getConId() == $this->getLastestContract()->getConId()) {
-                    foreach ($contract->getConjobs() as $conjob) {
-                        if ($conjob->getConjobActive()) {
-                            $job = $conjob->getFkJobId();
-                            return $job->getJobManagerId();
+                    if (null !== $contract->getConjobs()) {
+                        foreach ($contract->getConjobs() as $conjob) {
+                            if ($conjob->getConjobActive()) {
+                                $job = $conjob->getFkJobId();
+                                return $job->getJobManagerId();
+                            }
                         }
                     }
                 }

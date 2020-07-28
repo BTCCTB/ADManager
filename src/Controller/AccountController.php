@@ -8,6 +8,7 @@ use App\Form\ActionAuthType;
 use App\Form\ChangeEmailType;
 use App\Form\ChangePasswordType;
 use App\Form\ExternalFormType;
+use App\Form\ForceSyncType;
 use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
@@ -18,7 +19,10 @@ use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use AuthBundle\Service\BisDir;
+use AuthBundle\Service\SuccessFactorApi;
 use BisBundle\Service\BisPersonView;
+use Doctrine\ORM\EntityManagerInterface;
+use function Clue\StreamFilter\remove;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,6 +76,8 @@ class AccountController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      *
      * @param AccountRepository $accountRepository
+     *
+     * @param BisPersonView     $bisPersonView
      *
      * @return Response
      */
@@ -412,6 +418,78 @@ class AccountController extends AbstractController
             'Account/createExternal.html.twig',
             [
                 'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/force-sync", name="account_force_sync", methods={"GET","POST"})
+     *
+     * @param Request          $request
+     * @param SuccessFactorApi $sfApi
+     *
+     * @return Response
+     */
+    public function forceSync(
+        Request $request,
+        SuccessFactorApi $sfApi,
+        BisPersonView $bisPersonView,
+        ActiveDirectory $activeDirectory,
+        BisDir $bisDir,
+        EntityManagerInterface $entityManager
+    ) {
+        $form = $this->createForm(ForceSyncType::class);
+        $form->handleRequest($request);
+        $user = null;
+        $ad = null;
+        $ldap = null;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $users = $sfApi->searchUsers($data['search']);
+            if (isset($users[0]['id'])) {
+                $bisPersonView->cleanDataById($users[0]['id']);
+                $user = $bisPersonView->createPerson($users[0]);
+                if (null !== $user) {
+                    $ad = $activeDirectory->forceSync($user);
+                    $bisDir->synchronize($ad);
+                    $ldap = $bisDir->getUser($ad->getEmail());
+                    $account = $entityManager->find(Account::class, $ad->getEmployeeId());
+                    if (null === $account) {
+                        $account = new Account();
+                        $account->setEmployeeId($ad->getEmployeeId());
+                    }
+                    $account
+                        ->setEmail($ad->getEmail())
+                        ->setEmailContact($ad->getEmail())
+                        ->setAccountName($ad->getAccountName())
+                        ->setUserPrincipalName($ad->getUserPrincipalName())
+                        ->setLastname($ad->getLastName())
+                        ->setFirstname($ad->getFirstName())
+                        ->setActive(1)
+                        ->setToken(base64_encode($ad->getEmail()))
+                    ;
+
+                    $entityManager->persist($account);
+                    $entityManager->flush();
+
+                    $userRepo = $entityManager->getRepository(\App\Entity\User::class);
+                    $userAccount = $userRepo->findOneBy(['email' => $ad->getEmail()]);
+                    if (null !== $userAccount) {
+                        $entityManager->remove($userAccount);
+                        $entityManager->flush();
+                    }
+                }
+            }
+        }
+
+        /* @var \BisBundle\Entity\BisPersonView $user */
+        return $this->render(
+            'Account/forceSync.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+                'ldap' => $ldap,
+                'ad' => $ad,
             ]
         );
     }
