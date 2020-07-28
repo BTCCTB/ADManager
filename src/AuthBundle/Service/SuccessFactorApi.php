@@ -110,7 +110,9 @@ class SuccessFactorApi
                         $this->secret,
                     ],
                     'query' => [
-                        '$select' => 'personIdExternal,lastName,firstName,preferredName,gender,personNav/emailNav/emailTypeNav/externalCode,personNav/emailNav/emailAddress,nativePreferredLangNav/externalCode,customString1Nav/externalCode',
+                        '$select' =>
+                        'personIdExternal,lastName,firstName,preferredName,gender,personNav/emailNav/emailTypeNav/externalCode,' .
+                        'personNav/emailNav/emailAddress,nativePreferredLangNav/externalCode,customString1Nav/externalCode',
                         '$expand' => 'personNav/emailNav/emailTypeNav,nativePreferredLangNav,customString1Nav',
                         '$filter' => "personNav/emailNav/emailAddress like '" . $search . "' or personIdExternal eq '" . $search . "'",
                         'customPageSize' => self::ITEMS_PER_PAGES,
@@ -141,7 +143,12 @@ class SuccessFactorApi
                             'active' => !empty($job['active']) ? $job['active'] : 0,
                             'emailEnabel' => $employee['personNav']['emailNav']['results'][0]['emailAddress'],
                             'motherLanguage' => strtoupper(substr($employee['nativePreferredLangNav']['externalCode'], 0, 2)),
-                            'preferredLanguage' => (in_array(strtoupper(substr($employee['customString1Nav']['externalCode'], 0, 2)), ['EN', 'FR', 'NL']) ? strtoupper(substr($employee['customString1Nav']['externalCode'], 0, 2)) : 'EN'),
+                            'preferredLanguage' =>
+                            (
+                                in_array(strtoupper(substr($employee['customString1Nav']['externalCode'], 0, 2)), ['EN', 'FR', 'NL']) ?
+                                strtoupper(substr($employee['customString1Nav']['externalCode'], 0, 2)) :
+                                'EN'
+                            ),
                             'phone' => $this->getUserPhone($employee['personIdExternal'], 3849),
                             'mobile' => $this->getUserPhone($employee['personIdExternal'], 3850),
                             'position' => !empty($job['position']) ? SuccessFactorApiHelper::positionFromCode($job['position']) : null,
@@ -241,7 +248,8 @@ class SuccessFactorApi
                         $this->secret,
                     ],
                     'query' => [
-                        '$select' => 'userId,employmentNav/startDate,employmentNav/endDate,emplStatusNav/externalCode,jobCodeNav/name,customString10,jobCodeNav/cust_string1,managerId,jobCode,position',
+                        '$select' =>
+                        'userId,employmentNav/startDate,employmentNav/endDate,emplStatusNav/externalCode,jobCodeNav/name,customString10,jobCodeNav/cust_string1,managerId,jobCode,position',
                         '$expand' => 'emplStatusNav, jobCodeNav,employeeClassNav,employmentNav',
                         '$filter' => 'userId eq ' . $userId,
                         'customPageSize' => self::ITEMS_PER_PAGES,
@@ -276,7 +284,6 @@ class SuccessFactorApi
                             'position' => $empJob['position'],
                         ];
                     }
-
                 }
             } else {
                 $this->logger->error('SuccessFactorApi: Unable to get jobs (' . $response->getStatusCode() . ')');

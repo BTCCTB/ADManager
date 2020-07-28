@@ -12,7 +12,7 @@ class SuccessFactorApiHelper
     /**
      * Convert a SuccessFactor Date to DateTime object.
      */
-    public static function SFDateToDateTime( ? string $sfDate) :  ? \DateTime
+    public static function SFDateToDateTime(? string $sfDate) :  ? \DateTime
     {
         if (!empty($sfDate)) {
             $date = new \DateTime('now');
@@ -32,7 +32,7 @@ class SuccessFactorApiHelper
     /**
      * Convert a DateTime to SuccessFactor Date.
      */
-    public static function dateTimeToSFDate( ? \DateTime $date) :  ? string
+    public static function dateTimeToSFDate(? \DateTime $date) :  ? string
     {
         if (null != $date) {
             return '/Date(' . ($date->getTimestamp() * 1000) . ')/';
@@ -41,7 +41,7 @@ class SuccessFactorApiHelper
         return null;
     }
 
-    public static function cleanPhoneNumber( ? string $phone)
+    public static function cleanPhoneNumber(? string $phone)
     {
         if (null != $phone) {
             return '+' . str_replace('(0)', '', str_replace(' ', '', $phone));
@@ -50,7 +50,7 @@ class SuccessFactorApiHelper
         return null;
     }
 
-    public static function jobTypeFromJobCode( ? string $jobCode,  ? string $jobType)
+    public static function jobTypeFromJobCode(? string $jobCode, ? string $jobType)
     {
         $type = $jobType;
         if (empty($jobType)) {
@@ -59,9 +59,12 @@ class SuccessFactorApiHelper
             }
         }
         switch ($type) {
-            case 'LO' : return 'Local';
-            case 'HQ' : return 'HQ';
-            case 'EX' : return 'Expat';
+            case 'LO':
+                return 'Local';
+            case 'HQ':
+                return 'HQ';
+            case 'EX':
+                return 'Expat';
         }
         return null;
     }
@@ -70,5 +73,4 @@ class SuccessFactorApiHelper
     {
         return (int) filter_var($positionCode, FILTER_SANITIZE_NUMBER_INT);
     }
-
 }

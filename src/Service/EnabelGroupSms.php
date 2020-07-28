@@ -84,7 +84,6 @@ class EnabelGroupSms
 
     public static function getAllRecipientOptions(PhoneDirectory $phoneDirectory)
     {
-
         return [
             'Group' => array_flip(self::getGroups()),
             'Country' => array_flip(self::getCountries()),

@@ -23,7 +23,7 @@ class SfSearchEmployeeCommand extends Command
      * @param null             $name
      * @param SuccessFactorApi $sfApi
      */
-    public function __construct($name = null, SuccessFactorApi $sfApi)
+    public function __construct(SuccessFactorApi $sfApi, $name = null)
     {
         $this->sfApi = $sfApi;
         parent::__construct($name);

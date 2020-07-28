@@ -430,8 +430,14 @@ class AccountController extends AbstractController
      *
      * @return Response
      */
-    public function forceSync(Request $request, SuccessFactorApi $sfApi, BisPersonView $bisPersonView, ActiveDirectory $activeDirectory, BisDir $bisDir, EntityManagerInterface $entityManager)
-    {
+    public function forceSync(
+        Request $request,
+        SuccessFactorApi $sfApi,
+        BisPersonView $bisPersonView,
+        ActiveDirectory $activeDirectory,
+        BisDir $bisDir,
+        EntityManagerInterface $entityManager
+    ) {
         $form = $this->createForm(ForceSyncType::class);
         $form->handleRequest($request);
         $user = null;
@@ -445,7 +451,7 @@ class AccountController extends AbstractController
                 $user = $bisPersonView->createPerson($users[0]);
                 if (null !== $user) {
                     $ad = $activeDirectory->forceSync($user);
-                    $ldapSync = $bisDir->synchronize($ad);
+                    $bisDir->synchronize($ad);
                     $ldap = $bisDir->getUser($ad->getEmail());
                     $account = $entityManager->find(Account::class, $ad->getEmployeeId());
                     if (null === $account) {
