@@ -19,7 +19,7 @@ composer_path: '/usr/local/bin/composer'
 mailer_transport: 'smtp'
 mailer_host: 'smtp.office365.com'
 mailer_port: '587'
-mailer_user: "{{ vault_mailer_user }}"
-mailer_password: "{{ vault_mailer_password }}"
+mailer_user: '{{ vault_mailer_user }}'
+mailer_password: '{{ vault_mailer_password }}'
 mailer_encryption: 'tls'
 mailer_auth_mode: 'login'

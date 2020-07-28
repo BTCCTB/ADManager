@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr-BE" trgLang="en">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
   <file id="messages.en">
     <unit id="DdLwEhz" name="my.account.label.password.recommendation">
       <segment>
@@ -835,6 +835,12 @@ A password will be generated automatically.
 You can use the reset function to send the password by SMS to the user.
 This user will be placed in the organizational unit "/Enabel-Brussels/Users/AD-ONLY" it can be moved after creation.
 The expiration date is mandatory for security reasons, because this user does not go through the automatic disabling scripts.</target>
+      </segment>
+    </unit>
+    <unit id="yBDsB27" name="main.menu.admin.account.forceSync.label">
+      <segment>
+        <source>main.menu.admin.account.forceSync.label</source>
+        <target>Force sync</target>
       </segment>
     </unit>
   </file>

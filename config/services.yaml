@@ -144,7 +144,10 @@ services:
 
     AuthBundle\Service\SuccessFactorApi:
         autowire: true
-        arguments: ['%env(resolve:SF_API_USER)%', '%env(resolve:SF_API_PASSWORD)%', '%env(resolve:SF_API_COMPANY)%']
+        arguments:
+            $token: "%env(SF_API_TOKEN)%"
+            $secret: "%env(SF_API_SECRET)%"
+            $baseUrl: "%env(SF_API_URL)%"
         public: true
 
     App\Twig\AdExtensions:
@@ -183,4 +186,3 @@ services:
         autowire: true
         autoconfigure: true
         tags: ['twig.extension']
-

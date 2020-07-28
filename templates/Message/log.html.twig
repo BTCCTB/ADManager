@@ -27,7 +27,7 @@
                         <td>{{ message.recipient|smsGroup }}</td>
                         <td>{{ message.message }}</td>
                         <td>
-                            <a href="{{ path('message_detail', {'id': message.id}) }}" class="btn btn-xs btn-outline-primary"><i class="fa fa-eye"></i> {{ 'message.label.detail'|trans }}</a>
+                            <a href="{{ path('message_detail', {'id': message.id}) }}" class="btn btn-xs btn-outline-primary"><i class="fas fa-eye"></i> {{ 'message.label.detail'|trans }}</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -26,7 +26,7 @@ class BisContractSf
     private $conId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisPersonView", inversedBy="contracts")
+     * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisPersonSf", inversedBy="contracts")
      * @ORM\JoinColumn(name="con_per_id", referencedColumnName="per_id", nullable=true)
      */
     private $conPerId;

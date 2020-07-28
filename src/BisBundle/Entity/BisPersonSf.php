@@ -20,7 +20,6 @@ class BisPersonSf
     /**
      * @ORM\Column(type="integer", name="per_id")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $perId;
 
@@ -99,6 +98,12 @@ class BisPersonSf
      * @var BisJobSf[]|null
      */
     private $jobs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BisBundle\Entity\BisContractSf", mappedBy="conPerId")
+     * @var BisContractSf[]|null
+     */
+    private $contracts;
 
     public function getPerId()
     {
@@ -301,5 +306,10 @@ class BisPersonSf
     public function __toString()
     {
         return $this->getFullName() . " [" . $this->getPerEmail() . "]";
+    }
+
+    public function getContracts()
+    {
+        return $this->contracts;
     }
 }

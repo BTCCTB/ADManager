@@ -10,7 +10,7 @@
         <div class="col-md-6">
             <div class="alert alert-danger">
                 <p>{{ 'Your need to update the email address in GO4HR before doing this modification.'|trans }}</p>
-                <p><a href="https://performancemanager5.successfactors.eu/xi/ui/pages/empfile/liveprofile.xhtml?selected_user={{ account.employeeId }}" class="text-danger" target="_blank"><i class="fa fa-chevron-right" aria-hidden="true"></i> {{ [account.lastname, account.firstname]|join(' ') }} in GO4HR</a></p>
+                <p><a href="https://performancemanager5.successfactors.eu/xi/ui/pages/empfile/liveprofile.xhtml?selected_user={{ account.employeeId }}" class="text-danger" target="_blank"><i class="fas fa-chevron-right" aria-hidden="true"></i> {{ [account.lastname, account.firstname]|join(' ') }} in GO4HR</a></p>
                 <p>{{ 'Current proxyAddresses:'|trans }}</p>
                 <ul>
                     <li>{{ adData.proxyAddresses|join('</li><li>')|raw }}</li>
@@ -33,7 +33,7 @@
     <div class="row" style="padding-top: 1rem">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <button type="submit" class="btn btn-danger"><i class="fa fa-key"></i> {{ 'Change email'|trans }}</button>
+            <button type="submit" class="btn btn-danger"><i class="fas fa-key"></i> {{ 'Change email'|trans }}</button>
         </div>
     </div>
     {{ form_rest(form) }}

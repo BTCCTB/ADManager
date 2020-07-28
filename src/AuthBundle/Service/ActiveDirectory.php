@@ -1438,4 +1438,31 @@ class ActiveDirectory
             ActiveDirectoryResponseType::UPDATE
         );
     }
+
+    public function forceSync(BisPersonView $bisPersonView)
+    {
+        // Check user exist in AD
+        $adAccount = $this->getUser($bisPersonView->getEmail());
+
+        // Create user in AD
+        if (null === $adAccount) {
+            $log = $this->createUser($bisPersonView);
+            $adAccount = $this->getUser($bisPersonView->getEmail());
+        } else {
+            // Set BIS data in Active Directory format
+            [$adAccount, $diffData] = ActiveDirectoryHelper::bisPersonUpdateAdUser($bisPersonView, $adAccount);
+            if (!empty($diffData)) {
+                if ($adAccount->save()) {
+                    $moved = $this->userNeedToMove($bisPersonView, $adAccount);
+                    if (ActiveDirectoryResponseStatus::ACTION_NEEDED === $moved->getStatus()) {
+                        // Move user in AD
+                        $this->moveUser($bisPersonView, $adAccount);
+                    }
+                    $this->bisDir->synchronize($adAccount);
+                }
+            }
+        }
+
+        return $adAccount;
+    }
 }

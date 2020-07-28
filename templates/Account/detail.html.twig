@@ -7,7 +7,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-address-card"></i> Personal information
+                    <i class="fas fa-address-card"></i> Personal information
                 </div>
                 <div class="card-body">
                     {% if bisData is empty %}
@@ -35,9 +35,9 @@
                                 <th>Genre</th>
                                 <td>
                                     {% if bisData.sex == 'M' %}
-                                    <i class="fa fa-male" aria-hidden="true"></i> Male
+                                    <i class="fas fa-male" aria-hidden="true"></i> Male
                                     {% else %}
-                                    <i class="fa fa-female" aria-hidden="true"></i> Female
+                                    <i class="fas fa-female" aria-hidden="true"></i> Female
                                     {% endif %}
                                 </td>
                             </tr>
@@ -48,8 +48,8 @@
                             <tr>
                                 <th>Phone</th>
                                 <td>
-                                    <i class="fa fa-mobile" aria-hidden="true"></i> {{ bisData.mobile|default('N.C.') }}<br>
-                                    <i class="fa fa-phone" aria-hidden="true"></i> {{ bisData.telephone|default('N.C.') }}
+                                    <i class="fas fa-mobile" aria-hidden="true"></i> {{ bisData.mobile|default('N.C.') }}<br>
+                                    <i class="fas fa-phone" aria-hidden="true"></i> {{ bisData.telephone|default('N.C.') }}
                                 </td>
                             </tr>
                             <tr>
@@ -64,7 +64,7 @@
             <br>
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-envelope-open"></i> Email information
+                    <i class="fas fa-envelope-open"></i> Email information
                 </div>
                 <div class="card-body">
                     {% if bisData is empty %}
@@ -88,7 +88,7 @@
             <br>
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-briefcase"></i> Job information
+                    <i class="fas fa-briefcase"></i> Job information
                 </div>
                 <div class="card-body">
                     {% if bisData is empty %}
@@ -129,9 +129,9 @@
                             <th>In contract</th>
                             <td>
                                 {% if bisData.perActive %}
-                                    <span class="badge badge-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Yes</span>
+                                    <span class="badge badge-success"><i class="fas fa-check-circle" aria-hidden="true"></i> Yes</span>
                                 {% else %}
-                                    <span class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i> No</span>
+                                    <span class="badge badge-danger"><i class="fas fa-times" aria-hidden="true"></i> No</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -152,7 +152,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-user-circle"></i> Account information [AD]
+                    <i class="fas fa-user-circle"></i> Account information [AD]
                 </div>
                 <div class="card-body">
                     {% if adData is empty %}
@@ -188,9 +188,9 @@
                                 <th>Status</th>
                                 <th>
                                     {%  if adData.disabled %}
-                                        <span class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i> disabled</span>
+                                        <span class="badge badge-danger"><i class="fas fa-times" aria-hidden="true"></i> disabled</span>
                                     {% else %}
-                                        <span class="badge badge-success"><i class="fa fa-check-circle" aria-hidden="true"></i> enabled</span>
+                                        <span class="badge badge-success"><i class="fas fa-check-circle" aria-hidden="true"></i> enabled</span>
                                     {% endif %}
                                 </th>
                             </tr>
@@ -224,7 +224,7 @@
             <br>
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-key"></i> Account information [LDAP]
+                    <i class="fas fa-key"></i> Account information [LDAP]
                 </div>
                 <div class="card-body">
                     {% if ldapData is empty %}

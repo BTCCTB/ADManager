@@ -9,9 +9,9 @@
         {% if is_granted('ROLE_ADMIN') %}
             <div class="btn-group" role="group" aria-label="Exports">
                 <a href="{{ path('contact_hq_export') }}" class="btn btn-outline-danger"><i class="flag-icon flag-icon-be"></i> {{ 'contact.export.hq'|trans }}</a>
-                <a href="{{ path('contact_field_export') }}" class="btn btn-outline-danger"><i class="fa fa-flag"></i> {{ 'contact.export.field'|trans }}</a>
-                <a href="{{ path('contact_resrep_export') }}" class="btn btn-outline-danger"><i class="fa fa-briefcase"></i> {{ 'contact.export.resrep'|trans }}</a>
-                <a href="{{ path('contact_export') }}" class="btn btn-outline-danger"><i class="fa fa-globe"></i> {{ 'contact.export.all'|trans }}</a>
+                <a href="{{ path('contact_field_export') }}" class="btn btn-outline-danger"><i class="fas fa-flag"></i> {{ 'contact.export.field'|trans }}</a>
+                <a href="{{ path('contact_resrep_export') }}" class="btn btn-outline-danger"><i class="fas fa-briefcase"></i> {{ 'contact.export.resrep'|trans }}</a>
+                <a href="{{ path('contact_export') }}" class="btn btn-outline-danger"><i class="fas fa-globe"></i> {{ 'contact.export.all'|trans }}</a>
             </div>
             <br>
             <br>
@@ -32,17 +32,17 @@
 
                     <p class="contactPhone">
                         {% if contact.mobile is not empty  %}
-                        <a href="tel:{{ contact.mobile|replace({' ': '', '(0)':''}) }}"><i class="fa fa-mobile"></i> {{ contact.mobile }}</a>
+                        <a href="tel:{{ contact.mobile|replace({' ': '', '(0)':''}) }}"><i class="fas fa-mobile"></i> {{ contact.mobile }}</a>
                         <span class="contactPhone text-hide">{{ contact.mobile|replace({' ': '', '(0)':''}) }}</span>
                         {% else %}
-                        <a href="tel:{{ contact.telephone|replace({' ': '', '(0)':''}) }}"><i class="fa fa-phone"></i> {{ contact.telephone }}</a>
+                        <a href="tel:{{ contact.telephone|replace({' ': '', '(0)':''}) }}"><i class="fas fa-phone"></i> {{ contact.telephone }}</a>
                         <span class="contactPhone text-hide">{{ contact.telephone|replace({' ': '', '(0)':''}) }}</span>
                         {% endif %}
                     </p>
                 </div>
                 <a data-toggle="collapse" data-target="#collapse{{ contact.id }}" aria-expanded="false" aria-controls="collapseExample">
                     <div class="arrow">
-                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
                     </div>
                 </a>
                 <div class="collapse" id="collapse{{ contact.id }}">

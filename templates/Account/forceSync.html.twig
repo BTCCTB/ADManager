@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sync GO4HR Data with Enabel AD/LDAP</h1>
+    {% include '_partial/flash.html.twig' %}
+
+    {% if user is null %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="alert alert-danger">
+                <div class="row">
+                    <div class="col-md-1 text-center">
+                        <i class="fas fa-siren-on fa-3x"></i>
+                    </div>
+                    <div class="col-md-11">
+                        <h4>{{ 'Check before forcing synchronization'|trans }}:</h4>
+                        <ul>
+                            <li> {{ 'GO4HR'|trans }}
+                                <ul>
+                                    <li>{{ 'User is active (in contract)'|trans }}</li>
+                                    <li>{{ 'Email address correctly encoded (Type: Enabel)'|trans }}</li>
+                                    <li>{{ 'User languages (roles/mother/preferred) is set'|trans }}</li>
+                                </ul>
+                            </li>
+                            <li>{{ 'AD'|trans }}
+                                <ul>
+                                    <li>{{ 'User is not another OU (disabled user, ...)'|trans }}</li>
+                                    <li>{{ 'Another user with same first & last name does not exist'|trans }}</li>
+                                    <li>{{ 'User is not locked/disabled'|trans }}</li>
+
+                                </ul>
+                            </li>
+                            <li>{{ 'LDAP'|trans }}
+                                <ul>
+                                    <li>{{ 'User has already logged in on password'|trans }}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h5>{{ 'Forcing the synchronization will delete all HR data on BIS for this user.'|trans }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info">
+                {{ 'Your can force the sync for a existing GO4HR user.'|trans }} {{ 'All you need is the email (...@enabel.be) or the SuccessFactor ID.'|trans }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            {{ form_row(form.search) }}
+        </div>
+    </div>
+    <div class="row" style="padding-top: 1rem">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button type="submit" class="btn btn-warning"><i class="fas fa-sync-alt"></i>  {{ 'Force sync'|trans }}</button>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    {% else %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Nickname</th>
+                    <th>Start date</th>
+                    <th>In contract</th>
+                    <th>Sync with BIS</th>
+                    <th>Sync with AD</th>
+                    <th>Sync with LDAP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td scope="row">{{ user.id }}</td>
+                    <td>{{ user.email|default('-') }}</td>
+                    <td>{{ user.mobile|default('-') }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.nickname|default('-') }}</td>
+                    <td>{{ user.contracts is not null ? user.contracts.0.conDateStart|date('Y-m-d') : '-' }}</td>
+                    <td>{{ user.contracts is not null ? user.contracts.0.conActive==1?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                    <td>{{ user is not null?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                    <td>{{ ad is not null?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                    <td>{{ ldap is not null?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}

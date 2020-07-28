@@ -19,7 +19,6 @@ class BisJobSf
     /**
      * @ORM\Column(name="job_id", type="bigint")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $jobId;
 
