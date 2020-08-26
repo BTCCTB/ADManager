@@ -6,6 +6,3 @@ parameters:
         - src/Migrations/*
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
-    symfony:
-        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
-        constant_hassers: false
