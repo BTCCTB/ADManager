@@ -5,10 +5,10 @@
 # Setup ————————————————————————————————————————————————————————————————————————
 SHELL         = bash
 PROJECT       = password
-EXEC_PHP      = php
-REDIS         = $(DOCKER_EXEC) redis redis-cli
-SYMFONY       = $(EXEC_PHP) bin/console
 SYMFONY_BIN   = ./symfony
+EXEC_PHP      = $(SYMFONY_BIN) php
+REDIS         = $(DOCKER_EXEC) redis redis-cli
+SYMFONY       = $(SYMFONY_BIN) console
 COMPOSER      = $(EXEC_PHP) composer.phar
 DOCKER        = docker-compose
 DOCKER_EXEC = docker-compose exec
@@ -25,16 +25,15 @@ wait: ## Sleep 5 seconds
 ## —— Composer 🧙‍♂️ ————————————————————————————————————————————————————————————
 ./composer.phar:
 	$(EXEC_PHP) -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-	$(EXEC_PHP) -r "if (hash_file('sha384', 'composer-setup.php') === 'e5325b19b381bfd88ce90a5ddb7823406b2a38cff6bb704b0acc289a09c8128d4a8ce2bbafcd1fcbdc38666422fe2806') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 	$(EXEC_PHP) composer-setup.php
 	$(EXEC_PHP) -r "unlink('composer-setup.php');"
 
-get-composer: ./composer.phar ## Download and install composer in the project (file is ignored)
+get-composer: ./symfony ./composer.phar ## Download and install composer in the project (file is ignored)
 
 install: get-composer composer.lock ## Install vendors according to the current composer.lock file
 	$(COMPOSER) install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
-update: composer.json ## Update vendors according to the composer.json file
+update: get-composer composer.json ## Update vendors according to the composer.json file
 	$(COMPOSER) update
 
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
@@ -107,7 +106,7 @@ dpsn: ## List Docker containers for the project
 	@echo "--------------------------------------------------------------------------------------------------------------"
 
 ## —— Project 🛠———————————————————————————————————————————————————————————————
-run: up wait reload serve open ## Start docker, load fixtures and start the web server
+run: bin-install up wait schema serve open ## Start docker, load fixtures and start the web server
 
 reload: load-fixtures ## Reload fixtures
 
@@ -119,10 +118,12 @@ cc-redis: ## Flush all Redis cache
 commands: ## Display all commands in the project namespace
 	$(SYMFONY) list $(PROJECT)
 
-load-fixtures: ## Build the db, control the schema validity, load fixtures and check the migration status
+schema: ## Build the db, control the schema validity and check the migration status
 	$(SYMFONY) doctrine:cache:clear-metadata
 	$(SYMFONY) doctrine:database:create --if-not-exists
 	$(SYMFONY) doctrine:migrations:migrate -q
+
+load-fixtures: schema ## Load fixtures
 	$(SYMFONY) doctrine:fixtures:load -n
 
 ## —— Tests ✅ —————————————————————————————————————————————————————————————————
@@ -139,13 +140,13 @@ test-all: phpunit.xml ## Launch all tests
 	./bin/phpunit --stop-on-failure
 
 ## —— Coding standards ✨ ——————————————————————————————————————————————————————
-cs: codesniffer mess ## Launch check style and static analysis
+cs: stan codesniffer mess ## Launch check style and static analysis
 
 codesniffer: ## Run php_codesniffer only
 	./vendor/bin/phpcs --standard=checkstyle.xml -n -p src/
 
 stan: ## Run PHPStan only
-	./vendor/bin/phpstan analyse -l max --memory-limit 1G -c phpstan.neon src/
+	./vendor/bin/phpstan analyse --memory-limit 1G -c phpstan.neon
 
 mess: ## Run PHP Mess Dectector only
 	./vendor/bin/phpmd --exclude Migrations,AuthBundle/Command,AuthBundle/Service src/ ansi ./codesize.xml

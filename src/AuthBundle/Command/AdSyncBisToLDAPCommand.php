@@ -58,7 +58,7 @@ class AdSyncBisToLDAPCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
@@ -82,5 +82,7 @@ class AdSyncBisToLDAPCommand extends Command
             }
         }
         $output->writeln('<error>User: ' . $input->getArgument('email') . ' not found!</error>');
+
+        return null;
     }
 }

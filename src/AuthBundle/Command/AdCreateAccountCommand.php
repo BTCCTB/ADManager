@@ -83,7 +83,7 @@ class AdCreateAccountCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      *
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
@@ -130,7 +130,7 @@ class AdCreateAccountCommand extends Command
                 $output->writeln('Type: ' . ActiveDirectoryResponseType::CREATE);
 
                 // Update account list with generated password
-                $accountRepository = $this->em->getRepository('App:Account');
+                $accountRepository = $this->em->getRepository(Account::class);
                 $account = $accountRepository->findOneBy([
                     'email' => $bisPersonView->getEmail(),
                 ]);
@@ -154,5 +154,7 @@ class AdCreateAccountCommand extends Command
                 }
             }
         }
+
+        return null;
     }
 }

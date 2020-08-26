@@ -264,6 +264,18 @@ class BisPersonViewRepository extends EntityRepository
         return $activeUsers;
     }
 
+    public function getActiveUserBySfId()
+    {
+        $activeUsers = [];
+
+        foreach ($this->findAll() as $bisPersonView) {
+            /* @var bisPersonView $bisPersonView */
+            $activeUsers[] = $bisPersonView->getEmployeeId();
+        }
+
+        return $activeUsers;
+    }
+
     public function getUserMobileByEmail()
     {
         $usersMobile = [];

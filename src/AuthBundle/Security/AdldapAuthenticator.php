@@ -10,7 +10,6 @@ use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\BisDir;
 use AuthBundle\Service\BisDirResponseStatus;
 use Doctrine\ORM\EntityManager;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -57,7 +56,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
      */
     private $bisDir;
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     private $logger;
     /**
@@ -98,7 +97,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
         $checkMethod = $request->isMethod('POST');
 
         if (!($checkMethod && $checkPath)) {
-            return null;
+            return false;
         }
 
         return true;
@@ -241,7 +240,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
             throw new UsernameNotFoundException('Username can\'t be empty!');
         }
 
-        $user = $this->em->getRepository('App:User')
+        $user = $this->em->getRepository(User::class)
             ->findOneBy(['email' => $username]);
 
         if (null === $user) {
@@ -254,7 +253,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
                 $this->em->flush();
             }
         }
-        $user = $this->em->getRepository('App:User')
+        $user = $this->em->getRepository(User::class)
             ->findOneBy(['email' => $username]);
 
         if (null === $user) {

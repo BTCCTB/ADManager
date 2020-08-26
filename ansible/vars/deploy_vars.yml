@@ -49,3 +49,7 @@ sms_gateway_me_device_id: "{{ vault_sms_gateway_me_device_id }}"
 
 # Api key for intranet iframe
 intranet_api_key: "{{ vault_intranet_api_key }}"
+
+# Redis vars
+redis_host: "{{ vault_redis_host }}"
+redis_port: "{{ vault_redis_port }}"

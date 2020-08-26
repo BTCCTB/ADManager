@@ -13,6 +13,7 @@ use Gedmo\Translatable\Translatable;
  *
  * @ORM\Table(name="application")
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  *
  * @Gedmo\Loggable(logEntryClass="LoggableEntry")
  */

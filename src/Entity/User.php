@@ -16,10 +16,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class User
  *
- * @package AuthBundle\Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  *
  * @UniqueEntity(fields={"email"}, message="It looks this user has already an account")
  *
@@ -219,7 +218,7 @@ class User implements EntityInterface, UserInterface, EquatableInterface
      */
     public function eraseCredentials()
     {
-        $this->plainPassword = null;
+        $this->plainPassword = '';
     }
 
     /**
@@ -387,8 +386,9 @@ class User implements EntityInterface, UserInterface, EquatableInterface
             ->setLastname($adUser->getLastName())
             ->setAccountName($adUser->getAccountName())
             ->setRoles(['ROLE_USER'])
+            ->setActive($adUser->isActive())
             ->setCreatedAt(new \DateTime())
-            ->setActive($adUser->isActive());
+        ;
     }
 
     public function getIdentity()

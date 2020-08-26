@@ -65,7 +65,7 @@ class AdInitAccountCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      *
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
@@ -80,9 +80,6 @@ class AdInitAccountCommand extends Command
 
         $logs = [];
 
-        /**
-         * @var ActiveDirectoryResponse[] $logs
-         */
         foreach ($fieldUsers as $fieldUser) {
             $log = $this->activeDirectory->initAccount($fieldUser);
             $data = $log->getData();
@@ -114,5 +111,7 @@ class AdInitAccountCommand extends Command
         }
         $table->setRows($rows);
         $table->render();
+
+        return null;
     }
 }

@@ -12,6 +12,7 @@ use Gedmo\Loggable\Entity\MappedSuperclass\AbstractLogEntry;
  *
  * @ORM\Table(name="loggable_entry")
  * @ORM\Entity(repositoryClass="App\Repository\LoggableEntryRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  *
  * @author  Damien Lagae <damien.lagae@enabel.be>
  */

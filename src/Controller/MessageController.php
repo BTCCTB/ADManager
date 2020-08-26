@@ -50,7 +50,8 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/create/group", name="create_group")
-     * @param SmsGatewayMe         $smsService The service to send SMS
+     * @param Request        $request
+     * @param EnabelGroupSms $enabelGroupSms
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -63,7 +64,9 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/create/person", name="create_person")
-     * @param SmsGatewayMe         $smsService The service to send SMS
+     * @param Request        $request
+     * @param EnabelGroupSms $enabelGroupSms
+     * @param PhoneDirectory $phoneDirectory
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
