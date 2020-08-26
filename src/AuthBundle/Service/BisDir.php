@@ -24,7 +24,7 @@ class BisDir
     const DISABLE_ALLOWED_LIMIT = 30;
 
     /**
-     * @var Provider
+     * @var Adldap
      */
     private $bisDir;
 
@@ -185,7 +185,7 @@ class BisDir
         $entry = $this->getUser($email);
 
         if (null !== $entry) {
-            $passwordEncoded = $this->passwordEncoder->encodePassword($password);
+            $passwordEncoded = $this->passwordEncoder->encodePassword($password, null);
             $entry->setAttribute('userPassword', $passwordEncoded);
             if ($entry->save()) {
                 return new BisDirResponse(
@@ -234,7 +234,8 @@ class BisDir
             $log = $this->createEntry($adAccount);
             $logs[] = $log;
             if ($log->getStatus() === BisDirResponseStatus::DONE && !empty($password)) {
-                $logs[] = $this->synchronize($adAccount, $password);
+                $syncLogs = $this->synchronize($adAccount, $password);
+                $logs = array_merge($logs, $syncLogs);
             }
 
             return $logs;

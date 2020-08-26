@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Adldap\Models\User;
+use App\Repository\AccountRepository;
 use BisBundle\Entity\BisPersonView;
 use Doctrine\ORM\EntityManager;
 
@@ -27,7 +28,7 @@ class Account
 
     public function updateCredentials(User $adAccount, $credentials)
     {
-        $accountRepository = $this->em->getRepository('App:Account');
+        $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
 
         $account = $accountRepository->findOneBy([
             'email' => $adAccount->getEmail(),
@@ -61,6 +62,7 @@ class Account
 
     public function getAccount(String $email)
     {
+        /** @var AccountRepository $accountRepository */
         $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
 
         return $accountRepository->findByEmail($email);
@@ -68,12 +70,14 @@ class Account
 
     public function lastLogin(String $email)
     {
+        /** @var AccountRepository $accountRepository */
         $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
         $accountRepository->setLastLogin($email);
     }
 
     public function setGeneratedPassword(String $email, $password)
     {
+        /** @var AccountRepository $accountRepository */
         $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
         $accountRepository->setGeneratedPassword($email, $password);
     }
@@ -90,6 +94,7 @@ class Account
      */
     public function upSertAccount(BisPersonView $bisPersonView): int
     {
+        /** @var AccountRepository $accountRepository */
         $accountRepository = $this->em->getRepository(\App\Entity\Account::class);
 
         $account = $accountRepository->findOneBy([

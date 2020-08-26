@@ -110,7 +110,7 @@ class Account implements EntityInterface
     /**
      * @ORM\Column(type="boolean")
      *
-     * @var \Bool
+     * @var bool
      */
     private $isActive;
 

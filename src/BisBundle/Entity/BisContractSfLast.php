@@ -69,18 +69,6 @@ class BisContractSfLast
         return $this;
     }
 
-    public function getPerId()
-    {
-        return $this->perId;
-    }
-
-    public function setPerId($perId)
-    {
-        $this->perId = $perId;
-
-        return $this;
-    }
-
     public function getConType()
     {
         return $this->conType;

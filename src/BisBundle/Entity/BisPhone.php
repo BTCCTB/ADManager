@@ -103,7 +103,7 @@ class BisPhone
     private $mobile;
 
     /**
-     * @var BisCountry
+     * @var BisCountry|string
      *
      * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisCountry", inversedBy="bisPhones")
      * @ORM\JoinColumn(name="country_workplace", referencedColumnName="cou_isocode_3letters", nullable=true)
@@ -134,7 +134,7 @@ class BisPhone
         return $this->email;
     }
 
-    public function setEmail(String $email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -146,7 +146,7 @@ class BisPhone
         return $this->firstname;
     }
 
-    public function setFirstname(String $firstname)
+    public function setFirstname(string $firstname)
     {
         $this->firstname = $firstname;
 
@@ -158,7 +158,7 @@ class BisPhone
         return $this->lastname;
     }
 
-    public function setLastname(String $lastname)
+    public function setLastname(string $lastname)
     {
         $this->lastname = $lastname;
 
@@ -182,7 +182,7 @@ class BisPhone
         return ActiveDirectoryHelper::cleanUpPhoneNumber($this->telephone);
     }
 
-    public function setTelephone(String $telephone)
+    public function setTelephone(string $telephone)
     {
         $this->telephone = ActiveDirectoryHelper::cleanUpPhoneNumber($telephone);
 
@@ -194,7 +194,7 @@ class BisPhone
         return $this->sex;
     }
 
-    public function setSex(String $sex)
+    public function setSex(string $sex)
     {
         $this->sex = $sex;
 
@@ -206,7 +206,7 @@ class BisPhone
         return $this->language;
     }
 
-    public function setLanguage(String $language)
+    public function setLanguage(string $language)
     {
         $this->language = $language;
 
@@ -218,7 +218,7 @@ class BisPhone
         return $this->function;
     }
 
-    public function setFunction(String $function)
+    public function setFunction(string $function)
     {
         $this->function = $function;
 
@@ -230,7 +230,7 @@ class BisPhone
         return ActiveDirectoryHelper::cleanUpPhoneNumber($this->mobile);
     }
 
-    public function setMobile(String $mobile)
+    public function setMobile(string $mobile)
     {
         $this->mobile = ActiveDirectoryHelper::cleanUpPhoneNumber($mobile);
 
@@ -262,7 +262,7 @@ class BisPhone
         return null;
     }
 
-    public function setCountryWorkplace(String $countryWorkplace)
+    public function setCountryWorkplace(string $countryWorkplace)
     {
         $this->countryWorkplace = $countryWorkplace;
 
@@ -274,7 +274,7 @@ class BisPhone
         return $this->type;
     }
 
-    public function setType(String $type)
+    public function setType(string $type)
     {
         $this->type = $type;
 
@@ -295,7 +295,7 @@ class BisPhone
         return $this->nickname;
     }
 
-    public function setNickname(String $nickname)
+    public function setNickname(string $nickname)
     {
         $this->nickname = $nickname;
 

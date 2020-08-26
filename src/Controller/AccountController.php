@@ -94,7 +94,7 @@ class AccountController extends AbstractController
      *
      * @IsGranted("ROLE_ADMIN")
      *
-     * @param AccountRepository $accountRepository
+     * @param ActiveDirectory $activeDirectory
      *
      * @return Response
      */
@@ -116,6 +116,7 @@ class AccountController extends AbstractController
      */
     public function changeAction(Request $request)
     {
+        /** @var \App\Entity\User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $form = $this->createForm(ChangePasswordType::class);
@@ -206,10 +207,11 @@ class AccountController extends AbstractController
      *
      * @IsGranted("ROLE_ADMIN")
      *
-     * @param integer                     $employeeID                  The employee ID     *
-     * @param AccountRepository           $accountRepository
+     * @param integer           $employeeID The employee ID     *
+     * @param AccountRepository $accountRepository
      *
-     * @param ActiveDirectoryNotification $activeDirectoryNotification
+     * @param BisPersonView     $bisPersonView
+     * @param SmsGatewayMe      $smsGatewayMe
      *
      * @return RedirectResponse
      *

@@ -45,7 +45,7 @@ class MailTestCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -58,5 +58,7 @@ class MailTestCommand extends Command
                 'text/plain'
             );
         $this->mailer->send($message);
+
+        return null;
     }
 }

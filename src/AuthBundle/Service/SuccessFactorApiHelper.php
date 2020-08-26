@@ -50,7 +50,7 @@ class SuccessFactorApiHelper
         return null;
     }
 
-    public static function jobTypeFromJobCode(? string $jobCode, ? string $jobType)
+    public static function jobTypeFromJobCode(? string $jobCode, ? string $jobType = null)
     {
         $type = $jobType;
         if (empty($jobType)) {

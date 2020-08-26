@@ -67,7 +67,7 @@ class AdSyncLangCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      *
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
@@ -82,9 +82,6 @@ class AdSyncLangCommand extends Command
 
         $logs = [];
 
-        /**
-         * @var ActiveDirectoryResponse[] $logs
-         */
         foreach ($bisPersons as $bisPerson) {
             if (!empty($bisPerson->getEmail())) {
                 $adAccount = $this->activeDirectory->getUser($bisPerson->getEmail());
@@ -116,5 +113,7 @@ class AdSyncLangCommand extends Command
         }
         $table->setRows($rows);
         $table->render();
+
+        return null;
     }
 }

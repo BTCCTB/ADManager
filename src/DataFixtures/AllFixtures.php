@@ -6,8 +6,7 @@ use App\Entity\Account;
 use App\Entity\Application;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
@@ -28,7 +27,7 @@ class AllFixtures extends Fixture
         $manager->flush();
     }
 
-    private function addApplication(EntityManager $em)
+    private function addApplication(ObjectManager $em)
     {
         for ($i = 1; $i <= 15; $i++) {
             $application = new Application();
@@ -39,7 +38,7 @@ class AllFixtures extends Fixture
         }
     }
 
-    private function addAccount(EntityManager $em)
+    private function addAccount(ObjectManager $em)
     {
         for ($i = 1; $i <= 2000; $i++) {
             $account = new Account();
@@ -58,7 +57,7 @@ class AllFixtures extends Fixture
         }
     }
 
-    private function addAdmin(EntityManager $em)
+    private function addAdmin(ObjectManager $em)
     {
         $user = new User();
         $user->setEmail("damien.lagae@enabel.be");
@@ -70,7 +69,7 @@ class AllFixtures extends Fixture
         $em->persist($user);
     }
 
-    private function addUser(EntityManager $em)
+    private function addUser(ObjectManager $em)
     {
         for ($i = 1; $i <= 10; $i++) {
             $user = new User();

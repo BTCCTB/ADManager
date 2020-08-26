@@ -8,6 +8,7 @@ use BisBundle\Entity\BisJobSf;
 use BisBundle\Entity\BisPersonSf;
 use BisBundle\Repository\BisPersonViewRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Class BisPersonView
@@ -24,14 +25,14 @@ class BisPersonView
     private $em;
 
     /**
-     * @var BisPersonViewRepository
+     * @var BisPersonViewRepository|EntityRepository
      */
     private $repository;
 
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->repository = $this->em->getRepository('BisBundle:BisPersonView');
+        $this->repository = $this->em->getRepository(\BisBundle\Entity\BisPersonView::class);
     }
 
     /**
@@ -41,7 +42,9 @@ class BisPersonView
      */
     public function getUser(String $email)
     {
-        return $this->repository->getUserByEmail($email);
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->getUserByEmail($email);
     }
 
     /**
@@ -51,7 +54,9 @@ class BisPersonView
      */
     public function getUserData(String $email)
     {
-        return $this->repository->getUserData($email);
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->getUserData($email);
     }
 
     /**
@@ -62,45 +67,63 @@ class BisPersonView
     public function getCountryUsers(String $country = null)
     {
         if (null !== $country) {
-            return $this->repository->getUsersByCountry($country);
+            /** @var BisPersonViewRepository $repo*/
+            $repo = $this->repository;
+            return $repo->getUsersByCountry($country);
         }
 
-        return $this->repository->findAllFieldUser();
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->findAllFieldUser();
     }
 
     public function getAllUsers()
     {
-        return $this->repository->findAll();
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->findAll();
     }
 
     public function getActiveUserByEmail()
     {
-        return $this->repository->getActiveUserByEmail();
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->getActiveUserByEmail();
     }
 
     public function getActiveUserBySfId()
     {
-        return $this->repository->getActiveUserBySfId();
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->getActiveUserBySfId();
     }
 
     public function getUserMobileByEmail()
     {
-        return $this->repository->getUserMobileByEmail();
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->getUserMobileByEmail();
     }
 
     public function getStarters(int $nbDays = 15)
     {
-        return $this->repository->getStarters($nbDays);
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->getStarters($nbDays);
     }
 
     public function getFinishers(int $nbDays = 15)
     {
-        return $this->repository->getFinishers($nbDays);
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->getFinishers($nbDays);
     }
 
     public function findById(int $id)
     {
-        return $this->repository->find($id);
+        /** @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        return $repo->find($id);
     }
 
     public function cleanDataById(int $id)
@@ -133,7 +156,7 @@ class BisPersonView
     /**
      * @param array $user
      *
-     * @return \BisBundle\Entity\BisPersonView|object
+     * @return \BisBundle\Entity\BisPersonView
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException

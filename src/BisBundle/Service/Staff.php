@@ -2,6 +2,8 @@
 
 namespace BisBundle\Service;
 
+use BisBundle\Entity\BisPhone;
+use BisBundle\Repository\BisPhoneRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -21,31 +23,41 @@ class Staff
 
     public function __construct(EntityManager $em)
     {
-        $this->repository = $em->getRepository('BisBundle:BisPhone');
+        $this->repository = $em->getRepository(BisPhone::class);
     }
 
     public function getByCountry(string $country):  ? array
     {
-        return $this->repository->getStaffByCountry($country);
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getStaffByCountry($country);
     }
 
     public function getAll()
     {
-        return $this->repository->getStaff();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getStaff();
     }
 
     public function getField()
     {
-        return $this->repository->getFieldStaff();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getFieldStaff();
     }
 
     public function getHQ()
     {
-        return $this->repository->getHQStaff();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getHQStaff();
     }
 
     public function getResRep()
     {
-        return $this->repository->getResRepStaff();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getResRepStaff();
     }
 }

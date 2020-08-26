@@ -57,6 +57,9 @@ class EnabelGroupSms
         $this->phoneDirectory = $phoneDirectory;
     }
 
+    /**
+     * @return string[]
+     */
     public static function getGroups()
     {
         return [
@@ -68,6 +71,9 @@ class EnabelGroupSms
         ];
     }
 
+    /**
+     * @return array
+     */
     public static function getCountries()
     {
         $partnerCountries = [];
@@ -108,7 +114,8 @@ class EnabelGroupSms
 
     public function getName($groupCode)
     {
-        $groups = self::getCountries() + self::getGroups() + array_flip($this->phoneDirectory->getRecipientOptions());
+        $options = array_flip($this->phoneDirectory->getRecipientOptions());
+        $groups = self::getCountries() + self::getGroups() + $options;
 
         if (array_key_exists($groupCode, $groups)) {
             return $groups[$groupCode];

@@ -40,6 +40,7 @@ class UserRepository extends EntityRepository
 
     public function syncAccount(\Adldap\Models\User $adAccount, String $password, UserInterface $user)
     {
+        /** @var User $user */
         $user->eraseCredentials();
         $user
             ->setFirstname($adAccount->getFirstName())

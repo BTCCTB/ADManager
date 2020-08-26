@@ -3,6 +3,7 @@
 namespace AuthBundle\Command;
 
 use App\Entity\Account;
+use App\Repository\AccountRepository;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\BisDir;
@@ -34,7 +35,7 @@ class AdExpiredAccountCommand extends Command
      */
     private $bisPersonView;
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
     /**
@@ -45,11 +46,11 @@ class AdExpiredAccountCommand extends Command
     /**
      * AdFixAttributesCommand constructor.
      *
-     * @param ActiveDirectory              $activeDirectory Active directory Service
-     * @param BisPersonView                $bisPersonView
-     * @param BisDir                       $bisDir
-     * @param EntityManagerInterface       $em
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param ActiveDirectory          $activeDirectory Active directory Service
+     * @param BisPersonView            $bisPersonView
+     * @param BisDir                   $bisDir
+     * @param EntityManagerInterface   $em
+     * @param PasswordEncoderInterface $passwordEncoder
      */
     public function __construct(ActiveDirectory $activeDirectory, BisPersonView $bisPersonView, BisDir $bisDir, EntityManagerInterface $em, PasswordEncoderInterface $passwordEncoder)
     {
@@ -84,7 +85,7 @@ class AdExpiredAccountCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
@@ -102,7 +103,9 @@ class AdExpiredAccountCommand extends Command
             $bisAccount = $this->bisPersonView->getUser($email);
             $adAccount = $this->activeDirectory->getUser($email);
             $ldapAccount = $this->bisDir->getUser($email);
-            $accountInfo = $this->em->getRepository('App:Account')->findByEmail($email);
+            /** @var AccountRepository $accountRepository **/
+            $accountRepository = $this->em->getRepository(Account::class);
+            $accountInfo = $accountRepository->findByEmail($email);
 
             // Reset Changes logs
             $adChanges = null;
@@ -188,5 +191,7 @@ class AdExpiredAccountCommand extends Command
 
         $table->setRows($data);
         $table->render();
+
+        return null;
     }
 }
