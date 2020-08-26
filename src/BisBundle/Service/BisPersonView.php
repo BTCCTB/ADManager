@@ -6,7 +6,7 @@ use BisBundle\Entity\BisConjobSf;
 use BisBundle\Entity\BisContractSf;
 use BisBundle\Entity\BisJobSf;
 use BisBundle\Entity\BisPersonSf;
-use BisBundle\Entity\BisPersonViewRepository;
+use BisBundle\Repository\BisPersonViewRepository;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -76,6 +76,11 @@ class BisPersonView
     public function getActiveUserByEmail()
     {
         return $this->repository->getActiveUserByEmail();
+    }
+
+    public function getActiveUserBySfId()
+    {
+        return $this->repository->getActiveUserBySfId();
     }
 
     public function getUserMobileByEmail()

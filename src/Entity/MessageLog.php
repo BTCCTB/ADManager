@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageLogRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class MessageLog
 {

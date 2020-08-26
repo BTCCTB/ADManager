@@ -1,0 +1,46 @@
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: "%env(REDIS_URL)%"
+            logging: '%kernel.debug%'
+        doctrine:
+            type: predis
+            alias: doctrine
+            dsn: "%env(REDIS_URL)%/1"
+            logging: '%kernel.debug%'
+        cache:
+            type: predis
+            alias: cache
+            dsn: "%env(REDIS_URL)%/2"
+            options:
+                profile: 2.2
+                connection_timeout: 10
+                read_write_timeout: 30
+        session:
+            type: predis
+            alias: session
+            dsn: "%env(REDIS_URL)%/3"
+
+    session:
+        client: session
+        ttl: 1200
+    doctrine:
+        metadata_cache:
+            client: doctrine
+            entity_manager: default
+            document_manager: default
+            namespace: 'dmc:'
+        result_cache:
+            client: doctrine
+            entity_manager: default
+            namespace: 'drc:'
+        query_cache:
+            client: doctrine
+            entity_manager: default
+            namespace: 'dqc:'
+        second_level_cache:
+            client: doctrine
+            entity_manager: default
+            namespace: 'dslc:'

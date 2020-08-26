@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="security_audit")
  * @ORM\Entity(repositoryClass="App\Repository\SecurityAuditRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  *
  * @author  Damien Lagae <damien.lagae@enabel.be>
  */

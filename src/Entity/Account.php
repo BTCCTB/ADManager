@@ -9,8 +9,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="account")
+ * @ORM\Table(name="account",indexes={@ORM\Index(columns={"isActive"})})
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  *
  * @UniqueEntity(fields={"email"}, message="It looks this user has already an account")
  *

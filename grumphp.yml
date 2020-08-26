@@ -25,8 +25,8 @@ parameters:
         phpcpd:
             directory: './src'
             exclude: ['Migrations', 'Service']
-            min_lines: 5
-            min_tokens: 70
+            min_lines: 10
+            min_tokens: 100
         phpstan:
             ignore_patterns: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Service']
 #        phpunitbridge:
