@@ -133,6 +133,7 @@ class SuccessFactorApi
 
                     foreach ($data['d']['results'] as $employee) {
                         $job = $this->getUserJob($employee['personIdExternal']);
+                        $email = $this->getUserMail($employee['personIdExternal']);
                         $users[] = [
                             'id' => $employee['personIdExternal'],
                             'lastname' => strtoupper($employee['lastName']),
@@ -142,7 +143,7 @@ class SuccessFactorApi
                             'startDate' => !empty($job['startDate']) ? $job['startDate'] : null,
                             'endDate' => !empty($job['endDate']) ? $job['endDate'] : null,
                             'active' => !empty($job['active']) ? $job['active'] : 0,
-                            'emailEnabel' => $employee['personNav']['emailNav']['results'][0]['emailAddress'],
+                            'emailEnabel' => $email,
                             'motherLanguage' => strtoupper(substr($employee['nativePreferredLangNav']['externalCode'], 0, 2)),
                             'preferredLanguage' =>
                             (
@@ -209,10 +210,10 @@ class SuccessFactorApi
                 if (isset($data['d'])) {
                     $this->logger->debug('SuccessFactorApi: Get phones (' . count($data['d']['results']) . ')');
                     if (isset($data['d']['results'])) {
-                        foreach ($data['d']['results'] as $phone) {
-                            if (isset($phone['personIdExternal'])) {
-                                $this->logger->debug('SuccessFactorApi: handle phone  for user ' . $phone['personIdExternal']);
-                                $phone = SuccessFactorApiHelper::cleanPhoneNumber($phone['countryCodeNav']['externalCode'] . $phone['phoneNumber']);
+                        foreach ($data['d']['results'] as $phoneRow) {
+                            if (isset($phoneRow['personIdExternal'])) {
+                                $this->logger->debug('SuccessFactorApi: handle phone  for user ' . $phoneRow['personIdExternal']);
+                                $phone = SuccessFactorApiHelper::cleanPhoneNumber($phoneRow['countryCodeNav']['externalCode'] . $phoneRow['phoneNumber']);
                             }
                         }
                     }
@@ -300,6 +301,63 @@ class SuccessFactorApi
         }
 
         return $job;
+    }
+
+    public function getUserMail($userId, $mailType = 3515)
+    {
+        $phone = null;
+        $client = HttpClient::create();
+        try {
+            $this->logger->info('SuccessFactorApi: Get emails');
+            // photo data
+            $response = $client->request(
+                'GET',
+                $this->baseUrl . 'PerEmail',
+                [
+                    'auth_basic' => [
+                        $this->token,
+                        $this->secret,
+                    ],
+                    'query' => [
+                        '$filter' => 'emailType eq ' . $mailType . ' and personIdExternal eq ' . $userId,
+                        '$select' => 'personIdExternal, emailAddress',
+                        'customPageSize' => self::ITEMS_PER_PAGES,
+                    ],
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ],
+                ]
+            );
+
+            // Request successful
+            if (200 === $response->getStatusCode()) {
+                $data = $response->toArray();
+                if (isset($data['d'])) {
+                    $this->logger->debug('SuccessFactorApi: Get emails (' . count($data['d']['results']) . ')');
+                    if (isset($data['d']['results'])) {
+                        foreach ($data['d']['results'] as $emailRow) {
+                            if (isset($emailRow['personIdExternal'])) {
+                                $this->logger->debug('SuccessFactorApi: handle email  for user ' . $emailRow['personIdExternal']);
+                                $email = $emailRow['emailAddress'];
+                            }
+                        }
+                    }
+                }
+            } else {
+                $this->logger->error('SuccessFactorApi: Unable to get phone (' . $response->getStatusCode() . ')');
+            }
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ClientExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (RedirectionExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ServerExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        }
+
+        return $email;
     }
 
     public function getUserJobHistory($userId)
