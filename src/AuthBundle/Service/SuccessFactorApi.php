@@ -2,7 +2,9 @@
 
 namespace AuthBundle\Service;
 
+use Illuminate\Contracts\Queue\Job;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -304,7 +306,7 @@ class SuccessFactorApi
 
     public function getUserMail($userId, $mailType = 3515)
     {
-        $phone = null;
+        $email = null;
         $client = HttpClient::create();
         try {
             $this->logger->info('SuccessFactorApi: Get emails');
@@ -357,5 +359,211 @@ class SuccessFactorApi
         }
 
         return $email;
+    }
+
+    public function getUserJobHistory($userId)
+    {
+        $job = null;
+        $client = HttpClient::create();
+        try {
+            $this->logger->info('SuccessFactorApi: Get job history for userID: ' . $userId);
+            // Employees personal data
+            $response = $client->request(
+                'GET',
+                $this->baseUrl . 'EmpJob',
+                [
+                    'auth_basic' => [
+                        $this->token,
+                        $this->secret,
+                    ],
+                    'query' => [
+                        '$select' => 'userId,endDate,positionEntryDate,jobCode',
+                        '$filter' => 'userId eq ' . $userId . " and endDate lt datetimeoffset'" . date("Y-m-d") . "T00:00:00Z'",
+                        '$expand' => 'eventReasonNav',
+                        'fromDate' => '1990-01-01',
+                        '$orderby' => 'endDate',
+                        'customPageSize' => self::ITEMS_PER_PAGES,
+                    ],
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ],
+                ]
+            );
+
+            // Request successful
+            if (200 === $response->getStatusCode()) {
+                $data = $response->toArray(false);
+                if (isset($data['d'])) {
+                    $this->logger->debug('SuccessFactorApi: Get job history (' . count($data['d']['results']) . ')');
+                    // Transform response as array of job
+                    foreach ($data['d']['results'] as $empJob) {
+                        $job = [
+                            'startDate' => SuccessFactorApiHelper::SFDateToDateFormat($empJob['positionEntryDate']),
+                            'endDate' => SuccessFactorApiHelper::SFDateToDateFormat($empJob['endDate']),
+                            'jobCode' => $empJob['jobCode']
+                        ];
+                    }
+                }
+            } else {
+                $this->logger->error('SuccessFactorApi: Unable to get job history for userID: ' . $userId . ' (' . $response->getStatusCode() . ')');
+            }
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ClientExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (RedirectionExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ServerExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        }
+
+        return $job;
+    }
+
+    /**
+     * List of inactive user with end date.
+     *
+     * @param ProgressBar|null $progressBar
+     *
+     * @return null|array return array of inactive userId.
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     */
+    public function getInactiveUsers(? ProgressBar $progressBar)
+    {
+        $users = null;
+        $client = HttpClient::create();
+        try {
+            $this->logger->info('SuccessFactorApi: Get not active users');
+            // Employees personal data
+            $response = $client->request(
+                'GET',
+                $this->baseUrl . 'EmpJob',
+                [
+                    'auth_basic' => [
+                        $this->token,
+                        $this->secret,
+                    ],
+                    'query' => [
+                        '$select' => 'userId,emplStatusNav/externalCode',
+                        '$filter' => "emplStatusNav/externalCode eq 'T'",
+                        '$expand' => 'emplStatusNav',
+                        '$orderby' => 'userId',
+                        'customPageSize' => self::ITEMS_PER_PAGES,
+                    ],
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ],
+                ]
+            );
+
+            // Request successful
+            if (200 === $response->getStatusCode()) {
+                $data = $response->toArray(false);
+                if (isset($data['d'])) {
+                    $this->logger->debug('SuccessFactorApi: Get not active users (' . count($data['d']['results']) . ')');
+                    while (false != $data) {
+                        if (null !== $progressBar) {
+                            $progressBar->advance(count($data['d']['results']));
+                        }
+                        // Transform response as array
+                        $users = $this->resultToUserStatusArray($data, $users);
+                        if (isset($data['d']['__next'])) {
+                            $data = $this->getNextResult($data['d']['__next']);
+                        } else {
+                            $data = false;
+                        }
+                    }
+                }
+            } else {
+                $this->logger->error('SuccessFactorApi: Unable to get jobs (' . $response->getStatusCode() . ')');
+            }
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ClientExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (RedirectionExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ServerExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        }
+        if (null !== $progressBar) {
+            $progressBar->finish();
+        }
+
+        return $users;
+    }
+
+    public function resultToUserStatusArray(array $data, ? array $users)
+    {
+        if (isset($data['d']['results'])) {
+            $this->logger->info('SuccessFactorApi: Transform empJob to job');
+            foreach ($data['d']['results'] as $employee) {
+                $users[(int) $employee['userId']] = [
+                    'userId' => (int) $employee['userId'],
+                    'active' => $employee['emplStatusNav']['externalCode']
+                ];
+            }
+        }
+
+        return $users;
+    }
+
+
+    /**
+     * Handle OData pagination of SuccessFactorApi.
+     *
+     * @param string $nextUrl The next url to load
+     *
+     * @return array|bool The result response or null
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     */
+    public function getNextResult($nextUrl)
+    {
+        $client = HttpClient::create();
+        try {
+            $this->logger->info('SuccessFactorApi: Get next page');
+            // Get next page of results
+            $response = $client->request(
+                'GET',
+                $nextUrl,
+                [
+                    'auth_basic' => [
+                        $this->token,
+                        $this->secret,
+                    ],
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ],
+                ]
+            );
+
+            // Request successful
+            if (200 === $response->getStatusCode()) {
+                $data = $response->toArray(false);
+                if (isset($data['d']['results']) && !empty($data['d']['results'])) {
+                    $this->logger->info('SuccessFactorApi: Get next page (' . count($data['d']['results']) . ') [' . $nextUrl . ']');
+
+                    return $data;
+                }
+
+                return false;
+            } else {
+                $this->logger->error('SuccessFactorApi: Unable to get next page (' . $response->getStatusCode() . ') [' . $nextUrl . ']');
+            }
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ClientExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (RedirectionExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        } catch (ServerExceptionInterface $e) {
+            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+        }
+
+        return false;
     }
 }

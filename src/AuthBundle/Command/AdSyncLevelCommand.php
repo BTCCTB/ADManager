@@ -28,7 +28,7 @@ class AdSyncLevelCommand extends Command
      * AdFixAccountCommand constructor.
      *
      * @param ActiveDirectory $activeDirectory
-     * @param ViewLevelSf     $viewLevelSf
+     * @param BisPersonView   $bisPersonView
      */
     public function __construct(ActiveDirectory $activeDirectory, BisPersonView $bisPersonView)
     {
@@ -60,7 +60,7 @@ class AdSyncLevelCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
@@ -158,5 +158,7 @@ class AdSyncLevelCommand extends Command
 
         $table->setRows($data);
         $table->render();
+
+        return null;
     }
 }

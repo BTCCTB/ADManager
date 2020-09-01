@@ -34,6 +34,10 @@ class SmsGatewayMe implements SmsInterface
      * @var ApiClient
      */
     private $apiClient;
+    /**
+     * @var string|null
+     */
+    private $from;
 
     /**
      * @inheritDoc
@@ -42,6 +46,7 @@ class SmsGatewayMe implements SmsInterface
     {
         $this->setDeviceId((int) $accountId);
         $this->setApiToken($token);
+        $this->from = $from;
     }
 
     /**

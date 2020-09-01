@@ -15,7 +15,11 @@ use Adldap\Models\User;
 use Adldap\Query\Collection;
 use Adldap\Schemas\ActiveDirectory as AdldapActiveDirectory;
 use App\Service\Account;
+use BisBundle\Entity\BisContractSf;
+use BisBundle\Entity\BisPersonSf;
 use BisBundle\Entity\BisPersonView;
+use BisBundle\Repository\BisPersonSfRepository;
+use BisBundle\Repository\BisPersonViewRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Debug\Exception\ContextErrorException;
 
@@ -109,7 +113,7 @@ class ActiveDirectory
      *
      * @param string $email His email
      *
-     * @return User The user.
+     * @return User|null The user.
      */
     public function getUser(string $email)
     {
@@ -420,7 +424,8 @@ class ActiveDirectory
         $logs = [];
 
         // Get BisPersonView Repository
-        $bisPersonView = $this->em->getRepository('BisBundle:BisPersonView');
+        /** @var BisPersonViewRepository $bisPersonView */
+        $bisPersonView = $this->em->getRepository(BisPersonView::class);
 
         // Get active users in GO4HR
         if (!empty($country)) {
@@ -429,9 +434,6 @@ class ActiveDirectory
             $bisUsers = $bisPersonView->findAllWithMail();
         }
 
-        /**
-         * @var BisPersonView[] $bisUsers
-         */
         foreach ($bisUsers as $bisUser) {
             $adAccount = $this->checkUserExistByUsername($bisUser->getDomainAccount());
 
@@ -494,18 +496,23 @@ class ActiveDirectory
         $logs = [];
 
         // Get BisPersonView Repository
-        $bisPersonView = $this->em->getRepository('BisBundle:BisPersonView');
-        $bisPersonSf = $this->em->getRepository('BisBundle:BisPersonSf');
-        $bisContractSf = $this->em->getRepository('BisBundle:BisContractSf');
+        /** @var BisPersonViewRepository $bisPersonView */
+        $bisPersonView = $this->em->getRepository(BisPersonView::class);
+        /** @var BisPersonSfRepository $bisPersonSf */
+        $bisPersonSf = $this->em->getRepository(BisPersonSf::class);
+        /** @var BisPersonSfRepository $bisContractSf */
+        $bisContractSf = $this->em->getRepository(BisContractSf::class);
 
         $adUsers = $this->getAllUsers('email', 'ASC');
         foreach ($adUsers as $adUser) {
             $bisUser = null;
             if (!empty($adUser->getEmail())) {
+                /** @var BisPersonView $bisUser */
                 $bisUser = $bisPersonView->getUserByEmail($adUser->getEmail());
             }
             if (empty($bisUser)) {
                 if ($adUser->getPhysicalDeliveryOfficeName() !== 'AD-ONLY') {
+                    /** @var BisPersonSf $userData */
                     $userData = $bisPersonSf->findOneBy(['perEmail' => $adUser->getEmail()]);
                     $log = [
                         'email' => $adUser->getEmail(),
@@ -517,6 +524,7 @@ class ActiveDirectory
                     ];
 
                     if (!empty($userData)) {
+                        /** @var BisContractSf $contractData */
                         $contractData = $bisContractSf->findOneBy(['conPerId' => $userData->getPerId()], ['conDateStart' => 'DESC']);
                         $log['log'] = 'No contract information';
                         if (!empty($contractData)) {
@@ -636,7 +644,9 @@ class ActiveDirectory
     public function updateAccount(string $email): ActiveDirectoryResponse
     {
         $adAccount = $this->checkUserExistByUsername($email);
-        $bisUser = $this->em->getRepository('BisBundle:BisPersonView')->getUserByEmail($email);
+        /** @var BisPersonViewRepository $bisPersonViewRepo */
+        $bisPersonViewRepo = $this->em->getRepository(BisPersonView::class);
+        $bisUser = $bisPersonViewRepo->getUserByEmail($email);
 
         if (false !== $adAccount && !empty($bisUser)) {
             // Set BIS data in Active Directory format
@@ -684,7 +694,9 @@ class ActiveDirectory
     public function renameAdUser(string $email)
     {
         $adAccount = $this->checkUserExistByUsername($email);
-        $bisUser = $this->em->getRepository('BisBundle:BisPersonView')->getUserByEmail($email);
+        /** @var BisPersonViewRepository $bisPersonViewRepo */
+        $bisPersonViewRepo = $this->em->getRepository(BisPersonView::class);
+        $bisUser = $bisPersonViewRepo->getUserByEmail($email);
 
         if (false !== $adAccount && !empty($bisUser)) {
             if ($bisUser->getCommonName() !== $adAccount->getCommonName()) {
@@ -755,9 +767,10 @@ class ActiveDirectory
      */
     public function initAccount(User $fieldUser)
     {
+        // Generate un new password
+        $password = ActiveDirectoryHelper::generatePassword();
+
         if (!empty($fieldUser->getEmail())) {
-            // Generate un new password
-            $password = ActiveDirectoryHelper::generatePassword();
             // Set the generated password
             $fieldUser->setPassword($password);
             $this->accountService->updateCredentials($fieldUser, $password);
@@ -929,40 +942,32 @@ class ActiveDirectory
             $user->setDn($dn);
 
             // Save the basic data of the user
-            try {
-                if ($user->save() && !empty($user->getEmail())) {
-                    // Generate a password
-                    $password = ActiveDirectoryHelper::generatePassword();
-                    $user->setPassword($password);
-                    $this->accountService->updateCredentials($user, $password);
-                    $this->accountService->setGeneratedPassword($user->getEmail(), $password);
-                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
-                    if (!$user->save()) {
-                        return new ActiveDirectoryResponse(
-                            "User '" . $data['login'] . "' unable to enable and set '" . $password . "' as default password",
-                            ActiveDirectoryResponseStatus::EXCEPTION,
-                            ActiveDirectoryResponseType::CREATE,
-                            ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
-                        );
-                    }
-
-                    $this->bisDir->synchronize($user, $password);
-
+            if ($user->save() && !empty($user->getEmail())) {
+                // Generate a password
+                $password = ActiveDirectoryHelper::generatePassword();
+                $user->setPassword($password);
+                $this->accountService->updateCredentials($user, $password);
+                $this->accountService->setGeneratedPassword($user->getEmail(), $password);
+                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                if (!$user->save()) {
                     return new ActiveDirectoryResponse(
-                        "User '" . $data['login'] . "' created with password '" . $password . "'",
-                        ActiveDirectoryResponseStatus::DONE,
+                        "User '" . $data['login'] . "' unable to enable and set '" . $password . "' as default password",
+                        ActiveDirectoryResponseStatus::EXCEPTION,
                         ActiveDirectoryResponseType::CREATE,
                         ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
                     );
                 }
-            } catch (ContextErrorException $e) {
+
+                $this->bisDir->synchronize($user, $password);
+
                 return new ActiveDirectoryResponse(
-                    "Unable to create this user '" . $data['login'] . "'",
-                    ActiveDirectoryResponseStatus::FAILED,
+                    "User '" . $data['login'] . "' created with password '" . $password . "'",
+                    ActiveDirectoryResponseStatus::DONE,
                     ActiveDirectoryResponseType::CREATE,
-                    ActiveDirectoryHelper::getDataAdUser($user, [['exception' => $e->getTraceAsString()]])
+                    ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
                 );
             }
+
             return new ActiveDirectoryResponse(
                 "Unable to create this user '" . $data['login'] . "'",
                 ActiveDirectoryResponseStatus::FAILED,
@@ -1351,43 +1356,34 @@ class ActiveDirectory
         $user = ActiveDirectoryHelper::bisPersonToAdUser($bisUser, $user, $organizationalUnit);
 
         // Save the basic data of the user
-        try {
-            if ($user->save() && !empty($user->getEmail())) {
-                // Generate a password
-                $password = ActiveDirectoryHelper::generatePassword();
-                $user->setPassword($password);
-                $this->accountService->updateCredentials($user, $password);
-                $this->accountService->setGeneratedPassword($user->getEmail(), $password);
-                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+        if ($user->save() && !empty($user->getEmail())) {
+            // Generate a password
+            $password = ActiveDirectoryHelper::generatePassword();
+            $user->setPassword($password);
+            $this->accountService->updateCredentials($user, $password);
+            $this->accountService->setGeneratedPassword($user->getEmail(), $password);
+            $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
 
-                if ($user->getCountry() !== 'BE') {
-                    $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
-                }
+            if ($user->getCountry() !== 'BE') {
+                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT | AccountControl::DONT_EXPIRE_PASSWORD);
+            }
 
-                if (!$user->save()) {
-                    return new ActiveDirectoryResponse(
-                        "User '" . $bisUser->getEmail() . "' unable to enable and set '" . $password . "' as default password",
-                        ActiveDirectoryResponseStatus::EXCEPTION,
-                        ActiveDirectoryResponseType::CREATE,
-                        ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
-                    );
-                }
-
-                $this->bisDir->synchronize($user, $password);
-
+            if (!$user->save()) {
                 return new ActiveDirectoryResponse(
-                    "User '" . $bisUser->getEmail() . "' created with password '" . $password . "'",
-                    ActiveDirectoryResponseStatus::DONE,
+                    "User '" . $bisUser->getEmail() . "' unable to enable and set '" . $password . "' as default password",
+                    ActiveDirectoryResponseStatus::EXCEPTION,
                     ActiveDirectoryResponseType::CREATE,
                     ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
                 );
             }
-        } catch (ContextErrorException $e) {
+
+            $this->bisDir->synchronize($user, $password);
+
             return new ActiveDirectoryResponse(
-                "Unable to create this user '" . $bisUser->getEmail() . "'",
-                ActiveDirectoryResponseStatus::FAILED,
+                "User '" . $bisUser->getEmail() . "' created with password '" . $password . "'",
+                ActiveDirectoryResponseStatus::DONE,
                 ActiveDirectoryResponseType::CREATE,
-                ActiveDirectoryHelper::getDataBisUser($bisUser, [['exception' => $e->getTraceAsString()]])
+                ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
             );
         }
 

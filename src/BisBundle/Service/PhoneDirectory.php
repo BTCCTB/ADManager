@@ -2,6 +2,8 @@
 
 namespace BisBundle\Service;
 
+use BisBundle\Entity\BisPhone;
+use BisBundle\Repository\BisPhoneRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -21,49 +23,68 @@ class PhoneDirectory
 
     public function __construct(EntityManager $em)
     {
-        $this->repository = $em->getRepository('BisBundle:BisPhone');
+        $this->repository = $em->getRepository(BisPhone::class);
     }
 
     public function getByCountry(string $country):  ? array
     {
-        return $this->repository->getPhoneDirectoryByCountry($country);
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getPhoneDirectoryByCountry($country);
     }
 
     public function getAll()
     {
-        return $this->repository->getPhoneDirectory();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getPhoneDirectory();
     }
 
     public function getField()
     {
-        return $this->repository->getFieldPhoneDirectory();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getFieldPhoneDirectory();
     }
 
     public function getHQ()
     {
-        return $this->repository->getHQPhoneDirectory();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getHQPhoneDirectory();
     }
 
     public function getResRep()
     {
-        return $this->repository->getResRepPhoneDirectory();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getResRepPhoneDirectory();
     }
 
     public function getIctHq()
     {
-        return $this->repository->getIctHqPhoneDirectory();
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getIctHqPhoneDirectory();
     }
 
     public function getContactByIds(array $arrayId)
     {
-        return $this->repository->getStaffByIds($arrayId);
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getStaffByIds($arrayId);
     }
 
     public function getContactById(int $id)
     {
-        return $this->repository->getStaffById($id);
+        /** @var BisPhoneRepository $bisPhoneRepo*/
+        $bisPhoneRepo = $this->repository;
+        return $bisPhoneRepo->getStaffById($id);
     }
 
+    /**
+     * @return array
+     */
     public function getRecipientOptions()
     {
         $recipients = [];

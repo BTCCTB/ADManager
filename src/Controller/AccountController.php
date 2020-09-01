@@ -94,7 +94,7 @@ class AccountController extends AbstractController
      *
      * @IsGranted("ROLE_ADMIN")
      *
-     * @param AccountRepository $accountRepository
+     * @param ActiveDirectory $activeDirectory
      *
      * @return Response
      */
@@ -116,6 +116,7 @@ class AccountController extends AbstractController
      */
     public function changeAction(Request $request)
     {
+        /** @var \App\Entity\User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $form = $this->createForm(ChangePasswordType::class);
@@ -206,10 +207,11 @@ class AccountController extends AbstractController
      *
      * @IsGranted("ROLE_ADMIN")
      *
-     * @param integer                     $employeeID                  The employee ID     *
-     * @param AccountRepository           $accountRepository
+     * @param integer           $employeeID The employee ID     *
+     * @param AccountRepository $accountRepository
      *
-     * @param ActiveDirectoryNotification $activeDirectoryNotification
+     * @param BisPersonView     $bisPersonView
+     * @param SmsGatewayMe      $smsGatewayMe
      *
      * @return RedirectResponse
      *
@@ -451,7 +453,7 @@ class AccountController extends AbstractController
                 $user = $bisPersonView->createPerson($users[0]);
                 if (null !== $user) {
                     $ad = $activeDirectory->forceSync($user);
-                    if(is_a($ad, User::class)){
+                    if (is_a($ad, User::class)) {
                         $bisDir->synchronize($ad);
                         $ldap = $bisDir->getUser($ad->getEmail());
                         $account = $entityManager->find(Account::class, $ad->getEmployeeId());
@@ -479,7 +481,7 @@ class AccountController extends AbstractController
                             $entityManager->remove($userAccount);
                             $entityManager->flush();
                         }
-                    }else{
+                    } else {
                         $this->addFlash('danger', 'Unable to create a AD account for this user !');
                         $this->addFlash('warning', 'Check GO4HR required data !');
                     }

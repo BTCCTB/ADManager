@@ -50,7 +50,7 @@ class SuccessFactorApiHelper
         return null;
     }
 
-    public static function jobTypeFromJobCode(? string $jobCode, ? string $jobType)
+    public static function jobTypeFromJobCode(? string $jobCode, ? string $jobType = null)
     {
         $type = $jobType;
         if (empty($jobType)) {
@@ -72,5 +72,24 @@ class SuccessFactorApiHelper
     public static function positionFromCode(string $positionCode) :  ? int
     {
         return (int) filter_var($positionCode, FILTER_SANITIZE_NUMBER_INT);
+    }
+
+    /**
+     * Convert a SuccessFactor Date to formated date  object.
+     *
+     * @param string|null $sfDate SF Date
+     * @param string      $format Return date format
+     *
+     * @return string|null
+     */
+    public static function SFDateToDateFormat(? string $sfDate, string $format = 'Y-m-d') :  ? string
+    {
+        $datetime = self::SFDateToDateTime($sfDate);
+
+        if (null !== $datetime) {
+            return $datetime->format($format);
+        }
+
+        return null;
     }
 }

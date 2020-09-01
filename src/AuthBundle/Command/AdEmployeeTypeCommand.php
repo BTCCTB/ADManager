@@ -59,7 +59,7 @@ class AdEmployeeTypeCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return void null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
@@ -127,5 +127,7 @@ class AdEmployeeTypeCommand extends Command
 
         $table->setRows($data);
         $table->render();
+
+        return null;
     }
 }
