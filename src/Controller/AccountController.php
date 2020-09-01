@@ -453,7 +453,7 @@ class AccountController extends AbstractController
                 $user = $bisPersonView->createPerson($users[0]);
                 if (null !== $user) {
                     $ad = $activeDirectory->forceSync($user);
-                    if(is_a($ad, User::class)){
+                    if (is_a($ad, User::class)) {
                         $bisDir->synchronize($ad);
                         $ldap = $bisDir->getUser($ad->getEmail());
                         $account = $entityManager->find(Account::class, $ad->getEmployeeId());
@@ -481,7 +481,7 @@ class AccountController extends AbstractController
                             $entityManager->remove($userAccount);
                             $entityManager->flush();
                         }
-                    }else{
+                    } else {
                         $this->addFlash('danger', 'Unable to create a AD account for this user !');
                         $this->addFlash('warning', 'Check GO4HR required data !');
                     }

@@ -2,6 +2,7 @@
 
 namespace AuthBundle\Service;
 
+use Illuminate\Contracts\Queue\Job;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\HttpClient\HttpClient;
@@ -305,7 +306,7 @@ class SuccessFactorApi
 
     public function getUserMail($userId, $mailType = 3515)
     {
-        $phone = null;
+        $email = null;
         $client = HttpClient::create();
         try {
             $this->logger->info('SuccessFactorApi: Get emails');
@@ -365,7 +366,7 @@ class SuccessFactorApi
         $job = null;
         $client = HttpClient::create();
         try {
-            $this->logger->info('SuccessFactorApi: Get job history for userID: '.$userId);
+            $this->logger->info('SuccessFactorApi: Get job history for userID: ' . $userId);
             // Employees personal data
             $response = $client->request(
                 'GET',
@@ -377,7 +378,7 @@ class SuccessFactorApi
                     ],
                     'query' => [
                         '$select' => 'userId,endDate,positionEntryDate,jobCode',
-                        '$filter' => 'userId eq ' . $userId." and endDate lt datetimeoffset'".date("Y-m-d")."T00:00:00Z'",
+                        '$filter' => 'userId eq ' . $userId . " and endDate lt datetimeoffset'" . date("Y-m-d") . "T00:00:00Z'",
                         '$expand' => 'eventReasonNav',
                         'fromDate' => '1990-01-01',
                         '$orderby' => 'endDate',
@@ -405,7 +406,7 @@ class SuccessFactorApi
                     }
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get job history for userID: '.$userId.' (' . $response->getStatusCode() . ')');
+                $this->logger->error('SuccessFactorApi: Unable to get job history for userID: ' . $userId . ' (' . $response->getStatusCode() . ')');
             }
         } catch (TransportExceptionInterface $e) {
             $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
@@ -423,12 +424,12 @@ class SuccessFactorApi
     /**
      * List of inactive user with end date.
      *
-     * @param $userId The user SFID
+     * @param ProgressBar|null $progressBar
      *
      * @return null|array return array of inactive userId.
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      */
-    public function getInactiveUsers( ? ProgressBar $progressBar)
+    public function getInactiveUsers(? ProgressBar $progressBar)
     {
         $users = null;
         $client = HttpClient::create();
@@ -494,15 +495,7 @@ class SuccessFactorApi
         return $users;
     }
 
-    /**
-     * Handle SuccessFactorApi [EmplJob] response to populate a array.
-     *
-     * @param array      $data The response as array
-     * @param array|null $users The array to populate
-     *
-     * @return Job[]|null Assoc array user [key] / job object [value] or null
-     */
-    public function resultToUserStatusArray(array $data,  ? array $users)
+    public function resultToUserStatusArray(array $data, ? array $users)
     {
         if (isset($data['d']['results'])) {
             $this->logger->info('SuccessFactorApi: Transform empJob to job');
@@ -573,5 +566,4 @@ class SuccessFactorApi
 
         return false;
     }
-
 }

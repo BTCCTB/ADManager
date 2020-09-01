@@ -57,19 +57,21 @@ class SfDisableEmployeeCommand extends Command
         $disableUsers = $this->sfApi->getInactiveUsers($progressBar);
         $io->text(sprintf('%d inactive employee found in SF !', count($disableUsers)));
         $action = 0;
-        foreach($disableUsers as $id=>$data){
-            if(is_int($id) && in_array($id, $users)){
+        foreach ($disableUsers as $id => $data) {
+            if (is_int($id) && in_array($id, $users)) {
                 $action++;
                 $eventData = $this->sfApi->getUserJobHistory($id);
-                $io->comment(sprintf("Employee %d is not active in SF (%s) => End date: %s", $id, $data['active'],$eventData['endDate']));
+                $io->comment(sprintf("Employee %d is not active in SF (%s) => End date: %s", $id, $data['active'], $eventData['endDate']));
                 $this->bisPersonView->disbaleUserAt($id, $eventData['endDate']);
             }
         }
-        if($action === 0 ){
+
+        if ($action === 0) {
             $io->text('All your active employee found in BIS are OK.');
-        }else{
-            $io->warning(sprintf('%d active employee found in BIS are inactive in SF.',$action));
+        } else {
+            $io->warning(sprintf('%d active employee found in BIS are inactive in SF.', $action));
         }
+
         return 0;
     }
 }

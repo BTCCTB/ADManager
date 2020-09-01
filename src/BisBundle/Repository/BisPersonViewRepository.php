@@ -275,8 +275,8 @@ class BisPersonViewRepository extends EntityRepository
             ->orderBy('bpv.perId', 'ASC')
             ->getQuery();
 
-        foreach($query->getResult() as $user){
-           $users[] = $user['perId'];
+        foreach ($query->getResult() as $user) {
+            $users[] = $user['perId'];
         }
 
         return $users;

@@ -82,11 +82,11 @@ class SuccessFactorApiHelper
      *
      * @return string|null
      */
-    public static function SFDateToDateFormat(? string $sfDate, $format= 'Y-m-d') :  ? string
+    public static function SFDateToDateFormat(? string $sfDate, string $format = 'Y-m-d') :  ? string
     {
         $datetime = self::SFDateToDateTime($sfDate);
 
-        if(null !== $datetime){
+        if (null !== $datetime) {
             return $datetime->format($format);
         }
 

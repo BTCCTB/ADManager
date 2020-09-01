@@ -272,7 +272,7 @@ class BisPersonView
         /** @var BisContractSf[] $contracts */
         $contracts = $query->getResult();
 
-        foreach ($contracts as $contract){
+        foreach ($contracts as $contract) {
             $contract
                 ->setConDateStop(new \DateTime($endDate))
                 ->setConActive(0)
@@ -280,6 +280,5 @@ class BisPersonView
             $this->em->persist($contract);
             $this->em->flush();
         }
-
     }
 }
