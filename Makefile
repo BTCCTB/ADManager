@@ -140,7 +140,7 @@ test-all: phpunit.xml ## Launch all tests
 	./bin/phpunit --stop-on-failure
 
 ## —— Coding standards ✨ ——————————————————————————————————————————————————————
-cs: stan codesniffer mess ## Launch check style and static analysis
+cs: codesniffer mess stan ## Launch check style and static analysis
 
 codesniffer: ## Run php_codesniffer only
 	./vendor/bin/phpcs --standard=checkstyle.xml -n -p src/

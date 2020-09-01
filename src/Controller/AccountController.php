@@ -453,32 +453,37 @@ class AccountController extends AbstractController
                 $user = $bisPersonView->createPerson($users[0]);
                 if (null !== $user) {
                     $ad = $activeDirectory->forceSync($user);
-                    $bisDir->synchronize($ad);
-                    $ldap = $bisDir->getUser($ad->getEmail());
-                    $account = $entityManager->find(Account::class, $ad->getEmployeeId());
-                    if (null === $account) {
-                        $account = new Account();
-                        $account->setEmployeeId($ad->getEmployeeId());
-                    }
-                    $account
-                        ->setEmail($ad->getEmail())
-                        ->setEmailContact($ad->getEmail())
-                        ->setAccountName($ad->getAccountName())
-                        ->setUserPrincipalName($ad->getUserPrincipalName())
-                        ->setLastname($ad->getLastName())
-                        ->setFirstname($ad->getFirstName())
-                        ->setActive(1)
-                        ->setToken(base64_encode($ad->getEmail()))
-                    ;
+                    if (is_a($ad, User::class)) {
+                        $bisDir->synchronize($ad);
+                        $ldap = $bisDir->getUser($ad->getEmail());
+                        $account = $entityManager->find(Account::class, $ad->getEmployeeId());
+                        if (null === $account) {
+                            $account = new Account();
+                            $account->setEmployeeId($ad->getEmployeeId());
+                        }
+                        $account
+                            ->setEmail($ad->getEmail())
+                            ->setEmailContact($ad->getEmail())
+                            ->setAccountName($ad->getAccountName())
+                            ->setUserPrincipalName($ad->getUserPrincipalName())
+                            ->setLastname($ad->getLastName())
+                            ->setFirstname($ad->getFirstName())
+                            ->setActive(1)
+                            ->setToken(base64_encode($ad->getEmail()))
+                        ;
 
-                    $entityManager->persist($account);
-                    $entityManager->flush();
-
-                    $userRepo = $entityManager->getRepository(\App\Entity\User::class);
-                    $userAccount = $userRepo->findOneBy(['email' => $ad->getEmail()]);
-                    if (null !== $userAccount) {
-                        $entityManager->remove($userAccount);
+                        $entityManager->persist($account);
                         $entityManager->flush();
+
+                        $userRepo = $entityManager->getRepository(\App\Entity\User::class);
+                        $userAccount = $userRepo->findOneBy(['email' => $ad->getEmail()]);
+                        if (null !== $userAccount) {
+                            $entityManager->remove($userAccount);
+                            $entityManager->flush();
+                        }
+                    } else {
+                        $this->addFlash('danger', 'Unable to create a AD account for this user !');
+                        $this->addFlash('warning', 'Check GO4HR required data !');
                     }
                 }
             }

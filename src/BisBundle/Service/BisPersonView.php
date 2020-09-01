@@ -250,4 +250,35 @@ class BisPersonView
 
         return $bisPersonView;
     }
+
+    /**
+     * Disable user with specific end date
+     * @param int $id User id to deactivate
+     * @param string $endDate The end date (format: YYYY-MM-DD)
+     */
+    public function disbaleUserAt(int $id, string $endDate)
+    {
+        $repository = $this->em->getRepository(BisContractSf::class);
+        $query = $repository
+            ->createQueryBuilder('con')
+            ->where('con.conPerId = :perId')
+            ->andWhere('con.conActive = 1')
+            ->andWhere('con.conDateStart < :today')
+            ->setParameter('perId', $id)
+            ->setParameter('today', date('Y-m-d'))
+            ->getQuery()
+        ;
+
+        /** @var BisContractSf[] $contracts */
+        $contracts = $query->getResult();
+
+        foreach ($contracts as $contract) {
+            $contract
+                ->setConDateStop(new \DateTime($endDate))
+                ->setConActive(0)
+            ;
+            $this->em->persist($contract);
+            $this->em->flush();
+        }
+    }
 }
