@@ -1,6 +1,6 @@
 # PasswordManager
 
-![Full CI process for Symfony](https://github.com/Enabel/Password/workflows/Full%20CI%20process%20for%20Symfony/badge.svg)
+![Build](https://github.com/Enabel/Password/workflows/Build/badge.svg)
 
 A php application for Active Directory Manipulation.
 
