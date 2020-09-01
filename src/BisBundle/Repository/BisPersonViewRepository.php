@@ -266,14 +266,20 @@ class BisPersonViewRepository extends EntityRepository
 
     public function getActiveUserBySfId()
     {
-        $activeUsers = [];
+        $users = [];
+        $repository = $this->_em->getRepository(BisPersonView::class);
+        $query = $repository->createQueryBuilder('bpv')
+            ->select('bpv.perId')
+            ->where('bpv.perActive = :perActive')
+            ->setParameter('perActive', 1)
+            ->orderBy('bpv.perId', 'ASC')
+            ->getQuery();
 
-        foreach ($this->findAll() as $bisPersonView) {
-            /* @var bisPersonView $bisPersonView */
-            $activeUsers[] = $bisPersonView->getEmployeeId();
+        foreach($query->getResult() as $user){
+           $users[] = $user['perId'];
         }
 
-        return $activeUsers;
+        return $users;
     }
 
     public function getUserMobileByEmail()

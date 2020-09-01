@@ -73,4 +73,23 @@ class SuccessFactorApiHelper
     {
         return (int) filter_var($positionCode, FILTER_SANITIZE_NUMBER_INT);
     }
+
+    /**
+     * Convert a SuccessFactor Date to formated date  object.
+     *
+     * @param string|null $sfDate SF Date
+     * @param string      $format Return date format
+     *
+     * @return string|null
+     */
+    public static function SFDateToDateFormat(? string $sfDate, $format= 'Y-m-d') :  ? string
+    {
+        $datetime = self::SFDateToDateTime($sfDate);
+
+        if(null !== $datetime){
+            return $datetime->format($format);
+        }
+
+        return null;
+    }
 }
