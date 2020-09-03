@@ -612,8 +612,8 @@ class BisPersonView
 
     public function getPreferredLanguage()
     {
-        //Add a exception for IT user in English
-        $userIDs = [38248, 38038, 37847, 38229];
+        //Add a exception for user in English (Some IT+ Patrick Rich)
+        $userIDs = [38248, 38038, 37847, 38229, 50734];
         if (in_array($this->getId(), $userIDs, false)) {
             return 'en-us';
         }
