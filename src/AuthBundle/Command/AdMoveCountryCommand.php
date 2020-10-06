@@ -44,24 +44,24 @@ class AdMoveCountryCommand extends Command
         $migrated = 0;
         $migratedY = 0;
         $migratedN = 0;
-        foreach($adUsers as $adUser){
+        foreach ($adUsers as $adUser) {
             $spinner->spin();
-            if($adUser->getFirstAttribute('physicalDeliveryOfficeName') == 'AD-ONLY'){
+            if ($adUser->getFirstAttribute('physicalDeliveryOfficeName') == 'AD-ONLY') {
                 $migrated++;
                 $adUser->setAttribute('importedFrom', 'AD-ONLY');
-                if($adUser->save()){
+                if ($adUser->save()) {
                     $migratedY++;
-                }else{
+                } else {
                     $migratedN++;
-                    $io->caution($adUser->getDisplayName().' attribute data not migrated !');
+                    $io->caution($adUser->getDisplayName() . ' attribute data not migrated !');
                 }
             }
         }
         $spinner->end();
-        $io->note("User with attribute data to migrate: ".$migrated);
-        $io->success("User successfully migrated: ".$migratedY);
-        if($migratedN > 0){
-            $io->success("User not migrated: ".$migratedN);
+        $io->note("User with attribute data to migrate: " . $migrated);
+        $io->success("User successfully migrated: " . $migratedY);
+        if ($migratedN > 0) {
+            $io->success("User not migrated: " . $migratedN);
         }
 
         return 0;

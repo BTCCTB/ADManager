@@ -551,7 +551,7 @@ class BisPersonView
 
             case 'physicalDeliveryOfficeName':
                 if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-                    return $this->getCountryWorkplace()->getCouName() . ' ['.$this->getCountryWorkplace()->getCouIsocode2letters().']';
+                    return $this->getCountryWorkplace()->getCouName() . ' [' . $this->getCountryWorkplace()->getCouIsocode2letters() . ']';
                 }
 
                 return null;
