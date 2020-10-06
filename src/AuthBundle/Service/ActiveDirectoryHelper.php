@@ -57,9 +57,9 @@ class ActiveDirectoryHelper
         if (!empty($bisPersonView->getManagerEmail())) {
             $user->setPostOfficeBox($bisPersonView->getManagerEmail());
         }
-//        $user->setCountry($bisPersonView->getCountry());
         $user->setAttribute('c', $bisPersonView->getAttribute('c'));
         $user->setAttribute('co', $bisPersonView->getAttribute('co'));
+        $user->setAttribute('physicalDeliveryOfficeName', $bisPersonView->getAttribute('physicalDeliveryOfficeName'));
         if (!empty($bisPersonView->getInfo())) {
             $user->setInfo($bisPersonView->getInfo());
         }
@@ -393,6 +393,15 @@ class ActiveDirectoryHelper
             $user->setAttribute('co', $bisPersonView->getAttribute('co'));
         }
 
+        if ($bisPersonView->getAttribute('physicalDeliveryOfficeName') !== $user->getFirstAttribute('physicalDeliveryOfficeName')) {
+            $diffData['physicalDeliveryOfficeName'] = [
+                'attribute' => 'physicalDeliveryOfficeName',
+                'value' => $bisPersonView->getAttribute('physicalDeliveryOfficeName'),
+                'original' => $user->getFirstAttribute('physicalDeliveryOfficeName'),
+            ];
+            $user->setAttribute('physicalDeliveryOfficeName', $bisPersonView->getAttribute('physicalDeliveryOfficeName'));
+        }
+
         if ($bisPersonView->getInfo() !== $user->getInfo()) {
             $diffData['info'] = [
                 'attribute' => 'info',
@@ -596,6 +605,7 @@ class ActiveDirectoryHelper
             'company',
             'c',
             'co',
+            'physicalDeliveryOfficeName',
             'info',
             'title',
             'description',

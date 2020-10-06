@@ -464,7 +464,7 @@ class ActiveDirectory
                 $bisUser = $bisPersonView->getUserByEmail($adUser->getEmail());
             }
             if (empty($bisUser)) {
-                if ($adUser->getPhysicalDeliveryOfficeName() !== 'AD-ONLY') {
+                if ($adUser->getFirstAttribute('importedFrom') !== 'AD-ONLY') {
                     $accountsToDisable[] = $adUser;
                 }
             }
@@ -922,7 +922,8 @@ class ActiveDirectory
             $user->setCompany($data['company']);
             $user->setAttribute('c', 'BE');
             $user->setAttribute('co', 'Belgium');
-            $user->setAttribute('physicalDeliveryOfficeName', 'AD-ONLY');
+            $user->setAttribute('physicalDeliveryOfficeName', 'Belgium [BE]');
+            $user->setAttribute('importedFrom', 'AD-ONLY');
             $user->setAccountExpiry($data['expirationDate']->getTimestamp());
 
             if (!empty($data['jobTitle'])) {
