@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00c37d6d79e9611df88fdd2764352497",
+    "content-hash": "d7c586c48850cc02e9b0f1f31b5b9f2a",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -64,6 +64,209 @@
                 "windows"
             ],
             "time": "2019-09-03T15:41:15+00:00"
+        },
+        {
+            "name": "alecrabbit/php-cli-tools",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alecrabbit/php-cli-tools.git",
+                "reference": "962a6c4396a18081efe08561dd76bacdd4e3163b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alecrabbit/php-cli-tools/zipball/962a6c4396a18081efe08561dd76bacdd4e3163b",
+                "reference": "962a6c4396a18081efe08561dd76bacdd4e3163b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "alecrabbit/php-helpers": "^0.7 || ^0.8 ",
+                "nunomaduro/collision": "^3.0",
+                "phpunit/phpunit": "^8.0",
+                "symfony/var-dumper": "^4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AlecRabbit\\Cli\\": "src\\Cli"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "CLI tools for php.",
+            "keywords": [
+                "ansi",
+                "cli",
+                "console",
+                "control",
+                "height",
+                "terminal",
+                "title",
+                "width"
+            ],
+            "time": "2019-11-01T12:16:39+00:00"
+        },
+        {
+            "name": "alecrabbit/php-console-colour",
+            "version": "0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alecrabbit/php-console-colour.git",
+                "reference": "faa66b9e9622b8d7613fe7433b28c8e7bbd7e9f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alecrabbit/php-console-colour/zipball/faa66b9e9622b8d7613fe7433b28c8e7bbd7e9f6",
+                "reference": "faa66b9e9622b8d7613fe7433b28c8e7bbd7e9f6",
+                "shasum": ""
+            },
+            "require": {
+                "alecrabbit/php-cli-tools": "^0.6",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "alecrabbit/php-helpers": "^0.7 || ^0.8",
+                "nunomaduro/collision": "^3.0",
+                "phpunit/phpunit": "^8.0",
+                "symfony/var-dumper": "^4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AlecRabbit\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Helps to do colored console output.",
+            "keywords": [
+                "ansi",
+                "color",
+                "colour",
+                "console",
+                "height",
+                "output",
+                "terminal",
+                "width"
+            ],
+            "time": "2019-11-01T12:24:31+00:00"
+        },
+        {
+            "name": "alecrabbit/php-console-spinner",
+            "version": "0.54.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alecrabbit/php-console-spinner.git",
+                "reference": "91481994966b4225f942b58eb9f1d2e384a5dc59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alecrabbit/php-console-spinner/zipball/91481994966b4225f942b58eb9f1d2e384a5dc59",
+                "reference": "91481994966b4225f942b58eb9f1d2e384a5dc59",
+                "shasum": ""
+            },
+            "require": {
+                "alecrabbit/php-console-colour": "^0.10",
+                "alecrabbit/php-wcwidth": ">=0",
+                "php": ">=7.2",
+                "symfony/console": "^4.3"
+            },
+            "require-dev": {
+                "alecrabbit/php-helpers": "^0.8.1",
+                "fzaninotto/faker": "^1.8",
+                "nunomaduro/collision": "^3.0",
+                "phpunit/phpunit": "^8.0",
+                "react/http": "^0.8",
+                "symfony/var-dumper": "^4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AlecRabbit\\Spinner\\": "src\\Spinner"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Colorful highly configurable spinner for php cli applications",
+            "keywords": [
+                "256color",
+                "8bit",
+                "Arrow",
+                "ansi",
+                "bash",
+                "cli",
+                "clock",
+                "color",
+                "colorful",
+                "console",
+                "moon",
+                "php",
+                "pretty",
+                "scripts",
+                "shell",
+                "snake",
+                "spinner"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/alecrabbit",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-05-24T12:54:25+00:00"
+        },
+        {
+            "name": "alecrabbit/php-wcwidth",
+            "version": "0.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alecrabbit/php-wcwidth.git",
+                "reference": "98d1fbfad22440312ee73b4640470ca3bc6f885e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alecrabbit/php-wcwidth/zipball/98d1fbfad22440312ee73b4640470ca3bc6f885e",
+                "reference": "98d1fbfad22440312ee73b4640470ca3bc6f885e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^3.0",
+                "phpunit/phpunit": "^8.0",
+                "symfony/var-dumper": "^4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AlecRabbit\\Helpers\\": "src\\Helpers"
+                },
+                "files": [
+                    "src\\bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Calculate width of unicode strings rendered to a terminal",
+            "time": "2020-05-17T13:10:30+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -9527,12 +9730,12 @@
             "version": "v6.18.34",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tightenco/collect.git",
+                "url": "https://github.com/tighten/collect.git",
                 "reference": "624b86cde21f8d9ba14ec0e4974ef0aca3922a1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/collect/zipball/624b86cde21f8d9ba14ec0e4974ef0aca3922a1c",
+                "url": "https://api.github.com/repos/tighten/collect/zipball/624b86cde21f8d9ba14ec0e4974ef0aca3922a1c",
                 "reference": "624b86cde21f8d9ba14ec0e4974ef0aca3922a1c",
                 "shasum": ""
             },

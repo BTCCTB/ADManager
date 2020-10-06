@@ -2,6 +2,18 @@
     "adldap2/adldap2": {
         "version": "v8.1.2"
     },
+    "alecrabbit/php-cli-tools": {
+        "version": "0.6.0"
+    },
+    "alecrabbit/php-console-colour": {
+        "version": "0.10.0"
+    },
+    "alecrabbit/php-console-spinner": {
+        "version": "0.54.0"
+    },
+    "alecrabbit/php-wcwidth": {
+        "version": "0.0.8"
+    },
     "amphp/amp": {
         "version": "v2.4.1"
     },
