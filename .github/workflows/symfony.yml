@@ -85,11 +85,16 @@ jobs:
       - name: Run functionnal and unit tests
         run: make test
 
+  matrix-notification:
+    steps:
       - name: Slack status
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,took # selectable (default: repo,message)
+          username: Github Actions
+          icon_emoji: ":octocat:"
+          fields: all
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
         if: always() # Pick up events even if the job fails or is canceled.
