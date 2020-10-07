@@ -86,7 +86,7 @@ jobs:
         run: make test
 
       - name: Slack status
-        uses: 8398a7/actions-slack@v3
+        uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,took # selectable (default: repo,message)
