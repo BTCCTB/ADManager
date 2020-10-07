@@ -86,6 +86,7 @@ jobs:
         run: make test
 
   matrix-notification:
+    runs-on: ubuntu-18.04
     steps:
       - name: Slack status
         uses: 8398a7/action-slack@v3
