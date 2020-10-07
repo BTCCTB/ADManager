@@ -90,15 +90,14 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: custom
-          author_name: Password - Tests (PHP ${{ matrix.php-versions }})
-          username: Github Actions
-          fields: repo,message,author,took,commit,eventName
+          fields: repo,message,author,took,commit,eventName,job
           custom_payload: |
             {
                 username: 'Github Actions',
                 attachments: [{
                   color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                  text: `${process.env.AS_MESSAGE} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
+                  title: 'Password - Tests (PHP ${{ matrix.php-versions }})',
+                  text: `${process.env.AS_MESSAGE} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}\nBy ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
                 }]
               }
         env:
