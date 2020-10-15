@@ -217,14 +217,6 @@ Deploy on stage no-downtime deployment with Ansistrano
 $ make depoy-stage
 ```
 
-## Contributing
-
-Thank you for considering contributing to the PasswordManager project! Please review an abide the [contribution guide](docs/CONTRIBUTING.md).
-
-## Code of Conduct
-
-In order to ensure that the PasswordManager community is welcoming to all, please review and abide by the [Code of Conduct](docs/CODE_OF_CONDUCT.md).
-
 ## License
 
 The PasswordManager project is open-sourced software licensed under the [GPL-2.0 License](LICENSE.md).
