@@ -928,6 +928,7 @@ class ActiveDirectory
 
             if (!empty($data['jobTitle'])) {
                 $user->setTitle($data['jobTitle']);
+                $user->setDescription($data['jobTitle']);
             }
             $user->setUserPrincipalName($data['login']);
             $user->setEmail($data['login']);

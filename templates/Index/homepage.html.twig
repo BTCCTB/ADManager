@@ -23,28 +23,44 @@
                                 <br/><small>{{ 'my.account.label.password.recommendation'|trans }}</small>
                             </div>
                         </div>
-                        <div class="col-md-12 col-lg-10 col-xl-8">
-                            <div class="card">
-                                <h4 class="card-header">
-                                    <i class="flag-icon flag-icon-{{ country|lower }}" title="{{ user.country }}" alt="{{ user.country }}"></i> {{ user.firstname }} {{ user.lastname }}
-                                </h4>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ user.description }}</h5>
-                                    <p class="card-text">
-                                        <i class="fas fa-envelope" aria-hidden="true"></i> {{ user.userprincipalname }}
-                                        {% if user.mobileNumber is not empty %}
-                                            <br>
-                                            <i class="fas fa-mobile" aria-hidden="true"></i> {{ user.mobileNumber }}
-                                        {% elseif user.telephoneNumber is not empty %}
-                                            <br>
-                                            <i class="fas fa-phone" aria-hidden="true"></i> {{ user.telephoneNumber }}
-                                        {% endif %}
-                                    </p>
-                                    <div class="links" aria-label="Actions">
-                                        <a href="{{ url('account_change_password') }}" class="btn btn-warning"><i class="fas fa-key"></i> {{ 'btn.change.password.label'|trans }}</a>
-                                        <a href="{{ url('contact_own_country') }}" class="btn btn-info"><i class="fas fa-phone"></i> {{ 'btn.contact.own.country.label'|trans }} <i class="flag-icon flag-icon-{{ app.user.username|userCountry|lower }}"></i></a>
-                                        <a href="https://intranet.enabel.be" class="btn btn-primary" target="_blank"><i class="fas fa-info-circle"></i> {{ 'btn.intranet.label'|trans }}</a>
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <div class="card mb-3">
+
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ qrcode }}" alt="Add this to your signature" class="img-responsive" width="100%" style="max-width: 250px">
                                     </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body text-left">
+                                            <h4 class="card-title">
+                                                {{ user.firstname }} {{ user.lastname }}
+                                            </h4>
+                                            <h5 class="card-title"><i>{{ user.description }}</i></h5>
+                                            <hr>
+                                            <p class="card-text">
+                                                <i class="flag-icon flag-icon-{{ country|lower }}" title="{{ user.country }}" alt="{{ user.country }}"></i> {{ user.physicalDeliveryOfficeName }}
+                                                <br>
+                                                <i class="fas fa-building"></i> {{ user.company|default('N.C.') }}
+                                                <br>
+                                                <i class="fas fa-sitemap"></i> {{ user.department|default('N.C.') }}
+                                            </p>
+                                            <p class="card-text">
+                                                <i class="fas fa-envelope" aria-hidden="true"></i> {{ user.userprincipalname }}
+                                                {% if user.mobileNumber is not empty %}
+                                                    <br>
+                                                    <i class="fas fa-mobile" aria-hidden="true"></i> {{ user.mobileNumber }}
+                                                {% elseif user.telephoneNumber is not empty %}
+                                                    <br>
+                                                    <i class="fas fa-phone" aria-hidden="true"></i> {{ user.telephoneNumber }}
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer links" aria-label="Actions">
+                                    <a href="{{ url('account_change_password') }}" class="btn btn-warning"><i class="fas fa-key"></i> {{ 'btn.change.password.label'|trans }}</a>
+                                    <a href="{{ url('contact_own_country') }}" class="btn btn-info"><i class="fas fa-phone"></i> {{ 'btn.contact.own.country.label'|trans }} <i class="flag-icon flag-icon-{{ app.user.username|userCountry|lower }}"></i></a>
+                                    <a href="https://intranet.enabel.be" class="btn btn-primary" target="_blank"><i class="fas fa-info-circle"></i> {{ 'btn.intranet.label'|trans }}</a>
                                 </div>
                             </div>
                         </div>

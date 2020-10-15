@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Service\QrCodeUser;
 use AuthBundle\Service\ActiveDirectory;
 use BisBundle\Service\BisPersonView;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\QrCode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,13 +43,14 @@ class IndexController extends AbstractController
      *
      * @throws \Exception
      */
-    public function myApps(BisPersonView $bisPersonView): Response
+    public function myApps(BisPersonView $bisPersonView, QrCodeUser $qrCodeUser): Response
     {
         $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
         $now = new \DateTime('now');
         $passwordLastSet = new \DateTime();
         $passwordLastSet->setTimestamp($user->getPasswordLastSetTimestamp());
         $passwordAges = $passwordLastSet->diff($now)->format('%a');
+        $qrCodeData = $qrCodeUser->generateBase64($user);
 
         return $this->render(
             'Index/homepage.html.twig',
@@ -56,6 +60,7 @@ class IndexController extends AbstractController
                 'country' => $user->getFirstAttribute('c'),
                 'starters' => $bisPersonView->getStarters(),
                 'finishers' => $bisPersonView->getFinishers(),
+                'qrcode' => $qrCodeData,
             ]
         );
     }
