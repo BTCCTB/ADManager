@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use AuthBundle\Service\ActiveDirectory;
+use BisBundle\Entity\BisCountry;
+use BisBundle\Repository\BisCountryRepository;
 use BisBundle\Service\BisPersonView;
 use BisBundle\Service\PhoneDirectory;
 use BisBundle\Service\Staff;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -57,6 +61,9 @@ class ContactController extends AbstractController
     public function myCountry(BisPersonView $bisPersonView)
     {
         $user = $bisPersonView->getUser($this->getUser()->getEmail());
+        if ($user === null) {
+            return $this->redirectToRoute('contact_hq');
+        }
         $contacts = $this->phoneDirectory->getByCountry($user->getCountry());
 
         return $this->render(
