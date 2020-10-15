@@ -91,8 +91,8 @@ class BisDirHelper
         if (!empty($bisPersonView->getInitials())) {
             $entry->setAttribute('initials', $bisPersonView->getInitials());
         }
-        if (!empty($bisPersonView->getDescription())) {
-            $entry->setAttribute('title', $bisPersonView->getDescription());
+        if (!empty($bisPersonView->getTitle())) {
+            $entry->setAttribute('title', $bisPersonView->getTitle());
         }
 
         return $entry;
@@ -148,7 +148,7 @@ class BisDirHelper
                 'initials' => $bisPersonView->getInitials(),
                 'givenname' => $bisPersonView->getFirstName(),
                 'sn' => $bisPersonView->getLastName(),
-                'title' => $bisPersonView->getDescription(),
+                'title' => $bisPersonView->getTitle(),
                 'objectclass' => 'inetOrgPerson',
                 'dn' => self::buildDn($bisPersonView->getEmail(), $bisPersonView->getFirstAttribute('c')),
             ],

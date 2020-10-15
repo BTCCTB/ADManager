@@ -581,7 +581,7 @@ class BisPersonView
     public function getDescription()
     {
         if (!empty($this->getFunction())) {
-            return mb_substr($this->getFunction(), 0, 60);
+            return $this->getFunction();
         }
 
         return null;
