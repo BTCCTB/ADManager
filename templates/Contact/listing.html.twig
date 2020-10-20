@@ -16,6 +16,9 @@
             <br>
             <br>
         {% endif %}
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i> {{ 'contact.notice'|trans|nl2br }}
+            </div>
             <input type="text" class="form-control contactSearch" placeholder="Search for..."> <br>
     </div>
     {% for contact in contacts %}

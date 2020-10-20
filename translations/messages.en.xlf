@@ -843,5 +843,11 @@ The expiration date is mandatory for security reasons, because this user does no
         <target>Force sync</target>
       </segment>
     </unit>
+    <unit id="iVTKv7q" name="contact.notice">
+      <segment>
+        <source>contact.notice</source>
+        <target>This list only includes employees encoded in GO4HR with a Enabel phone number.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

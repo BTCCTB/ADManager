@@ -269,5 +269,11 @@
         <target>Je bericht moet minstens {{ limit }} tekens lang zijn</target>
       </segment>
     </unit>
+    <unit id="iVTKv7q" name="contact.notice">
+      <segment>
+        <source>contact.notice</source>
+        <target>Deze lijst bevat alleen medewerkers die gecodeerd zijn in GO4HR met een Enabel-telefoonnummer.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

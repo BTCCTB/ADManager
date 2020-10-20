@@ -627,5 +627,11 @@ Cet utilisateur sera placé dans l'unité organisationnel "/Enabel-Brussels/User
 La date d'expiration est obligatoire pour des raison de sécurité, car cette utilisateur ne passe pas par les scripts de désactivation automatique.</target>
       </segment>
     </unit>
+    <unit id="iVTKv7q" name="contact.notice">
+      <segment>
+        <source>contact.notice</source>
+        <target>Cette liste ne comprend que les employés encodés dans GO4HR avec un numéro de téléphone Enabel. </target>
+      </segment>
+    </unit>
   </file>
 </xliff>
