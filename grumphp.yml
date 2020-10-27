@@ -1,11 +1,8 @@
-parameters:
-    git_dir: .
-    bin_dir: vendor/bin
+grumphp:
     tasks:
         composer:
             file: ./composer.json
             no_check_all: true
-        git_conflict: ~
         securitychecker: ~
 #        clover_coverage:
 #            clover_file: ./QA/coverage.xml
@@ -23,7 +20,7 @@ parameters:
             ruleset: ['codesize.xml']
             exclude: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Command', 'src/AuthBundle/Service']
         phpcpd:
-            directory: './src'
+            directory: ['./src']
             exclude: ['Migrations', 'Service']
             min_lines: 10
             min_tokens: 100
