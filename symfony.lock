@@ -125,9 +125,6 @@
     "doctrine/persistence": {
         "version": "v1.0.0"
     },
-    "doctrine/reflection": {
-        "version": "v1.0.0"
-    },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
@@ -241,9 +238,6 @@
     },
     "openlss/lib-array2xml": {
         "version": "1.0.0"
-    },
-    "paragonie/random_compat": {
-        "version": "v9.99.99"
     },
     "pdepend/pdepend": {
         "version": "2.5.2"
