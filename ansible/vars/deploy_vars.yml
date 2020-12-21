@@ -47,6 +47,11 @@ sf_api_secret: '{{ vault_sf_api_secret }}'
 sms_gateway_me_api_token: "{{ vault_sms_gateway_me_api_token }}"
 sms_gateway_me_device_id: "{{ vault_sms_gateway_me_device_id }}"
 
+# Twilio vars
+twilio_sid: "{{ vault_twilio_sid }}"
+twilio_token: "{{ vault_twilio_token }}"
+twilio_number: "{{ vault_twilio_number }}"
+
 # Api key for intranet iframe
 intranet_api_key: "{{ vault_intranet_api_key }}"
 
