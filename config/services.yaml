@@ -168,7 +168,6 @@ services:
         tags: ['controller.service_arguments']
 
     App\Service\SmsGatewayMe:
-        autowire: true
         arguments:
             $token: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
             $accountId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
@@ -176,6 +175,7 @@ services:
         public: true
 
     App\Service\Twilio:
+        autowire: true
         arguments:
             $token: '%env(resolve:TWILIO_TOKEN)%'
             $accountId: '%env(resolve:TWILIO_SID)%'
