@@ -62,7 +62,7 @@
     <!-- Increase maximum mumber of dependencies for coupling between objects rule -->
     <rule ref="rulesets/design.xml/CouplingBetweenObjects">
         <properties>
-            <property name="maximum" value="30" description="Maximum number of acceptable dependencies." />
+            <property name="maximum" value="35" description="Maximum number of acceptable dependencies." />
         </properties>
     </rule>
 
