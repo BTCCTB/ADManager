@@ -28,8 +28,6 @@ grumphp:
             ignore_patterns: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Service']
 #        phpunitbridge:
 #            always_execute: false
-        phpversion:
-            project: '7.2'
         twigcs:
             path: './src'
         yamllint: ~

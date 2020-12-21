@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twilio\TwiML\MessagingResponse;
 
 class ErrorController extends AbstractController
 {
@@ -20,13 +21,13 @@ class ErrorController extends AbstractController
      */
     public function twilioAutoReply(TranslatorInterface $translator)
     {
-        $message =
-            '<?xml version="1.0" encoding="UTF-8"?><Response><Message>'.
-            $translator->trans('This is an unmonitored number and your text
-has been deleted from our system. ').
-            $translator->trans('If you require support, please use https://support.enabel.be .').
-            $translator->trans('Thank you, Enabel IT Team.').
-            '</Message></Response>';
-        return new Response($message,200, ['Content-type'=> 'text/xml']);
+        $response = new MessagingResponse();
+        $response->message(
+            $translator->trans('This is an unmonitored number and your text has been deleted from our system. ') .
+                $translator->trans('If you require support, please use https://support.enabel.be .') .
+                $translator->trans('Thank you, Enabel IT Team.')
+        );
+
+        return new Response($response->asXML(), Response::HTTP_OK, ['Content-Type'=>'text/xml']);
     }
 }
