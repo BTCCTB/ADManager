@@ -188,14 +188,20 @@ class AdldapAuthenticator implements AuthenticatorInterface
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
         $user = $token->getUser();
+        $language = 'en';
         if ($user instanceof User) {
             $this->account->lastLogin($user->getEmail());
+            $adAccount = $this->activeDirectory->getUser($user->getEmail());
+            if (null !== $adAccount) {
+                $locale = strtolower(substr($adAccount->getFirstAttribute('preferredLanguage'), 0, 2));
+                $language = (in_array($locale, ['en', 'nl', 'fr']))?$locale:'en';
+            }
         }
         if ($targetPath = $this->getTargetPath($request->getSession(), 'main')) {
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->router->generate('homepage'));
+        return new RedirectResponse($this->router->generate('homepage', ["_locale"=>$language]));
     }
 
     /**
