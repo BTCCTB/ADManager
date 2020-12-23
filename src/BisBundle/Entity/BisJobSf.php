@@ -55,7 +55,7 @@ class BisJobSf
     private $jobManagerId;
 
     /**
-     * @ORM\Column(type="datetime", name="job_last_updated", options={"default": 0})
+     * @ORM\Column(type="datetime", name="job_last_updated", options={"default"=0})
      */
     private $jobLastUpdated;
 

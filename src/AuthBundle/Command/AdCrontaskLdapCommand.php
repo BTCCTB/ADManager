@@ -62,7 +62,7 @@ class AdCrontaskLdapCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $outputStyle = new OutputFormatterStyle('red', null, array('bold'));
         $output->getFormatter()->setStyle('warning', $outputStyle);
@@ -91,6 +91,6 @@ class AdCrontaskLdapCommand extends Command
         }
         $table->render();
 
-        return null;
+        return 0;
     }
 }

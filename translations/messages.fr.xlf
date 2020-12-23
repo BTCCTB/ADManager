@@ -491,6 +491,24 @@
         <target>Accueil</target>
       </segment>
     </unit>
+    <unit id="oZH6_3Q" name="btn.intranet.label">
+      <segment>
+        <source>btn.intranet.label</source>
+        <target>Intranet</target>
+      </segment>
+    </unit>
+    <unit id="rsS3nEv" name="new_collegues.title.h3">
+      <segment>
+        <source>new_collegues.title.h3</source>
+        <target>Nouveau collègues</target>
+      </segment>
+    </unit>
+    <unit id="Ep78Se3" name="new_collegues.start_date">
+      <segment>
+        <source>new_collegues.start_date</source>
+        <target>Date de début</target>
+      </segment>
+    </unit>
     <unit id="BgzG80a" name="main.menu.admin.message.create.group.label">
       <segment>
         <source>main.menu.admin.message.create.group.label</source>
@@ -627,10 +645,88 @@ Cet utilisateur sera placé dans l'unité organisationnel "/Enabel-Brussels/User
 La date d'expiration est obligatoire pour des raison de sécurité, car cette utilisateur ne passe pas par les scripts de désactivation automatique.</target>
       </segment>
     </unit>
+    <unit id="yBDsB27" name="main.menu.admin.account.forceSync.label">
+      <segment>
+        <source>main.menu.admin.account.forceSync.label</source>
+        <target>Forcer sync.</target>
+      </segment>
+    </unit>
     <unit id="iVTKv7q" name="contact.notice">
       <segment>
         <source>contact.notice</source>
         <target>Cette liste ne comprend que les employés encodés dans GO4HR avec un numéro de téléphone Enabel. </target>
+      </segment>
+    </unit>
+    <unit id="CpwLLIG" name="user.language.form.label.language">
+      <segment>
+        <source>user.language.form.label.language</source>
+        <target>Langue</target>
+      </segment>
+    </unit>
+    <unit id="ErWFmEh" name="user.language.form.language.choice.fr">
+      <segment>
+        <source>user.language.form.language.choice.fr</source>
+        <target>Français [FR]</target>
+      </segment>
+    </unit>
+    <unit id="EeVOLok" name="user.language.form.language.choice.en">
+      <segment>
+        <source>user.language.form.language.choice.en</source>
+        <target>Anglais [EN]</target>
+      </segment>
+    </unit>
+    <unit id="jJP_4wX" name="user.language.form.language.choice.empty">
+      <segment>
+        <source>user.language.form.language.choice.empty</source>
+        <target>Sélectionnez une langue</target>
+      </segment>
+    </unit>
+    <unit id="GgOlJPk" name="user.language.form.language.choice.nl">
+      <segment>
+        <source>user.language.form.language.choice.nl</source>
+        <target>Néerlandais [NL]</target>
+      </segment>
+    </unit>
+    <unit id="gy.xrRu" name="my.account.label.preferred.language">
+      <segment>
+        <source>my.account.label.preferred.language</source>
+        <target>Langue préférée</target>
+      </segment>
+    </unit>
+    <unit id="nSaB0Vs" name="btn.change.language.label">
+      <segment>
+        <source>btn.change.language.label</source>
+        <target>Changer la langue préférée</target>
+      </segment>
+    </unit>
+    <unit id="Y44kn0o" name="Filter">
+      <segment>
+        <source>Filter</source>
+        <target>Filtrer</target>
+      </segment>
+    </unit>
+    <unit id="cXCGmaz" name="Criteria">
+      <segment>
+        <source>Criteria</source>
+        <target>Critère</target>
+      </segment>
+    </unit>
+    <unit id="NS7hMw7" name="filter.criteria">
+      <segment>
+        <source>filter.criteria</source>
+        <target>Critères</target>
+      </segment>
+    </unit>
+    <unit id="X0owthj" name="change.language.title.h1">
+      <segment>
+        <source>change.language.title.h1</source>
+        <target>Modifier votre préférence linguistique</target>
+      </segment>
+    </unit>
+    <unit id="udKTn1u" name="switch.language">
+      <segment>
+        <source>switch.language</source>
+        <target>Français</target>
       </segment>
     </unit>
   </file>

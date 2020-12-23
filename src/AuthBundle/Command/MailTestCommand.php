@@ -47,7 +47,7 @@ class MailTestCommand extends Command
      *
      * @return null|int null or 0 if everything went fine, or an error code
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $subject = 'Test mail from symfony';
         $message = (new \Swift_Message($subject))
@@ -59,6 +59,6 @@ class MailTestCommand extends Command
             );
         $this->mailer->send($message);
 
-        return null;
+        return 0;
     }
 }

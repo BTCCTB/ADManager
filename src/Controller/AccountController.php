@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use Adldap\Models\User;
 use App\Entity\Account;
+use App\Entity\UserLanguage;
 use App\Form\ActionAuthType;
 use App\Form\ChangeEmailType;
 use App\Form\ChangePasswordType;
 use App\Form\ExternalFormType;
 use App\Form\ForceSyncType;
+use App\Form\UserLanguageType;
 use App\Repository\AccountRepository;
+use App\Repository\UserLanguageRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
 use App\Service\SecurityAudit;
@@ -22,6 +25,10 @@ use AuthBundle\Service\BisDir;
 use AuthBundle\Service\SuccessFactorApi;
 use BisBundle\Service\BisPersonView;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\RouterInterface;
 use function Clue\StreamFilter\remove;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -81,12 +88,20 @@ class AccountController extends AbstractController
      *
      * @return Response
      */
-    public function indexAction(AccountRepository $accountRepository, BisPersonView $bisPersonView)
+    public function indexAction(AccountRepository $accountRepository, BisPersonView $bisPersonView, PaginatorInterface $paginator, Request $request)
     {
-        $accounts = $accountRepository->findAllActive();
-        $mobiles = $bisPersonView->getUserMobileByEmail();
+        $criteria = $request->query->get('v', null);
+        $request->query->remove('f');
+        $request->query->remove('v');
+        $query = $accountRepository->paginateAllActive($criteria);
 
-        return $this->render('Account/index.html.twig', ['accounts' => $accounts, 'mobiles' => $mobiles]);
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            20 /*limit per page*/
+        );
+
+        return $this->render('Account/index.html.twig', ['pagination' => $pagination]);
     }
 
     /**
@@ -298,7 +313,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/detail/{id}", name="account_detail", methods={"GET"}, requirements={"id":"\d+"})
+     * @Route("/detail/{id}", name="account_detail", methods={"GET"}, requirements={"id"="\d+"})
      *
      * @IsGranted("ROLE_ADMIN")
      *
@@ -312,13 +327,20 @@ class AccountController extends AbstractController
     {
         if (!empty($id)) {
             $bisData = $bisPersonView->findById($id);
+            $account = $accountRepository->find($id);
             $adUser = null;
             $ldapUser = null;
-            $account = null;
             if (!empty($bisData)) {
                 $adUser = $this->activeDirectory->getUser($bisData->getEmail());
                 $ldapUser = $this->bisDir->getUser($bisData->getEmail());
-                $account = $accountRepository->find($id);
+            } elseif (!empty($account)) {
+                $adUser = $this->activeDirectory->getUser($account->getEmail());
+                $ldapUser = $this->bisDir->getUser($account->getEmail());
+            } else {
+                $adUser = $this->activeDirectory->getUserByEmployeeId($id);
+                if (!empty($adUser)) {
+                    $ldapUser = $this->bisDir->getUser($adUser->getEmail());
+                }
             }
         } else {
             $this->addFlash('danger', 'Can\'t do this action!');
@@ -499,5 +521,49 @@ class AccountController extends AbstractController
                 'ad' => $ad,
             ]
         );
+    }
+
+    /**
+     * @Route("/change-language", name="account_change_language", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Adldap\AdldapException
+     */
+    public function changeLanguageAction(Request $request, UserLanguageRepository $userLanguageRepository, RouterInterface $router, SessionInterface $session)
+    {
+        /** @var \App\Entity\User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $adUser = $this->activeDirectory->getUser($user->getEmail());
+        $userLanguage = $userLanguageRepository->findOneBy(['userId'=>$adUser->getEmployeeId()]);
+        if (null === $userLanguage) {
+            $userLanguage = (new UserLanguage())
+                ->setUserId($adUser->getEmployeeId())
+                ->setLanguage($adUser->getFirstAttribute('preferredLanguage'))
+            ;
+        }
+        $form = $this->createForm(UserLanguageType::class, $userLanguage);
+        $form->remove('userId');
+        $form->add('userId', HiddenType::class);
+        $form->setData($userLanguage);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($data);
+            $em->flush();
+            $adUser->setFirstAttribute('preferredLanguage', $data->getLanguage());
+            $adUser->save();
+            $locale = substr(strtolower($data->getLanguage()), 0, 2);
+            $session->set('_locale', $locale);
+            $request->setLocale($locale);
+            $localRoute = $router->generate("homepage", ["_locale"=>$locale]);
+            return $this->redirect($localRoute);
+        }
+
+        return $this->render('Account/changeLanguage.html.twig', ['form' => $form->createView()]);
     }
 }

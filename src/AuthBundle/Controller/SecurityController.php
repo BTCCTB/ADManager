@@ -14,6 +14,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  * @package AuthBundle\Controller
  *
  * @author  Damien Lagae <damien.lagae@enabel.be>
+ * @see \AuthBundle\Tests\Controller\SecurityControllerTest
  */
 class SecurityController extends AbstractController
 {

@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @author  Damien Lagae <damien.lagae@enabel.be>
  *
  * @IsGranted("ROLE_USER")
+ * @see \App\Tests\Controller\IndexControllerTest
  */
 class IndexController extends AbstractController
 {
@@ -43,7 +44,7 @@ class IndexController extends AbstractController
      *
      * @throws \Exception
      */
-    public function myApps(BisPersonView $bisPersonView, QrCodeUser $qrCodeUser): Response
+    public function myAccount(BisPersonView $bisPersonView, QrCodeUser $qrCodeUser): Response
     {
         $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
         $now = new \DateTime('now');
@@ -58,6 +59,7 @@ class IndexController extends AbstractController
                 'passwordAges' => $passwordAges,
                 'user' => $user,
                 'country' => $user->getFirstAttribute('c'),
+                'language' => strtoupper(substr($user->getFirstAttribute('preferredLanguage'), 0, 2)),
                 'starters' => $bisPersonView->getStarters(),
                 'finishers' => $bisPersonView->getFinishers(),
                 'qrcode' => $qrCodeData,

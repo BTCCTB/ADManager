@@ -45,7 +45,7 @@ class BisGroupSf
     private $groActive;
 
     /**
-     * @ORM\Column(type="datetime", name="gro_last_updated", options={"default": 0})
+     * @ORM\Column(type="datetime", name="gro_last_updated", options={"default"=0})
      */
     private $groLastUpdated;
 

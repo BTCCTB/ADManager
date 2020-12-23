@@ -619,12 +619,14 @@ class BisPersonView
 
     public function getPreferredLanguage()
     {
+        /**
+        // 2020.12.23: Remove this with user preference language selection
         //Add a exception for user in English (Some IT + Patrick Rich + Willem Van der voort)
         $userIDs = [38248, 38038, 37847, 38229, 50734, 51362];
         if (in_array($this->getId(), $userIDs, false)) {
             return 'en-us';
         }
-
+*/
         switch ($this->getLanguage()) {
             case 'fr':
                 return 'fr-fr';

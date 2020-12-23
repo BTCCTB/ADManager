@@ -72,7 +72,7 @@ class AdCompareAccountCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $bisUserData = $this->bisPersonView->getUser($input->getArgument('email'));
         $adUserData = $this->activeDirectory->getUser($input->getArgument('email'));
@@ -115,6 +115,6 @@ class AdCompareAccountCommand extends Command
 
         $table->render();
 
-        return null;
+        return 0;
     }
 }

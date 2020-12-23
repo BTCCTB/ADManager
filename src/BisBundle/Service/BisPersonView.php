@@ -281,4 +281,17 @@ class BisPersonView
             $this->em->flush();
         }
     }
+
+    public function userChoices()
+    {
+        $choices = [
+            'Select a option' => null
+        ];
+
+        /* @var BisPersonViewRepository $repo*/
+        $repo = $this->repository;
+        $choices+=$repo->getUserChoices();
+
+        return $choices;
+    }
 }

@@ -72,7 +72,7 @@ class AdSyncPhoneCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //$bisPersons = $this->bisPersonView->getCountryUsers($input->getArgument('country'));
         $bisPersons = $this->bisPersonView->getAllUsers();
@@ -111,6 +111,6 @@ class AdSyncPhoneCommand extends Command
         $table->setRows($rows);
         $table->render();
 
-        return null;
+        return 0;
     }
 }

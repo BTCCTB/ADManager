@@ -43,7 +43,8 @@ class SfSearchEmployeeCommand extends Command
         $email = $input->getArgument('email');
 
         if ($email && strpos($email, '@enabel.be')) {
-            $io->text(sprintf('Search employee with email: %s', $email));
+            $message = sprintf('Search employee with email: %s', $email);
+            $io->text($message);
             $users = $this->sfApi->searchUsers($email);
             if ($users) {
                 $headers = [

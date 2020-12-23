@@ -13,6 +13,7 @@ use Twilio\Rest\Client;
  * Class Twilio
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
+ * @see \App\Tests\Service\TwilioTest
  */
 class Twilio implements SmsInterface
 {

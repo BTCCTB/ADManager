@@ -54,12 +54,18 @@
                                                     <i class="fas fa-phone" aria-hidden="true"></i> {{ user.telephoneNumber }}
                                                 {% endif %}
                                             </p>
+                                            <p class="card-text">
+                                                {{ 'my.account.label.preferred.language'|trans }}:
+                                                <i class="flag-icon flag-icon-{{ language|lower|replace({'en':'gb'}) }}" title="{{ language }}" alt="{{ language }}"></i> {{ language }}
+                                                <a href="{{ url('account_change_language') }}" class="btn btn-xs btn-secondary" alt="{{ 'btn.change.language.label'|trans }}" title="{{ 'btn.change.language.label'|trans }}" ><i class="fas fa-pencil"></i></a>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer links" aria-label="Actions">
                                     <a href="{{ url('account_change_password') }}" class="btn btn-warning"><i class="fas fa-key"></i> {{ 'btn.change.password.label'|trans }}</a>
                                     <a href="{{ url('contact_own_country') }}" class="btn btn-info"><i class="fas fa-phone"></i> {{ 'btn.contact.own.country.label'|trans }} <i class="flag-icon flag-icon-{{ app.user.username|userCountry|lower }}"></i></a>
+
                                     <a href="https://intranet.enabel.be" class="btn btn-primary" target="_blank"><i class="fas fa-info-circle"></i> {{ 'btn.intranet.label'|trans }}</a>
                                 </div>
                             </div>

@@ -70,7 +70,7 @@ class AdInitAccountCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fieldUsers = $this->activeDirectory->getFieldUsers('email');
 
@@ -112,6 +112,6 @@ class AdInitAccountCommand extends Command
         $table->setRows($rows);
         $table->render();
 
-        return null;
+        return 0;
     }
 }

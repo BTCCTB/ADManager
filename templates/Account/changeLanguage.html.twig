@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ 'change.language.title.h1'|trans }}</h1>
+
+    {% include '_partial/flash.html.twig' %}
+
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {{ form_row(form.language) }}
+        </div>
+        <div class="col-md-3">
+            <div class="form-control-feedback">
+                <span class="text-danger align-middle">
+                    {#{{ form_errors(form.language) }}#}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 1rem">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-language"></i> {{ 'btn.change.language.label'|trans }}</button>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}

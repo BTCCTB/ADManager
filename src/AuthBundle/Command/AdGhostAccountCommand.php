@@ -55,7 +55,7 @@ class AdGhostAccountCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $logs = $this->activeDirectory->ghostAccount();
 
@@ -72,6 +72,6 @@ class AdGhostAccountCommand extends Command
         $table->addRows($logs);
         $table->render();
 
-        return null;
+        return 0;
     }
 }

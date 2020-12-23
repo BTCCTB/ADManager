@@ -16,6 +16,7 @@ use SMSGatewayMe\Client\Model\SendMessageRequest;
  * Class SmsGatewayMe
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
+ * @see \App\Tests\Service\SmsGatewayMeTest
  */
 class SmsGatewayMe implements SmsInterface
 {

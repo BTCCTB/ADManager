@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="account",indexes={@ORM\Index(columns={"isActive"})})
+ * @ORM\Table(name="account",indexes={@ORM\Index(name="active_idx", columns={"is_active"})})
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  *

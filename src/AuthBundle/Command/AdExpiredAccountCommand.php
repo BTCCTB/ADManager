@@ -91,7 +91,7 @@ class AdExpiredAccountCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $emails = $input->getArgument('emails');
         $adChanges = null;
@@ -192,6 +192,6 @@ class AdExpiredAccountCommand extends Command
         $table->setRows($data);
         $table->render();
 
-        return null;
+        return 0;
     }
 }

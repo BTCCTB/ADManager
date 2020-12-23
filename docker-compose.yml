@@ -56,3 +56,33 @@ services:
       - 6379:6379
     labels:
       com.symfony.server.service-prefix: 'REDIS'
+
+  ## PHP Part
+  ## TODO: Add php ext (ldap, curl, json, intl, mysql, xml)
+  ## TODO2: Create a install/entrypoint script
+  php72:
+    image: php:7.2-fpm
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+      - 72:8000
+    entrypoint: /app/symfony serve
+
+  php74:
+    image: php:7.4-fpm
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+      - 74:8000
+    entrypoint: /app/symfony serve
+
+  php80:
+    image: php:8.0-fpm
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+      - 80:8000
+    entrypoint: /app/symfony serve

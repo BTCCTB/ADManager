@@ -72,7 +72,7 @@ class AdSyncLangCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getArgument('country') !== 'ALL') {
             $bisPersons = $this->bisPersonView->getCountryUsers($input->getArgument('country'));
@@ -114,6 +114,6 @@ class AdSyncLangCommand extends Command
         $table->setRows($rows);
         $table->render();
 
-        return null;
+        return 0;
     }
 }

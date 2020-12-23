@@ -71,8 +71,11 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "1.0",
-            "ref": "cb4152ebcadbe620ea2261da1a1c5a9b8cea7672"
-        }
+            "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
+        },
+        "files": [
+            "config/routes/annotations.yaml"
+        ]
     },
     "doctrine/cache": {
         "version": "v1.7.1"
@@ -90,13 +93,19 @@
         "version": "v2.6.3"
     },
     "doctrine/doctrine-bundle": {
-        "version": "1.6",
+        "version": "2.0",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
-            "version": "1.6",
-            "ref": "44d3aa7752dd46f77ba11af2297a25e1dedfb4d0"
-        }
+            "version": "2.0",
+            "ref": "368794356c1fb634e58b38ad2addb36933f2e73e"
+        },
+        "files": [
+            "config/packages/doctrine.yaml",
+            "config/packages/prod/doctrine.yaml",
+            "src/Entity/.gitignore",
+            "src/Repository/.gitignore"
+        ]
     },
     "doctrine/doctrine-fixtures-bundle": {
         "version": "3.0",
@@ -209,8 +218,17 @@
     "jms/i18n-routing-bundle": {
         "version": "3.0.3"
     },
+    "karo-io/messenger-monitor-bundle": {
+        "version": "dev-master"
+    },
     "khanamiryan/qrcode-detector-decoder": {
         "version": "1.0.3"
+    },
+    "knplabs/knp-components": {
+        "version": "v2.5.1"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.3.0"
     },
     "misd/phone-number-bundle": {
         "version": "1.3",
@@ -470,8 +488,11 @@
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
             "version": "1.0",
-            "ref": "c82bead70f9a4f656354a193df7bf0ca2114efa0"
-        }
+            "ref": "71599f5b0fdeeeec0fb90e9b17c85e6f5e1350c1"
+        },
+        "files": [
+            "public/.htaccess"
+        ]
     },
     "symfony/asset": {
         "version": "v4.0.4"
@@ -523,6 +544,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.0.4"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/doctrine-bridge": {
         "version": "v4.0.4"
@@ -674,6 +698,9 @@
     "symfony/polyfill-php80": {
         "version": "v1.18.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.20.0"
+    },
     "symfony/process": {
         "version": "v4.0.4"
     },
@@ -751,6 +778,9 @@
     },
     "symfony/test-pack": {
         "version": "v1.0.5"
+    },
+    "symfony/thanks": {
+        "version": "v1.2.10"
     },
     "symfony/translation": {
         "version": "3.3",

@@ -51,17 +51,20 @@ class SfDisableEmployeeCommand extends Command
         $io->section('Get active employee from BIS');
 
         $users = $this->bisPersonView->getActiveUserBySfId();
-        $io->text(sprintf('%d active employee found in BIS !', count($users)));
+        $message = sprintf('%d active employee found in BIS !', count($users));
+        $io->text($message);
         $io->section('Get not active employee from SF');
         $progressBar = new ProgressBar($io, count($users));
         $disableUsers = $this->sfApi->getInactiveUsers($progressBar);
-        $io->text(sprintf('%d inactive employee found in SF !', count($disableUsers)));
+        $message = sprintf('%d inactive employee found in SF !', count($disableUsers));
+        $io->text($message);
         $action = 0;
         foreach ($disableUsers as $id => $data) {
             if (is_int($id) && in_array($id, $users)) {
                 $action++;
                 $eventData = $this->sfApi->getUserJobHistory($id);
-                $io->comment(sprintf("Employee %d is not active in SF (%s) => End date: %s", $id, $data['active'], $eventData['endDate']));
+                $message = sprintf("Employee %d is not active in SF (%s) => End date: %s", $id, $data['active'], $eventData['endDate']);
+                $io->comment($message);
                 $this->bisPersonView->disbaleUserAt($id, $eventData['endDate']);
             }
         }
@@ -69,7 +72,8 @@ class SfDisableEmployeeCommand extends Command
         if ($action === 0) {
             $io->text('All your active employee found in BIS are OK.');
         } else {
-            $io->warning(sprintf('%d active employee found in BIS are inactive in SF.', $action));
+            $message = sprintf('%d active employee found in BIS are inactive in SF.', $action);
+            $io->warning($message);
         }
 
         return 0;

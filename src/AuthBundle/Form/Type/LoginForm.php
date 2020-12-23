@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @author Damien Lagae <damien.lagae@enabel.be>
+ * @see \AuthBundle\Tests\Form\Type\LoginFormTest
  */
 class LoginForm extends AbstractType
 {

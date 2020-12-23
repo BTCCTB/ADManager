@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'user.language.title.list'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'user.language.title.list'|trans }}</h1>
+{% include '_partial/flash.html.twig' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group-sm">
+                <a href="{{ path('user_language_new') }}" class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'user.language.btn.create'|trans }}</a>
+            </div>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ 'user.language.form.label.user'|trans }}</th>
+                        <th>{{ 'user.language.form.label.language'|trans }}</th>
+                        <th>{{ 'user.language.form.label.actions'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user_language in user_languages %}
+                    <tr>
+                        <td>{{ user_language.userId }}</td>
+                        <td>{{ user_language.language }}</td>
+                        <td>
+                            <a href="{{ path('user_language_show', {'id': user_language.id}) }}" class="btn btn-xs btn-info"><i class="fa fa-eye"></i> {{ 'user.language.btn.show'|trans }}</a>
+                            <a href="{{ path('user_language_edit', {'id': user_language.id}) }}" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> {{ 'user.language.btn.edit'|trans }}</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">{{ 'user.language.no.record'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

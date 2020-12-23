@@ -849,5 +849,131 @@ The expiration date is mandatory for security reasons, because this user does no
         <target>This list only includes employees encoded in GO4HR with a Enabel phone number.</target>
       </segment>
     </unit>
+    <unit id="DXYbOD6" name="user.language.title.create">
+      <segment>
+        <source>user.language.title.create</source>
+        <target>Create new user language preferences</target>
+      </segment>
+    </unit>
+    <unit id=".HbFAP_" name="user.language.btn.back">
+      <segment>
+        <source>user.language.btn.back</source>
+        <target>Back to list</target>
+      </segment>
+    </unit>
+    <unit id="xExstmv" name="user.language.form.label.user">
+      <segment>
+        <source>user.language.form.label.user</source>
+        <target>User</target>
+      </segment>
+    </unit>
+    <unit id="CpwLLIG" name="user.language.form.label.language">
+      <segment>
+        <source>user.language.form.label.language</source>
+        <target>Language</target>
+      </segment>
+    </unit>
+    <unit id="ErWFmEh" name="user.language.form.language.choice.fr">
+      <segment>
+        <source>user.language.form.language.choice.fr</source>
+        <target>French [FR]</target>
+      </segment>
+    </unit>
+    <unit id="EeVOLok" name="user.language.form.language.choice.en">
+      <segment>
+        <source>user.language.form.language.choice.en</source>
+        <target>English [EN]</target>
+      </segment>
+    </unit>
+    <unit id="jJP_4wX" name="user.language.form.language.choice.empty">
+      <segment>
+        <source>user.language.form.language.choice.empty</source>
+        <target>Select a language</target>
+      </segment>
+    </unit>
+    <unit id="GgOlJPk" name="user.language.form.language.choice.nl">
+      <segment>
+        <source>user.language.form.language.choice.nl</source>
+        <target>Dutch [NL]</target>
+      </segment>
+    </unit>
+    <unit id="LqXbK1D" name="user.language.form.confirm.delete">
+      <segment>
+        <source>user.language.form.confirm.delete</source>
+        <target>Are you sure you want to delete this item?</target>
+      </segment>
+    </unit>
+    <unit id="ieRQR0H" name="user.language.title.edit">
+      <segment>
+        <source>user.language.title.edit</source>
+        <target>Edit user language preference</target>
+      </segment>
+    </unit>
+    <unit id="_rJFpek" name="user.language.form.btn.save">
+      <segment>
+        <source>user.language.form.btn.save</source>
+        <target>Save</target>
+      </segment>
+    </unit>
+    <unit id="ifsWdqS" name="user.language.btn.delete">
+      <segment>
+        <source>user.language.btn.delete</source>
+        <target>Delete</target>
+      </segment>
+    </unit>
+    <unit id="dXFUBJc" name="user.language.title.list">
+      <segment>
+        <source>user.language.title.list</source>
+        <target>Users language preferences</target>
+      </segment>
+    </unit>
+    <unit id="D9iQpeo" name="user.language.btn.create">
+      <segment>
+        <source>user.language.btn.create</source>
+        <target>Create</target>
+      </segment>
+    </unit>
+    <unit id="OMFRwBT" name="user.language.form.label.actions">
+      <segment>
+        <source>user.language.form.label.actions</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="OQIFwdg" name="user.language.btn.edit">
+      <segment>
+        <source>user.language.btn.edit</source>
+        <target>Edit</target>
+      </segment>
+    </unit>
+    <unit id="4OKFDgO" name="user.language.btn.show">
+      <segment>
+        <source>user.language.btn.show</source>
+        <target>Show</target>
+      </segment>
+    </unit>
+    <unit id="gy.xrRu" name="my.account.label.preferred.language">
+      <segment>
+        <source>my.account.label.preferred.language</source>
+        <target>Preferred language</target>
+      </segment>
+    </unit>
+    <unit id="nSaB0Vs" name="btn.change.language.label">
+      <segment>
+        <source>btn.change.language.label</source>
+        <target>Change preferred language</target>
+      </segment>
+    </unit>
+    <unit id="X0owthj" name="change.language.title.h1">
+      <segment>
+        <source>change.language.title.h1</source>
+        <target>Change your language preference</target>
+      </segment>
+    </unit>
+    <unit id="udKTn1u" name="switch.language">
+      <segment>
+        <source>switch.language</source>
+        <target>English</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

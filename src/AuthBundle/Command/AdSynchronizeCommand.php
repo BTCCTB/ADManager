@@ -62,7 +62,7 @@ class AdSynchronizeCommand extends Command
      *
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /**
          * @var ActiveDirectoryResponse[] $logs
@@ -94,6 +94,6 @@ class AdSynchronizeCommand extends Command
         $this->activeDirectoryNotification->notifyUpdate($logs);
         $this->activeDirectoryNotification->notifyDisabled($logs);
 
-        return null;
+        return 0;
     }
 }

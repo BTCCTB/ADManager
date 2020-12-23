@@ -72,7 +72,7 @@ class AdSetThumbnailCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $table = new Table($output);
         $table->setHeaders([
@@ -102,6 +102,6 @@ class AdSetThumbnailCommand extends Command
         $table->setRows($data);
         $table->render();
 
-        return null;
+        return 0;
     }
 }

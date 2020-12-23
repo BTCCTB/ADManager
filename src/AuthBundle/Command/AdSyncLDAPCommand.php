@@ -72,7 +72,7 @@ class AdSyncLDAPCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getArgument('email');
         if (!empty($email)) {
@@ -90,6 +90,6 @@ class AdSyncLDAPCommand extends Command
             }
         }
 
-        return null;
+        return 0;
     }
 }

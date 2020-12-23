@@ -31,6 +31,22 @@ class AccountRepository extends ServiceEntityRepository
     }
 
     /**
+     * Generate query to get all active account in pagination
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function paginateAllActive(String $searchCriteria = null)
+    {
+        return $this->createQueryBuilder('account')
+            ->andWhere('account.isActive = :active')
+            ->andWhere('(account.firstname LIKE :criteria OR account.lastname LIKE :criteria OR account.email LIKE :criteria OR account.employeeId LIKE :criteria)')
+            ->setParameter('active', 1)
+            ->setParameter('criteria', (empty($searchCriteria)?'%':'%' . $searchCriteria . '%'))
+            ->getQuery()
+        ;
+    }
+
+    /**
      * Find a user by email
      *
      * @param String $email

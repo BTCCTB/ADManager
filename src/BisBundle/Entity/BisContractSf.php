@@ -60,7 +60,7 @@ class BisContractSf
     private $conActive;
 
     /**
-     * @ORM\Column(name="con_last_updated", type="datetime", options={"default": 0})
+     * @ORM\Column(name="con_last_updated", type="datetime", options={"default"=0})
      */
     private $conLastUpdated;
 

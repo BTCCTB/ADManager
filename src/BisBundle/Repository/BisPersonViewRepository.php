@@ -10,6 +10,7 @@ use BisBundle\Entity\BisCountry;
 use BisBundle\Entity\BisJobSf;
 use BisBundle\Entity\BisPersonSf;
 use BisBundle\Entity\BisPersonView;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -328,5 +329,24 @@ class BisPersonViewRepository extends EntityRepository
             ->getQuery();
 
         return $query->getResult();
+    }
+
+    public function getUserChoices()
+    {
+        $userChoices = [];
+        $repository = $this->_em->getRepository(BisPersonView::class);
+
+        $query = $repository->createQueryBuilder('bpv')
+            ->select('bpv.perEmail, bpv.perId')
+            ->where('bpv.perActive = :active')
+            ->setParameter('active', true)
+            ->getQuery();
+
+        $users = $query->getResult(AbstractQuery::HYDRATE_ARRAY);
+        foreach ($users as $user) {
+            $userChoices[$user['perEmail']] = $user['perId'];
+        }
+
+        return $userChoices;
     }
 }

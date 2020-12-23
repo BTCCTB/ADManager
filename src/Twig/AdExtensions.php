@@ -29,6 +29,7 @@ class AdExtensions extends AbstractExtension
         return [
             new TwigFilter('adTimestamp', [$this, 'adTimestampToUnix']),
             new TwigFilter('userCountry', [$this, 'getUserCountry']),
+            new TwigFilter('userMobile', [$this, 'getUserMobile'])
         ];
     }
 
@@ -37,6 +38,17 @@ class AdExtensions extends AbstractExtension
         $winSecs = (int) ($win32Time / 10000000); // divide by 10 000 000 to get seconds
         $unixTimestamp = ($winSecs - 11644473600); // 1.1.1600 -> 1.1.1970 difference in seconds
         return $unixTimestamp;
+    }
+
+    public function getUserMobile($email)
+    {
+        $user = $this->ad->getUser($email);
+
+        if ($user != null) {
+            return $user->getMobileNumber();
+        }
+
+        return null;
     }
 
     public function getUserCountry($email)

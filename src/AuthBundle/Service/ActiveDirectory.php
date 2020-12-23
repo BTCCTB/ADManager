@@ -14,6 +14,7 @@ use Adldap\Models\OrganizationalUnit;
 use Adldap\Models\User;
 use Adldap\Query\Collection;
 use Adldap\Schemas\ActiveDirectory as AdldapActiveDirectory;
+use App\Entity\UserLanguage;
 use App\Service\Account;
 use BisBundle\Entity\BisContractSf;
 use BisBundle\Entity\BisPersonSf;
@@ -118,6 +119,24 @@ class ActiveDirectory
     public function getUser(string $email)
     {
         $user = $this->checkUserExistByEmail($email);
+
+        if (!$user instanceof User) {
+            return null;
+        }
+
+        return $user;
+    }
+
+    /**
+     * Find a active directory user by employee ID
+     *
+     * @param string $employeeID His employee ID
+     *
+     * @return User|null The user.
+     */
+    public function getUserByEmployeeId(int $employeeID)
+    {
+        $user = $this->checkUserExistByEmployeeID($employeeID);
 
         if (!$user instanceof User) {
             return null;
@@ -649,6 +668,12 @@ class ActiveDirectory
         $bisUser = $bisPersonViewRepo->getUserByEmail($email);
 
         if (false !== $adAccount && !empty($bisUser)) {
+            // Check if a language preference exist for this user
+            $userLanguage = $this->em->getRepository(UserLanguage::class)->findOneBy(['userId'=>$bisUser->getEmployeeId()]);
+            if (null !== $userLanguage) {
+                $bisUser->setLanguage($userLanguage->getShortLanguage());
+            }
+
             // Set BIS data in Active Directory format
             [$adAccount, $diffData] = ActiveDirectoryHelper::bisPersonUpdateAdUser($bisUser, $adAccount);
             //$adAccount->setAccountName($original['samaccountname'][0]);
@@ -757,7 +782,7 @@ class ActiveDirectory
     }
 
     /**
-     * Intitalize a account with generated password.
+     * Initialize a account with generated password.
      *
      * @param User $fieldUser
      *
@@ -913,7 +938,7 @@ class ActiveDirectory
             $organizationalUnit = $this->checkOuExistByName('AD-ONLY');
 
             // Set user data in Active Directory format
-            $user->setEmployeeId((int) time());
+            $user->setEmployeeId(time());
             $user->setCommonName(ucfirst($data['firstname']) . ' ' . strtoupper($data['lastname']));
             $user->setAccountName(substr($data['firstname'], 0, 1) . substr($data['lastname'], 0, 7) . '_ext');
             $user->setDisplayName(ucfirst($data['firstname']) . ', ' . strtoupper($data['lastname']));
@@ -933,9 +958,9 @@ class ActiveDirectory
             $user->setUserPrincipalName($data['login']);
             $user->setEmail($data['login']);
             // Get & clean phone info
-            $telephone = ActiveDirectoryHelper::cleanUpPhoneNumber($data['phone']);
-            if (!empty($telephone)) {
-                $user->setTelephoneNumber($telephone);
+            $mobile = ActiveDirectoryHelper::cleanUpPhoneNumber($data['phone']);
+            if (!empty($mobile)) {
+                $user->setMobileNumber($mobile);
             }
             $dn = new DistinguishedName();
             // Get or create the country OU
@@ -1334,6 +1359,12 @@ class ActiveDirectory
     {
         // Init a new Active Directory user
         $user = $this->activeDirectory->connect()->make()->user();
+
+        // Check if a language preference exist for this user
+        $userLanguage = $this->em->getRepository(UserLanguage::class)->findOneBy(['userId'=>$bisUser->getEmployeeId()]);
+        if (null !== $userLanguage) {
+            $bisUser->setLanguage($userLanguage->getShortLanguage());
+        }
 
         // Get the correct organizational unit
         $organizationalUnit = $this->checkOuExistByName($bisUser->getCountry());

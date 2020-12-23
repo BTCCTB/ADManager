@@ -64,7 +64,7 @@ class AdSyncBisToLDAPCommand extends Command
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $bisPersonView = $this->bisPersonView
             ->getUser($input->getArgument('email'));
@@ -83,6 +83,6 @@ class AdSyncBisToLDAPCommand extends Command
         }
         $output->writeln('<error>User: ' . $input->getArgument('email') . ' not found!</error>');
 
-        return null;
+        return 0;
     }
 }

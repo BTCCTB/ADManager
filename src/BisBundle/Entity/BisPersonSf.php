@@ -54,7 +54,7 @@ class BisPersonSf
     private $perActive;
 
     /**
-     * @ORM\Column(type="datetime", name="per_last_updated", options={"default": 0})
+     * @ORM\Column(type="datetime", name="per_last_updated", options={"default"=0})
      */
     private $perLastUpdated;
 
