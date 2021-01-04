@@ -22,17 +22,17 @@ class BisPersonView
     /**
      * @var EntityManager
      */
-    private $em;
+    private $bis;
 
     /**
      * @var BisPersonViewRepository|EntityRepository
      */
     private $repository;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $bis)
     {
-        $this->em = $em;
-        $this->repository = $this->em->getRepository(\BisBundle\Entity\BisPersonView::class);
+        $this->bis = $bis;
+        $this->repository = $this->bis->getRepository(\BisBundle\Entity\BisPersonView::class);
     }
 
     /**
@@ -129,27 +129,27 @@ class BisPersonView
     public function cleanDataById(int $id)
     {
         // Get PersonSf
-        $repoPersonSf = $this->em->getRepository(BisPersonSf::class);
+        $repoPersonSf = $this->bis->getRepository(BisPersonSf::class);
         $personSf = $repoPersonSf->find($id);
 
         if (null !== $personSf) {
             // Get contractSf
-            $repoContractSf = $this->em->getRepository(BisContractSf::class);
+            $repoContractSf = $this->bis->getRepository(BisContractSf::class);
             $contractSf = $repoContractSf->findBy(['conPerId' => $personSf->getPerId()]);
 
             // Get conJobSf & remove BIS data for this user
-            $repoConJobSf = $this->em->getRepository(BisConjobSf::class);
+            $repoConJobSf = $this->bis->getRepository(BisConjobSf::class);
             foreach ($contractSf as $contract) {
                 $conJobSf = $repoConJobSf->findOneBy(['fkConId' => $contract->getConId()]);
                 if (null !== $conJobSf) {
-                    $this->em->remove($conJobSf);
+                    $this->bis->remove($conJobSf);
                 }
-                $this->em->remove($contract);
+                $this->bis->remove($contract);
             }
 
             // Remove PersonSf
             //            $this->em->remove($personSf);
-            $this->em->flush();
+            $this->bis->flush();
         }
     }
 
@@ -164,7 +164,7 @@ class BisPersonView
     public function createPerson(array $user): \BisBundle\Entity\BisPersonView
     {
         // Update or create person
-        $personSf = $this->em->find(BisPersonSf::class, $user['id']);
+        $personSf = $this->bis->find(BisPersonSf::class, $user['id']);
         if ($personSf == null) {
             $personSf = new BisPersonSf();
         }
@@ -181,34 +181,34 @@ class BisPersonView
             ->setPerMobile($user['mobile'])
             ->setPerTelephone($user['phone']);
 
-        $this->em->persist($personSf);
-        $this->em->flush();
+        $this->bis->persist($personSf);
+        $this->bis->flush();
 
         // Create contract
-        $perId = $this->em->getReference(BisPersonSf::class, $personSf->getPerId());
+        $perId = $this->bis->getReference(BisPersonSf::class, $personSf->getPerId());
         $contractSf = new BisContractSf();
         $contractSf
             ->setConDateStart($user['startDate'])
             ->setConDateStop($user['endDate'])
             ->setConActive($user['active'])
             ->setConPerId($perId);
-        $this->em->persist($contractSf);
-        $this->em->flush();
+        $this->bis->persist($contractSf);
+        $this->bis->flush();
 
         // Find or create Job (position)
         if (!empty($user['position'])) {
-            $position = $this->em->find(BisJobSf::class, $user['position']);
+            $position = $this->bis->find(BisJobSf::class, $user['position']);
             if (null == $position) {
                 $position = new BisJobSf();
-                $managerId = $this->em->getReference(BisPersonSf::class, $user['managerId']);
+                $managerId = $this->bis->getReference(BisPersonSf::class, $user['managerId']);
                 $position
                     ->setJobId($user['position'])
                     ->setJobFunction($user['jobTitle'])
                     ->setJobCountryWorkplace($user['countryWorkplace'])
                     ->setJobClass($user['jobClass'])
                     ->setJobManagerId($managerId);
-                $this->em->persist($position);
-                $this->em->flush();
+                $this->bis->persist($position);
+                $this->bis->flush();
             }
 
             // Add link contract/job
@@ -219,12 +219,12 @@ class BisPersonView
                 ->setConjobActive($user['active'])
                 ->setConjobEntryDate($user['startDate']);
 
-            $this->em->persist($conJobSf);
-            $this->em->flush();
+            $this->bis->persist($conJobSf);
+            $this->bis->flush();
         }
 
         // Retrieve the active record in the view bis_person
-        $bisPersonView = $this->em->find(\BisBundle\Entity\BisPersonView::class, $user['id']);
+        $bisPersonView = $this->bis->find(\BisBundle\Entity\BisPersonView::class, $user['id']);
 
         // If the record is inactive, we make a fake record
         if (empty($bisPersonView)) {
@@ -258,7 +258,7 @@ class BisPersonView
      */
     public function disbaleUserAt(int $id, string $endDate)
     {
-        $repository = $this->em->getRepository(BisContractSf::class);
+        $repository = $this->bis->getRepository(BisContractSf::class);
         $query = $repository
             ->createQueryBuilder('con')
             ->where('con.conPerId = :perId')
@@ -277,8 +277,8 @@ class BisPersonView
                 ->setConDateStop(new \DateTime($endDate))
                 ->setConActive(0)
             ;
-            $this->em->persist($contract);
-            $this->em->flush();
+            $this->bis->persist($contract);
+            $this->bis->flush();
         }
     }
 

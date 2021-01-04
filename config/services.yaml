@@ -62,7 +62,8 @@ services:
 
     AuthBundle\Service\ActiveDirectory:
         arguments:
-            $em: "@doctrine.orm.bis_entity_manager"
+            $em: "@doctrine.orm.default_entity_manager"
+            $bis: "@doctrine.orm.bis_entity_manager"
             $hosts:  '%env(resolve:DOMAIN_CONTROLLERS)%'
             $baseDn:  '%env(resolve:BASE_DN)%'
             $adminUsername:  '%env(resolve:ADMIN_USERNAME)%'
@@ -107,19 +108,19 @@ services:
     BisBundle\Service\BisPersonView:
         autowire: true
         arguments:
-            $em: "@doctrine.orm.bis_entity_manager"
+            $bis: "@doctrine.orm.bis_entity_manager"
         public: true
 
     BisBundle\Service\PhoneDirectory:
         autowire: true
         arguments:
-            $em: "@doctrine.orm.bis_entity_manager"
+            $bis: "@doctrine.orm.bis_entity_manager"
         public: true
 
     BisBundle\Service\Staff:
         autowire: true
         arguments:
-            $em: "@doctrine.orm.bis_entity_manager"
+            $bis: "@doctrine.orm.bis_entity_manager"
         public: true
 
     App\Service\Account:

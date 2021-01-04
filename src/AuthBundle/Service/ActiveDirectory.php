@@ -61,6 +61,11 @@ class ActiveDirectory
     private $bisDir;
 
     /**
+     * @var EntityManager
+     */
+    private $bis;
+
+    /**
      * ActiveDirectory constructor.
      *
      * @param EntityManager $em
@@ -80,7 +85,7 @@ class ActiveDirectory
      *
      * @phpcs:disable Generic.Files.LineLength
      */
-    public function __construct(EntityManager $em, Account $accountService, BisDir $bisDir, string $hosts, string $baseDn, string $adminUsername, string $adminPassword, string $accountSuffix = '', int $port = 636, bool $followReferrals = false, bool $useTls = true, bool $useSsl = true)
+    public function __construct(EntityManager $em, EntityManager $bis, Account $accountService, BisDir $bisDir, string $hosts, string $baseDn, string $adminUsername, string $adminPassword, string $accountSuffix = '', int $port = 636, bool $followReferrals = false, bool $useTls = true, bool $useSsl = true)
     {
         $config = new DomainConfiguration(
             [
@@ -107,6 +112,7 @@ class ActiveDirectory
         $this->baseDn = $baseDn;
         $this->accountService = $accountService;
         $this->bisDir = $bisDir;
+        $this->bis = $bis;
     }
 
     /**
@@ -444,7 +450,7 @@ class ActiveDirectory
 
         // Get BisPersonView Repository
         /** @var BisPersonViewRepository $bisPersonView */
-        $bisPersonView = $this->em->getRepository(BisPersonView::class);
+        $bisPersonView = $this->bis->getRepository(BisPersonView::class);
 
         // Get active users in GO4HR
         if (!empty($country)) {
@@ -516,11 +522,11 @@ class ActiveDirectory
 
         // Get BisPersonView Repository
         /** @var BisPersonViewRepository $bisPersonView */
-        $bisPersonView = $this->em->getRepository(BisPersonView::class);
+        $bisPersonView = $this->bis->getRepository(BisPersonView::class);
         /** @var BisPersonSfRepository $bisPersonSf */
-        $bisPersonSf = $this->em->getRepository(BisPersonSf::class);
+        $bisPersonSf = $this->bis->getRepository(BisPersonSf::class);
         /** @var BisPersonSfRepository $bisContractSf */
-        $bisContractSf = $this->em->getRepository(BisContractSf::class);
+        $bisContractSf = $this->bis->getRepository(BisContractSf::class);
 
         $adUsers = $this->getAllUsers('email', 'ASC');
         foreach ($adUsers as $adUser) {
@@ -664,11 +670,12 @@ class ActiveDirectory
     {
         $adAccount = $this->checkUserExistByUsername($email);
         /** @var BisPersonViewRepository $bisPersonViewRepo */
-        $bisPersonViewRepo = $this->em->getRepository(BisPersonView::class);
+        $bisPersonViewRepo = $this->bis->getRepository(BisPersonView::class);
         $bisUser = $bisPersonViewRepo->getUserByEmail($email);
 
         if (false !== $adAccount && !empty($bisUser)) {
             // Check if a language preference exist for this user
+
             $userLanguage = $this->em->getRepository(UserLanguage::class)->findOneBy(['userId'=>$bisUser->getEmployeeId()]);
             if (null !== $userLanguage) {
                 $bisUser->setLanguage($userLanguage->getShortLanguage());
@@ -720,7 +727,7 @@ class ActiveDirectory
     {
         $adAccount = $this->checkUserExistByUsername($email);
         /** @var BisPersonViewRepository $bisPersonViewRepo */
-        $bisPersonViewRepo = $this->em->getRepository(BisPersonView::class);
+        $bisPersonViewRepo = $this->bis->getRepository(BisPersonView::class);
         $bisUser = $bisPersonViewRepo->getUserByEmail($email);
 
         if (false !== $adAccount && !empty($bisUser)) {

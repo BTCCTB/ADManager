@@ -19,66 +19,66 @@ class PhoneDirectory
     /**
      * @var EntityRepository
      */
-    private $repository;
+    private $bis;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $bis)
     {
-        $this->repository = $em->getRepository(BisPhone::class);
+        $this->bis = $bis->getRepository(BisPhone::class);
     }
 
     public function getByCountry(string $country):  ? array
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getPhoneDirectoryByCountry($country);
     }
 
     public function getAll()
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getPhoneDirectory();
     }
 
     public function getField()
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getFieldPhoneDirectory();
     }
 
     public function getHQ()
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getHQPhoneDirectory();
     }
 
     public function getResRep()
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getResRepPhoneDirectory();
     }
 
     public function getIctHq()
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getIctHqPhoneDirectory();
     }
 
     public function getContactByIds(array $arrayId)
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getStaffByIds($arrayId);
     }
 
     public function getContactById(int $id)
     {
         /** @var BisPhoneRepository $bisPhoneRepo*/
-        $bisPhoneRepo = $this->repository;
+        $bisPhoneRepo = $this->bis;
         return $bisPhoneRepo->getStaffById($id);
     }
 
