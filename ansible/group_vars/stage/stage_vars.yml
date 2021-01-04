@@ -1,5 +1,6 @@
 ---
 project_deploy_dir: '/var/www/html'
+ansistrano_keep_releases: 2
 host_server_name: 'password-test.up.btcctb.net'
 application_url: 'http://{{ host_server_name }}/'
 application_env: 'dev'

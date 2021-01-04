@@ -1,5 +1,6 @@
 ---
 project_deploy_dir: '/var/www/html'
+ansistrano_keep_releases: 3
 host_server_name: 'password.enabel.be'
 application_url: 'http://{{ host_server_name }}/'
 application_env: 'prod'
