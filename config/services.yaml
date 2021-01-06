@@ -150,7 +150,7 @@ services:
         autoconfigure: true
         tags: ['twig.extension']
 
-    AuthBundle\Command\AdExpiredAccountCommand:
+    AuthBundle\Command\Ad\Account\ForceExpiredCommand:
         arguments:
             $passwordEncoder: "@auth.ldap.password_encoder"
 
