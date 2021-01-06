@@ -25,7 +25,7 @@
     state: present
     user: '{{ ansistrano_crontab_user }}'
     cron_file: '{{ ansistrano_crontab_filename }}'
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_1PM.log"
+    job: "{{ release_console_path }} crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_1PM.log"
   when: application_env == 'prod'
 
 - name: CRONTAB | SF Disable employees out of contract [12:30pm]
@@ -48,7 +48,7 @@
     state: present
     user: '{{ ansistrano_crontab_user }}'
     cron_file: '{{ ansistrano_crontab_filename }}'
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_1AM.log"
+    job: "{{ release_console_path }} crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_1AM.log"
   when: application_env == 'prod'
 
 - name: CRONTAB | SF Disable employees out of contract [8am]
@@ -71,7 +71,7 @@
     state: present
     user: '{{ ansistrano_crontab_user }}'
     cron_file: '{{ ansistrano_crontab_filename }}'
-    job: "{{ release_console_path }} ad:crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_830AM.log"
+    job: "{{ release_console_path }} crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_830AM.log"
   when: application_env == 'prod'
 
 #- name: CRONTAB | LDAP cleanup [2 am]
@@ -83,7 +83,7 @@
 #    state: absent
 #    user: '{{ ansistrano_crontab_user }}'
 #    cron_file: '{{ ansistrano_crontab_filename }}'
-#    job: "{{ release_console_path }} ad:crontask:ldap --env={{ application_env }} > {{ release_log_path }}/ad_sync_morning.log"
+#    job: "{{ release_console_path }} crontask:ldap --env={{ application_env }} > {{ release_log_path }}/ad_sync_morning.log"
 #  when: application_env == 'prod'
 
 - name: Stop sms workers

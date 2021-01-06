@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Sf;
 
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\SuccessFactorApi;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdSetThumbnailCommand extends Command
+class ThumbnailCommand extends Command
 {
     /**
      * @var ActiveDirectory
@@ -50,7 +50,7 @@ class AdSetThumbnailCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:set:thumbnail')
+        $this->setName('sf:thumbnail')
             ->setDescription('Get picture from GO4HR API & set this as AD thumbnail')
             ->addArgument('email', InputArgument::REQUIRED, 'User email [@enabel.be]?');
     }
@@ -66,7 +66,7 @@ class AdSetThumbnailCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int null or 0 if everything went fine, or an error code
+     * @return int 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException

@@ -133,12 +133,6 @@ services:
         arguments: ["@doctrine.orm.default_entity_manager"]
         public: true
 
-    AuthBundle\Command\MailTestCommand:
-            autowire: true
-            arguments:
-                $fromAddress: '%env(resolve:NOTIFICATION_FROM)%'
-            public: true
-
     App\Repository\UserRepository:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: ['App\Entity\User']

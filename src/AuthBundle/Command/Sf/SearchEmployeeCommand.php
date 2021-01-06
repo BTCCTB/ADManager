@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Sf;
 
 use AuthBundle\Service\SuccessFactorApi;
 use Symfony\Component\Console\Command\Command;
@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class SfSearchEmployeeCommand extends Command
+class SearchEmployeeCommand extends Command
 {
     protected static $defaultName = 'sf:search-employee';
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Ad\Account;
 
 use Adldap\Models\Attributes\DistinguishedName;
 use App\Entity\Account;
@@ -19,7 +19,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdCreateAccountCommand extends Command
+class CreateCommand extends Command
 {
     /**
      * @var ActiveDirectory
@@ -27,17 +27,15 @@ class AdCreateAccountCommand extends Command
     private $activeDirectory;
 
     /**
-     * @var ActiveDirectoryNotification
-     */
-    private $activeDirectoryNotification;
-    /**
      * @var BisDir
      */
     private $bisDir;
+
     /**
      * @var BisPersonView
      */
     private $bisPersonView;
+
     /**
      * @var EntityManager
      */
@@ -49,7 +47,7 @@ class AdCreateAccountCommand extends Command
      * @param ActiveDirectory $activeDirectory Active directory Service
      * @param BisDir          $bisDir
      * @param BisPersonView   $bisPersonView
-     * @param EntityManager   $em
+     * @param EntityManagerInterface   $em
      */
     public function __construct(ActiveDirectory $activeDirectory, BisDir $bisDir, BisPersonView $bisPersonView, EntityManagerInterface $em)
     {
@@ -83,7 +81,7 @@ class AdCreateAccountCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int null or 0 if everything went fine, or an error code
+     * @return int 0 if everything went fine, or an error code
      *
      * @throws \RuntimeException
      * @throws \Adldap\AdldapException

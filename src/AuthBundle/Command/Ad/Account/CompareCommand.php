@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Ad\Account;
 
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdCompareAccountCommand extends Command
+class CompareCommand extends Command
 {
     /**
      * @var ActiveDirectory
@@ -66,7 +66,7 @@ class AdCompareAccountCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int null or 0 if everything went fine, or an error code
+     * @return int 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException

@@ -1,37 +1,38 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Crontask;
 
-use AuthBundle\Service\BisDir;
-use BisBundle\Service\BisPersonView;
+use AuthBundle\Service\ActiveDirectory;
+use AuthBundle\Service\ActiveDirectoryNotification;
+use AuthBundle\Service\ActiveDirectoryResponse;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdCrontaskLdapCommand extends Command
+class SynchronizeCommand extends Command
 {
     /**
-     * @var BisPersonView
+     * @var ActiveDirectory
      */
-    private $bisPersonView;
+    private $activeDirectory;
 
     /**
-     * @var BisDir
+     * @var ActiveDirectoryNotification
      */
-    private $bisDir;
+    private $activeDirectoryNotification;
 
     /**
-     * AdCrontaskLdapCommand constructor.
+     * AdFixNameCommand constructor.
      *
-     * @param BisPersonView $bisPersonView
-     * @param BisDir        $bisDir
+     * @param ActiveDirectory             $activeDirectory             Active directory Service
+     *
+     * @param ActiveDirectoryNotification $activeDirectoryNotification
      */
-    public function __construct(BisPersonView $bisPersonView, BisDir $bisDir)
+    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification)
     {
-        $this->bisPersonView = $bisPersonView;
-        $this->bisDir = $bisDir;
+        $this->activeDirectory = $activeDirectory;
+        $this->activeDirectoryNotification = $activeDirectoryNotification;
         parent::__construct();
     }
 
@@ -42,8 +43,8 @@ class AdCrontaskLdapCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:crontask:ldap')
-            ->setDescription('Cleanup entry/person who are no longer in GO4HR.');
+        $this->setName('crontask:synchronize')
+            ->setDescription('Synchronise the AD with GO4HR data.');
     }
 
     /**
@@ -57,19 +58,16 @@ class AdCrontaskLdapCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int null or 0 if everything went fine, or an error code
+     * @return int 0 if everything went fine, or an error code
      *
-     * @throws \RuntimeException
      * @throws \Adldap\AdldapException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $outputStyle = new OutputFormatterStyle('red', null, array('bold'));
-        $output->getFormatter()->setStyle('warning', $outputStyle);
-
-        $bisPersons = $this->bisPersonView->getActiveUserByEmail();
-
-        $logs = $this->bisDir->disableFromBis($bisPersons);
+        /**
+         * @var ActiveDirectoryResponse[] $logs
+         */
+        $logs = $this->activeDirectory->cronTaskSynchronize();
 
         $table = new Table($output);
         $table->setHeaders([
@@ -90,6 +88,11 @@ class AdCrontaskLdapCommand extends Command
             $i++;
         }
         $table->render();
+
+        $this->activeDirectoryNotification->notifyCreation($logs);
+        $this->activeDirectoryNotification->notifyMove($logs);
+        $this->activeDirectoryNotification->notifyUpdate($logs);
+        $this->activeDirectoryNotification->notifyDisabled($logs);
 
         return 0;
     }

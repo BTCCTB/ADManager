@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Sf;
 
 use AuthBundle\Service\SuccessFactorApi;
 use BisBundle\Service\BisPersonView;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 
-class SfDisableEmployeeCommand extends Command
+class DisableEmployeeCommand extends Command
 {
     protected static $defaultName = 'sf:disable-employee';
     /**

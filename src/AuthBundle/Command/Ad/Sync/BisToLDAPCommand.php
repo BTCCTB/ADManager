@@ -1,8 +1,7 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Ad\Sync;
 
-use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\BisDir;
 use BisBundle\Service\BisPersonView;
 use Symfony\Component\Console\Command\Command;
@@ -10,12 +9,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdSyncBisToADCommand extends Command
+class BisToLDAPCommand extends Command
 {
-    /**
-     * @var ActiveDirectory
-     */
-    private $activeDirectory;
 
     /**
      * @var BisDir
@@ -30,14 +25,11 @@ class AdSyncBisToADCommand extends Command
     /**
      * AdResetAccountCommand constructor.
      *
-     * @param ActiveDirectory $activeDirectory Active directory Service
-     *
-     * @param BisPersonView   $bisPersonView
-     * @param BisDir          $bisDir
+     * @param BisPersonView $bisPersonView
+     * @param BisDir        $bisDir
      */
-    public function __construct(ActiveDirectory $activeDirectory, BisPersonView $bisPersonView, BisDir $bisDir)
+    public function __construct(BisPersonView $bisPersonView, BisDir $bisDir)
     {
-        $this->activeDirectory = $activeDirectory;
         $this->bisDir = $bisDir;
         $this->bisPersonView = $bisPersonView;
         parent::__construct();
@@ -50,8 +42,8 @@ class AdSyncBisToADCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:sync:bistoad')
-            ->setDescription('Sync the BIS account with AD account')
+        $this->setName('ad:sync:bis-to-ldap')
+            ->setDescription('Sync the BIS account with LDAP account')
             ->addArgument('email', InputArgument::REQUIRED, 'User email [@enabel.be]?');
     }
 
@@ -66,7 +58,7 @@ class AdSyncBisToADCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int null or 0 if everything went fine, or an error code
+     * @return int 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
@@ -78,7 +70,7 @@ class AdSyncBisToADCommand extends Command
             ->getUser($input->getArgument('email'));
 
         if (null !== $bisPersonView) {
-            $responses = $this->activeDirectory
+            $responses = $this->bisDir
                 ->synchronizeFromBis($bisPersonView);
 
             $output->writeln('User: ' . $bisPersonView->getEmail() . ' - ' . $bisPersonView->getDisplayName());
@@ -89,6 +81,7 @@ class AdSyncBisToADCommand extends Command
                 $output->writeln('Data: ' . json_encode($response->getData()));
             }
         }
+        $output->writeln('<error>User: ' . $input->getArgument('email') . ' not found!</error>');
 
         return 0;
     }

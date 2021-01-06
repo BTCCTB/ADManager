@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Ad\Sync;
 
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\BisDir;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AdSyncLDAPCommand extends Command
+class BisToADCommand extends Command
 {
     /**
      * @var ActiveDirectory
@@ -50,8 +50,8 @@ class AdSyncLDAPCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:sync:ldap')
-            ->setDescription('Sync the AD account with LDAP account')
+        $this->setName('ad:sync:bis-to-ad')
+            ->setDescription('Sync the BIS account with AD account')
             ->addArgument('email', InputArgument::REQUIRED, 'User email [@enabel.be]?');
     }
 
@@ -66,7 +66,7 @@ class AdSyncLDAPCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int null or 0 if everything went fine, or an error code
+     * @return int 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
@@ -74,14 +74,14 @@ class AdSyncLDAPCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $email = $input->getArgument('email');
-        if (!empty($email)) {
-            $adAccount = $this->activeDirectory
-                ->getUser($email);
-            $output->writeln('User: ' . $adAccount->getEmail() . ' - ' . $adAccount->getDisplayName());
-            $responses = $this->bisDir
-                ->synchronize($adAccount);
+        $bisPersonView = $this->bisPersonView
+            ->getUser($input->getArgument('email'));
 
+        if (null !== $bisPersonView) {
+            $responses = $this->activeDirectory
+                ->synchronizeFromBis($bisPersonView);
+
+            $output->writeln('User: ' . $bisPersonView->getEmail() . ' - ' . $bisPersonView->getDisplayName());
             foreach ($responses as $response) {
                 $output->writeln('Message: ' . $response->getMessage());
                 $output->writeln('Status: ' . $response->getStatus());

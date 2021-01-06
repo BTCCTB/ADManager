@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Command;
+namespace AuthBundle\Command\Ad\Account;
 
 use App\Entity\Account;
 use App\Repository\AccountRepository;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class AdExpiredAccountCommand extends Command
+class ForceExpiredCommand extends Command
 {
     /**
      * @var ActiveDirectory
@@ -34,10 +34,12 @@ class AdExpiredAccountCommand extends Command
      * @var BisPersonView
      */
     private $bisPersonView;
+
     /**
      * @var EntityManagerInterface
      */
     private $em;
+
     /**
      * @var PasswordEncoderInterface
      */
@@ -69,7 +71,7 @@ class AdExpiredAccountCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('ad:account:expired')
+        $this->setName('ad:account:force-expired')
             ->setDescription('Force expiration for given account')
             ->addArgument('emails', InputArgument::OPTIONAL, 'User(s) email(s)? [...@enabel.be] or [...@enabel.be,...@enabel.be]');
     }
@@ -85,7 +87,7 @@ class AdExpiredAccountCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int null or 0 if everything went fine, or an error code
+     * @return int 0 if everything went fine, or an error code
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \RuntimeException
