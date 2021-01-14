@@ -1055,8 +1055,8 @@ class ActiveDirectory
             $user->setInfo(
                 json_encode([
                     'warning' => 'Early created by password, remove attribute importedFrom after startDate',
-                    'startDate' => $data['startDate'],
-                    'endDate' => $data['endDate']
+                    'startDate' => ($data['startDate'] === null) ? null : $data['startDate']->format('Y-m-d'),
+                    'endDate' => ($data['endDate'] === null) ? null : $data['endDate']->format('Y-m-d')
                 ])
             );
 
