@@ -117,6 +117,7 @@ class SuccessFactorApi
                         'personNav/emailNav/emailAddress,nativePreferredLangNav/externalCode,customString1Nav/externalCode',
                         '$expand' => 'personNav/emailNav/emailTypeNav,nativePreferredLangNav,customString1Nav',
                         '$filter' => "personNav/emailNav/emailAddress like '" . $search . "' or personIdExternal eq '" . $search . "'",
+                        'fromDate' => '1990-01-01',
                         'customPageSize' => self::ITEMS_PER_PAGES,
                     ],
                     'headers' => [
@@ -196,6 +197,7 @@ class SuccessFactorApi
                         '$filter' => 'phoneType eq ' . $phoneType . ' and personIdExternal eq ' . $userId,
                         '$select' => 'personIdExternal, phoneNumber, countryCodeNav/externalCode',
                         '$expand' => 'countryCodeNav',
+                        'fromDate' => '1990-01-01',
                         'customPageSize' => self::ITEMS_PER_PAGES,
                     ],
                     'headers' => [
@@ -255,6 +257,7 @@ class SuccessFactorApi
                         'userId,employmentNav/startDate,employmentNav/endDate,emplStatusNav/externalCode,jobCodeNav/name,customString10,jobCodeNav/cust_string1,managerId,jobCode,position',
                         '$expand' => 'emplStatusNav, jobCodeNav,employeeClassNav,employmentNav',
                         '$filter' => 'userId eq ' . $userId,
+                        'fromDate' => '1990-01-01',
                         'customPageSize' => self::ITEMS_PER_PAGES,
                     ],
                     'headers' => [
@@ -322,6 +325,7 @@ class SuccessFactorApi
                     'query' => [
                         '$filter' => 'emailType eq ' . $mailType . ' and personIdExternal eq ' . $userId,
                         '$select' => 'personIdExternal, emailAddress',
+                        'fromDate' => '1990-01-01',
                         'customPageSize' => self::ITEMS_PER_PAGES,
                     ],
                     'headers' => [

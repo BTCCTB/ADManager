@@ -17,6 +17,7 @@ use Adldap\Schemas\ActiveDirectory as AdldapActiveDirectory;
 use App\Entity\UserLanguage;
 use App\Service\Account;
 use BisBundle\Entity\BisContractSf;
+use BisBundle\Entity\BisCountry;
 use BisBundle\Entity\BisPersonSf;
 use BisBundle\Entity\BisPersonView;
 use BisBundle\Repository\BisPersonSfRepository;
@@ -1011,6 +1012,109 @@ class ActiveDirectory
         }
         return new ActiveDirectoryResponse(
             "This user '" . $data['login'] . "' already exist",
+            ActiveDirectoryResponseStatus::FAILED,
+            ActiveDirectoryResponseType::CREATE,
+            $data
+        );
+    }
+
+    /**
+     * Create a user from SuccessFactor API in Active directory
+     *
+     * @return ActiveDirectoryResponse
+     */
+    public function createFromSfApi(array $data)
+    {
+        // Check user exist in AD
+        $adAccount = $this->getUser($data['emailEnabel']);
+
+        // Create user in AD
+        if (null === $adAccount) {
+            $bisCountryRepository = $this->bis->getRepository(BisCountry::class);
+            $bisCountry = $bisCountryRepository->findOneBy(['couIsocode3letters'=>$data['countryWorkplace']]);
+            // Init a new Active Directory user
+            $user = $this->activeDirectory->connect()->make()->user();
+            // Get the correct organizational unit
+            $organizationalUnit = $this->checkOuExistByName($bisCountry->getCouIsocode3letters());
+
+            // Set user data in Active Directory format
+            $user->setEmployeeId($data['id']);
+            $user->setCommonName(ucfirst($data['firstname']) . ' ' . strtoupper($data['lastname']));
+            $user->setAccountName(strtolower(substr($data['firstname'], 0, 1) . substr($data['lastname'], 0, 7)) . $data['id']);
+            $user->setDisplayName(ucfirst($data['firstname']) . ', ' . strtoupper($data['lastname']));
+            $user->setInitials($data['gender']);
+            $user->setEmployeeType($data['jobClass']);
+            $user->setAttribute('language', strtolower($data['preferredLanguage']));
+            $user->setProxyAddresses(['SMTP:' . $data['emailEnabel']]);
+            $user->setFirstName(ucfirst($data['firstname']));
+            $user->setLastName(strtoupper($data['lastname']));
+            $user->setAttribute('c', $bisCountry->getCouIsocode2letters());
+            $user->setAttribute('co', $bisCountry->getCouName());
+            $user->setAttribute('physicalDeliveryOfficeName', $bisCountry->getCouName() . ' [' . $bisCountry->getCouIsocode2letters() . ']');
+            $user->setAttribute('importedFrom', 'AD-ONLY');
+            $user->setInfo(
+                json_encode([
+                    'warning' => 'Early created by password, remove attribute importedFrom after startDate',
+                    'startDate' => $data['startDate'],
+                    'endDate' => $data['endDate']
+                ])
+            );
+
+            if (!empty($data['jobTitle'])) {
+                $user->setTitle($data['jobTitle']);
+                $user->setDescription($data['jobTitle']);
+            }
+            $user->setUserPrincipalName($data['emailEnabel']);
+            $user->setEmail($data['emailEnabel']);
+            // Get & clean phone info
+            $mobile = ActiveDirectoryHelper::cleanUpPhoneNumber($data['mobile']);
+            $phone = ActiveDirectoryHelper::cleanUpPhoneNumber($data['phone']);
+            if (!empty($mobile)) {
+                $user->setMobileNumber($mobile);
+            }
+            if (!empty($phone)) {
+                $user->setTelephoneNumber($phone);
+            }
+            $dn = new DistinguishedName();
+            // Get or create the country OU
+            $dn->setBase($organizationalUnit->getDn());
+            $dn->addCn($user->getCommonName());
+            $user->setDn($dn);
+
+            // Save the basic data of the user
+            if ($user->save() && !empty($user->getEmail())) {
+                // Generate a password
+                $password = ActiveDirectoryHelper::generatePassword();
+                $user->setPassword($password);
+                $this->accountService->updateCredentials($user, $password);
+                $this->accountService->setGeneratedPassword($user->getEmail(), $password);
+                $user->setUserAccountControl(AccountControl::NORMAL_ACCOUNT);
+                if (!$user->save()) {
+                    return new ActiveDirectoryResponse(
+                        "User '" . $data['emailEnabel'] . "' unable to enable and set '" . $password . "' as default password",
+                        ActiveDirectoryResponseStatus::EXCEPTION,
+                        ActiveDirectoryResponseType::CREATE,
+                        ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
+                    );
+                }
+
+                return new ActiveDirectoryResponse(
+                    "User '" . $data['emailEnabel'] . "' created with password '" . $password . "'",
+                    ActiveDirectoryResponseStatus::DONE,
+                    ActiveDirectoryResponseType::CREATE,
+                    ActiveDirectoryHelper::getDataAdUser($user, ['password' => $password])
+                );
+            }
+
+            return new ActiveDirectoryResponse(
+                "Unable to create this user '" . $data['emailEnabel'] . "'",
+                ActiveDirectoryResponseStatus::FAILED,
+                ActiveDirectoryResponseType::CREATE,
+                ActiveDirectoryHelper::getDataAdUser($user)
+            );
+        }
+        return new ActiveDirectoryResponse(
+            "This user '" . $data['emailEnabel'] . "' already exist",
             ActiveDirectoryResponseStatus::FAILED,
             ActiveDirectoryResponseType::CREATE,
             $data
