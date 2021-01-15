@@ -1,7 +1,7 @@
 ---
 - name: CRONTAB | Init
   file:
-    path: "/etc/cron.d/ {{ ansistrano_crontab_filename }}"
+    path: "/etc/cron.d/{{ ansistrano_crontab_filename }}"
     state: absent
 
 - name: CRONTAB | SF Disable employees out of contract [12:30am]
@@ -51,11 +51,11 @@
     job: "{{ release_console_path }} crontask:synchronize --env={{ application_env }} > {{ release_log_path }}/ad_sync_1AM.log"
   when: application_env == 'prod'
 
-- name: CRONTAB | SF Disable employees out of contract [8am]
+- name: CRONTAB | SF Disable employees out of contract [6am]
   cron:
     name: Disable employees out of contract (8am)
     minute: "0"
-    hour: "8"
+    hour: "6"
     weekday: "1-5"
     state: present
     user: '{{ ansistrano_crontab_user }}'
