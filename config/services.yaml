@@ -162,12 +162,12 @@ services:
         resource: '../src/ApiBundle/Controller'
         tags: ['controller.service_arguments']
 
-    App\Service\SmsGatewayMe:
-        arguments:
-            $token: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
-            $accountId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
-            $from: ''
-        public: true
+#    App\Service\SmsGatewayMe:
+#        arguments:
+#            $token: '%env(resolve:SMS_GATEWAY_ME_API_TOKEN)%'
+#            $accountId: '%env(resolve:SMS_GATEWAY_ME_DEVICE_ID)%'
+#            $from: ''
+#        public: true
 
     App\Service\Twilio:
         autowire: true
@@ -177,7 +177,11 @@ services:
             $from: '%env(resolve:TWILIO_NUMBER)%'
         public: true
 
+    App\Service\SmsInterface: '@App\Service\Twilio'
+
     App\Twig\SmsExtensions:
         autowire: true
         autoconfigure: true
         tags: ['twig.extension']
+
+

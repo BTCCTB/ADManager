@@ -16,7 +16,7 @@ use App\Repository\UserLanguageRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
 use App\Service\SecurityAudit;
-use App\Service\SmsGatewayMe;
+use App\Service\SmsInterface;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryNotification;
@@ -226,13 +226,13 @@ class AccountController extends AbstractController
      * @param AccountRepository $accountRepository
      *
      * @param BisPersonView     $bisPersonView
-     * @param SmsGatewayMe      $smsGatewayMe
+     * @param SmsInterface      $sms
      *
      * @return RedirectResponse
      *
      * @throws \Adldap\AdldapException
      */
-    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsGatewayMe $smsGatewayMe): RedirectResponse
+    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsInterface $sms): RedirectResponse
     {
         $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
         $account = $accountRepository->find($employeeID);
@@ -268,9 +268,9 @@ class AccountController extends AbstractController
             $language = 'en';
             if ($userInfo !== null) {
                 $language = $userInfo->getLanguage();
-                $smsGatewayMe->send($messages['info'][$language], $userInfo->getMobile());
+                $sms->send($messages['info'][$language], $userInfo->getMobile());
                 $messagePassword = str_replace('%%_PASSWORD_%%', $resetData['generatedpassword'], $messages['password'][$language]);
-                $smsGatewayMe->send($messagePassword, $userInfo->getMobile());
+                $sms->send($messagePassword, $userInfo->getMobile());
             }
             $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized! [Password: ' . $resetData['generatedpassword'] . ']');
