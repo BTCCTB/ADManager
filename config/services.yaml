@@ -177,7 +177,11 @@ services:
             $from: '%env(resolve:TWILIO_NUMBER)%'
         public: true
 
+    App\Service\SmsInterface: '@App\Service\Twilio'
+
     App\Twig\SmsExtensions:
         autowire: true
         autoconfigure: true
         tags: ['twig.extension']
+
+
