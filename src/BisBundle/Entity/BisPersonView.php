@@ -295,7 +295,8 @@ class BisPersonView
 
     public function getMobile()
     {
-        return $this->perMobile;
+        // Remove that (0) shit from SF
+        return str_replace("(0)", "", $this->perMobile);
     }
 
     public function setMobile($perMobile)
