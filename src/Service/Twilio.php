@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Service\Exception\SmsException;
 use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberUtil;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\RestException;
@@ -49,15 +51,19 @@ class Twilio implements SmsInterface
 
     /**
      * @inheritDoc
+     * @throws SmsException
      */
     public function send(string $message, string $phoneNumber) : int
     {
         if (self::OK === $this->configureApiClient()) {
             try {
-                $number = PhoneNumberUtil::getInstance()->parse($phoneNumber, PhoneNumberUtil::UNKNOWN_REGION);
+                /** @var PhoneNumber $number */
+                $number = PhoneNumberUtil::getInstance()->parse($phoneNumber);
+
                 if (!PhoneNumberUtil::getInstance()->isValidNumber($number)) {
-                    return self::INVALID_PHONE_NUMBER;
+                    throw new SmsException('Invalid phone number: "' . $phoneNumber . '"', self::INVALID_PHONE_NUMBER);
                 }
+                $phoneNumber = '+' . $number->getCountryCode() . $number->getNationalNumber();
 
                 // Create & send message
                 $sendMessage = $this->apiClient->messages->create(
@@ -75,16 +81,15 @@ class Twilio implements SmsInterface
                     return self::SEND;
                 }
             } catch (NumberParseException $e) {
-                return self::INVALID_PHONE_NUMBER;
+                throw new SmsException('Invalid phone number: ' . $e->getMessage(), self::INVALID_PHONE_NUMBER);
             } catch (TwilioException | RestException $e) {
-                error_log($e->getMessage());
-
-                return self::NOT_SEND;
+                throw new SmsException($e->getMessage(), self::NOT_SEND);
             }
         }
 
         return self::NOT_SEND;
     }
+
     /**
      * @inheritDoc
      */
@@ -103,6 +108,7 @@ class Twilio implements SmsInterface
      * Configure the ApiClient
      *
      * @return int Status code
+     * @throws SmsException
      */
     public function configureApiClient() : int
     {
@@ -115,12 +121,12 @@ class Twilio implements SmsInterface
                 case 200:
                     return self::OK;
                 case 20003:
-                    return self::INVALID_TOKEN;
+                    throw new SmsException('Twilio API: Invalid token', self::INVALID_TOKEN);
                 case 20404:
-                    return self::INVALID_ACCOUNT_ID;
+                    throw new SmsException('Twilio API: Invalid account ID', self::INVALID_ACCOUNT_ID);
             }
         }
-        return self::INVALID_REQUEST;
+        throw new SmsException('Twilio API: Invalid request', self::INVALID_REQUEST);
     }
 
     public function setSID($accountId)
