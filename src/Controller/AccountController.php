@@ -15,11 +15,11 @@ use App\Repository\AccountRepository;
 use App\Repository\UserLanguageRepository;
 use App\Repository\UserRepository;
 use App\Service\Account as AccountService;
+use App\Service\Exception\SmsException;
 use App\Service\SecurityAudit;
 use App\Service\SmsInterface;
 use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
-use AuthBundle\Service\ActiveDirectoryNotification;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use AuthBundle\Service\BisDir;
 use AuthBundle\Service\SuccessFactorApi;
@@ -29,7 +29,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
-use function Clue\StreamFilter\remove;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -267,10 +266,14 @@ class AccountController extends AbstractController
             $resetData = $resetPassword->getData();
             $language = 'en';
             if ($userInfo !== null) {
-                $language = $userInfo->getLanguage();
-                $sms->send($messages['info'][$language], $userInfo->getMobile());
-                $messagePassword = str_replace('%%_PASSWORD_%%', $resetData['generatedpassword'], $messages['password'][$language]);
-                $sms->send($messagePassword, $userInfo->getMobile());
+                try {
+                    $language = $userInfo->getLanguage();
+                    $sms->send($messages['info'][$language], $userInfo->getMobile());
+                    $messagePassword = str_replace('%%_PASSWORD_%%', $resetData['generatedpassword'], $messages['password'][$language]);
+                    $sms->send($messagePassword, $userInfo->getMobile());
+                } catch (SmsException $exception) {
+                    $this->addFlash('danger', $exception->getMessage() . ' [SMS ' . $exception->getCode() . ']');
+                }
             }
             $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
             $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized! [Password: ' . $resetData['generatedpassword'] . ']');
