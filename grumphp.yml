@@ -3,10 +3,9 @@ grumphp:
         composer:
             file: ./composer.json
             no_check_all: true
-        securitychecker: ~
-#        clover_coverage:
-#            clover_file: ./QA/coverage.xml
-#            level: 1
+        clover_coverage:
+            clover_file: ./QA/coverage.xml
+            level: 1
         phpcs:
             standard: "./checkstyle.xml"
             whitelist_patterns:
@@ -19,11 +18,11 @@ grumphp:
         phpmd:
             ruleset: ['codesize.xml']
             exclude: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Command', 'src/AuthBundle/Service']
-        phpcpd:
-            directory: ['./src']
-            exclude: ['Migrations', 'Service']
-            min_lines: 10
-            min_tokens: 100
+#        phpcpd:
+#            directory: ['./src']
+#            exclude: ['Migrations', 'Service']
+#            min_lines: 10
+#            min_tokens: 100
         phpstan:
             ignore_patterns: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Service']
 #        phpunitbridge:
