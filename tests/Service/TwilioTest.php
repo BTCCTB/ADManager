@@ -2,9 +2,10 @@
 
 namespace App\Tests\Service;
 
+use App\Service\Exception\SmsException;
 use App\Service\SmsInterface;
 use App\Service\Twilio;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class TwilioTest
@@ -12,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @author Damien Lagae <damien.lagae@enabel.be>
  * @group external
  */
-class TwilioTest extends WebTestCase
+class TwilioTest extends KernelTestCase
 {
     /**
      * @var SmsInterface
@@ -38,13 +39,19 @@ class TwilioTest extends WebTestCase
     public function testConfigurationWrongAccount()
     {
         $this->twilio->setSID('1234567890');
-        $this->assertSame(Twilio::INVALID_ACCOUNT_ID, $this->twilio->configureApiClient());
+        $this->expectException(SmsException::class);
+//        $this->expectedExceptionCode(Twilio::INVALID_ACCOUNT_ID);
+//        $this->expectedExceptionMessage('Twilio API: Invalid account ID');
+        $this->twilio->configureApiClient();
     }
 
     public function testConfigurationWrongToken()
     {
         $this->twilio->setToken('1234567890AZERTYUIOP');
-        $this->assertSame(Twilio::INVALID_TOKEN, $this->twilio->configureApiClient());
+        $this->expectException(SmsException::class);
+//        $this->expectedExceptionCode(Twilio::INVALID_TOKEN);
+//        $this->expectedExceptionMessage('Twilio API: Invalid token');
+        $this->twilio->configureApiClient();
     }
 
     public function testSendSuccess()
@@ -54,7 +61,10 @@ class TwilioTest extends WebTestCase
 
     public function testSendWrongPhone()
     {
-        $this->assertSame(Twilio::INVALID_PHONE_NUMBER, $this->twilio->send('test unique message [Twilio]', '+329999999999999999999999'));
+        $this->expectException(SmsException::class);
+//        $this->expectedExceptionCode(Twilio::INVALID_PHONE_NUMBER);
+//        $this->expectedExceptionMessage('Invalid phone number: The string supplied is too long to be a phone number.');
+        $this->twilio->send('test unique message [Twilio]', '+329999999999999999999999');
     }
 
     public function testSendGroupSuccess()
@@ -75,9 +85,9 @@ class TwilioTest extends WebTestCase
             '+3299999999999999999999999',
             '+3299999999999999999999999',
         ];
-        $sendStatus = $this->twilio->sendGroup('test group message [Twilio]', $group);
-        foreach ($sendStatus as $send) {
-            $this->assertSame(Twilio::INVALID_PHONE_NUMBER, $send);
-        }
+        $this->expectException(SmsException::class);
+//        $this->expectedExceptionCode(Twilio::INVALID_PHONE_NUMBER);
+//        $this->expectedExceptionMessage('Invalid phone number: The string supplied is too long to be a phone number.');
+        $this->twilio->sendGroup('test group message [Twilio]', $group);
     }
 }

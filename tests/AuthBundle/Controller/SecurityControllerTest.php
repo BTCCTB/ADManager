@@ -22,7 +22,7 @@ class SecurityControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains("Please login", $crawler->filter('.container h2')->text());
+        $this->assertStringContainsString("Please login", $crawler->filter('.container h2')->text());
     }
 
     /**
@@ -34,7 +34,7 @@ class SecurityControllerTest extends WebTestCase
         $client->request('GET', '/logout');
         $crawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Please login', $crawler->filter('.container h2')->text());
+        $this->assertStringContainsString('Please login', $crawler->filter('.container h2')->text());
     }
 
     /**
@@ -48,6 +48,6 @@ class SecurityControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
         $crawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Please login', $crawler->filter('.container h2')->text());
+        $this->assertStringContainsString('Please login', $crawler->filter('.container h2')->text());
     }
 }
