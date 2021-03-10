@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class IndexController
@@ -44,13 +45,18 @@ class IndexController extends AbstractController
      *
      * @throws \Exception
      */
-    public function myAccount(BisPersonView $bisPersonView, QrCodeUser $qrCodeUser): Response
+    public function myAccount(BisPersonView $bisPersonView, QrCodeUser $qrCodeUser, TranslatorInterface $translator): Response
     {
         $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
         $now = new \DateTime('now');
-        $passwordLastSet = new \DateTime();
-        $passwordLastSet->setTimestamp($user->getPasswordLastSetTimestamp());
+        $passwordLastSet = (new \DateTime())->setTimestamp($user->getPasswordLastSetTimestamp());
         $passwordAges = $passwordLastSet->diff($now)->format('%a');
+        $dateForceChange = (new \DateTime(''))->setDate(2021, 02, 15);
+        $needToChange = $dateForceChange->diff($passwordLastSet)->invert;
+        if ($needToChange === 1) {
+            $this->addFlash('danger', $translator->trans('alert.account.force.change.password'));
+            return $this->redirectToRoute('account_change_password');
+        }
         $qrCodeData = $qrCodeUser->generateBase64($user);
 
         return $this->render(

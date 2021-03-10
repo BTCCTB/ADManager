@@ -11,9 +11,9 @@
                 <div class="col-md-12">
                     {% include '_partial/flash.html.twig' %}
                     <h1>{{ 'main.menu.account.label'|trans }}</h1>
-                    {%  if passwordAges > 80 %}
+                    {%  if passwordAges > 180 %}
                     <div class="alert alert-danger" role="alert">
-                        {%  elseif passwordAges > 70 %}
+                        {%  elseif passwordAges > 160 %}
                         <div class="alert alert-warning" role="alert">
                             {%  else %}
                             <div class="alert alert-primary" role="alert">

@@ -4,7 +4,7 @@
     <unit id="DdLwEhz" name="my.account.label.password.recommendation">
       <segment>
         <source>my.account.label.password.recommendation</source>
-        <target>Wij raden u aan om uw wachtwoord om de 3 maanden te veranderen.</target>
+        <target>Wij raden u aan om uw wachtwoord om de 6 maanden te veranderen.</target>
       </segment>
     </unit>
     <unit id="1pjSy9y" name="my.account.label.lastset">
@@ -281,6 +281,12 @@
         <target>Meer info</target>
       </segment>
     </unit>
+    <unit id=".y7CYYu" name="Change email">
+      <segment>
+        <source>Change email</source>
+        <target>Email wijzigen</target>
+      </segment>
+    </unit>
     <unit id="XkcCw9o" name="btn.contact.own.country.label">
       <segment>
         <source>btn.contact.own.country.label</source>
@@ -447,6 +453,12 @@
       <segment>
         <source>switch.language</source>
         <target>Nederlands</target>
+      </segment>
+    </unit>
+    <unit id="YOEOtkO" name="alert.account.force.change.password">
+      <segment>
+        <source>alert.account.force.change.password</source>
+        <target>Uw wachtwoord is te oud: Om veiligheidsredenen is het noodzakelijk dat u het wijzigt.</target>
       </segment>
     </unit>
   </file>
