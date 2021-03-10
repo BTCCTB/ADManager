@@ -4,7 +4,7 @@
     <unit id="DdLwEhz" name="my.account.label.password.recommendation">
       <segment>
         <source>my.account.label.password.recommendation</source>
-        <target>Nous vous recommandons de changer votre mot de passe tous les 3 mois.</target>
+        <target>Nous vous recommandons de changer votre mot de passe tous les 6 mois.</target>
       </segment>
     </unit>
     <unit id="1pjSy9y" name="my.account.label.lastset">
@@ -727,6 +727,12 @@ La date d'expiration est obligatoire pour des raison de sécurité, car cette ut
       <segment>
         <source>switch.language</source>
         <target>Français</target>
+      </segment>
+    </unit>
+    <unit id="YOEOtkO" name="alert.account.force.change.password">
+      <segment>
+        <source>alert.account.force.change.password</source>
+        <target>Votre mot de passe est trop ancien : Pour des raisons de sécurité, vous devez le changer.</target>
       </segment>
     </unit>
   </file>

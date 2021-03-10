@@ -4,7 +4,7 @@
     <unit id="DdLwEhz" name="my.account.label.password.recommendation">
       <segment>
         <source>my.account.label.password.recommendation</source>
-        <target>We recommend to change your password every 3 months</target>
+        <target>We recommend to change your password every 6 months</target>
       </segment>
     </unit>
     <unit id="1pjSy9y" name="my.account.label.lastset">
@@ -973,6 +973,12 @@ The expiration date is mandatory for security reasons, because this user does no
       <segment>
         <source>switch.language</source>
         <target>English</target>
+      </segment>
+    </unit>
+    <unit id="YOEOtkO" name="alert.account.force.change.password">
+      <segment>
+        <source>alert.account.force.change.password</source>
+        <target>Your password is too old: For security reason you need to change it.</target>
       </segment>
     </unit>
   </file>
