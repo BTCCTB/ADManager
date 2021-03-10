@@ -11,7 +11,8 @@ REDIS         = $(DOCKER_EXEC) redis redis-cli
 SYMFONY       = $(SYMFONY_BIN) console
 COMPOSER      = $(EXEC_PHP) composer.phar
 DOCKER        = docker-compose
-DOCKER_EXEC = docker-compose exec
+DOCKER_EXEC   = docker-compose exec
+PHPUNIT       = $(EXEC_PHP) bin/phpunit
 .DEFAULT_GOAL = help
 #.PHONY       = # Not needed for now
 
@@ -73,6 +74,10 @@ create-form: ## Creates a new form class
 create-voter: ## Creates a new security voter class
 	$(SYMFONY) make:voter
 
+get-translation: ## Get translation files from localise
+	$(SYMFONY) translation:download
+	$(SYMFONY) cache:clear
+
 ## —— Symfony binary 💻 ————————————————————————————————————————————————————————
 ./symfony:
 	curl -sS https://get.symfony.com/cli/installer | bash
@@ -100,7 +105,7 @@ down: docker-compose.yml ## Stop the docker hub
 	$(DOCKER) down --remove-orphans
 
 dpsn: ## List Docker containers for the project
-	docker-compose images
+	$(DOCKER) images
 	@echo "--------------------------------------------------------------------------------------------------------------"
 	docker ps -a | grep "$(PROJECT)_"
 	@echo "--------------------------------------------------------------------------------------------------------------"
@@ -131,13 +136,13 @@ phpunit.xml:
 	cp phpunit.xml.dist phpunit.xml
 
 test: phpunit.xml ## Launch main functionnal and unit tests
-	./bin/phpunit --group=main --stop-on-failure
+	$(PHPUNIT) --group=main --stop-on-failure --debug
 
 test-external: phpunit.xml ## Launch tests implying external resources (api, services...)
-	./bin/phpunit --group=external --stop-on-failure
+	$(PHPUNIT) --group=external --stop-on-failure --debug
 
 test-all: phpunit.xml ## Launch all tests
-	./bin/phpunit --stop-on-failure
+	$(PHPUNIT) --stop-on-failure
 
 ## —— Coding standards ✨ ——————————————————————————————————————————————————————
 cs: codesniffer mess stan ## Launch check style and static analysis
