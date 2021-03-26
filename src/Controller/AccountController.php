@@ -474,41 +474,54 @@ class AccountController extends AbstractController
             $data = $form->getData();
             $users = $sfApi->searchUsers($data['search']);
             if (isset($users[0]['id'])) {
-                $bisPersonView->cleanDataById($users[0]['id']);
-                $user = $bisPersonView->createPerson($users[0]);
-                if (null !== $user) {
-                    $ad = $activeDirectory->forceSync($user);
-                    if (is_a($ad, User::class)) {
-                        $bisDir->synchronize($ad);
-                        $ldap = $bisDir->getUser($ad->getEmail());
-                        $account = $entityManager->find(Account::class, $ad->getEmployeeId());
-                        if (null === $account) {
-                            $account = new Account();
-                            $account->setEmployeeId($ad->getEmployeeId());
-                        }
-                        $account
-                            ->setEmail($ad->getEmail())
-                            ->setEmailContact($ad->getEmail())
-                            ->setAccountName($ad->getAccountName())
-                            ->setUserPrincipalName($ad->getUserPrincipalName())
-                            ->setLastname($ad->getLastName())
-                            ->setFirstname($ad->getFirstName())
-                            ->setActive(1)
-                            ->setToken(base64_encode($ad->getEmail()))
-                        ;
+                $adUser = $activeDirectory->checkUserExistByEmail($users[0]['emailEnabel']);
+                if (false !== $adUser) {
+                    $this->addFlash(
+                        'warning',
+                        "Unable to force sync for '" . $users[0]['emailEnabel'] . "' [ID: " . $users[0]['id'] . "]"
+                    );
+                    $formError = new FormError(
+                        "AD account already exist ! " .
+                        "[" . $adUser->getDn() . "]"
+                    );
+                    $form->get('search')->addError($formError);
+                } else {
+                    $bisPersonView->cleanDataById($users[0]['id']);
+                    $user = $bisPersonView->createPerson($users[0]);
+                    if (null !== $user) {
+                        $ad = $activeDirectory->forceSync($user);
+                        if (is_a($ad, User::class)) {
+                            $bisDir->synchronize($ad);
+                            $ldap = $bisDir->getUser($ad->getEmail());
+                            $account = $entityManager->find(Account::class, $ad->getEmployeeId());
+                            if (null === $account) {
+                                $account = new Account();
+                                $account->setEmployeeId($ad->getEmployeeId());
+                            }
+                            $account
+                                ->setEmail($ad->getEmail())
+                                ->setEmailContact($ad->getEmail())
+                                ->setAccountName($ad->getAccountName())
+                                ->setUserPrincipalName($ad->getUserPrincipalName())
+                                ->setLastname($ad->getLastName())
+                                ->setFirstname($ad->getFirstName())
+                                ->setActive(1)
+                                ->setToken(base64_encode($ad->getEmail()))
+                            ;
 
-                        $entityManager->persist($account);
-                        $entityManager->flush();
-
-                        $userRepo = $entityManager->getRepository(\App\Entity\User::class);
-                        $userAccount = $userRepo->findOneBy(['email' => $ad->getEmail()]);
-                        if (null !== $userAccount) {
-                            $entityManager->remove($userAccount);
+                            $entityManager->persist($account);
                             $entityManager->flush();
+
+                            $userRepo = $entityManager->getRepository(\App\Entity\User::class);
+                            $userAccount = $userRepo->findOneBy(['email' => $ad->getEmail()]);
+                            if (null !== $userAccount) {
+                                $entityManager->remove($userAccount);
+                                $entityManager->flush();
+                            }
+                        } else {
+                            $this->addFlash('danger', 'Unable to create a AD account for this user !');
+                            $this->addFlash('warning', 'Check GO4HR required data !');
                         }
-                    } else {
-                        $this->addFlash('danger', 'Unable to create a AD account for this user !');
-                        $this->addFlash('warning', 'Check GO4HR required data !');
                     }
                 }
             }
