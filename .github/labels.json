@@ -1,0 +1,114 @@
+[
+    {
+        "name": "Priority: Must have (vital) [Critical]",
+        "description": "critical to the current delivery timebox in order for it to be a success",
+        "color": "B60205"
+    },
+    {
+        "name": "Priority: Should have (essential) [High]",
+        "description": "important but not necessary for delivery in the current delivery timebox",
+        "color": "FBCA04"
+    },
+    {
+        "name": "Priority: Could have (confort) [Medium]",
+        "description": "desirable but not necessary and could improve the user experience or customer satisfaction for a lit",
+        "color": "0E8A16"
+    },
+    {
+        "name": "Priority: Won't have (luxe) [Low]",
+        "description": "Not planned into the schedule for the next delivery timebox",
+        "color": "1D76DB"
+    },
+    {
+        "name": "Status: Abandoned",
+        "color": "000000",
+        "description": "The issue or Pull Request is wontfix",
+        "aliases": [
+            "wontfix",
+            "invalid"
+        ]
+    },
+    {
+        "name": "Status: Blocked",
+        "color": "ee0701",
+        "description": "Progress on the issue is Blocked",
+        "aliases": [
+            "blocked"
+        ]
+    },
+    {
+        "name": "Status: In Progress",
+        "description": "Work in Progress",
+        "color": "cccccc"
+    },
+    
+    {
+        "name": "Status: Completed",
+        "color": "0E8A16",
+        "description": "Request for review comments"
+    },
+    {
+        "name": "Status: On Hold",
+        "color": "F9C90A",
+        "description": "Lacks enough info to make progress"
+    },
+    {
+        "name": "Type: Bug",
+        "color": "ee0701",
+        "description": "Bug or Bug fixes",
+        "aliases": [
+            "bug"
+        ]
+    },
+    {
+        "name": "Type: Documentation",
+        "color": "0e8a16",
+        "description": "Documentation only changes",
+        "aliases": [
+            "documents",
+            "document"
+        ]
+    },
+    {
+        "name": "Type: Feature",
+        "color": "1d76db",
+        "description": "New Feature",
+        "aliases": [
+            "enhancement"
+        ]
+    },
+    {
+        "name": "Type: Refactoring",
+        "color": "fbca04",
+        "description": "A code change that neither fixes a bug nor adds a feature",
+        "aliases": [
+            "refactor"
+        ]
+    },
+    {
+        "name": "Type: Testing",
+        "color": "257759",
+        "description": "Adding missing tests or correcting existing tests",
+        "aliases": [
+            "test",
+            "testing"
+        ]
+    },
+    {
+        "name": "Type: Maintenance",
+        "color": "abd406",
+        "description": "Repository Maintenance",
+        "aliases": [
+            "greenkeeper",
+            "maintenance"
+        ]
+    },
+    {
+        "name": "Type: Question",
+        "color": "cc317c",
+        "description": "Further information is requested",
+        "aliases": [
+            "question"
+        ]
+    }
+]
