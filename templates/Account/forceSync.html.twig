@@ -2,8 +2,6 @@
 
 {% block body %}
     <h1>Sync GO4HR Data with Enabel AD/LDAP</h1>
-    {% include '_partial/flash.html.twig' %}
-
     {% if user is null %}
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
     {{ form_start(form) }}
@@ -52,6 +50,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             {{ form_row(form.search) }}
+            {% include '_partial/flash.html.twig' %}
         </div>
     </div>
     <div class="row" style="padding-top: 1rem">
