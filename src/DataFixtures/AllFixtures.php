@@ -74,15 +74,6 @@ class AllFixtures extends Fixture
     {
         for ($i = 1; $i <= 10; $i++) {
             $user = new User();
-            $user->setEmail("damienlagae+$i@gmail.com");
-            $user->setAccountName("dlagae+$i");
-            $user->setPlainPassword('p@ssw0rd');
-            $user->setRoles(['ROLE_ADMIN']);
-            $em->persist($user);
-        }
-
-        for ($i = 1; $i <= 10; $i++) {
-            $user = new User();
             $user->setEmail("user$i@example.org");
             $user->setAccountName("user$i");
             $user->setPlainPassword('user');
