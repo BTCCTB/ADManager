@@ -56,7 +56,7 @@ jobs:
       mariadb:
         image: mariadb:10.1.29
         env:
-          MYSQL_ROOT_PASSWORD: toor
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: admanager
           MYSQL_USER: db_user
           MYSQL_PASSWORD: db_password
