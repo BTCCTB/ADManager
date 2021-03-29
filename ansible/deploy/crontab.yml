@@ -89,12 +89,12 @@
 - name: Stop sms workers
   command: "{{ release_console_path }} messenger:stop-workers"
 
-- name: CRONTAB | Worker SMS [every 30min]
+- name: CRONTAB | Worker SMS [every 10min]
   cron:
-    name:  Consume the sms queue (every 30min)
-    minute: "*/30"
+    name:  Consume the sms queue (every 10min)
+    minute: "*/10"
     state: present
     user: '{{ ansistrano_crontab_user }}'
     cron_file: '{{ ansistrano_crontab_filename }}'
-    job: "{{ release_console_path }} messenger:consume sms --time-limit=1740 --env={{ application_env }} > {{ release_log_path }}/sms_consume.log"
+    job: "{{ release_console_path }} messenger:consume sms --time-limit=600 --env={{ application_env }} > {{ release_log_path }}/sms_consume.log"
   when: application_env == 'prod'
