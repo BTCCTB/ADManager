@@ -78,8 +78,14 @@ class SyncEmployeeCommand extends Command
                     'AdAccount'
                 ];
                 foreach ($users as $id => $data) {
-                    $users[$id]['startDate'] = ($data['startDate'] === null) ? null : $data['startDate']->format('Y-m-d');
-                    $users[$id]['endDate'] = ($data['endDate'] === null) ? null : $data['endDate']->format('Y-m-d');
+                    $users[$id]['startDate'] = null;
+                    if ($data['startDate'] !== null) {
+                        $data['startDate']->format('Y-m-d');
+                    }
+                    $users[$id]['endDate'] = null;
+                    if ($data['endDate'] !== null) {
+                        $data['endDate']->format('Y-m-d');
+                    }
                     $users[$id]['AdAccount'] = $this->activeDirectory->checkUserExistByEmail($email);
                     if ($users[$id]['AdAccount'] === false) {
                         $message = sprintf('Try to add this users (%s) in AD', $email);

@@ -19,10 +19,19 @@ use Symfony\Component\Serializer\SerializerInterface;
 class StaffController extends AbstractController
 {
     /**
-     * @Route("/starters/{format}/{limit}", name="starters", methods={"GET"}, requirements={"limit"="\d+", "format"="json|csv"})
+     * @Route(
+     *     "/starters/{format}/{limit}",
+     *     name="starters",
+     *     methods={"GET"},
+     *     requirements={"limit"="\d+", "format"="json|csv"}
+     * )
      */
-    public function starters(SerializerInterface $serializer, BisPersonView $bisPersonView, $format = "json", $limit = 15)
-    {
+    public function starters(
+        SerializerInterface $serializer,
+        BisPersonView $bisPersonView,
+        $format = "json",
+        $limit = 15
+    ) {
         if ($limit >= 15) {
             $limit = 15;
         }
@@ -40,10 +49,19 @@ class StaffController extends AbstractController
     }
 
     /**
-     * @Route("/finishers/{format}/{limit}", name="finishers", methods={"GET"}, requirements={"limit"="\d+", "format"="json|csv"})
+     * @Route(
+     *     "/finishers/{format}/{limit}",
+     *     name="finishers",
+     *     methods={"GET"},
+     *     requirements={"limit"="\d+", "format"="json|csv"}
+     * )
      */
-    public function finishers(SerializerInterface $serializer, BisPersonView $bisPersonView, $format = "json", $limit = 15)
-    {
+    public function finishers(
+        SerializerInterface $serializer,
+        BisPersonView $bisPersonView,
+        $format = "json",
+        $limit = 15
+    ) {
         if ($limit >= 15) {
             $limit = 15;
         }

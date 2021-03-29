@@ -68,8 +68,14 @@ class SearchEmployeeCommand extends Command
                     'jobClass',
                 ];
                 foreach ($users as $id => $data) {
-                    $users[$id]['startDate'] = ($data['startDate'] === null) ? null : $data['startDate']->format('Y-m-d');
-                    $users[$id]['endDate'] = ($data['endDate'] === null) ? null : $data['endDate']->format('Y-m-d');
+                    $users[$id]['startDate'] = null;
+                    if ($data['startDate'] !== null) {
+                        $data['startDate']->format('Y-m-d');
+                    }
+                    $users[$id]['endDate'] = null;
+                    if ($data['endDate'] !== null) {
+                        $data['endDate']->format('Y-m-d');
+                    }
                 }
                 $io->table($headers, $users);
             } else {

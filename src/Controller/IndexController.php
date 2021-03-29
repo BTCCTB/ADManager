@@ -45,12 +45,18 @@ class IndexController extends AbstractController
      *
      * @throws \Exception
      */
-    public function myAccount(BisPersonView $bisPersonView, QrCodeUser $qrCodeUser, TranslatorInterface $translator): Response
-    {
+    public function myAccount(
+        BisPersonView $bisPersonView,
+        QrCodeUser $qrCodeUser,
+        TranslatorInterface $translator
+    ): Response {
         $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
         $now = new \DateTime('now');
-        $passwordLastSet = (new \DateTime())->setTimestamp($user->getPasswordLastSetTimestamp());
-        $passwordAges = $passwordLastSet->diff($now)->format('%a');
+        $passwordLastSet = null;
+        if ($user->getPasswordLastSetTimestamp() !== null) {
+            $passwordLastSet = (new \DateTime())->setTimestamp($user->getPasswordLastSetTimestamp());
+        }
+        $passwordAges = ($passwordLastSet !== null) ? $passwordLastSet->diff($now)->format('%a') : null;
         $dateForceChange = (new \DateTime(''))->setDate(2021, 02, 15);
         $needToChange = $dateForceChange->diff($passwordLastSet)->invert;
         if ($needToChange === 1) {

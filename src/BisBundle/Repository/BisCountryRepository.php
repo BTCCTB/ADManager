@@ -32,7 +32,7 @@ class BisCountryRepository extends EntityRepository
             ->getQuery();
 
         /**
-         * @var BisCountry $country
+         * @var BisCountry|null $country
          */
         $country = $query->getOneOrNullResult();
         if (null !== $country) {
@@ -61,7 +61,7 @@ class BisCountryRepository extends EntityRepository
             ->getQuery();
 
         /**
-         * @var BisCountry $country
+         * @var BisCountry|null $country
          */
         $country = $query->getOneOrNullResult();
         if (null !== $country) {

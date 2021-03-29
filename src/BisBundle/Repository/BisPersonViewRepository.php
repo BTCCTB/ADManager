@@ -134,7 +134,13 @@ class BisPersonViewRepository extends EntityRepository
                     if (null !== $jobData) {
                         $bisPersonView
                             ->setFunction($jobData->getJobFunction())
-                            ->setCountryWorkplace($bisCountryRepository->findOneBy(['couIsocode3letters' => $jobData->getJobCountryWorkplace()]))
+                            ->setCountryWorkplace(
+                                $bisCountryRepository->findOneBy(
+                                    [
+                                        'couIsocode3letters' => $jobData->getJobCountryWorkplace()
+                                    ]
+                                )
+                            )
                             ->setJobClass($jobData->getJobClass())
                         ;
                     }
@@ -289,7 +295,9 @@ class BisPersonViewRepository extends EntityRepository
 
         foreach ($this->findAll() as $bisPersonView) {
             /* @var bisPersonView $bisPersonView */
-            $usersMobile[$bisPersonView->getEmail()] = ActiveDirectoryHelper::cleanUpPhoneNumber($bisPersonView->getMobile());
+            $usersMobile[$bisPersonView->getEmail()] = ActiveDirectoryHelper::cleanUpPhoneNumber(
+                $bisPersonView->getMobile()
+            );
         }
 
         return $usersMobile;

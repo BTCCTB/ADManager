@@ -41,7 +41,7 @@
                 <td>{{ account.email }}</td>
                 <td>{{ account.email|userMobile|default('NC') }}</td>
                 <td>{{ account.generatedPassword | default('Not generated') }}</td>
-                <td>{{ account.lastLoginAt|date('d/m/Y H:i')|default('00/00/0000 00:00') }}</td>
+                <td>{{ account.lastLoginAt is empty ? 'never' : account.lastLoginAt|date('d/m/Y H:i') }}</td>
                 <td class="text-right">
                     {% if account.employeeId is not empty %}
                         <a href="{{ path('account_detail', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" aria-hidden="true"></i> {{ 'Show detail'|trans }}</a>

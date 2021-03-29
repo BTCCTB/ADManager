@@ -22,6 +22,7 @@ use AuthBundle\Service\ActiveDirectory;
 use AuthBundle\Service\ActiveDirectoryHelper;
 use AuthBundle\Service\ActiveDirectoryResponseStatus;
 use AuthBundle\Service\BisDir;
+use AuthBundle\Service\BisDirResponseStatus;
 use AuthBundle\Service\SuccessFactorApi;
 use BisBundle\Service\BisPersonView;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,8 +69,12 @@ class AccountController extends AbstractController
      */
     private $securityAudit;
 
-    public function __construct(ActiveDirectory $activeDirectory, BisDir $bisDir, AccountService $accountService, SecurityAudit $securityAudit)
-    {
+    public function __construct(
+        ActiveDirectory $activeDirectory,
+        BisDir $bisDir,
+        AccountService $accountService,
+        SecurityAudit $securityAudit
+    ) {
         $this->activeDirectory = $activeDirectory;
         $this->bisDir = $bisDir;
         $this->accountService = $accountService;
@@ -87,8 +92,12 @@ class AccountController extends AbstractController
      *
      * @return Response
      */
-    public function indexAction(AccountRepository $accountRepository, BisPersonView $bisPersonView, PaginatorInterface $paginator, Request $request)
-    {
+    public function indexAction(
+        AccountRepository $accountRepository,
+        BisPersonView $bisPersonView,
+        PaginatorInterface $paginator,
+        Request $request
+    ) {
         $criteria = $request->query->get('v', null);
         $request->query->remove('f');
         $request->query->remove('v');
@@ -142,7 +151,8 @@ class AccountController extends AbstractController
                 $passwordCheck = ActiveDirectoryHelper::checkPasswordComplexity($data['password']);
                 if (true === $passwordCheck) {
                     if ($this->activeDirectory->changePassword($user->getEmail(), $data['password'])) {
-                        if ($this->bisDir->syncPassword($user->getEmail(), $data['password'])) {
+                        $syncPwdResponse = $this->bisDir->syncPassword($user->getEmail(), $data['password']);
+                        if ($syncPwdResponse->getStatus() === BisDirResponseStatus::DONE) {
                             $this->securityAudit->changePassword(
                                 $this->accountService->getAccount($user->getEmail()),
                                 $user
@@ -231,8 +241,12 @@ class AccountController extends AbstractController
      *
      * @throws \Adldap\AdldapException
      */
-    public function resetAction($employeeID, AccountRepository $accountRepository, BisPersonView $bisPersonView, SmsInterface $sms): RedirectResponse
-    {
+    public function resetAction(
+        $employeeID,
+        AccountRepository $accountRepository,
+        BisPersonView $bisPersonView,
+        SmsInterface $sms
+    ): RedirectResponse {
         $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
         $account = $accountRepository->find($employeeID);
         $userInfo = $bisPersonView->getUser($user->getUserPrincipalName());
@@ -269,16 +283,30 @@ class AccountController extends AbstractController
                 try {
                     $language = $userInfo->getLanguage();
                     $sms->send($messages['info'][$language], $userInfo->getMobile());
-                    $messagePassword = str_replace('%%_PASSWORD_%%', $resetData['generatedpassword'], $messages['password'][$language]);
+                    $messagePassword = str_replace(
+                        '%%_PASSWORD_%%',
+                        $resetData['generatedpassword'],
+                        $messages['password'][$language]
+                    );
                     $sms->send($messagePassword, $userInfo->getMobile());
                 } catch (SmsException $exception) {
-                    $this->addFlash('danger', $exception->getMessage() . ' [SMS ' . $exception->getCode() . ']');
+                    $this->addFlash(
+                        'danger',
+                        $exception->getMessage() . ' [SMS ' . $exception->getCode() . ']'
+                    );
                 }
             }
             $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
-            $this->addFlash('success', 'Account [' . $user->getUserPrincipalName() . '] initialized! [Password: ' . $resetData['generatedpassword'] . ']');
+            $this->addFlash(
+                'success',
+                'Account [' . $user->getUserPrincipalName() . '] initialized! '.
+                '[Password: ' . $resetData['generatedpassword'] . ']'
+            );
         } else {
-            $this->addFlash('danger', 'Can\'t do this action!');
+            $this->addFlash(
+                'danger',
+                'Can\'t do this action!'
+            );
         }
 
         return $this->redirectToRoute('account_list');
@@ -304,10 +332,18 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             if ($this->activeDirectory->checkCredentials($account->getEmail(), $data['password'])) {
-                $this->securityAudit->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), true);
+                $this->securityAudit->testPassword(
+                    $account,
+                    $this->get('security.token_storage')->getToken()->getUser(),
+                    true
+                );
                 $this->addFlash('success', 'This password is correct !');
             } else {
-                $this->securityAudit->testPassword($account, $this->get('security.token_storage')->getToken()->getUser(), false);
+                $this->securityAudit->testPassword(
+                    $account,
+                    $this->get('security.token_storage')->getToken()->getUser(),
+                    false
+                );
                 $this->addFlash('danger', 'This password don\'t match !');
             }
         }
@@ -351,7 +387,15 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account_list');
         }
 
-        return $this->render('Account/detail.html.twig', ['account' => $account, 'adData' => $adUser, 'ldapData' => $ldapUser, 'bisData' => $bisData]);
+        return $this->render(
+            'Account/detail.html.twig',
+            [
+                'account' => $account,
+                'adData' => $adUser,
+                'ldapData' => $ldapUser,
+                'bisData' => $bisData
+            ]
+        );
     }
 
     /**
@@ -373,8 +417,12 @@ class AccountController extends AbstractController
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function changeEmailAction(Account $account, Request $request, UserRepository $userRepository, AccountRepository $accountRepository)
-    {
+    public function changeEmailAction(
+        Account $account,
+        Request $request,
+        UserRepository $userRepository,
+        AccountRepository $accountRepository
+    ) {
         if (!empty($account->getEmail())) {
             $form = $this->createForm(ChangeEmailType::class);
             $form->handleRequest($request);
@@ -392,7 +440,11 @@ class AccountController extends AbstractController
                     $email = strtolower(trim($data['new_email']));
 
                     // Apply email change in AD
-                    $adUser = $this->activeDirectory->findAndChangeEmail($account->getEmail(), $email, $data['keep_proxy']);
+                    $adUser = $this->activeDirectory->findAndChangeEmail(
+                        $account->getEmail(),
+                        $email,
+                        $data['keep_proxy']
+                    );
 
                     if (null !== $adUser && $adUser->getEmail() == $email) {
                         // Apply email change in LDAP
@@ -406,7 +458,11 @@ class AccountController extends AbstractController
                     }
                     $form->addError(new FormError('The email address can\' t be changed'));
                 } else {
-                    $form->get('new_email')->addError(new FormError('The new email address must be a valid Enabel email address [firstname.lastname@enabel.be]'));
+                    $form->get('new_email')->addError(
+                        new FormError(
+                            'The new email address must be a valid Enabel email address [firstname.lastname@enabel.be]'
+                        )
+                    );
                 }
             }
         } else {
@@ -415,7 +471,14 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account_list');
         }
 
-        return $this->render('Account/changeEmail.html.twig', ['form' => $form->createView(), 'account' => $account, 'adData' => $adData]);
+        return $this->render(
+            'Account/changeEmail.html.twig',
+            [
+                'form' => $form->createView(),
+                'account' => $account,
+                'adData' => $adData
+            ]
+        );
     }
 
     /**
@@ -548,8 +611,12 @@ class AccountController extends AbstractController
      *
      * @throws \Adldap\AdldapException
      */
-    public function changeLanguageAction(Request $request, UserLanguageRepository $userLanguageRepository, RouterInterface $router, SessionInterface $session)
-    {
+    public function changeLanguageAction(
+        Request $request,
+        UserLanguageRepository $userLanguageRepository,
+        RouterInterface $router,
+        SessionInterface $session
+    ) {
         /** @var \App\Entity\User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $adUser = $this->activeDirectory->getUser($user->getEmail());

@@ -6,27 +6,38 @@ grumphp:
         clover_coverage:
             clover_file: ./QA/coverage.xml
             level: 1
-        phpcs:
-            standard: "./checkstyle.xml"
-            whitelist_patterns:
-              - '/^src\/(.*)/'
-            ignore_patterns:
-              - '*/Resources/*'
-              - '*/Migrations/*'
-              - '*/DataFixtures/*'
-              - '*/templates/*'
-        phpmd:
-            ruleset: ['codesize.xml']
-            exclude: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Command', 'src/AuthBundle/Service']
-#        phpcpd:
-#            directory: ['./src']
-#            exclude: ['Migrations', 'Service']
-#            min_lines: 10
-#            min_tokens: 100
-        phpstan:
-            ignore_patterns: ['assets', 'bin', 'config', 'public', 'templates', 'tests', 'translations', 'var', 'vendor', 'src/Migrations', 'src/AuthBundle/Service']
-#        phpunitbridge:
-#            always_execute: false
-        twigcs:
-            path: './src'
+        code_sniffer:
+          make_file: ~
+          task: codesniffer
+          triggered_by: [ php ]
+          metadata:
+            task: make
+        mess_detector:
+          make_file: ~
+          task: mess
+          triggered_by: [ php ]
+          metadata:
+            task: make
+        php_stan:
+          make_file: ~
+          task: stan
+          triggered_by: [ php ]
+          metadata:
+            task: make
+        twig_lint:
+          make_file: ~
+          task: twig
+          triggered_by: [ twig ]
+          metadata:
+            task: make
+        security_checker:
+          make_file: ~
+          task: security
+          metadata:
+            task: make
+        test:
+          make_file: ~
+          task: test
+          metadata:
+            task: make
         yamllint: ~

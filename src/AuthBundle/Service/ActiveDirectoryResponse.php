@@ -28,8 +28,12 @@ class ActiveDirectoryResponse
      */
     private $type;
 
-    public function __construct(String $message, int $status = ActiveDirectoryResponseStatus::DONE, int $type = ActiveDirectoryResponseType::GENERAL, array $data = [])
-    {
+    public function __construct(
+        String $message,
+        int $status = ActiveDirectoryResponseStatus::DONE,
+        int $type = ActiveDirectoryResponseType::GENERAL,
+        array $data = []
+    ) {
         $this->message = $message;
         $this->status = $status;
         $this->data = $data;

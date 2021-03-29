@@ -7,12 +7,11 @@ SHELL         = bash
 PROJECT       = password
 SYMFONY_BIN   = ./symfony
 EXEC_PHP      = $(SYMFONY_BIN) php
-REDIS         = $(DOCKER_EXEC) redis redis-cli
 SYMFONY       = $(SYMFONY_BIN) console
 COMPOSER      = $(EXEC_PHP) composer.phar
 DOCKER        = docker-compose
-DOCKER_EXEC   = docker-compose exec
 PHPUNIT       = $(EXEC_PHP) bin/phpunit
+PHPQA		  = $(DOCKER) run --rm phpqa
 .DEFAULT_GOAL = help
 #.PHONY       = # Not needed for now
 
@@ -50,7 +49,7 @@ warmup: ## Warmump the cache
 fix-perms: ## Fix permissions of all var files
 	chmod -R 777 var/*
 
-assets: purge ## Install the assets with symlinks in the public folder
+assets: ## Install the assets with symlinks in the public folder
 	$(SYMFONY) assets:install public/ --symlink --relative
 
 purge: ## Purge cache and logs
@@ -118,7 +117,7 @@ reload: load-fixtures ## Reload fixtures
 abort: down unserve ## Stop docker and the Symfony binary server
 
 cc-redis: ## Flush all Redis cache
-	$(REDIS) flushall
+	$(SYMFONY) redis:flushall -n
 
 commands: ## Display all commands in the project namespace
 	$(SYMFONY) list $(PROJECT)
@@ -148,23 +147,27 @@ test-all: phpunit.xml ## Launch all tests
 cs: codesniffer mess stan ## Launch check style and static analysis
 
 codesniffer: ## Run php_codesniffer only
-	./vendor/bin/phpcs --standard=checkstyle.xml -n -p src/
+	$(PHPQA) phpcs -v --standard=PSR2 --ignore=./src/Kernel.php ./src
 
 stan: ## Run PHPStan only
-	./vendor/bin/phpstan analyse --memory-limit 1G -c phpstan.neon
+	$(PHPQA) phpstan analyze ./src -l 4
 
 mess: ## Run PHP Mess Dectector only
-	./vendor/bin/phpmd --exclude Migrations,AuthBundle/Command,AuthBundle/Service src/ ansi ./codesize.xml
-
-psalm: ## Run psalm only
-	./vendor/bin/psalm --show-info=false
-
-init-psalm: ## Init a new psalm config file for a given level, it must be decremented to have stricter rules
-	rm ./psalm.xml
-	./vendor/bin/psalm --init src/ 3
+	$(PHPQA) phpmd ./src ansi ./codesize.xml
 
 cs-fix: ## Run php-cs-fixer and fix the code.
-	./vendor/bin/php-cs-fixer fix src/
+	$(PHPQA) php-cs-fixer fix src/
+
+twig: ## Run twig lint
+	$(PHPQA) twig-lint lint ./templates
+#	$(PHPQA) twigcs ./templates
+
+security: ./symfony ## Launch dependencies security check
+	$(SYMFONY_BIN) check:security
+
+requirements: ./symfony ## Launch symfony requirements check
+	$(SYMFONY_BIN) check:requirements
+
 
 ## —— Deploy & Prod 🚀 —————————————————————————————————————————————————————————
 deploy-prod: ## Deploy on prod, no-downtime deployment with Ansistrano
