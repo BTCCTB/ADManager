@@ -58,7 +58,7 @@ services:
       com.symfony.server.service-prefix: 'REDIS'
 
   phpqa:
-    image: enabel/phpqa
+    image: enabel/phpqa:7.2
     volumes:
       - ./:/project
       - ./var/cache/phpqa/tmp:/tmp

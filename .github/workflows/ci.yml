@@ -27,23 +27,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Code Sniffer [PHP-CS]
-        uses: docker://jakzal/phpqa:php7.2-alpine
+        uses: docker://enabel/phpqa:7.2
         with:
           args: phpcs -v --standard=PSR2 --ignore=./src/Kernel.php ./src
       - name: PHPStan
-        uses: docker://jakzal/phpqa:php7.2-alpine
+        uses: docker://enabel/phpqa:7.2
         with:
           args: phpstan analyze ./src/ -l 4
       - name: PHP Mess Detector
-        uses: docker://jakzal/phpqa:php7.2-alpine
+        uses: docker://enabel/phpqa:7.2
         with:
           args: phpmd ./src/ ansi ./codesize.xml
       - name: Twig lint
-        uses: docker://jakzal/phpqa:php7.2-alpine
+        uses: docker://enabel/phpqa:7.2
         with:
           args: twig lint ./templates
 #      - name: Twig CS
-#        uses: docker://jakzal/phpqa:php7.2-alpine
+#        uses: docker://enabel/phpqa:7.2
 #        with:
 #          args: twigcs ./templates
 
