@@ -41,7 +41,7 @@ jobs:
       - name: Twig lint
         uses: docker://enabel/phpqa:7.2
         with:
-          args: twig lint ./templates
+          args: twig-lint lint ./templates
 #      - name: Twig CS
 #        uses: docker://enabel/phpqa:7.2
 #        with:
