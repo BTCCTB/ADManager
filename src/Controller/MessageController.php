@@ -61,7 +61,13 @@ class MessageController extends AbstractController
      */
     public function createGroup(Request $request, EnabelGroupSms $enabelGroupSms)
     {
-        $form = $this->createForm(MessageFormType::class, null, ['recipient_choices' => $enabelGroupSms::getGroupRecipientOptions()]);
+        $form = $this->createForm(
+            MessageFormType::class,
+            null,
+            [
+                'recipient_choices' => $enabelGroupSms::getGroupRecipientOptions()
+            ]
+        );
 
         return $this->handleSmsRequest($form, $request, $enabelGroupSms);
     }
@@ -76,7 +82,13 @@ class MessageController extends AbstractController
      */
     public function createPerson(Request $request, EnabelGroupSms $enabelGroupSms, PhoneDirectory $phoneDirectory)
     {
-        $form = $this->createForm(MessageFormType::class, null, ['recipient_choices' => $enabelGroupSms::getPersonRecipientOptions($phoneDirectory)]);
+        $form = $this->createForm(
+            MessageFormType::class,
+            null,
+            [
+                'recipient_choices' => $enabelGroupSms::getPersonRecipientOptions($phoneDirectory)
+            ]
+        );
 
         return $this->handleSmsRequest($form, $request, $enabelGroupSms);
     }

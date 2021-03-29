@@ -393,13 +393,18 @@ class ActiveDirectoryHelper
             $user->setAttribute('co', $bisPersonView->getAttribute('co'));
         }
 
-        if ($bisPersonView->getAttribute('physicalDeliveryOfficeName') !== $user->getFirstAttribute('physicalDeliveryOfficeName')) {
+        if ($bisPersonView->getAttribute('physicalDeliveryOfficeName')
+            !== $user->getFirstAttribute('physicalDeliveryOfficeName')
+        ) {
             $diffData['physicalDeliveryOfficeName'] = [
                 'attribute' => 'physicalDeliveryOfficeName',
                 'value' => $bisPersonView->getAttribute('physicalDeliveryOfficeName'),
                 'original' => $user->getFirstAttribute('physicalDeliveryOfficeName'),
             ];
-            $user->setAttribute('physicalDeliveryOfficeName', $bisPersonView->getAttribute('physicalDeliveryOfficeName'));
+            $user->setAttribute(
+                'physicalDeliveryOfficeName',
+                $bisPersonView->getAttribute('physicalDeliveryOfficeName')
+            );
         }
 
         if ($bisPersonView->getInfo() !== $user->getInfo()) {
@@ -519,7 +524,7 @@ class ActiveDirectoryHelper
                     'value' => null,
                     'original' => $user->getHomeDrive(),
                 ];
-                $user->setHomeDrive(null);
+                $user->setHomeDrive('');
             }
             if (!empty($user->getHomeDirectory())) {
                 $diffData['homedirectory'] = [
@@ -527,7 +532,7 @@ class ActiveDirectoryHelper
                     'value' => null,
                     'original' => $user->getHomeDirectory(),
                 ];
-                $user->setHomeDirectory(null);
+                $user->setHomeDirectory('');
             }
             if (!empty($user->getScriptPath())) {
                 $diffData['scriptpath'] = [
@@ -535,7 +540,7 @@ class ActiveDirectoryHelper
                     'value' => null,
                     'original' => $user->getScriptPath(),
                 ];
-                $user->setScriptPath(null);
+                $user->setScriptPath('');
             }
         }
         if ($bisPersonView->getAttribute('preferredLanguage') !== $user->getFirstAttribute('preferredLanguage')) {

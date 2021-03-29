@@ -288,7 +288,9 @@ class BisPersonView
             'Select a option' => null
         ];
 
-        /* @var BisPersonViewRepository $repo*/
+        /**
+         * @var BisPersonViewRepository $repo
+         */
         $repo = $this->repository;
         $choices+=$repo->getUserChoices();
 

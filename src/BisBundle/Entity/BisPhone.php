@@ -103,7 +103,7 @@ class BisPhone
     private $mobile;
 
     /**
-     * @var BisCountry|string
+     * @var BisCountry|string|null
      *
      * @ORM\ManyToOne(targetEntity="BisBundle\Entity\BisCountry", inversedBy="bisPhones")
      * @ORM\JoinColumn(name="country_workplace", referencedColumnName="cou_isocode_3letters", nullable=true)
@@ -237,7 +237,7 @@ class BisPhone
         return $this;
     }
 
-    public function getCountryWorkplace() : BisCountry
+    public function getCountryWorkplace() : ?BisCountry
     {
         return $this->countryWorkplace;
     }
@@ -254,15 +254,18 @@ class BisPhone
     public function getCountryFlag() :  ? string
     {
         if ($this->getCountryWorkplace() !== null && $this->getCountryWorkplace() instanceof BisCountry) {
-            return "<i class=\"flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) . "\" " .
-            "title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
-            "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>";
+            return
+                "<i class=\"".
+                "flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) .
+                "\" title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
+                "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>"
+            ;
         }
 
         return null;
     }
 
-    public function setCountryWorkplace(string $countryWorkplace)
+    public function setCountryWorkplace(string $countryWorkplace): self
     {
         $this->countryWorkplace = $countryWorkplace;
 

@@ -29,8 +29,10 @@ class SynchronizeCommand extends Command
      *
      * @param ActiveDirectoryNotification $activeDirectoryNotification
      */
-    public function __construct(ActiveDirectory $activeDirectory, ActiveDirectoryNotification $activeDirectoryNotification)
-    {
+    public function __construct(
+        ActiveDirectory $activeDirectory,
+        ActiveDirectoryNotification $activeDirectoryNotification
+    ) {
         $this->activeDirectory = $activeDirectory;
         $this->activeDirectoryNotification = $activeDirectoryNotification;
         parent::__construct();

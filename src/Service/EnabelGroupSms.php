@@ -198,7 +198,7 @@ class EnabelGroupSms
      * Get a array recipient for a given filter by language
      *
      * @param string $filter The given filter to apply
-     * @return ArrayCollection<ContactSms>[] List of contact by language
+     * @return array List of contact by language
      */
     public function getRecipientByLanguages($filter)
     {

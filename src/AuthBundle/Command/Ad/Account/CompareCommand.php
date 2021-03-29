@@ -35,8 +35,11 @@ class CompareCommand extends Command
      * @param BisPersonView         $bisPersonView
      * @param ActiveDirectoryHelper $activeDirectoryHelper
      */
-    public function __construct(ActiveDirectory $activeDirectory, BisPersonView $bisPersonView, ActiveDirectoryHelper $activeDirectoryHelper)
-    {
+    public function __construct(
+        ActiveDirectory $activeDirectory,
+        BisPersonView $bisPersonView,
+        ActiveDirectoryHelper $activeDirectoryHelper
+    ) {
         $this->activeDirectory = $activeDirectory;
         $this->bisPersonView = $bisPersonView;
         $this->activeDirectoryHelper = $activeDirectoryHelper;

@@ -28,8 +28,12 @@ class BisDirResponse
      */
     private $type;
 
-    public function __construct(String $message, int $status = BisDirResponseStatus::DONE, int $type = BisDirResponseType::GENERAL, array $data = [])
-    {
+    public function __construct(
+        String $message,
+        int $status = BisDirResponseStatus::DONE,
+        int $type = BisDirResponseType::GENERAL,
+        array $data = []
+    ) {
         $this->message = $message;
         $this->status = $status;
         $this->data = $data;

@@ -74,16 +74,27 @@ class SuccessFactorApi
                     return $content['d']['photo'];
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get picture for employee [' . $userID . '] (' . $response->getStatusCode() . ')');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to get picture for employee [' . $userID . '] '.
+                    '(' . $response->getStatusCode() . ')'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
 
         return null;
@@ -113,10 +124,13 @@ class SuccessFactorApi
                     ],
                     'query' => [
                         '$select' =>
-                        'personIdExternal,lastName,firstName,preferredName,gender,personNav/emailNav/emailTypeNav/externalCode,' .
-                        'personNav/emailNav/emailAddress,nativePreferredLangNav/externalCode,customString1Nav/externalCode',
+                            'personIdExternal,lastName,firstName,preferredName,gender,'.
+                            'personNav/emailNav/emailTypeNav/externalCode,personNav/emailNav/emailAddress,'.
+                            'nativePreferredLangNav/externalCode,customString1Nav/externalCode',
                         '$expand' => 'personNav/emailNav/emailTypeNav,nativePreferredLangNav,customString1Nav',
-                        '$filter' => "personNav/emailNav/emailAddress like '" . $search . "' or personIdExternal eq '" . $search . "'",
+                        '$filter' =>
+                            "personNav/emailNav/emailAddress like '" . $search . "' ".
+                            "or personIdExternal eq '" . $search . "'",
                         'fromDate' => '1990-01-01',
                         'customPageSize' => self::ITEMS_PER_PAGES,
                     ],
@@ -131,7 +145,9 @@ class SuccessFactorApi
             if (200 === $response->getStatusCode()) {
                 $data = $response->toArray(false);
                 if (isset($data['d']) && 0 !== count($data['d']['results'])) {
-                    $this->logger->debug('SuccessFactorApi: Search employee (' . count($data['d']['results']) . ')');
+                    $this->logger->debug(
+                        'SuccessFactorApi: Search employee (' . count($data['d']['results']) . ')'
+                    );
 
                     foreach ($data['d']['results'] as $employee) {
                         $job = $this->getUserJob($employee['personIdExternal']);
@@ -146,34 +162,70 @@ class SuccessFactorApi
                             'endDate' => !empty($job['endDate']) ? $job['endDate'] : null,
                             'active' => !empty($job['active']) ? $job['active'] : 0,
                             'emailEnabel' => $email,
-                            'motherLanguage' => strtoupper(substr($employee['nativePreferredLangNav']['externalCode'], 0, 2)),
+                            'motherLanguage' =>
+                                strtoupper(
+                                    substr($employee['nativePreferredLangNav']['externalCode'], 0, 2)
+                                ),
                             'preferredLanguage' =>
                             (
-                                in_array(strtoupper(substr($employee['customString1Nav']['externalCode'], 0, 2)), ['EN', 'FR', 'NL']) ?
-                                strtoupper(substr($employee['customString1Nav']['externalCode'], 0, 2)) :
+                                in_array(
+                                    strtoupper(
+                                        substr(
+                                            $employee['customString1Nav']['externalCode'],
+                                            0,
+                                            2
+                                        )
+                                    ),
+                                    [
+                                        'EN', 'FR', 'NL'
+                                    ]
+                                ) ?
+                                strtoupper(
+                                    substr(
+                                        $employee['customString1Nav']['externalCode'],
+                                        0,
+                                        2
+                                    )
+                                ) :
                                 'EN'
                             ),
                             'phone' => $this->getUserPhone($employee['personIdExternal'], 3849),
                             'mobile' => $this->getUserPhone($employee['personIdExternal'], 3850),
-                            'position' => !empty($job['position']) ? SuccessFactorApiHelper::positionFromCode($job['position']) : null,
-                            'jobTitle' => !empty($job['jobTitle']) ? ucfirst(strtolower($job['jobTitle'])) : null,
-                            'countryWorkplace' => !empty($job['countryWorkplace']) ? $job['countryWorkplace'] : null,
-                            'managerId' => !empty($job['managerId']) ? $job['managerId'] : null,
+                            'position' =>
+                                !empty($job['position']) ?
+                                    SuccessFactorApiHelper::positionFromCode($job['position']) :
+                                    null,
+                            'jobTitle' =>
+                                !empty($job['jobTitle']) ? ucfirst(strtolower($job['jobTitle'])) : null,
+                            'countryWorkplace' =>
+                                !empty($job['countryWorkplace']) ? $job['countryWorkplace'] : null,
+                            'managerId' =>
+                                !empty($job['managerId']) ? $job['managerId'] : null,
                             'jobClass' => SuccessFactorApiHelper::jobTypeFromJobCode($job['jobCode'], $job['type']),
                         ];
                     }
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to search employee (' . $response->getStatusCode() . ')');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to search employee (' . $response->getStatusCode() . ')'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
         return $users;
     }
@@ -211,27 +263,43 @@ class SuccessFactorApi
             if (200 === $response->getStatusCode()) {
                 $data = $response->toArray();
                 if (isset($data['d'])) {
-                    $this->logger->debug('SuccessFactorApi: Get phones (' . count($data['d']['results']) . ')');
+                    $this->logger->debug(
+                        'SuccessFactorApi: Get phones (' . count($data['d']['results']) . ')'
+                    );
                     if (isset($data['d']['results'])) {
                         foreach ($data['d']['results'] as $phoneRow) {
                             if (isset($phoneRow['personIdExternal'])) {
-                                $this->logger->debug('SuccessFactorApi: handle phone  for user ' . $phoneRow['personIdExternal']);
-                                $phone = SuccessFactorApiHelper::cleanPhoneNumber($phoneRow['countryCodeNav']['externalCode'] . $phoneRow['phoneNumber']);
+                                $this->logger->debug(
+                                    'SuccessFactorApi: handle phone  for user ' . $phoneRow['personIdExternal']
+                                );
+                                $phone = SuccessFactorApiHelper::cleanPhoneNumber(
+                                    $phoneRow['countryCodeNav']['externalCode'] . $phoneRow['phoneNumber']
+                                );
                             }
                         }
                     }
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get phone (' . $response->getStatusCode() . ')');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to get phone (' . $response->getStatusCode() . ')'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
 
         return $phone;
@@ -254,7 +322,8 @@ class SuccessFactorApi
                     ],
                     'query' => [
                         '$select' =>
-                        'userId,employmentNav/startDate,employmentNav/endDate,emplStatusNav/externalCode,jobCodeNav/name,customString10,jobCodeNav/cust_string1,managerId,jobCode,position',
+                            'userId,employmentNav/startDate,employmentNav/endDate,emplStatusNav/externalCode,'.
+                            'jobCodeNav/name,customString10,jobCodeNav/cust_string1,managerId,jobCode,position',
                         '$expand' => 'emplStatusNav, jobCodeNav,employeeClassNav,employmentNav',
                         '$filter' => 'userId eq ' . $userId,
                         'fromDate' => '1990-01-01',
@@ -279,8 +348,10 @@ class SuccessFactorApi
                             $jobType = SuccessFactorApiHelper::jobTypeFromJobCode($empJob['jobCode']);
                         }
                         $job = [
-                            'startDate' => SuccessFactorApiHelper::SFDateToDateTime($empJob['employmentNav']['startDate']),
-                            'endDate' => SuccessFactorApiHelper::SFDateToDateTime($empJob['employmentNav']['endDate']),
+                            'startDate' =>
+                                SuccessFactorApiHelper::SFDateToDateTime($empJob['employmentNav']['startDate']),
+                            'endDate' =>
+                                SuccessFactorApiHelper::SFDateToDateTime($empJob['employmentNav']['endDate']),
                             'active' => ('A' == $empJob['emplStatusNav']['externalCode']) ? true : false,
                             'jobTitle' => $empJob['jobCodeNav']['name'],
                             'countryWorkplace' => $empJob['customString10'],
@@ -292,16 +363,26 @@ class SuccessFactorApi
                     }
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get jobs (' . $response->getStatusCode() . ')');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to get jobs (' . $response->getStatusCode() . ')'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
 
         return $job;
@@ -339,27 +420,41 @@ class SuccessFactorApi
             if (200 === $response->getStatusCode()) {
                 $data = $response->toArray();
                 if (isset($data['d'])) {
-                    $this->logger->debug('SuccessFactorApi: Get emails (' . count($data['d']['results']) . ')');
+                    $this->logger->debug(
+                        'SuccessFactorApi: Get emails (' . count($data['d']['results']) . ')'
+                    );
                     if (isset($data['d']['results'])) {
                         foreach ($data['d']['results'] as $emailRow) {
                             if (isset($emailRow['personIdExternal'])) {
-                                $this->logger->debug('SuccessFactorApi: handle email  for user ' . $emailRow['personIdExternal']);
+                                $this->logger->debug(
+                                    'SuccessFactorApi: handle email  for user ' . $emailRow['personIdExternal']
+                                );
                                 $email = $emailRow['emailAddress'];
                             }
                         }
                     }
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get phone (' . $response->getStatusCode() . ')');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to get phone (' . $response->getStatusCode() . ')'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
 
         return $email;
@@ -382,7 +477,9 @@ class SuccessFactorApi
                     ],
                     'query' => [
                         '$select' => 'userId,endDate,positionEntryDate,jobCode',
-                        '$filter' => 'userId eq ' . $userId . " and endDate lt datetimeoffset'" . date("Y-m-d") . "T00:00:00Z'",
+                        '$filter' =>
+                            'userId eq ' . $userId .
+                            " and endDate lt datetimeoffset'" . date("Y-m-d") . "T00:00:00Z'",
                         '$expand' => 'eventReasonNav',
                         'fromDate' => '1990-01-01',
                         '$orderby' => 'endDate',
@@ -410,16 +507,27 @@ class SuccessFactorApi
                     }
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get job history for userID: ' . $userId . ' (' . $response->getStatusCode() . ')');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to get job history for userID: ' .
+                    $userId . ' (' . $response->getStatusCode() . ')'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
 
         return $job;
@@ -466,7 +574,9 @@ class SuccessFactorApi
             if (200 === $response->getStatusCode()) {
                 $data = $response->toArray(false);
                 if (isset($data['d'])) {
-                    $this->logger->debug('SuccessFactorApi: Get not active users (' . count($data['d']['results']) . ')');
+                    $this->logger->debug(
+                        'SuccessFactorApi: Get not active users (' . count($data['d']['results']) . ')'
+                    );
                     while (false != $data) {
                         if (null !== $progressBar) {
                             $progressBar->advance(count($data['d']['results']));
@@ -481,16 +591,26 @@ class SuccessFactorApi
                     }
                 }
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get jobs (' . $response->getStatusCode() . ')');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to get jobs (' . $response->getStatusCode() . ')'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
         if (null !== $progressBar) {
             $progressBar->finish();
@@ -549,23 +669,35 @@ class SuccessFactorApi
             if (200 === $response->getStatusCode()) {
                 $data = $response->toArray(false);
                 if (isset($data['d']['results']) && !empty($data['d']['results'])) {
-                    $this->logger->info('SuccessFactorApi: Get next page (' . count($data['d']['results']) . ') [' . $nextUrl . ']');
+                    $this->logger->info(
+                        'SuccessFactorApi: Get next page (' . count($data['d']['results']) . ') [' . $nextUrl . ']'
+                    );
 
                     return $data;
                 }
 
                 return false;
             } else {
-                $this->logger->error('SuccessFactorApi: Unable to get next page (' . $response->getStatusCode() . ') [' . $nextUrl . ']');
+                $this->logger->error(
+                    'SuccessFactorApi: Unable to get next page (' . $response->getStatusCode() . ') [' . $nextUrl . ']'
+                );
             }
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: transport exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ClientExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: client exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (RedirectionExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: redirection exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         } catch (ServerExceptionInterface $e) {
-            $this->logger->error('SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage());
+            $this->logger->error(
+                'SuccessFactorApi: server exception: [' . $e->getCode() . '] ' . $e->getMessage()
+            );
         }
 
         return false;

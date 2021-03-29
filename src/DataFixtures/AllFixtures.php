@@ -21,6 +21,7 @@ class AllFixtures extends Fixture
     {
         $this->faker = Factory::create();
         $this->addAdmin($manager);
+        $this->addUser($manager);
         $this->addApplication($manager);
         $this->addAccount($manager);
 
