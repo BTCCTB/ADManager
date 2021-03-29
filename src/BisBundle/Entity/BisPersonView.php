@@ -335,9 +335,11 @@ class BisPersonView
     public function getCountryFlag()
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-            return "<i class=\"flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) . "\" " .
-            "title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
-            "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>";
+            return "<i class=\"".
+                "flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) .
+                "\" title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
+                "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>"
+            ;
         }
 
         return null;
@@ -552,7 +554,8 @@ class BisPersonView
 
             case 'physicalDeliveryOfficeName':
                 if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-                    return $this->getCountryWorkplace()->getCouName() . ' [' . $this->getCountryWorkplace()->getCouIsocode2letters() . ']';
+                    return $this->getCountryWorkplace()->getCouName() .
+                        ' [' . $this->getCountryWorkplace()->getCouIsocode2letters() . ']';
                 }
 
                 return null;
@@ -607,7 +610,9 @@ class BisPersonView
     public function getOrganizationalUnit()
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-            return ActiveDirectoryHelper::createCountryDistinguishedName($this->getCountryWorkplace()->getCouIsocode3letters());
+            return ActiveDirectoryHelper::createCountryDistinguishedName(
+                $this->getCountryWorkplace()->getCouIsocode3letters()
+            );
         }
 
         return null;

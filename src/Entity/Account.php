@@ -117,7 +117,7 @@ class Account implements EntityInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $lastLoginAt = null;
 

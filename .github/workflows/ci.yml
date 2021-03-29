@@ -1,4 +1,4 @@
-name: Build
+name: CI
 on:
   push:
     branches-ignore:
@@ -7,16 +7,54 @@ on:
     branches:
       - master
       - stage
+
 env:
   APP_ENV: test
+
 jobs:
-  build:
+  security-checker:
+    name: Dependencies security check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Security checker
+        run: make security
+
+  coding-standards:
+    name: Coding standards check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Code Sniffer [PHP-CS]
+        uses: docker://enabel/phpqa:7.2
+        with:
+          args: phpcs -v --standard=PSR2 --ignore=./src/Kernel.php ./src
+      - name: PHPStan
+        uses: docker://enabel/phpqa:7.2
+        with:
+          args: phpstan analyze ./src/ -l 4
+      - name: PHP Mess Detector
+        uses: docker://enabel/phpqa:7.2
+        with:
+          args: phpmd ./src/ ansi ./codesize.xml
+      - name: Twig lint
+        uses: docker://enabel/phpqa:7.2
+        with:
+          args: twig-lint lint ./templates
+#      - name: Twig CS
+#        uses: docker://enabel/phpqa:7.2
+#        with:
+#          args: twigcs ./templates
+
+  tests:
     name: Tests (PHP ${{ matrix.php-versions }})
-    # https://hub.docker.com/_/ubuntu/
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+    needs: [ security-checker, coding-standards ]
     services:
       mariadb:
-        image: mariadb:10.1
+        image: mariadb:10.1.29
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: admanager
@@ -29,8 +67,6 @@ jobs:
       matrix:
         php-versions: ['7.2']
     steps:
-      # —— Setup Github actions 🐙 —————————————————————————————————————————————
-      # https://github.com/actions/checkout (official)
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -47,7 +83,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer:v2
-          coverage: xdebug
           extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, ldap
         env:
           update: true
@@ -77,18 +112,11 @@ jobs:
         run: make install
 
       # —— Symfony 🎵 ——————————————————————————————————————————————————————————
-      - name: Check Symfony requirements
-        run: vendor/bin/requirements-checker
+      - name: Check requirements
+        run: make requirements
 
-      - name: Check the Symfony console
-        run: php bin/console -V
-
-      ## —— Coding standards ✨ ————————————————————————————————————————————————
-      - name: Coding standards checks (php_codesniffer + PHPMD+ PHPStan)
-        run: make cs
-
-      ## —— Tests ✅ ———————————————————————————————————————————————————————————
-      - name: Load Doctrine fixtures
+      # —— Tests ✅ ———————————————————————————————————————————————————————————
+      - name: Create & fill database
         run: make load-fixtures
 
       - name: Run functionnal and unit tests
@@ -98,7 +126,7 @@ jobs:
   slack:
     name: Slack
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [tests]
     if: always()
     steps:
       - uses: technote-space/workflow-conclusion-action@v1

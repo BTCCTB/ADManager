@@ -37,7 +37,7 @@ class CreateCommand extends Command
     private $bisPersonView;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -49,8 +49,12 @@ class CreateCommand extends Command
      * @param BisPersonView   $bisPersonView
      * @param EntityManagerInterface   $em
      */
-    public function __construct(ActiveDirectory $activeDirectory, BisDir $bisDir, BisPersonView $bisPersonView, EntityManagerInterface $em)
-    {
+    public function __construct(
+        ActiveDirectory $activeDirectory,
+        BisDir $bisDir,
+        BisPersonView $bisPersonView,
+        EntityManagerInterface $em
+    ) {
         $this->activeDirectory = $activeDirectory;
         $this->bisDir = $bisDir;
         $this->bisPersonView = $bisPersonView;

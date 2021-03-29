@@ -63,7 +63,12 @@ class DisableEmployeeCommand extends Command
             if (is_int($id) && in_array($id, $users)) {
                 $action++;
                 $eventData = $this->sfApi->getUserJobHistory($id);
-                $message = sprintf("Employee %d is not active in SF (%s) => End date: %s", $id, $data['active'], $eventData['endDate']);
+                $message = sprintf(
+                    "Employee %d is not active in SF (%s) => End date: %s",
+                    $id,
+                    $data['active'],
+                    $eventData['endDate']
+                );
                 $io->comment($message);
                 $this->bisPersonView->disbaleUserAt($id, $eventData['endDate']);
             }

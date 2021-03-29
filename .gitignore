@@ -35,11 +35,6 @@
 ansible/.ssh/*
 !ansible/.ssh/.gitkeep
 ###< ansistrano/deploy ###
-
-###> squizlabs/php_codesniffer ###
-/.phpcs-cache
-###< squizlabs/php_codesniffer ###
-
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
@@ -50,8 +45,3 @@ yarn-error.log
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
-
-###> friendsofphp/php-cs-fixer ###
-/.php_cs
-/.php_cs.cache
-###< friendsofphp/php-cs-fixer ###

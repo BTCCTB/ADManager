@@ -39,7 +39,12 @@ class AccountRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('account')
             ->andWhere('account.isActive = :active')
-            ->andWhere('(account.firstname LIKE :criteria OR account.lastname LIKE :criteria OR account.email LIKE :criteria OR account.employeeId LIKE :criteria)')
+            ->andWhere(
+                '(account.firstname LIKE :criteria '.
+                'OR account.lastname LIKE :criteria '.
+                'OR account.email LIKE :criteria '.
+                'OR account.employeeId LIKE :criteria)'
+            )
             ->setParameter('active', 1)
             ->setParameter('criteria', (empty($searchCriteria)?'%':'%' . $searchCriteria . '%'))
             ->getQuery()

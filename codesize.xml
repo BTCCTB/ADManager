@@ -8,15 +8,7 @@
         Custom ruleset for Symfony
     </description>
 
-    <exclude-pattern>.docker/</exclude-pattern>
-    <exclude-pattern>ansible/</exclude-pattern>
-    <exclude-pattern>var/</exclude-pattern>
-    <exclude-pattern>vendor/</exclude-pattern>
-    <exclude-pattern>*/Command/*</exclude-pattern>
-    <exclude-pattern>*/Resources/*</exclude-pattern>
-    <exclude-pattern>*/Migrations/*</exclude-pattern>
-    <exclude-pattern>*/DataFixtures/*</exclude-pattern>
-    <exclude-pattern>*/templates/*</exclude-pattern>
+    <exclude-pattern>*Bundle/Service/*</exclude-pattern>
 
     <rule ref="rulesets/codesize.xml" >
         <!-- configured below -->
@@ -82,7 +74,7 @@
     <!-- Exclude $em, $id and $i from the short variables rule -->
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
-            <property name="exceptions" value="id,i,em,ad,dn,ou,to" />
+            <property name="exceptions" value="id,i,em,ad,dn,ou,to,io" />
         </properties>
     </rule>
     <!-- Allow a longer length for long variables rule -->

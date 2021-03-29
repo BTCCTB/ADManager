@@ -1,7 +1,7 @@
 version: '3'
 services:
   mariadb:
-    image: mariadb:10.1
+    image: mariadb:10.1.29
     volumes:
       - .docker/data/db:/var/lib/mysql
     environment:
@@ -57,32 +57,9 @@ services:
     labels:
       com.symfony.server.service-prefix: 'REDIS'
 
-  ## PHP Part
-  ## TODO: Add php ext (ldap, curl, json, intl, mysql, xml)
-  ## TODO2: Create a install/entrypoint script
-  php72:
-    image: php:7.2-fpm
+  phpqa:
+    image: enabel/phpqa:7.2
     volumes:
-      - ./:/app
-    working_dir: /app
-    ports:
-      - 72:8000
-    entrypoint: /app/symfony serve
-
-  php74:
-    image: php:7.4-fpm
-    volumes:
-      - ./:/app
-    working_dir: /app
-    ports:
-      - 74:8000
-    entrypoint: /app/symfony serve
-
-  php80:
-    image: php:8.0-fpm
-    volumes:
-      - ./:/app
-    working_dir: /app
-    ports:
-      - 80:8000
-    entrypoint: /app/symfony serve
+      - ./:/project
+      - ./var/cache/phpqa/tmp:/tmp
+    working_dir: /project

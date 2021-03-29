@@ -54,8 +54,13 @@ class ForceExpiredCommand extends Command
      * @param EntityManagerInterface   $em
      * @param PasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(ActiveDirectory $activeDirectory, BisPersonView $bisPersonView, BisDir $bisDir, EntityManagerInterface $em, PasswordEncoderInterface $passwordEncoder)
-    {
+    public function __construct(
+        ActiveDirectory $activeDirectory,
+        BisPersonView $bisPersonView,
+        BisDir $bisDir,
+        EntityManagerInterface $em,
+        PasswordEncoderInterface $passwordEncoder
+    ) {
         $this->activeDirectory = $activeDirectory;
         $this->bisDir = $bisDir;
         $this->bisPersonView = $bisPersonView;
@@ -73,16 +78,15 @@ class ForceExpiredCommand extends Command
     {
         $this->setName('ad:account:force-expired')
             ->setDescription('Force expiration for given account')
-            ->addArgument('emails', InputArgument::OPTIONAL, 'User(s) email(s)? [...@enabel.be] or [...@enabel.be,...@enabel.be]');
+            ->addArgument(
+                'emails',
+                InputArgument::OPTIONAL,
+                'User(s) email(s)? [...@enabel.be] or [...@enabel.be,...@enabel.be]'
+            );
     }
 
     /**
      * Executes the current command.
-     *
-     * This method is not abstract because you can use this class
-     * as a concrete class. In this case, instead of defining the
-     * execute() method, you set the code to execute by passing
-     * a Closure to the setCode() method.
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
@@ -96,13 +100,9 @@ class ForceExpiredCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $emails = $input->getArgument('emails');
-        $adChanges = null;
-        $accountChanges = null;
-        $ldapChanges = null;
         $data = [];
         foreach (explode('|', $emails) as $email) {
             // Get user info BIS,AD,LDAP,Password
-            $bisAccount = $this->bisPersonView->getUser($email);
             $adAccount = $this->activeDirectory->getUser($email);
             $ldapAccount = $this->bisDir->getUser($email);
             /** @var AccountRepository $accountRepository **/
@@ -166,7 +166,7 @@ class ForceExpiredCommand extends Command
                             $ldapChanges = "<fg=red> Password not updated!</>";
                         }
                     } else {
-                        $ldapChanges = "<fg=yellow>\xE2\x9A\xA1 no ldap account, should be create after first logon.</>";
+                        $ldapChanges = "<fg=yellow>\xE2\x9A\xA1 no ldap account.</>";
                     }
                     $accountChanges = "<info>\xF0\x9F\x97\xB8 Password updated !</info>";
                 }

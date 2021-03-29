@@ -78,7 +78,7 @@
                         </tr>
                         <tr>
                             <th>Proxy addresses</th>
-                            <td>{{ adData.proxyAddresses|default('N.C.')|join('<br>')|raw }}</td>
+                            <td>{{ adData.getproxyAddresses|default('N.C.')|join('<br>')|raw }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -162,27 +162,27 @@
                         <tbody>
                             <tr>
                                 <th>Account</th>
-                                <td>{{ adData.userPrincipalName|default('N.C.') }} [{{ account.accountName|default('N.C.') }}]</td>
+                                <td>{{ adData.getuserPrincipalName|default('N.C.') }} [{{ account.accountName|default('N.C.') }}]</td>
                             </tr>
                             <tr>
                                 <th>DN</th>
-                                <td>{{ adData.distinguishedName|default('N.C.') }}</td>
+                                <td>{{ adData.getdistinguishedName|default('N.C.') }}</td>
                             </tr>
                             <tr>
                                 <th>Home Drive</th>
-                                <td>{{ [adData.homeDrive, adData.homeDirectory]|join(' => ')|default('N.C.') }}</td>
+                                <td>{{ [adData.gethomeDrive, adData.gethomeDirectory]|join(' => ')|default('N.C.') }}</td>
                             </tr>
                             <tr>
                                 <th>Bad password count</th>
-                                <td>{{ adData.badPasswordCount|default('N.C.') }}</td>
+                                <td>{{ adData.getbadPasswordCount|default('N.C.') }}</td>
                             </tr>
                             <tr>
                                 <th>Last login</th>
-                                <td>{{ account.lastLoginAt|default('N.C.')|date("d/m/Y H:i:s") }}</td>
+                                <td>{{ account.lastLoginAt is empty ? 'never' : account.lastLoginAt|date("d/m/Y H:i:s") }}</td>
                             </tr>
                             <tr>
                                 <th>Password last set</th>
-                                <td>{{ adData.passwordLastSetTimestamp|default('N.C.')|date("d/m/Y H:i:s") }}</td>
+                                <td>{{ adData.getpasswordLastSetTimestamp is empty ? 'never' : adData.getpasswordLastSetTimestamp|date("d/m/Y H:i:s") }}</td>
                             </tr>
                             <tr>
                                 <th>Status</th>
@@ -210,11 +210,11 @@
                             </tr>
                             <tr>
                                 <th>Creation date</th>
-                                <td>{{ adData.createdAtDate|default('N.C.')|date('d/m/Y H:i') }}</td>
+                                <td>{{ adData.getcreatedAtDate|date('d/m/Y H:i') }}</td>
                             </tr>
                             <tr>
                                 <th>Modification date</th>
-                                <td>{{ adData.updatedAtDate|default('N.C.')|date('d/m/Y H:i') }}</td>
+                                <td>{{ adData.getupdatedAtDate is empty ? 'never' : adData.getupdatedAtDate|date('d/m/Y H:i') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -234,26 +234,26 @@
                         <tbody>
                         <tr>
                             <th>Email</th>
-                            <td>{{ ldapData.email }}</td>
+                            <td>{{ ldapData.getemail }}</td>
                         </tr>
                         <tr>
                             <th>Display name</th>
-                            <td>{{ ldapData.displayName }}</td>
+                            <td>{{ ldapData.getdisplayName }}</td>
                         </tr>
                         <tr>
                             <th>DN</th>
-                            <td>{{ ldapData.distinguishedName }}</td>
+                            <td>{{ ldapData.getdistinguishedName }}</td>
                         </tr>
-                        {% if ldapData.createdAt is not empty %}
+                        {% if ldapData.getcreatedAt is not empty %}
                             <tr>
                                 <th>Creation date</th>
-                                <td>{{ ldapData.createdAtDate|date('d/m/Y H:i') }}</td>
+                                <td>{{ ldapData.getcreatedAtDate|date('d/m/Y H:i') }}</td>
                             </tr>
                         {% endif %}
-                        {% if ldapData.updatedAt is not empty %}
+                        {% if ldapData.getupdatedAt is not empty %}
                             <tr>
                                 <th>Modify date</th>
-                                <td>{{ ldapData.updatedAtDate|date('d/m/Y H:i') }}</td>
+                                <td>{{ ldapData.getupdatedAtDate|date('d/m/Y H:i') }}</td>
                             </tr>
                         {% endif %}
                         </tbody>

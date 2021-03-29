@@ -137,7 +137,7 @@ class ActiveDirectory
     /**
      * Find a active directory user by employee ID
      *
-     * @param string $employeeID His employee ID
+     * @param int $employeeID His employee ID
      *
      * @return User|null The user.
      */
@@ -288,7 +288,7 @@ class ActiveDirectory
             ->whereEquals('objectClass', 'user')
             ->in($fieldDn->get())
             ->sortBy($sortField, $sortDirection)
-            ->paginate('10000')
+            ->paginate(10000)
             ->getResults();
     }
 
@@ -714,7 +714,7 @@ class ActiveDirectory
         }
 
         return new ActiveDirectoryResponse(
-            "User '" . $email . "' not found! " . ((null === $adAccount) ? '[NOT IN AD]' : '') . ((null === $bisUser) ? '[NOT IN BIS]' : ''),
+            "User '" . $email . "' not found! " . ((false === $adAccount) ? '[NOT IN AD]' : '') . ((null === $bisUser) ? '[NOT IN BIS]' : ''),
             ActiveDirectoryResponseStatus::EXCEPTION,
             ActiveDirectoryResponseType::UPDATE,
             [
@@ -779,7 +779,7 @@ class ActiveDirectory
         }
 
         return new ActiveDirectoryResponse(
-            "User '" . $email . "' not found! " . ((null === $adAccount) ? '[NOT IN AD]' : '') . ((null === $bisUser) ? '[NOT IN BIS]' : ''),
+            "User '" . $email . "' not found! " . ((false === $adAccount) ? '[NOT IN AD]' : '') . ((null === $bisUser) ? '[NOT IN BIS]' : ''),
             ActiveDirectoryResponseStatus::EXCEPTION,
             ActiveDirectoryResponseType::UPDATE,
             [

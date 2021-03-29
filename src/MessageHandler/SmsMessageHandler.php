@@ -29,17 +29,21 @@ class SmsMessageHandler implements MessageHandlerInterface, LoggerAwareInterface
 
     public function __invoke(SmsMessage $message)
     {
-        if ($this->logger) {
+        if ($this->logger !== null) {
             $this->logger->info(sprintf("Try to send a sms to %s", $message->getRecipient()));
         }
         $status = $this->smsService->send($message->getContent(), $message->getRecipient());
         if ($status != SmsInterface::SEND) {
-            if ($this->logger) {
-                $this->logger->alert(sprintf("Sms can't be send to %s (status: %s)", $message->getRecipient(), $status));
+            if ($this->logger !== null) {
+                $this->logger->alert(
+                    sprintf("Sms can't be send to %s (status: %s)", $message->getRecipient(), $status)
+                );
             }
-            throw new \Exception(sprintf("Sms can't be send to %s (status: %s)", $message->getRecipient(), $status));
+            throw new \Exception(
+                sprintf("Sms can't be send to %s (status: %s)", $message->getRecipient(), $status)
+            );
         } else {
-            if ($this->logger) {
+            if ($this->logger !== null) {
                 $this->logger->info(sprintf("Sms send to %s", $message->getRecipient()));
             }
         }
