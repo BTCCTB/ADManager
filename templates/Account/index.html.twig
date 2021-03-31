@@ -12,7 +12,7 @@
         {{ knp_pagination_filter(
             pagination,
             {
-                'global':'filter.criteria'
+                'global': 'filter.criteria'
             }
         ) }}
     </div>
@@ -23,12 +23,12 @@
         <thead>
         <tr>
             <th>{{ knp_pagination_sortable(pagination, '#', 'account.employeeId') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Firstname'|trans, 'account.firstname' )|raw }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Lastname'|trans, 'account.lastname' )|raw }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Email'|trans, 'account.email' )|raw }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Firstname'|trans, 'account.firstname')|raw }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Lastname'|trans, 'account.lastname')|raw }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Email'|trans, 'account.email')|raw }}</th>
             <th>{{ 'Mobile'|trans }}</th>
             <th>{{ 'Initial password'|trans }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Last login'|trans, 'account.lastLoginAt' )|raw }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Last login'|trans, 'account.lastLoginAt')|raw }}</th>
             <th class="text-right">{{ 'Actions'|trans }} </th>
         </tr>
         </thead>
@@ -40,14 +40,14 @@
                 <td>{{ account.lastname }}</td>
                 <td>{{ account.email }}</td>
                 <td>{{ account.email|userMobile|default('NC') }}</td>
-                <td>{{ account.generatedPassword | default('Not generated') }}</td>
+                <td>{{ account.generatedPassword|default('Not generated') }}</td>
                 <td>{{ account.lastLoginAt is empty ? 'never' : account.lastLoginAt|date('d/m/Y H:i') }}</td>
                 <td class="text-right">
                     {% if account.employeeId is not empty %}
-                        <a href="{{ path('account_detail', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" aria-hidden="true"></i> {{ 'Show detail'|trans }}</a>
-                        <a href="{{ path('account_change_email', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-danger"><i class="fas fa-edit" aria-hidden="true"></i> {{ 'Change email'|trans }}</a>
-                        <a href="{{ path('account_check_password', {'id': account.employeeId }) }}" class="btn btn-sm btn-outline-info"><i class="fas fa-medkit" aria-hidden="true"></i> {{ 'Test password'|trans }}</a>
-                        <a href="{{ path('account_reset_password', {'employeeID': account.employeeId }) }}" class="btn btn-sm btn-outline-warning account_reset_password"><i class="fas fa-redo-alt" aria-hidden="true"></i> {{ 'Reset password'|trans }}</a>
+                        <a href="{{ path('account_detail', {'id': account.employeeId}) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" aria-hidden="true"></i> {{ 'Show detail'|trans }}</a>
+                        <a href="{{ path('account_change_email', {'id': account.employeeId}) }}" class="btn btn-sm btn-outline-danger"><i class="fas fa-edit" aria-hidden="true"></i> {{ 'Change email'|trans }}</a>
+                        <a href="{{ path('account_check_password', {'id': account.employeeId}) }}" class="btn btn-sm btn-outline-info"><i class="fas fa-medkit" aria-hidden="true"></i> {{ 'Test password'|trans }}</a>
+                        <a href="{{ path('account_reset_password', {'employeeID': account.employeeId}) }}" class="btn btn-sm btn-outline-warning account_reset_password"><i class="fas fa-redo-alt" aria-hidden="true"></i> {{ 'Reset password'|trans }}</a>
                     {% endif %}
                 </td>
             </tr>
