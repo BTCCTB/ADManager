@@ -40,7 +40,7 @@ update: get-composer composer.json ## Update vendors according to the composer.j
 sf: ## List all Symfony commands
 	$(SYMFONY)
 
-cc: ## Clear the cache. DID YOU CLEAR YOUR CACHE????
+cc: cc-redis ## Clear the cache. DID YOU CLEAR YOUR CACHE????
 	$(SYMFONY) c:c
 
 warmup: ## Warmump the cache
