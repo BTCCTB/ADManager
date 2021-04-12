@@ -25,7 +25,7 @@ class SmsGatewayMeTest extends WebTestCase
 
         $container = self::$kernel->getContainer();
 
-        $this->smsGatewayMe = $container->get('test.App\Service\SmsGatewayMe');
+        $this->smsGatewayMe = $container->get('test.sms_gateway_me');
 
         parent::setUp();
     }

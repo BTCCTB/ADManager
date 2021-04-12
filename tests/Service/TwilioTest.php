@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
  * @group external
+ * @group pay
  */
 class TwilioTest extends KernelTestCase
 {
@@ -26,7 +27,7 @@ class TwilioTest extends KernelTestCase
 
         $container = self::$kernel->getContainer();
 
-        $this->twilio = $container->get('test.App\Service\Twilio');
+        $this->twilio = $container->get('test.twilio');
 
         parent::setUp();
     }

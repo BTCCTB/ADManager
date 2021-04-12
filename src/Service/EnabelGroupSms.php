@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Dto\ContactSms;
-use BisBundle\Service\PhoneDirectory;
+use Bis\Service\PhoneDirectory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;

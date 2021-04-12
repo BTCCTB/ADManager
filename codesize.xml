@@ -8,7 +8,7 @@
         Custom ruleset for Symfony
     </description>
 
-    <exclude-pattern>*Bundle/Service/*</exclude-pattern>
+    <exclude-pattern>Auth/Service/*</exclude-pattern>
 
     <rule ref="rulesets/codesize.xml" >
         <!-- configured below -->

@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use AuthBundle\Service\ActiveDirectory;
-use BisBundle\Entity\BisCountry;
-use BisBundle\Repository\BisCountryRepository;
-use BisBundle\Service\BisPersonView;
-use BisBundle\Service\PhoneDirectory;
-use BisBundle\Service\Staff;
+use Auth\Service\ActiveDirectory;
+use Bis\Entity\BisCountry;
+use Bis\Repository\BisCountryRepository;
+use Bis\Service\BisPersonView;
+use Bis\Service\PhoneDirectory;
+use Bis\Service\Staff;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
