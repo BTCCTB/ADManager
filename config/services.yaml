@@ -34,7 +34,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,BisBundle,AuthBundle,ApiBundle}'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,Bis,Auth,Api,Edw}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -42,25 +42,35 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    ## REMOVE LATER
-    AuthBundle\:
-        resource: '../src/AuthBundle/*'
-        exclude: '../src/AuthBundle/{Entity,Repository,Tests}'
+    Auth\:
+        resource: '../src/Auth/*'
+        exclude: '../src/Auth/{Entity,Repository,Tests}'
 
-    AuthBundle\Controller\:
-        resource: '../src/AuthBundle/Controller'
+    Auth\Controller\:
+        resource: '../src/Auth/Controller'
         public: true
         tags: ['controller.service_arguments']
-    ## END REMOVE LATER
+
+    Api\:
+        resource: '../src/Api/*'
+        exclude: '../src/Api/{Entity,Migrations,Tests}'
+
+    Api\Controller\:
+        resource: '../src/Api/Controller'
+        tags: ['controller.service_arguments']
+
+    Edw\:
+        resource: '../src/Edw/*'
+        exclude: '../src/Edw/{Entity,Migrations,Tests}'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    AuthBundle\Security\SHA1PasswordEncoder: ~
+    Auth\Security\SHA1PasswordEncoder: ~
     auth.ldap.password_encoder:
-        alias: 'AuthBundle\Security\SHA1PasswordEncoder'
+        alias: 'Auth\Security\SHA1PasswordEncoder'
         public: true
 
-    AuthBundle\Service\ActiveDirectory:
+    Auth\Service\ActiveDirectory:
         arguments:
             $em: "@doctrine.orm.default_entity_manager"
             $bis: "@doctrine.orm.bis_entity_manager"
@@ -72,52 +82,52 @@ services:
         public: true
 
     auth.active_directory:
-        alias: AuthBundle\Service\ActiveDirectory
+        alias: Auth\Service\ActiveDirectory
         public: true
 
-    AuthBundle\Service\ActiveDirectoryNotification:
+    Auth\Service\ActiveDirectoryNotification:
         autowire: true
         arguments:
             $fromAddress: '%env(resolve:NOTIFICATION_FROM)%'
             $toAddress: '%env(resolve:NOTIFICATION_TO)%'
         public: true
 
-    AuthBundle\Service\BisDir:
+    Auth\Service\BisDir:
         arguments: [ '@auth.ldap.password_encoder','%env(resolve:BIS_DIR_HOSTS)%', '%env(resolve:BIS_DIR_BASE_DN)%', '%env(resolve:BIS_DIR_ADMIN_USERNAME)%', '%env(resolve:BIS_DIR_ADMIN_PASSWORD)%']
         public: true
 
     auth.bis_dir:
-        alias: AuthBundle\Service\BisDir
+        alias: Auth\Service\BisDir
         public: true
 
-    AuthBundle\Security\AdldapAuthenticator:
+    Auth\Security\AdldapAuthenticator:
         arguments: [ "@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder", "@auth.active_directory", "@auth.bis_dir", '@logger', '@App\Service\Account']
         autowire: true
         public: true
 
-    AuthBundle\Doctrine\HashPasswordListener:
+    Auth\Doctrine\HashPasswordListener:
         autowire: true
         tags:
             - { name: doctrine.event_subscriber}
         public: true
 
     auth.doctrine.hash_password_listener:
-        alias: AuthBundle\Doctrine\HashPasswordListener
+        alias: Auth\Doctrine\HashPasswordListener
         public: true
 
-    BisBundle\Service\BisPersonView:
+    Bis\Service\BisPersonView:
         autowire: true
         arguments:
             $bis: "@doctrine.orm.bis_entity_manager"
         public: true
 
-    BisBundle\Service\PhoneDirectory:
+    Bis\Service\PhoneDirectory:
         autowire: true
         arguments:
             $bis: "@doctrine.orm.bis_entity_manager"
         public: true
 
-    BisBundle\Service\Staff:
+    Bis\Service\Staff:
         autowire: true
         arguments:
             $bis: "@doctrine.orm.bis_entity_manager"
@@ -137,7 +147,7 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: ['App\Entity\User']
 
-    AuthBundle\Service\SuccessFactorApi:
+    Auth\Service\SuccessFactorApi:
         autowire: true
         arguments:
             $token: "%env(SF_API_TOKEN)%"
@@ -150,17 +160,9 @@ services:
         autoconfigure: true
         tags: ['twig.extension']
 
-    AuthBundle\Command\Ad\Account\ForceExpiredCommand:
+    Auth\Command\Ad\Account\ForceExpiredCommand:
         arguments:
             $passwordEncoder: "@auth.ldap.password_encoder"
-
-    Api\:
-        resource: '../src/ApiBundle/*'
-        exclude: '../src/ApiBundle/{Entity,Migrations,Tests}'
-
-    Api\Controller\:
-        resource: '../src/ApiBundle/Controller'
-        tags: ['controller.service_arguments']
 
     App\Service\SmsGatewayMe:
         arguments:
@@ -184,4 +186,13 @@ services:
         autoconfigure: true
         tags: ['twig.extension']
 
+    Edw\Service\EdwApi:
+        autowire: true
+        arguments:
+            $email: "%env(EDW_EMAIL)%"
+            $password: "%env(EDW_PASSWORD)%"
+            $baseUrl: "%env(EDW_URL)%"
+        public: true
+
+    Edw\Service\ApiInterface: '@Edw\Service\EdwApi'
 

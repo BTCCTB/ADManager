@@ -3719,16 +3719,16 @@
         },
         {
             "name": "odolbeau/phone-number-bundle",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/odolbeau/phone-number-bundle.git",
-                "reference": "1182127cd71e596ad8b029007799443df371bfe9"
+                "reference": "8db439fa58d12a569ef0c97bf8bd8a08ab691e78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/odolbeau/phone-number-bundle/zipball/1182127cd71e596ad8b029007799443df371bfe9",
-                "reference": "1182127cd71e596ad8b029007799443df371bfe9",
+                "url": "https://api.github.com/repos/odolbeau/phone-number-bundle/zipball/8db439fa58d12a569ef0c97bf8bd8a08ab691e78",
+                "reference": "8db439fa58d12a569ef0c97bf8bd8a08ab691e78",
                 "shasum": ""
             },
             "require": {
@@ -3782,9 +3782,9 @@
             ],
             "support": {
                 "issues": "https://github.com/odolbeau/phone-number-bundle/issues",
-                "source": "https://github.com/odolbeau/phone-number-bundle/tree/v3.4.0"
+                "source": "https://github.com/odolbeau/phone-number-bundle/tree/v3.4.1"
             },
-            "time": "2021-04-06T08:55:36+00:00"
+            "time": "2021-04-12T08:30:59+00:00"
         },
         {
             "name": "php-http/client-common",
@@ -11709,16 +11709,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "943b5d70cc5ae7483f6aff6ff43d7e34592ca0f5"
+                "reference": "06e2ebd25f2869e54a306dda991f7db58066f7f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/943b5d70cc5ae7483f6aff6ff43d7e34592ca0f5",
-                "reference": "943b5d70cc5ae7483f6aff6ff43d7e34592ca0f5",
+                "url": "https://api.github.com/repos/opis/closure/zipball/06e2ebd25f2869e54a306dda991f7db58066f7f6",
+                "reference": "06e2ebd25f2869e54a306dda991f7db58066f7f6",
                 "shasum": ""
             },
             "require": {
@@ -11768,9 +11768,9 @@
             ],
             "support": {
                 "issues": "https://github.com/opis/closure/issues",
-                "source": "https://github.com/opis/closure/tree/3.6.1"
+                "source": "https://github.com/opis/closure/tree/3.6.2"
             },
-            "time": "2020-11-07T02:01:34+00:00"
+            "time": "2021-04-09T13:42:10+00:00"
         },
         {
             "name": "php-parallel-lint/php-console-highlighter",

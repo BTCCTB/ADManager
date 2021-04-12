@@ -6,5 +6,7 @@ services:
     # and then fetch that alias from the container. As a convention,
     # aliases are prefixed with test. For example:
     #
-    test.App\Service\SmsGatewayMe: '@App\Service\SmsGatewayMe'
-    test.App\Service\Twilio: '@App\Service\Twilio'
+    test.sms_gateway_me: '@App\Service\SmsGatewayMe'
+    test.twilio: '@App\Service\Twilio'
+    test.edw_api: '@Edw\Service\EdwApi'
+    test.edw_api_go4hr_contact: '@Edw\Service\Go4hr\Contact'

@@ -135,13 +135,19 @@ phpunit.xml:
 	cp phpunit.xml.dist phpunit.xml
 
 test: phpunit.xml ## Launch main functionnal and unit tests
-	$(PHPUNIT) --group=main --stop-on-failure --debug
+	$(PHPUNIT) --group=main --stop-on-failure --testdox
 
 test-external: phpunit.xml ## Launch tests implying external resources (api, services...)
-	$(PHPUNIT) --group=external --stop-on-failure --debug
+	$(PHPUNIT) --group=external --stop-on-failure --testdox
+
+test-edw: phpunit.xml ## Launch tests implying edw api
+	$(PHPUNIT) --group=edw --stop-on-failure --testdox
 
 test-all: phpunit.xml ## Launch all tests
-	$(PHPUNIT) --stop-on-failure
+	$(PHPUNIT) --stop-on-failure --testdox
+
+test-free: phpunit.xml ## Launch all tests excepted group `pay`
+	$(PHPUNIT) --exclude=pay --stop-on-failure --testdox
 
 ## —— Coding standards ✨ ——————————————————————————————————————————————————————
 cs: codesniffer mess stan ## Launch check style and static analysis
