@@ -44,13 +44,11 @@ class BisDirHelper
      */
     public static function adAccountToLdapEntry(User $adAccount, Entry $entry): Entry
     {
-        //TODO: Add old btcctb.org email in one of these attribute
         $entry->setCommonName($adAccount->getCommonName())
             ->setDisplayName($adAccount->getDisplayName())
             ->setAttribute('uid', $adAccount->getEmail())
             ->setAttribute('employeenumber', $adAccount->getEmployeeId())
             ->setAttribute('mail', $adAccount->getEmail())
-        //->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()))
             ->setAttribute('givenname', $adAccount->getFirstName())
             ->setAttribute('sn', $adAccount->getLastName())
             ->setAttribute('objectclass', 'inetOrgPerson')
@@ -76,13 +74,11 @@ class BisDirHelper
      */
     public static function bisPersonViewToLdapEntry(BisPersonView $bisPersonView, Entry $entry): Entry
     {
-        //TODO: Add old btcctb.org email in one of these attribute
         $entry->setCommonName($bisPersonView->getCommonName())
             ->setDisplayName($bisPersonView->getDisplayName())
             ->setAttribute('uid', $bisPersonView->getEmail())
             ->setAttribute('employeenumber', $bisPersonView->getEmployeeId())
             ->setAttribute('mail', $bisPersonView->getEmail())
-        //->setAttribute('businesscategory', str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()))
             ->setAttribute('givenname', $bisPersonView->getFirstName())
             ->setAttribute('sn', $bisPersonView->getLastName())
             ->setAttribute('objectclass', 'inetOrgPerson')
@@ -115,7 +111,6 @@ class BisDirHelper
                 'uid' => $adAccount->getEmail(),
                 'employeenumber' => $adAccount->getEmployeeId(),
                 'mail' => $adAccount->getEmail(),
-                //'businesscategory' => str_replace('@enabel.be', '@btcctb.org', $adAccount->getEmail()),
                 'initials' => $adAccount->getInitials(),
                 'givenname' => $adAccount->getFirstName(),
                 'sn' => $adAccount->getLastName(),
@@ -144,7 +139,6 @@ class BisDirHelper
                 'uid' => $bisPersonView->getEmail(),
                 'employeenumber' => $bisPersonView->getEmployeeId(),
                 'mail' => $bisPersonView->getEmail(),
-                //'businesscategory' => str_replace('@enabel.be', '@btcctb.org', $bisPersonView->getEmail()),
                 'initials' => $bisPersonView->getInitials(),
                 'givenname' => $bisPersonView->getFirstName(),
                 'sn' => $bisPersonView->getLastName(),
