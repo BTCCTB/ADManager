@@ -311,19 +311,36 @@ class BisPersonView
         return $this->perCountryWorkplace;
     }
 
-//    public function getDepartment()
-    //    {
-    //        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-    //            return $this->getCountryWorkplace()->getCouName();
-    //        }
-    //
-    //        return null;
-    //    }
-
     /**
      * @Groups({"starters","finishers"})
      */
     public function getCountry()
+    {
+        return $this->getCountryWorkplaceIso3();
+    }
+
+    public function getCountryFlag()
+    {
+        if (!empty($this->getCountryWorkplaceName())) {
+            return "<i class=\"".
+                "flag-icon flag-icon-".strtolower($this->getCountryWorkplaceIso2()).
+                "\" title=\"".$this->getCountryWorkplaceName()."\" ".
+                "alt=\"".$this->getCountryWorkplaceName()."\"></i>";
+        }
+
+        return null;
+    }
+
+    public function getCountryWorkplaceIso2()
+    {
+        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+            return $this->getCountryWorkplace()->getCouIsocode2letters();
+        }
+
+        return null;
+    }
+
+    public function getCountryWorkplaceIso3()
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
             return $this->getCountryWorkplace()->getCouIsocode3letters();
@@ -332,14 +349,19 @@ class BisPersonView
         return null;
     }
 
-    public function getCountryFlag()
+    public function getCountryWorkplaceName()
     {
         if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-            return "<i class=\"".
-                "flag-icon flag-icon-" . strtolower($this->getCountryWorkplace()->getCouIsocode2letters()) .
-                "\" title=\"" . $this->getCountryWorkplace()->getCouName() . "\" " .
-                "alt=\"" . $this->getCountryWorkplace()->getCouName() . "\"></i>"
-            ;
+            return $this->getCountryWorkplace()->getCouName();
+        }
+
+        return null;
+    }
+
+    public function getPhysicalDeliveryOfficeName()
+    {
+        if (!empty($this->getCountryWorkplaceName())) {
+            return $this->getCountryWorkplaceName().' ['.$this->getCountryWorkplaceIso2().']';
         }
 
         return null;
@@ -403,8 +425,9 @@ class BisPersonView
     public function getFullName()
     {
         if ($this->getFirstname() !== '-') {
-            return $this->getFirstname() . ' ' . strtoupper($this->getLastname());
+            return $this->getFirstname().' '.strtoupper($this->getLastname());
         }
+
         return strtoupper($this->getLastname());
     }
 
@@ -412,7 +435,7 @@ class BisPersonView
     {
         if ($this->getUsername() !== false && strpos($this->getUsername(), '.') !== false) {
             $username = explode('.', $this->getUsername());
-            $login = $username[0][0] . substr($username[1], 0, 7) . $this->getId();
+            $login = $username[0][0].substr($username[1], 0, 7).$this->getId();
 
             return strtolower($login);
         }
@@ -428,7 +451,7 @@ class BisPersonView
     public function getDomainAccount()
     {
         if ($this->getUsername() !== false) {
-            return $this->getUsername() . self::MAIN_DOMAIN;
+            return $this->getUsername().self::MAIN_DOMAIN;
         }
 
         return false;
@@ -450,11 +473,11 @@ class BisPersonView
     public function getDisplayName()
     {
         if (!empty($this->getNickname())) {
-            return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getNickname()));
+            return strtoupper($this->getLastname()).', '.ucfirst(strtolower($this->getNickname()));
         }
 
         if ($this->getFirstname() !== '-') {
-            return strtoupper($this->getLastname()) . ', ' . ucfirst(strtolower($this->getFirstname()));
+            return strtoupper($this->getLastname()).', '.ucfirst(strtolower($this->getFirstname()));
         }
 
         return strtoupper($this->getLastname());
@@ -463,7 +486,7 @@ class BisPersonView
     public function getCommonName()
     {
         if ($this->getFirstname() !== '-') {
-            return ucfirst(strtolower($this->getFirstname())) . ' ' . strtoupper($this->getLastname());
+            return ucfirst(strtolower($this->getFirstname())).' '.strtoupper($this->getLastname());
         }
 
         return strtoupper($this->getLastname());
@@ -540,32 +563,15 @@ class BisPersonView
             case 'per_function':
                 return $this->getFunction();
             case 'c':
-                if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-                    return $this->getCountryWorkplace()->getCouIsocode2letters();
-                }
-
-                return null;
+                return $this->getCountryWorkplaceIso2();
             case 'co':
-                if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-                    return $this->getCountryWorkplace()->getCouName();
-                }
-
-                return null;
-
+                return $this->getCountryWorkplaceName();
             case 'physicalDeliveryOfficeName':
-                if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
-                    return $this->getCountryWorkplace()->getCouName() .
-                        ' [' . $this->getCountryWorkplace()->getCouIsocode2letters() . ']';
-                }
-
-                return null;
-
+                return $this->getPhysicalDeliveryOfficeName();
             case 'language':
                 return $this->getLanguage();
-
             case 'preferredLanguage':
                 return $this->getPreferredLanguage();
-
             case 'homedirectory':
                 return $this->getLogin();
         }
@@ -594,7 +600,7 @@ class BisPersonView
     public function getProxyAddresses()
     {
         return [
-            'SMTP:' . $this->getUsername() . self::MAIN_DOMAIN,
+            'SMTP:'.$this->getUsername().self::MAIN_DOMAIN,
 //            'smtp:' . $this->getBusinessCategory(),
         ];
     }
@@ -609,9 +615,9 @@ class BisPersonView
      */
     public function getOrganizationalUnit()
     {
-        if (!empty($this->getCountryWorkplace()) && $this->getCountryWorkplace() instanceof BisCountry) {
+        if (!empty($this->getCountryWorkplaceIso3())) {
             return ActiveDirectoryHelper::createCountryDistinguishedName(
-                $this->getCountryWorkplace()->getCouIsocode3letters()
+                $this->getCountryWorkplaceIso3()
             );
         }
 
@@ -626,13 +632,13 @@ class BisPersonView
     public function getPreferredLanguage()
     {
         /**
-        // 2020.12.23: Remove this with user preference language selection
-        //Add a exception for user in English (Some IT + Patrick Rich + Willem Van der voort)
-        $userIDs = [38248, 38038, 37847, 38229, 50734, 51362];
-        if (in_array($this->getId(), $userIDs, false)) {
-            return 'en-us';
-        }
-*/
+         * // 2020.12.23: Remove this with user preference language selection
+         * //Add a exception for user in English (Some IT + Patrick Rich + Willem Van der voort)
+         * $userIDs = [38248, 38038, 37847, 38229, 50734, 51362];
+         * if (in_array($this->getId(), $userIDs, false)) {
+         * return 'en-us';
+         * }
+         */
         switch ($this->getLanguage()) {
             case 'fr':
                 return 'fr-fr';
@@ -691,6 +697,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
+
         return null;
     }
 
@@ -701,6 +708,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
+
         return null;
     }
 
@@ -711,6 +719,7 @@ class BisPersonView
                 return $level->getGroName();
             }
         }
+
         return null;
     }
 
@@ -733,6 +742,7 @@ class BisPersonView
                         foreach ($contract->getConjobs() as $conjob) {
                             if ($conjob->getConjobActive()) {
                                 $job = $conjob->getFkJobId();
+
                                 return $job->getJobManagerId();
                             }
                         }
@@ -740,6 +750,7 @@ class BisPersonView
                 }
             }
         }
+
         return null;
     }
 
@@ -748,6 +759,7 @@ class BisPersonView
         if ($this->getManager() instanceof BisPersonSf) {
             return $this->getManager()->getPerId();
         }
+
         return null;
     }
 
@@ -756,6 +768,7 @@ class BisPersonView
         if ($this->getManager() instanceof BisPersonSf) {
             return $this->getManager()->getPerEmail();
         }
+
         return null;
     }
 
