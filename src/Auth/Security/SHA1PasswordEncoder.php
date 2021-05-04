@@ -38,6 +38,5 @@ class SHA1PasswordEncoder implements PasswordEncoderInterface
 
     public function __call($name, $arguments)
     {
-        // TODO: Implement @method bool needsRehash(string $encoded)
     }
 }
