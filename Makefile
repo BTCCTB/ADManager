@@ -40,7 +40,7 @@ update: get-composer composer.json ## Update vendors according to the composer.j
 sf: ## List all Symfony commands
 	$(SYMFONY)
 
-cc: ## Clear the cache. DID YOU CLEAR YOUR CACHE????
+cc: cc-redis ## Clear the cache. DID YOU CLEAR YOUR CACHE????
 	$(SYMFONY) c:c
 
 warmup: ## Warmump the cache
@@ -135,13 +135,19 @@ phpunit.xml:
 	cp phpunit.xml.dist phpunit.xml
 
 test: phpunit.xml ## Launch main functionnal and unit tests
-	$(PHPUNIT) --group=main --stop-on-failure --debug
+	$(PHPUNIT) --group=main --stop-on-failure --testdox
 
 test-external: phpunit.xml ## Launch tests implying external resources (api, services...)
-	$(PHPUNIT) --group=external --stop-on-failure --debug
+	$(PHPUNIT) --group=external --stop-on-failure --testdox
+
+test-edw: phpunit.xml ## Launch tests implying edw api
+	$(PHPUNIT) --group=edw --stop-on-failure --testdox
 
 test-all: phpunit.xml ## Launch all tests
-	$(PHPUNIT) --stop-on-failure
+	$(PHPUNIT) --stop-on-failure --testdox
+
+test-free: phpunit.xml ## Launch all tests excepted group `pay`
+	$(PHPUNIT) --exclude=pay --stop-on-failure --testdox
 
 ## —— Coding standards ✨ ——————————————————————————————————————————————————————
 cs: codesniffer mess stan ## Launch check style and static analysis
@@ -160,7 +166,7 @@ cs-fix: ## Run php-cs-fixer and fix the code.
 
 twig: ## Run twig lint
 	$(PHPQA) twig-lint lint ./templates
-#	$(PHPQA) twigcs ./templates
+	$(PHPQA) twigcs ./templates
 
 security: ./symfony ## Launch dependencies security check
 	$(SYMFONY_BIN) check:security

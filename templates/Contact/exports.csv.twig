@@ -1,4 +1,4 @@
 "Firstname";"Lastname";"Nickname";"Email";"Country";"Language";"Function";"Mobile";"Phone"
 {% for contact in contacts %}
-"{{ contact.firstname }}";"{{ contact.lastname }}";"{{ contact.nickname }}";"{{ contact.email }}";"{{ contact.country }}";"{{ contact.language }}";"{{ contact.function|raw }}";"{{ contact.mobile|replace({' ': '', '(0)':''})|default('NC') }}";"{{ contact.telephone|replace({' ': '', '(0)':''})|default('NC') }}"
+"{{ contact.firstname }}";"{{ contact.lastname }}";"{{ contact.nickname }}";"{{ contact.email }}";"{{ contact.country }}";"{{ contact.language }}";"{{ contact.function|raw }}";"{{ contact.mobile|replace({' ': '', '(0)': ''})|default('NC') }}";"{{ contact.telephone|replace({' ': '', '(0)': ''})|default('NC') }}"
 {% endfor %}

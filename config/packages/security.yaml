@@ -1,7 +1,7 @@
 security:
     encoders:
         App\Entity\User:
-            id: AuthBundle\Security\SHA1PasswordEncoder
+            id: Auth\Security\SHA1PasswordEncoder
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
@@ -27,7 +27,7 @@ security:
             anonymous: ~
             guard:
                 authenticators:
-                    - AuthBundle\Security\AdldapAuthenticator
+                    - Auth\Security\AdldapAuthenticator
             provider: adlap
             stateless: true
             remember_me:

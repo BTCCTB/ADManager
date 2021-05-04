@@ -2,7 +2,7 @@
 
 namespace App\Twig;
 
-use AuthBundle\Service\ActiveDirectory;
+use Auth\Service\ActiveDirectory;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 

@@ -1,6 +1,7 @@
 # PasswordManager
 
 ![Build](https://github.com/Enabel/Password/workflows/Build/badge.svg)
+[![CodeFactor](https://www.codefactor.io/repository/github/enabel/password/badge)](https://www.codefactor.io/repository/github/enabel/password)
 
 A php application for Active Directory Manipulation.
 

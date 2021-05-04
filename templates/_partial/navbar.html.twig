@@ -14,7 +14,7 @@
             </ul>
             <ul class="navbar-nav">
                 {% include '_partial/lang.selector.html.twig' %}
-            {%  if is_granted('ROLE_USER') %}
+            {% if is_granted('ROLE_USER') %}
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> {{ app.user.username }} <span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -22,7 +22,7 @@
                         <a href="{{ path('security_logout') }}" class="dropdown-item"><i class="fas fa-unlock"></i> {{ 'main.menu.logout.label'|trans }}</a>
                     </div>
                 </li>
-            {%  else %}
+            {% else %}
                 <li class="nav-item"><a href="{{ path('security_login') }}" class="nav-link"><i class="fas fa-lock"></i></a></li>
             {% endif %}
             </ul>

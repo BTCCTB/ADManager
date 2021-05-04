@@ -80,12 +80,12 @@ doctrine:
             bis:
                 connection: bis
                 mappings:
-                    BisBundle:
+                    Bis:
                         is_bundle: false
                         type: annotation
-                        dir: '%kernel.project_dir%/src/BisBundle/Entity'
-                        prefix: 'BisBundle\Entity'
-                        alias: BisBundle
+                        dir: '%kernel.project_dir%/src/Bis/Entity'
+                        prefix: 'Bis\Entity'
+                        alias: Bis
                 dql:
                     datetime_functions:
                         year: DoctrineExtensions\Query\Mysql\Year

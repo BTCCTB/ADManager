@@ -1,43 +1,43 @@
 grumphp:
-    tasks:
-        composer:
-            file: ./composer.json
-            no_check_all: true
-        clover_coverage:
-            clover_file: ./QA/coverage.xml
-            level: 1
-        code_sniffer:
-          make_file: ~
-          task: codesniffer
-          triggered_by: [ php ]
-          metadata:
-            task: make
-        mess_detector:
-          make_file: ~
-          task: mess
-          triggered_by: [ php ]
-          metadata:
-            task: make
-        php_stan:
-          make_file: ~
-          task: stan
-          triggered_by: [ php ]
-          metadata:
-            task: make
-        twig_lint:
-          make_file: ~
-          task: twig
-          triggered_by: [ twig ]
-          metadata:
-            task: make
-        security_checker:
-          make_file: ~
-          task: security
-          metadata:
-            task: make
-        test:
-          make_file: ~
-          task: test
-          metadata:
-            task: make
-        yamllint: ~
+  tasks:
+    composer:
+      file: ./composer.json
+      no_check_all: true
+    clover_coverage:
+      clover_file: ./QA/coverage.xml
+      level: 1
+    code_sniffer:
+      make_file: ~
+      task: codesniffer
+      triggered_by: [ php ]
+      metadata:
+        task: make
+    mess_detector:
+      make_file: ~
+      task: mess
+      triggered_by: [ php ]
+      metadata:
+        task: make
+    php_stan:
+      make_file: ~
+      task: stan
+      triggered_by: [ php ]
+      metadata:
+        task: make
+    twig_lint:
+      make_file: ~
+      task: twig
+      triggered_by: [ twig ]
+      metadata:
+        task: make
+    security_checker:
+      make_file: ~
+      task: security
+      metadata:
+        task: make
+    test:
+      make_file: ~
+      task: test
+      metadata:
+        task: make
+    yamllint: ~

@@ -8,7 +8,7 @@ use App\Message\SmsMessage;
 use App\Repository\MessageLogRepository;
 use App\Service\EnabelGroupSms;
 use App\Service\SmsGatewayMe;
-use BisBundle\Service\PhoneDirectory;
+use Bis\Service\PhoneDirectory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

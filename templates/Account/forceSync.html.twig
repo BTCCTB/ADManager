@@ -88,10 +88,10 @@
                     <td>{{ user.lastname }}</td>
                     <td>{{ user.nickname|default('-') }}</td>
                     <td>{{ user.contracts is not null ? user.contracts.0.conDateStart|date('Y-m-d') : '-' }}</td>
-                    <td>{{ user.contracts is not null ? user.contracts.0.conActive==1?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
-                    <td>{{ user is not null?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
-                    <td>{{ ad is not null?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
-                    <td>{{ ldap is not null?'<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>':'<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                    <td>{{ user.contracts is not null ? user.contracts.0.conActive == 1 ? '<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>' : '<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' : '<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                    <td>{{ user is not null ? '<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>' : '<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                    <td>{{ ad is not null ? '<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>' : '<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
+                    <td>{{ ldap is not null ? '<span class="badge badge-success"><i class="fas fa-check-circle"></i> Yes</span>' : '<span class="badge badge-danger"><i class="fas fa-times-circle"></i> No</span>' }}</td>
                 </tr>
                 </tbody>
             </table>

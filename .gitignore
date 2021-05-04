@@ -1,6 +1,7 @@
 ###> CI/CD ###
 /QA/*
 /__symfony__bak
+.php_cs.cache
 ###< ###
 
 ###> symfony/framework-bundle ###
