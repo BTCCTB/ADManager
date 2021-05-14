@@ -10,8 +10,8 @@
     parse: 'none'
   delegate_to: localhost
 
-- name: Sync translation with localize.biz [loco]
-  command: '{{ release_console_path }} translation:download'
+# - name: Sync translation with localize.biz [loco]
+#   command: '{{ release_console_path }} translation:download'
 
 - name: Send notification message via Slack all options
   slack:
