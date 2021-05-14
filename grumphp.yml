@@ -1,8 +1,16 @@
 grumphp:
+    stop_on_failure: false
+    git_hook_variables:
+        EXEC_GRUMPHP_COMMAND: './symfony php'
+    process_timeout: 120
+    parallel:
+        enabled: true
+        max_workers: 20
     tasks:
         composer:
             file: ./composer.json
             no_check_all: true
+        composer_normalize: ~
         clover_coverage:
             clover_file: ./QA/coverage.xml
             level: 1
