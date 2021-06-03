@@ -2,8 +2,8 @@
 
 namespace App\Dto;
 
-use BisBundle\Entity\BisPersonView;
-use BisBundle\Entity\BisPhone;
+use Bis\Entity\BisPersonView;
+use Bis\Entity\BisPhone;
 
 /**
  * DTO to represent a ContactSms based on BisPersonView Entity

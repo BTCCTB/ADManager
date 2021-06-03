@@ -96,7 +96,7 @@ class MessageLog
         return $this->sender;
     }
 
-    public function setSender(User $sender) : self
+    public function setSender(?User $sender) : self
     {
         $this->sender = $sender;
 

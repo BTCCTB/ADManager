@@ -178,7 +178,7 @@
                             </tr>
                             <tr>
                                 <th>Last login</th>
-                                <td>{{ account.lastLoginAt is empty ? 'never' : account.lastLoginAt|date("d/m/Y H:i:s") }}</td>
+                                <td>{{ account is not empty and account.lastLoginAt is not empty ? account.lastLoginAt|date("d/m/Y H:i:s") : 'never' }}</td>
                             </tr>
                             <tr>
                                 <th>Password last set</th>

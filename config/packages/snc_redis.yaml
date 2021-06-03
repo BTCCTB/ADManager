@@ -26,21 +26,21 @@ snc_redis:
     session:
         client: session
         ttl: 1200
-    doctrine:
-        metadata_cache:
-            client: doctrine
-            entity_manager: default
-            document_manager: default
-            namespace: 'dmc:'
-        result_cache:
-            client: doctrine
-            entity_manager: default
-            namespace: 'drc:'
-        query_cache:
-            client: doctrine
-            entity_manager: default
-            namespace: 'dqc:'
-        second_level_cache:
-            client: doctrine
-            entity_manager: default
-            namespace: 'dslc:'
+#    doctrine:
+#        metadata_cache:
+#            client: doctrine
+#            entity_manager: default
+#            document_manager: default
+#            namespace: 'dmc:'
+#        result_cache:
+#            client: doctrine
+#            entity_manager: default
+#            namespace: 'drc:'
+#        query_cache:
+#            client: doctrine
+#            entity_manager: default
+#            namespace: 'dqc:'
+#        second_level_cache:
+#            client: doctrine
+#            entity_manager: default
+#            namespace: 'dslc:'

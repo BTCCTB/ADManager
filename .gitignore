@@ -1,6 +1,7 @@
 ###> CI/CD ###
 /QA/*
 /__symfony__bak
+/.php_cs.cache
 ###< ###
 
 ###> symfony/framework-bundle ###
@@ -35,6 +36,7 @@
 ansible/.ssh/*
 !ansible/.ssh/.gitkeep
 ###< ansistrano/deploy ###
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/

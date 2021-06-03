@@ -211,6 +211,16 @@ class User implements EntityInterface, UserInterface, EquatableInterface
     }
 
     /**
+     * Returns the username used to authenticate the user. Replace getUsername in SF 6
+     *
+     * @return string The username
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    /**
      * Removes sensitive data from the user.
      *
      * This is important if, at any given point, sensitive information like
@@ -461,5 +471,10 @@ class User implements EntityInterface, UserInterface, EquatableInterface
         }
 
         return $this;
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }

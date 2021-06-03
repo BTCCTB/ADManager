@@ -27,7 +27,7 @@ class SmsGatewayMe implements SmsInterface
     private $apiToken;
 
     /**
-     * @var integer
+     * @var string
      */
     private $deviceId;
 
@@ -45,7 +45,7 @@ class SmsGatewayMe implements SmsInterface
      */
     public function __construct(? string $accountId, ? string $token, ? string $from)
     {
-        $this->setDeviceId((int) $accountId);
+        $this->setDeviceId($accountId);
         $this->setApiToken($token);
         $this->from = $from;
     }
@@ -96,7 +96,7 @@ class SmsGatewayMe implements SmsInterface
     /**
      * Set the Device ID
      *
-     * @param integer $deviceId The device ID
+     * @param string $deviceId The device ID
      *
      * @return SmsInterface
      */

@@ -1,11 +1,11 @@
 auth:
-    resource: '../src/AuthBundle/Controller/'
+    resource: '../src/Auth/Controller/'
     type:     annotation
     prefix:   /
     options: { i18n: false }
 
 api:
-    resource: '../src/ApiBundle/Controller/'
+    resource: '../src/Api/Controller/'
     type:     annotation
     prefix:   /api
     options: { i18n: false }

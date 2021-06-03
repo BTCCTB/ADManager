@@ -18,13 +18,13 @@ use App\Service\Account as AccountService;
 use App\Service\Exception\SmsException;
 use App\Service\SecurityAudit;
 use App\Service\SmsInterface;
-use AuthBundle\Service\ActiveDirectory;
-use AuthBundle\Service\ActiveDirectoryHelper;
-use AuthBundle\Service\ActiveDirectoryResponseStatus;
-use AuthBundle\Service\BisDir;
-use AuthBundle\Service\BisDirResponseStatus;
-use AuthBundle\Service\SuccessFactorApi;
-use BisBundle\Service\BisPersonView;
+use Auth\Service\ActiveDirectory;
+use Auth\Service\ActiveDirectoryHelper;
+use Auth\Service\ActiveDirectoryResponseStatus;
+use Auth\Service\BisDir;
+use Auth\Service\BisDirResponseStatus;
+use Auth\Service\SuccessFactorApi;
+use Bis\Service\BisPersonView;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -590,7 +590,7 @@ class AccountController extends AbstractController
             }
         }
 
-        /* @var \BisBundle\Entity\BisPersonView $user */
+        /* @var \Bis\Entity\BisPersonView $user */
         return $this->render(
             'Account/forceSync.html.twig',
             [
@@ -623,7 +623,7 @@ class AccountController extends AbstractController
         $userLanguage = $userLanguageRepository->findOneBy(['userId'=>$adUser->getEmployeeId()]);
         if (null === $userLanguage) {
             $userLanguage = (new UserLanguage())
-                ->setUserId($adUser->getEmployeeId())
+                ->setUserId((int) $adUser->getEmployeeId())
                 ->setLanguage($adUser->getFirstAttribute('preferredLanguage'))
             ;
         }
