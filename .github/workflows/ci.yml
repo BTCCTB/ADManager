@@ -84,7 +84,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer:v2
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, ldap
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, ldap, zip
         env:
           update: true
 
