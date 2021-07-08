@@ -15,7 +15,7 @@ use Twilio\Rest\Client;
  * Class Twilio
  *
  * @author Damien Lagae <damien.lagae@enabel.be>
- * @see \App\Tests\Service\TwilioTest
+ * @see    \App\Tests\Service\TwilioTest
  */
 class Twilio implements SmsInterface
 {
@@ -42,7 +42,7 @@ class Twilio implements SmsInterface
     /**
      * {@inheritDoc}
      */
-    public function __construct(? String $accountId, ? String $token, ? String $from)
+    public function __construct(?string $accountId, ?string $token, ?string $from)
     {
         $this->setSID($accountId);
         $this->setToken($token);
@@ -53,7 +53,7 @@ class Twilio implements SmsInterface
      * @inheritDoc
      * @throws SmsException
      */
-    public function send(string $message, string $phoneNumber) : int
+    public function send(string $message, string $phoneNumber, $withPhoneNumber = true): int
     {
         if (self::OK === $this->configureApiClient()) {
             try {
@@ -61,15 +61,19 @@ class Twilio implements SmsInterface
                 $number = PhoneNumberUtil::getInstance()->parse($phoneNumber);
 
                 if (!PhoneNumberUtil::getInstance()->isValidNumber($number)) {
-                    throw new SmsException('Invalid phone number: "' . $phoneNumber . '"', self::INVALID_PHONE_NUMBER);
+                    throw new SmsException('Invalid phone number: "'.$phoneNumber.'"', self::INVALID_PHONE_NUMBER);
                 }
-                $phoneNumber = '+' . $number->getCountryCode() . $number->getNationalNumber();
+                $phoneNumber = '+'.$number->getCountryCode().$number->getNationalNumber();
 
                 // Create & send message
+                $from = $this->from;
+                if ($withPhoneNumber !== true) {
+                    $from = 'EnabelInfo';
+                }
                 $sendMessage = $this->apiClient->messages->create(
                     $phoneNumber,
                     [
-                        'from' => $this->from,
+                        'from' => $from,
                         'body' => $message,
                     ]
                 );
@@ -81,9 +85,13 @@ class Twilio implements SmsInterface
                     return self::SEND;
                 }
             } catch (NumberParseException $e) {
-                throw new SmsException('Invalid phone number: ' . $e->getMessage(), self::INVALID_PHONE_NUMBER);
+                throw new SmsException('Invalid phone number: '.$e->getMessage(), self::INVALID_PHONE_NUMBER);
             } catch (TwilioException | RestException $e) {
-                throw new SmsException($e->getMessage(), self::NOT_SEND);
+                try {
+                    return $this->send($message, $phoneNumber, false);
+                } catch (TwilioException | RestException $e) {
+                    throw new SmsException($e->getMessage(), self::NOT_SEND);
+                }
             }
         }
 
@@ -93,7 +101,7 @@ class Twilio implements SmsInterface
     /**
      * @inheritDoc
      */
-    public function sendGroup(string $message, array $phoneNumbers) : array
+    public function sendGroup(string $message, array $phoneNumbers): array
     {
         $status = [];
 
@@ -110,11 +118,12 @@ class Twilio implements SmsInterface
      * @return int Status code
      * @throws SmsException
      */
-    public function configureApiClient() : int
+    public function configureApiClient(): int
     {
         try {
             $this->apiClient = new Client($this->accountId, $this->token);
             $this->apiClient->messages->read([], 20);
+
             return self::OK;
         } catch (RestException | ConfigurationException | TwilioException $e) {
             switch ($e->getCode()) {
