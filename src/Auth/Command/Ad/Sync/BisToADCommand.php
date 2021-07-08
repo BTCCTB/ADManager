@@ -31,7 +31,6 @@ class BisToADCommand extends Command
      * AdResetAccountCommand constructor.
      *
      * @param ActiveDirectory $activeDirectory Active directory Service
-     *
      * @param BisPersonView   $bisPersonView
      * @param BisDir          $bisDir
      */

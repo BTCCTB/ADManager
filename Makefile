@@ -150,7 +150,7 @@ codesniffer: ## Run php_codesniffer only
 	$(PHPQA) phpcs -v --standard=PSR2 --ignore=./src/Kernel.php ./src
 
 stan: ## Run PHPStan only
-	$(PHPQA) phpstan analyze src -l 4
+	$(PHPQA) phpstan analyze -c ./phpstan.neon
 
 mess: ## Run PHP Mess Dectector only
 	$(PHPQA) phpmd ./src ansi ./codesize.xml

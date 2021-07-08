@@ -38,6 +38,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class AccountController
@@ -137,10 +138,10 @@ class AccountController extends AbstractController
      *
      * @throws \Adldap\AdldapException
      */
-    public function changeAction(Request $request)
+    public function changeAction(Request $request, TokenStorageInterface $tokenStorage)
     {
         /** @var \App\Entity\User $user */
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $tokenStorage->getToken()->getUser();
 
         $form = $this->createForm(ChangePasswordType::class);
         $form->handleRequest($request);
@@ -245,7 +246,8 @@ class AccountController extends AbstractController
         $employeeID,
         AccountRepository $accountRepository,
         BisPersonView $bisPersonView,
-        SmsInterface $sms
+        SmsInterface $sms,
+        TokenStorageInterface $tokenStorage
     ): RedirectResponse {
         $user = $this->activeDirectory->checkUserExistByEmployeeID($employeeID);
         $account = $accountRepository->find($employeeID);
@@ -296,7 +298,7 @@ class AccountController extends AbstractController
                     );
                 }
             }
-            $this->securityAudit->resetPassword($account, $this->get('security.token_storage')->getToken()->getUser());
+            $this->securityAudit->resetPassword($account, $tokenStorage->getToken()->getUser());
             $this->addFlash(
                 'success',
                 'Account [' . $user->getUserPrincipalName() . '] initialized! '.
@@ -324,8 +326,11 @@ class AccountController extends AbstractController
      *
      * @return Response
      */
-    public function checkPasswordAction(Account $account, Request $request)
-    {
+    public function checkPasswordAction(
+        Account $account,
+        Request $request,
+        TokenStorageInterface $tokenStorage
+    ) {
         $form = $this->createForm(ActionAuthType::class);
         $form->handleRequest($request);
 
@@ -334,14 +339,14 @@ class AccountController extends AbstractController
             if ($this->activeDirectory->checkCredentials($account->getEmail(), $data['password'])) {
                 $this->securityAudit->testPassword(
                     $account,
-                    $this->get('security.token_storage')->getToken()->getUser(),
+                    $tokenStorage->getToken()->getUser(),
                     true
                 );
                 $this->addFlash('success', 'This password is correct !');
             } else {
                 $this->securityAudit->testPassword(
                     $account,
-                    $this->get('security.token_storage')->getToken()->getUser(),
+                    $tokenStorage->getToken()->getUser(),
                     false
                 );
                 $this->addFlash('danger', 'This password don\'t match !');
@@ -615,10 +620,11 @@ class AccountController extends AbstractController
         Request $request,
         UserLanguageRepository $userLanguageRepository,
         RouterInterface $router,
-        SessionInterface $session
+        SessionInterface $session,
+        TokenStorageInterface $tokenStorage
     ) {
         /** @var \App\Entity\User $user */
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $tokenStorage->getToken()->getUser();
         $adUser = $this->activeDirectory->getUser($user->getEmail());
         $userLanguage = $userLanguageRepository->findOneBy(['userId'=>$adUser->getEmployeeId()]);
         if (null === $userLanguage) {

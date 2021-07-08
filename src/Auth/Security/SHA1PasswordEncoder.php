@@ -30,6 +30,6 @@ class SHA1PasswordEncoder implements PasswordHasherInterface
      */
     public function needsRehash(string $hashedPassword): bool
     {
-        // TODO: Implement needsRehash() method.
+        return false;
     }
 }

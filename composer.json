@@ -26,6 +26,7 @@
   "require": {
     "php": "^7.2",
     "ext-ldap": "*",
+    "ext-json": "*",
     "adldap2/adldap2": "^10.3",
     "btc/flagicon-bundle": "^1.3",
     "doctrine/annotations": "^1.0",

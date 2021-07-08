@@ -1,0 +1,22 @@
+parameters:
+  excludes_analyse:
+    - ./src/Controller/AccountController.php
+    - ./src/Controller/UserLanguageController.php
+    - ./src/Auth/Command/Ad/Account/
+    - ./src/Auth/Command/Ad/Sync/
+    - ./src/Auth/Command/Sf/
+  level: 4
+  paths:
+    - ./src
+  symfony:
+    console_application_loader: tests/console-application.php
+  checkGenericClassInNonGenericObjectType: false
+includes:
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/extension.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/rules.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-symfony/extension.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-symfony/rules.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/extension.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/rules.neon
+
+

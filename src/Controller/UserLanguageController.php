@@ -69,12 +69,10 @@ class UserLanguageController extends AbstractController
      */
     public function edit(Request $request, UserLanguage $userLanguage, BisPersonView $bisPersonView): Response
     {
-        dump($userLanguage);
         $form = $this->createForm(
             UserLanguageType::class,
             $userLanguage
         );
-        dump($form->get('userID'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

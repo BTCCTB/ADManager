@@ -28,6 +28,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -265,7 +266,7 @@ class AdldapAuthenticator implements AuthenticatorInterface
             ->findOneBy(['email' => $username]);
 
         if (null === $user) {
-            throw new UsernameNotFoundException('User not found!');
+            throw new UserNotFoundException('User not found!');
         }
 
         return $user;
