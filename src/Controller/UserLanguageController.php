@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\UserLanguage;
 use App\Form\UserLanguageType;
 use App\Repository\UserLanguageRepository;
-use BisBundle\Service\BisPersonView;
+use Bis\Service\BisPersonView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,12 +69,10 @@ class UserLanguageController extends AbstractController
      */
     public function edit(Request $request, UserLanguage $userLanguage, BisPersonView $bisPersonView): Response
     {
-        dump($userLanguage);
         $form = $this->createForm(
             UserLanguageType::class,
             $userLanguage
         );
-        dump($form->get('userID'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

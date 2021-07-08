@@ -10,7 +10,6 @@ grumphp:
         composer:
             file: ./composer.json
             no_check_all: true
-        composer_normalize: ~
         clover_coverage:
             clover_file: ./QA/coverage.xml
             level: 1
@@ -32,6 +31,7 @@ grumphp:
           triggered_by: [ php ]
           metadata:
             task: make
+            blocking: false
         twig_lint:
           make_file: ~
           task: twig

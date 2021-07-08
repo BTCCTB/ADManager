@@ -35,7 +35,7 @@ class SecurityAudit
             ->setData([
                 'message' => $authUser->getIdentity() . ' asked a new password for ' . $account->getIdentity() . '',
             ])
-            ->setUsername($authUser->getUsername());
+            ->setUsername($authUser->getUserIdentifier());
 
         $this->em->persist($securityAudit);
         $this->em->flush();
@@ -52,7 +52,7 @@ class SecurityAudit
             ->setData([
                 'message' => $authUser->getIdentity() . ' changed the password of ' . $account->getIdentity() . '',
             ])
-            ->setUsername($authUser->getUsername());
+            ->setUsername($authUser->getUserIdentifier());
 
         $this->em->persist($securityAudit);
         $this->em->flush();
@@ -70,7 +70,7 @@ class SecurityAudit
                 'message' => $authUser->getIdentity() . ' tried the password of ' . $account->getIdentity() . '',
                 'status' => $success,
             ])
-            ->setUsername($authUser->getUsername());
+            ->setUsername($authUser->getUserIdentifier());
 
         $this->em->persist($securityAudit);
         $this->em->flush();

@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Service\QrCodeUser;
-use AuthBundle\Service\ActiveDirectory;
-use BisBundle\Service\BisPersonView;
+use Auth\Service\ActiveDirectory;
+use Bis\Service\BisPersonView;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -50,11 +50,11 @@ class IndexController extends AbstractController
         QrCodeUser $qrCodeUser,
         TranslatorInterface $translator
     ): Response {
-        $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUsername());
+        $user = $this->activeDirectory->checkUserExistByUsername($this->getUser()->getUserIdentifier());
         $now = new \DateTime('now');
         $passwordLastSet = null;
         if ($user->getPasswordLastSetTimestamp() !== null) {
-            $passwordLastSet = (new \DateTime())->setTimestamp($user->getPasswordLastSetTimestamp());
+            $passwordLastSet = (new \DateTime())->setTimestamp((int) $user->getPasswordLastSetTimestamp());
         }
         $passwordAges = ($passwordLastSet !== null) ? $passwordLastSet->diff($now)->format('%a') : null;
         $dateForceChange = (new \DateTime(''))->setDate(2021, 02, 15);

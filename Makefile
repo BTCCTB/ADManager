@@ -40,7 +40,7 @@ update: get-composer composer.json ## Update vendors according to the composer.j
 sf: ## List all Symfony commands
 	$(SYMFONY)
 
-cc: ## Clear the cache. DID YOU CLEAR YOUR CACHE????
+cc: cc-redis ## Clear the cache. DID YOU CLEAR YOUR CACHE????
 	$(SYMFONY) c:c
 
 warmup: ## Warmump the cache
@@ -135,13 +135,13 @@ phpunit.xml:
 	cp phpunit.xml.dist phpunit.xml
 
 test: phpunit.xml ## Launch main functionnal and unit tests
-	$(PHPUNIT) --group=main --stop-on-failure --debug
+	$(PHPUNIT) --group=main --stop-on-failure --testdox
 
 test-external: phpunit.xml ## Launch tests implying external resources (api, services...)
-	$(PHPUNIT) --group=external --stop-on-failure --debug
+	$(PHPUNIT) --group=external --stop-on-failure --testdox
 
 test-all: phpunit.xml ## Launch all tests
-	$(PHPUNIT) --stop-on-failure
+	$(PHPUNIT) --stop-on-failure --testdox
 
 ## —— Coding standards ✨ ——————————————————————————————————————————————————————
 cs: codesniffer mess stan ## Launch check style and static analysis
@@ -150,7 +150,7 @@ codesniffer: ## Run php_codesniffer only
 	$(PHPQA) phpcs -v --standard=PSR2 --ignore=./src/Kernel.php ./src
 
 stan: ## Run PHPStan only
-	$(PHPQA) phpstan analyze ./src -l 4
+	$(PHPQA) phpstan analyze -c ./phpstan.neon
 
 mess: ## Run PHP Mess Dectector only
 	$(PHPQA) phpmd ./src ansi ./codesize.xml

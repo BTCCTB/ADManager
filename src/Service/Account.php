@@ -4,13 +4,13 @@ namespace App\Service;
 
 use Adldap\Models\User;
 use App\Repository\AccountRepository;
-use BisBundle\Entity\BisPersonView;
+use Bis\Entity\BisPersonView;
 use Doctrine\ORM\EntityManager;
 
 /**
  * Class Account
  *
- * @package AuthBundle\Service
+ * @package Auth\Service
  *
  * @author  Damien Lagae <damien.lagae@enabel.be>
  */
