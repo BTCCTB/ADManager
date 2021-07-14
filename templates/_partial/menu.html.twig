@@ -10,6 +10,7 @@
         <a href="{{ path('account_password_changed_ago') }}" class="dropdown-item {% if (app.request.get('_route') == 'account_password_changed_ago') %}active{% endif %}"><i class="fas fa-user-secret"></i> {{ 'main.menu.admin.account.passwordAgo.label'|trans }}</a>
         <a href="{{ path('account_create_external') }}" class="dropdown-item {% if (app.request.get('_route') == 'account_create_external') %}active{% endif %}"><i class="fas fa-user-plus"></i> {{ 'main.menu.admin.account.createExternal.label'|trans }}</a>
         <a href="{{ path('account_force_sync') }}" class="dropdown-item {% if (app.request.get('_route') == 'account_force_sync') %}active{% endif %}"><i class="fas fa-user-cog"></i> {{ 'main.menu.admin.account.forceSync.label'|trans }}</a>
+        <a href="{{ path('officer_index') }}" class="dropdown-item {% if (app.request.get('_route') == 'officer_index') %}active{% endif %}"><i class="fas fa-user-shield"></i> {{ 'main.menu.admin.officer.label'|trans }}</a>
     </div>
 </li>
 {% endif %}
