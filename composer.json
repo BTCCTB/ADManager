@@ -60,6 +60,7 @@
     "symfony/form": "^5.0",
     "symfony/framework-bundle": "^5.0",
     "symfony/http-client": "^5.0",
+    "symfony/loco-translation-provider": "^5.0",
     "symfony/messenger": "^5.0",
     "symfony/monolog-bundle": "^3.1",
     "symfony/polyfill-apcu": "^1.0",

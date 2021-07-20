@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="nl" trgLang="nl">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr-BE" trgLang="nl">
   <file id="validators.nl">
     <unit id="OqkX43e" name="change.password.form.new.password.invalid">
       <notes>
+        <note category="file-source" priority="1">Password/src/Form/ChangePasswordType.php:27</note>
         <note>parameters:</note>
         <note> '{{ value }}': array</note>
       </notes>
@@ -11,7 +12,45 @@
         <target>De velden nieuw wachtwoord moeten overeenkomen.</target>
       </segment>
     </unit>
+    <unit id="N.qdFOa" name="It looks this user has already an language preferences">
+      <notes>
+        <note category="file-source" priority="1">Password/src/Entity/UserLanguage.php:0</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>It looks this user has already an language preferences</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="XVwEJtj" name="It looks this user has already an account">
+      <notes>
+        <note category="file-source" priority="1">Password/src/Entity/Account.php:0</note>
+        <note category="file-source" priority="1">Password/src/Entity/User.php:0</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>It looks this user has already an account</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="wZlfePx" name="Your message cannot be longer than {{ limit }} characters">
+      <notes>
+        <note category="file-source" priority="1">Password/src/Entity/MessageLog.php:0</note>
+        <note category="file-source" priority="1">Password/src/Entity/MessageLog.php:0</note>
+        <note category="file-source" priority="1">Password/src/Entity/MessageLog.php:0</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>Your message cannot be longer than {{ limit }} characters</source>
+        <target></target>
+      </segment>
+    </unit>
     <unit id="idjV1ct" name="Your message must be at least {{ limit }} characters long">
+      <notes>
+        <note category="file-source" priority="1">Password/src/Entity/MessageLog.php:0</note>
+        <note category="file-source" priority="1">Password/src/Entity/MessageLog.php:0</note>
+        <note category="file-source" priority="1">Password/src/Entity/MessageLog.php:0</note>
+      </notes>
       <segment>
         <source>Your message must be at least {{ limit }} characters long</source>
         <target>Je bericht moet minstens {{ limit }} tekens lang zijn</target>

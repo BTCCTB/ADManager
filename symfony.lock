@@ -521,6 +521,15 @@
     "symfony/intl": {
         "version": "v4.0.4"
     },
+    "symfony/loco-translation-provider": {
+        "version": "5.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.3",
+            "ref": "c706da68af4ae956f45cffccf99a130e9484cb33"
+        }
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {

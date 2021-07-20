@@ -233,18 +233,6 @@
         <target>Start date</target>
       </segment>
     </unit>
-    <unit id="1yyLjoH" name="main.menu.contact.my_country.label">
-      <segment>
-        <source>main.menu.contact.my_country.label</source>
-        <target>My country</target>
-      </segment>
-    </unit>
-    <unit id="RWTbiCy" name="contact.my_country.title.h3">
-      <segment>
-        <source>contact.my_country.title.h3</source>
-        <target>My country contacts</target>
-      </segment>
-    </unit>
     <unit id="NxOF8ZD" name="main.menu.admin.account.passwordAgo.label">
       <segment>
         <source>main.menu.admin.account.passwordAgo.label</source>
@@ -263,12 +251,6 @@
         <target>Enabel HQ contacts</target>
       </segment>
     </unit>
-    <unit id="jcOp6Uw" name="contact.field.title.h3">
-      <segment>
-        <source>contact.field.title.h3</source>
-        <target>Enabel field contacts</target>
-      </segment>
-    </unit>
     <unit id="prYdXIi" name="contact.all.title.h3">
       <segment>
         <source>contact.all.title.h3</source>
@@ -279,18 +261,6 @@
       <segment>
         <source>main.menu.admin.contact.label</source>
         <target>Contacts</target>
-      </segment>
-    </unit>
-    <unit id="dsOGXc8" name="main.menu.admin.contact.own.label">
-      <segment>
-        <source>main.menu.admin.contact.own.label</source>
-        <target>My country</target>
-      </segment>
-    </unit>
-    <unit id="_OWqgyb" name="main.menu.admin.contact.field.label">
-      <segment>
-        <source>main.menu.admin.contact.field.label</source>
-        <target>Enabel Field</target>
       </segment>
     </unit>
     <unit id="xKQ8Mh_" name="main.menu.admin.contact.hq.label">
@@ -305,142 +275,10 @@
         <target>All Enabel</target>
       </segment>
     </unit>
-    <unit id="inyLZ.6" name="Accounts">
-      <segment>
-        <source>Accounts</source>
-        <target>Accounts</target>
-      </segment>
-    </unit>
-    <unit id="wa2PNYo" name="DN">
-      <segment>
-        <source>DN</source>
-        <target>DN</target>
-      </segment>
-    </unit>
-    <unit id="n3.AuJJ" name="User password last set">
-      <segment>
-        <source>User password last set</source>
-        <target>User password last set</target>
-      </segment>
-    </unit>
-    <unit id="ZHz6kbI" name="Firstname">
-      <segment>
-        <source>Firstname</source>
-        <target>Firstname</target>
-      </segment>
-    </unit>
-    <unit id="htiPHRy" name="Lastname">
-      <segment>
-        <source>Lastname</source>
-        <target>Lastname</target>
-      </segment>
-    </unit>
-    <unit id="lpzL089" name="Email">
-      <segment>
-        <source>Email</source>
-        <target>Email</target>
-      </segment>
-    </unit>
-    <unit id="pP5lJk7" name="Language">
-      <segment>
-        <source>Language</source>
-        <target>Language</target>
-      </segment>
-    </unit>
-    <unit id="y6rTz0p" name="Mobile">
-      <segment>
-        <source>Mobile</source>
-        <target>Mobile</target>
-      </segment>
-    </unit>
-    <unit id="8UnoM8L" name="Bad pwd count">
-      <segment>
-        <source>Bad pwd count</source>
-        <target>Bad pwd count</target>
-      </segment>
-    </unit>
-    <unit id="5bH1jUS" name="Password last set">
-      <segment>
-        <source>Password last set</source>
-        <target>Password last set</target>
-      </segment>
-    </unit>
-    <unit id="DTlgLcO" name="Last login">
-      <segment>
-        <source>Last login</source>
-        <target>Last login</target>
-      </segment>
-    </unit>
     <unit id="Z8kNoaT" name="Show detail">
       <segment>
         <source>Show detail</source>
         <target>Show details</target>
-      </segment>
-    </unit>
-    <unit id="zYd6EbR" name="User accounts">
-      <segment>
-        <source>User accounts</source>
-        <target>User accounts</target>
-      </segment>
-    </unit>
-    <unit id="1JkqMxP" name="Initial password">
-      <segment>
-        <source>Initial password</source>
-        <target>Initial password</target>
-      </segment>
-    </unit>
-    <unit id=".4BZ3Gd" name="Actions">
-      <segment>
-        <source>Actions</source>
-        <target>Actions</target>
-      </segment>
-    </unit>
-    <unit id=".y7CYYu" name="Change email">
-      <segment>
-        <source>Change email</source>
-        <target>Change email</target>
-      </segment>
-    </unit>
-    <unit id="2xvEhkD" name="Test password">
-      <segment>
-        <source>Test password</source>
-        <target>Test password</target>
-      </segment>
-    </unit>
-    <unit id="4O3_s6c" name="Reset password">
-      <segment>
-        <source>Reset password</source>
-        <target>Reset password</target>
-      </segment>
-    </unit>
-    <unit id="X0KdtZS" name="Detail user account">
-      <segment>
-        <source>Detail user account</source>
-        <target>Detail user account</target>
-      </segment>
-    </unit>
-    <unit id="d1tb_WR" name="Created at">
-      <segment>
-        <source>Created at</source>
-        <target>Created at</target>
-      </segment>
-    </unit>
-    <unit id="PCEFPeg" name="Updated at">
-      <segment>
-        <source>Updated at</source>
-        <target>Updated at</target>
-      </segment>
-    </unit>
-    <unit id="IPDEcp3" name="Updated by">
-      <segment>
-        <source>Updated by</source>
-        <target>Updated by</target>
-      </segment>
-    </unit>
-    <unit id="N0zZ0iD" name="Created by">
-      <segment>
-        <source>Created by</source>
-        <target>Created by</target>
       </segment>
     </unit>
     <unit id="XkcCw9o" name="btn.contact.own.country.label">
@@ -473,136 +311,10 @@
         <target>Export ResRep contacts</target>
       </segment>
     </unit>
-    <unit id="uYtYQ7G" name="main.menu.message.create.label">
-      <segment>
-        <source>main.menu.message.create.label</source>
-        <target>Send a message</target>
-      </segment>
-    </unit>
-    <unit id="sWvAqQz" name="message.form.label.recipient">
-      <segment>
-        <source>message.form.label.recipient</source>
-        <target>Recipient</target>
-      </segment>
-    </unit>
-    <unit id="Jz6aLb9" name="message.form.label.message">
-      <segment>
-        <source>message.form.label.message</source>
-        <target>Message (in English)</target>
-      </segment>
-    </unit>
-    <unit id="RZw4mhy" name="All Enabel">
-      <segment>
-        <source>All Enabel</source>
-        <target>All Enabel</target>
-      </segment>
-    </unit>
-    <unit id="NMoOdmC" name="Group">
-      <segment>
-        <source>Group</source>
-        <target>Group</target>
-      </segment>
-    </unit>
-    <unit id="Y91AjM9" name="Enabel HQ">
-      <segment>
-        <source>Enabel HQ</source>
-        <target>Enabel HQ</target>
-      </segment>
-    </unit>
-    <unit id="t_3LuVE" name="ResRep">
-      <segment>
-        <source>ResRep</source>
-        <target>ResRep</target>
-      </segment>
-    </unit>
-    <unit id="GCAIudD" name="Enabel Field">
-      <segment>
-        <source>Enabel Field</source>
-        <target>Enabel Field</target>
-      </segment>
-    </unit>
-    <unit id="cB0CHQj" name="Country">
-      <segment>
-        <source>Country</source>
-        <target>Country</target>
-      </segment>
-    </unit>
-    <unit id="urg19ro" name="Enabel RDC">
-      <segment>
-        <source>Enabel RDC</source>
-        <target>Enabel RDC</target>
-      </segment>
-    </unit>
-    <unit id="njjUugK" name="message.form.label.message.nl">
-      <segment>
-        <source>message.form.label.message.nl</source>
-        <target>Message (in Dutch)</target>
-      </segment>
-    </unit>
-    <unit id="IRKU5ij" name="message.form.label.message.fr">
-      <segment>
-        <source>message.form.label.message.fr</source>
-        <target>Message (in French)</target>
-      </segment>
-    </unit>
-    <unit id="Auequkh" name="message.form.label.multilanguage">
-      <segment>
-        <source>message.form.label.multilanguage</source>
-        <target>Multi-language</target>
-      </segment>
-    </unit>
     <unit id="idjV1ct" name="Your message must be at least {{ limit }} characters long">
       <segment>
         <source>Your message must be at least {{ limit }} characters long</source>
         <target>Your message must be at least {{ limit }} characters long</target>
-      </segment>
-    </unit>
-    <unit id="OxGojTV" name="message.log.all.title">
-      <segment>
-        <source>message.log.all.title</source>
-        <target>Log: All message</target>
-      </segment>
-    </unit>
-    <unit id="rLyIqF2" name="message.create.title">
-      <segment>
-        <source>message.create.title</source>
-        <target>Send a message</target>
-      </segment>
-    </unit>
-    <unit id="NFe6fk0" name="btn.message.label.send">
-      <segment>
-        <source>btn.message.label.send</source>
-        <target>Send</target>
-      </segment>
-    </unit>
-    <unit id="B5gpuMt" name="message.form.label.sender">
-      <segment>
-        <source>message.form.label.sender</source>
-        <target>Sender</target>
-      </segment>
-    </unit>
-    <unit id="h2Xp22e" name="Enabel ALG">
-      <segment>
-        <source>Enabel ALG</source>
-        <target>Enabel ALG</target>
-      </segment>
-    </unit>
-    <unit id="rxYKOx8" name="account.notfound.in.bis">
-      <segment>
-        <source>account.notfound.in.bis</source>
-        <target>Account not found in BIS/GO4HR</target>
-      </segment>
-    </unit>
-    <unit id="5G2N_ji" name="account.notfound.in.ad">
-      <segment>
-        <source>account.notfound.in.ad</source>
-        <target>Account not found in Active Directory</target>
-      </segment>
-    </unit>
-    <unit id="7g6VE5K" name="account.notfound.in.ldap">
-      <segment>
-        <source>account.notfound.in.ldap</source>
-        <target>Account not found in LDAP</target>
       </segment>
     </unit>
     <unit id="Ww8J0Mi" name="main.menu.admin.message.label">
@@ -615,54 +327,6 @@
       <segment>
         <source>main.menu.admin.message.log.label</source>
         <target>List of messages</target>
-      </segment>
-    </unit>
-    <unit id="lHrirk_" name="main.menu.admin.message.create.label">
-      <segment>
-        <source>main.menu.admin.message.create.label</source>
-        <target>Send a message</target>
-      </segment>
-    </unit>
-    <unit id="QJum5cG" name="Enabel BDI">
-      <segment>
-        <source>Enabel BDI</source>
-        <target>Enabel BDI</target>
-      </segment>
-    </unit>
-    <unit id="h1xM7b5" name="message.label.action">
-      <segment>
-        <source>message.label.action</source>
-        <target>Actions</target>
-      </segment>
-    </unit>
-    <unit id="74kw8Oc" name="message.label.detail">
-      <segment>
-        <source>message.label.detail</source>
-        <target>Details</target>
-      </segment>
-    </unit>
-    <unit id="_F_xE37" name="message.details.title">
-      <segment>
-        <source>message.details.title</source>
-        <target>Details</target>
-      </segment>
-    </unit>
-    <unit id="wI1o.Pk" name="main.menu.message.details.label">
-      <segment>
-        <source>main.menu.message.details.label</source>
-        <target>Details</target>
-      </segment>
-    </unit>
-    <unit id="0.AaMdt" name="message.label.back_to_list">
-      <segment>
-        <source>message.label.back_to_list</source>
-        <target>message.label.back_to_list</target>
-      </segment>
-    </unit>
-    <unit id="uBkHpvm" name="message.label.back">
-      <segment>
-        <source>message.label.back</source>
-        <target>Back</target>
       </segment>
     </unit>
     <unit id="gAu5Pm4" name="main.menu.homepage.label">
@@ -701,140 +365,10 @@
         <target>Send a message [Person]</target>
       </segment>
     </unit>
-    <unit id="1Ak3tnW" name="Enabel Staff">
-      <segment>
-        <source>Enabel Staff</source>
-        <target>Enabel Staff</target>
-      </segment>
-    </unit>
-    <unit id="zaZ1gP9" name="AllEnabel">
-      <segment>
-        <source>AllEnabel</source>
-        <target>All Enabel</target>
-      </segment>
-    </unit>
-    <unit id="ERQWffZ" name="EnabelHQ">
-      <segment>
-        <source>EnabelHQ</source>
-        <target>Enabel HQ</target>
-      </segment>
-    </unit>
-    <unit id="6r_3ySR" name="EnabelField">
-      <segment>
-        <source>EnabelField</source>
-        <target>Enabel Field</target>
-      </segment>
-    </unit>
-    <unit id="bzNTpKl" name="new_collegues.end_date">
-      <segment>
-        <source>new_collegues.end_date</source>
-        <target>End date</target>
-      </segment>
-    </unit>
     <unit id="yFFCrOm" name="main.menu.admin.account.createExternal.label">
       <segment>
         <source>main.menu.admin.account.createExternal.label</source>
         <target>Add external</target>
-      </segment>
-    </unit>
-    <unit id="xFi8FEX" name="external.title.create">
-      <segment>
-        <source>external.title.create</source>
-        <target>Add external user [AD-ONLY]</target>
-      </segment>
-    </unit>
-    <unit id="s5xY0dp" name="external.form.label.firstname">
-      <segment>
-        <source>external.form.label.firstname</source>
-        <target>Firstname</target>
-      </segment>
-    </unit>
-    <unit id="o0STQVx" name="external.form.label.lastname">
-      <segment>
-        <source>external.form.label.lastname</source>
-        <target>Lastname</target>
-      </segment>
-    </unit>
-    <unit id="EuGPE2U" name="external.form.label.login">
-      <segment>
-        <source>external.form.label.login</source>
-        <target>Login</target>
-      </segment>
-    </unit>
-    <unit id="07ItPsU" name="external.form.label.email">
-      <segment>
-        <source>external.form.label.email</source>
-        <target>Email</target>
-      </segment>
-    </unit>
-    <unit id="XQnU69P" name="external.form.label.phone">
-      <segment>
-        <source>external.form.label.phone</source>
-        <target>Phone</target>
-      </segment>
-    </unit>
-    <unit id="x2d7.Ij" name="external.form.label.jobTitle">
-      <segment>
-        <source>external.form.label.jobTitle</source>
-        <target>Job title</target>
-      </segment>
-    </unit>
-    <unit id="2EtfNNr" name="external.form.label.company">
-      <segment>
-        <source>external.form.label.company</source>
-        <target>Company</target>
-      </segment>
-    </unit>
-    <unit id="cUv9K1r" name="external.form.label.expirationDate">
-      <segment>
-        <source>external.form.label.expirationDate</source>
-        <target>Expiration date</target>
-      </segment>
-    </unit>
-    <unit id="X5U1FqQ" name="external.form.btn.create">
-      <segment>
-        <source>external.form.btn.create</source>
-        <target>Add</target>
-      </segment>
-    </unit>
-    <unit id="_OxVcBQ" name="external.form.help.phone">
-      <segment>
-        <source>external.form.help.phone</source>
-        <target>Can be use to reset password</target>
-      </segment>
-    </unit>
-    <unit id="toMXlfx" name="external.form.help.login">
-      <segment>
-        <source>external.form.help.login</source>
-        <target>firstname.lastname@enabel.be</target>
-      </segment>
-    </unit>
-    <unit id="YU9y_GR" name="external.form.label.personalInformation">
-      <segment>
-        <source>external.form.label.personalInformation</source>
-        <target>Personal information</target>
-      </segment>
-    </unit>
-    <unit id="dNIjK2i" name="external.form.label.companyInformation">
-      <segment>
-        <source>external.form.label.companyInformation</source>
-        <target>Company information</target>
-      </segment>
-    </unit>
-    <unit id="1F4pbou" name="external.form.label.accountInformation">
-      <segment>
-        <source>external.form.label.accountInformation</source>
-        <target>Account information</target>
-      </segment>
-    </unit>
-    <unit id="MXmMXZT" name="external.p.notice">
-      <segment>
-        <source>external.p.notice</source>
-        <target>Using this form, you can add an external user who will have access as any Enabel user.
-A password will be generated automatically.
-You can use the reset function to send the password by SMS to the user.
-This user will be placed in the organizational unit "/Enabel-Brussels/Users/AD-ONLY" it can be moved after creation.
-The expiration date is mandatory for security reasons, because this user does not go through the automatic disabling scripts.</target>
       </segment>
     </unit>
     <unit id="yBDsB27" name="main.menu.admin.account.forceSync.label">
@@ -847,24 +381,6 @@ The expiration date is mandatory for security reasons, because this user does no
       <segment>
         <source>contact.notice</source>
         <target>This list only includes employees encoded in GO4HR with a Enabel phone number.</target>
-      </segment>
-    </unit>
-    <unit id="DXYbOD6" name="user.language.title.create">
-      <segment>
-        <source>user.language.title.create</source>
-        <target>Create new user language preferences</target>
-      </segment>
-    </unit>
-    <unit id=".HbFAP_" name="user.language.btn.back">
-      <segment>
-        <source>user.language.btn.back</source>
-        <target>Back to list</target>
-      </segment>
-    </unit>
-    <unit id="xExstmv" name="user.language.form.label.user">
-      <segment>
-        <source>user.language.form.label.user</source>
-        <target>User</target>
       </segment>
     </unit>
     <unit id="CpwLLIG" name="user.language.form.label.language">
@@ -895,60 +411,6 @@ The expiration date is mandatory for security reasons, because this user does no
       <segment>
         <source>user.language.form.language.choice.nl</source>
         <target>Dutch [NL]</target>
-      </segment>
-    </unit>
-    <unit id="LqXbK1D" name="user.language.form.confirm.delete">
-      <segment>
-        <source>user.language.form.confirm.delete</source>
-        <target>Are you sure you want to delete this item?</target>
-      </segment>
-    </unit>
-    <unit id="ieRQR0H" name="user.language.title.edit">
-      <segment>
-        <source>user.language.title.edit</source>
-        <target>Edit user language preference</target>
-      </segment>
-    </unit>
-    <unit id="_rJFpek" name="user.language.form.btn.save">
-      <segment>
-        <source>user.language.form.btn.save</source>
-        <target>Save</target>
-      </segment>
-    </unit>
-    <unit id="ifsWdqS" name="user.language.btn.delete">
-      <segment>
-        <source>user.language.btn.delete</source>
-        <target>Delete</target>
-      </segment>
-    </unit>
-    <unit id="dXFUBJc" name="user.language.title.list">
-      <segment>
-        <source>user.language.title.list</source>
-        <target>Users language preferences</target>
-      </segment>
-    </unit>
-    <unit id="D9iQpeo" name="user.language.btn.create">
-      <segment>
-        <source>user.language.btn.create</source>
-        <target>Create</target>
-      </segment>
-    </unit>
-    <unit id="OMFRwBT" name="user.language.form.label.actions">
-      <segment>
-        <source>user.language.form.label.actions</source>
-        <target>Actions</target>
-      </segment>
-    </unit>
-    <unit id="OQIFwdg" name="user.language.btn.edit">
-      <segment>
-        <source>user.language.btn.edit</source>
-        <target>Edit</target>
-      </segment>
-    </unit>
-    <unit id="4OKFDgO" name="user.language.btn.show">
-      <segment>
-        <source>user.language.btn.show</source>
-        <target>Show</target>
       </segment>
     </unit>
     <unit id="gy.xrRu" name="my.account.label.preferred.language">
@@ -985,6 +447,210 @@ The expiration date is mandatory for security reasons, because this user does no
       <segment>
         <source>#</source>
         <target>#</target>
+      </segment>
+    </unit>
+    <unit id="uvSb30u" name="main.menu.admin.officer.label">
+      <segment>
+        <source>main.menu.admin.officer.label</source>
+        <target>IT Officer</target>
+      </segment>
+    </unit>
+    <unit id="1RTsWUi" name="officer.title.list">
+      <segment>
+        <source>officer.title.list</source>
+        <target>List of IT Officer</target>
+      </segment>
+    </unit>
+    <unit id="0aPJM8V" name="action.label.create">
+      <segment>
+        <source>action.label.create</source>
+        <target>Create a new</target>
+      </segment>
+    </unit>
+    <unit id="ecsgARJ" name="officer.list.label.firstname">
+      <segment>
+        <source>officer.list.label.firstname</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="ntwLbUp" name="officer.list.label.lastname">
+      <segment>
+        <source>officer.list.label.lastname</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="hvS0Ukh" name="officer.list.label.countries">
+      <segment>
+        <source>officer.list.label.countries</source>
+        <target>Countries</target>
+      </segment>
+    </unit>
+    <unit id="agQYBrj" name="officer.list.label.actions">
+      <segment>
+        <source>officer.list.label.actions</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="0jQRA3T" name="action.label.show">
+      <segment>
+        <source>action.label.show</source>
+        <target>Show</target>
+      </segment>
+    </unit>
+    <unit id="C3.a8pY" name="action.label.edit">
+      <segment>
+        <source>action.label.edit</source>
+        <target>Edit</target>
+      </segment>
+    </unit>
+    <unit id="92kh1Sl" name="main.menu.officer.create.label">
+      <segment>
+        <source>main.menu.officer.create.label</source>
+        <target>Create a IT Officer</target>
+      </segment>
+    </unit>
+    <unit id="xw_.Z0Z" name="officer.title.create">
+      <segment>
+        <source>officer.title.create</source>
+        <target>Create a IT Officer</target>
+      </segment>
+    </unit>
+    <unit id="wK1iDz4" name="officer.form.user.label">
+      <segment>
+        <source>officer.form.user.label</source>
+        <target>User</target>
+      </segment>
+    </unit>
+    <unit id="iK1pdO9" name="officer.form.user.placeholder">
+      <segment>
+        <source>officer.form.user.placeholder</source>
+        <target>Choose a user</target>
+      </segment>
+    </unit>
+    <unit id="ZZ6_fbs" name="officer.form.countries.label">
+      <segment>
+        <source>officer.form.countries.label</source>
+        <target>Countries</target>
+      </segment>
+    </unit>
+    <unit id="Gwm3WYT" name="form.btn.save">
+      <segment>
+        <source>form.btn.save</source>
+        <target>Save</target>
+      </segment>
+    </unit>
+    <unit id="1xZ3hYd" name="form.btn.back">
+      <segment>
+        <source>form.btn.back</source>
+        <target>Back</target>
+      </segment>
+    </unit>
+    <unit id="Ncg8oPK" name="main.menu.officer.show.label">
+      <segment>
+        <source>main.menu.officer.show.label</source>
+        <target>Show detail</target>
+      </segment>
+    </unit>
+    <unit id="8Tq.Jto" name="officer.title.show">
+      <segment>
+        <source>officer.title.show</source>
+        <target>IT Officer detail</target>
+      </segment>
+    </unit>
+    <unit id="vbXW8EG" name="form.btn.delete">
+      <segment>
+        <source>form.btn.delete</source>
+        <target>Delete</target>
+      </segment>
+    </unit>
+    <unit id="qDJ7F0H" name="form.btn.edit">
+      <segment>
+        <source>form.btn.edit</source>
+        <target>Edit</target>
+      </segment>
+    </unit>
+    <unit id="vlRdifP" name="officer.show.label.personalInformation">
+      <segment>
+        <source>officer.show.label.personalInformation</source>
+        <target>Personal Information</target>
+      </segment>
+    </unit>
+    <unit id="RuyhNjz" name="officer.user.label.firstname">
+      <segment>
+        <source>officer.user.label.firstname</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="aI2DJG." name="officer.user.label.lastname">
+      <segment>
+        <source>officer.user.label.lastname</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="RgKb0iq" name="officer.show.label.countryDelegation">
+      <segment>
+        <source>officer.show.label.countryDelegation</source>
+        <target>Country delegation</target>
+      </segment>
+    </unit>
+    <unit id="urPG9aQ" name="main.menu.officer.edit.label">
+      <segment>
+        <source>main.menu.officer.edit.label</source>
+        <target>Edit a IT Officer</target>
+      </segment>
+    </unit>
+    <unit id="MvJqbul" name="officer.title.edit">
+      <segment>
+        <source>officer.title.edit</source>
+        <target>Edit a IT Officer</target>
+      </segment>
+    </unit>
+    <unit id="zdRxnRc" name="main.menu.team.label">
+      <segment>
+        <source>main.menu.team.label</source>
+        <target>My colleagues</target>
+      </segment>
+    </unit>
+    <unit id="8Zaf9oX" name="team.list.title">
+      <segment>
+        <source>team.list.title</source>
+        <target>My colleagues</target>
+      </segment>
+    </unit>
+    <unit id="qqd6JYY" name="team.list.label.firstname">
+      <segment>
+        <source>team.list.label.firstname</source>
+        <target>Firstname</target>
+      </segment>
+    </unit>
+    <unit id="Gg16yk0" name="team.list.label.lastname">
+      <segment>
+        <source>team.list.label.lastname</source>
+        <target>Lastname</target>
+      </segment>
+    </unit>
+    <unit id="ZPRZ3TU" name="team.list.label.mail">
+      <segment>
+        <source>team.list.label.mail</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="bsV5d7I" name="team.list.label.lastlogon">
+      <segment>
+        <source>team.list.label.lastlogon</source>
+        <target>Last login</target>
+      </segment>
+    </unit>
+    <unit id="JjyQDj0" name="team.list.label.actions">
+      <segment>
+        <source>team.list.label.actions</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="9Dc54B." name="main.menu.admin.account.list.all.label">
+      <segment>
+        <source>main.menu.admin.account.list.all.label</source>
+        <target>List all</target>
       </segment>
     </unit>
   </file>

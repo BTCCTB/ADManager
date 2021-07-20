@@ -233,18 +233,6 @@
         <target>Date de début</target>
       </segment>
     </unit>
-    <unit id="1yyLjoH" name="main.menu.contact.my_country.label">
-      <segment>
-        <source>main.menu.contact.my_country.label</source>
-        <target>Mon pays</target>
-      </segment>
-    </unit>
-    <unit id="RWTbiCy" name="contact.my_country.title.h3">
-      <segment>
-        <source>contact.my_country.title.h3</source>
-        <target>Mes contacts pays</target>
-      </segment>
-    </unit>
     <unit id="NxOF8ZD" name="main.menu.admin.account.passwordAgo.label">
       <segment>
         <source>main.menu.admin.account.passwordAgo.label</source>
@@ -263,12 +251,6 @@
         <target>Contacts Enabel HQ</target>
       </segment>
     </unit>
-    <unit id="jcOp6Uw" name="contact.field.title.h3">
-      <segment>
-        <source>contact.field.title.h3</source>
-        <target>Contacts Enabel terrain</target>
-      </segment>
-    </unit>
     <unit id="prYdXIi" name="contact.all.title.h3">
       <segment>
         <source>contact.all.title.h3</source>
@@ -279,18 +261,6 @@
       <segment>
         <source>main.menu.admin.contact.label</source>
         <target>Contacts</target>
-      </segment>
-    </unit>
-    <unit id="dsOGXc8" name="main.menu.admin.contact.own.label">
-      <segment>
-        <source>main.menu.admin.contact.own.label</source>
-        <target>Mon pays</target>
-      </segment>
-    </unit>
-    <unit id="_OWqgyb" name="main.menu.admin.contact.field.label">
-      <segment>
-        <source>main.menu.admin.contact.field.label</source>
-        <target>Enabel terrain</target>
       </segment>
     </unit>
     <unit id="xKQ8Mh_" name="main.menu.admin.contact.hq.label">
@@ -309,30 +279,6 @@
       <segment>
         <source>Show detail</source>
         <target>Voir les détails</target>
-      </segment>
-    </unit>
-    <unit id="d1tb_WR" name="Created at">
-      <segment>
-        <source>Created at</source>
-        <target>Créé à</target>
-      </segment>
-    </unit>
-    <unit id="PCEFPeg" name="Updated at">
-      <segment>
-        <source>Updated at</source>
-        <target>Mise à jour à</target>
-      </segment>
-    </unit>
-    <unit id="IPDEcp3" name="Updated by">
-      <segment>
-        <source>Updated by</source>
-        <target>Mis à jour par</target>
-      </segment>
-    </unit>
-    <unit id="N0zZ0iD" name="Created by">
-      <segment>
-        <source>Created by</source>
-        <target>Créé par</target>
       </segment>
     </unit>
     <unit id="XkcCw9o" name="btn.contact.own.country.label">
@@ -365,112 +311,10 @@
         <target>Exporter les contacts ResRep</target>
       </segment>
     </unit>
-    <unit id="uYtYQ7G" name="main.menu.message.create.label">
-      <segment>
-        <source>main.menu.message.create.label</source>
-        <target>Nouveau message</target>
-      </segment>
-    </unit>
-    <unit id="sWvAqQz" name="message.form.label.recipient">
-      <segment>
-        <source>message.form.label.recipient</source>
-        <target>Destinataire</target>
-      </segment>
-    </unit>
-    <unit id="Jz6aLb9" name="message.form.label.message">
-      <segment>
-        <source>message.form.label.message</source>
-        <target>Message (en Anglais)</target>
-      </segment>
-    </unit>
-    <unit id="RZw4mhy" name="All Enabel">
-      <segment>
-        <source>All Enabel</source>
-        <target>Tout Enabel</target>
-      </segment>
-    </unit>
-    <unit id="NMoOdmC" name="Group">
-      <segment>
-        <source>Group</source>
-        <target>Groupe</target>
-      </segment>
-    </unit>
-    <unit id="Y91AjM9" name="Enabel HQ">
-      <segment>
-        <source>Enabel HQ</source>
-        <target>Enabel siège</target>
-      </segment>
-    </unit>
-    <unit id="t_3LuVE" name="ResRep">
-      <segment>
-        <source>ResRep</source>
-        <target>ResRep</target>
-      </segment>
-    </unit>
-    <unit id="GCAIudD" name="Enabel Field">
-      <segment>
-        <source>Enabel Field</source>
-        <target>Enabel Terrain</target>
-      </segment>
-    </unit>
-    <unit id="cB0CHQj" name="Country">
-      <segment>
-        <source>Country</source>
-        <target>Pays</target>
-      </segment>
-    </unit>
-    <unit id="urg19ro" name="Enabel RDC">
-      <segment>
-        <source>Enabel RDC</source>
-        <target>Enabel RDC</target>
-      </segment>
-    </unit>
-    <unit id="njjUugK" name="message.form.label.message.nl">
-      <segment>
-        <source>message.form.label.message.nl</source>
-        <target>Message (en Néérlandais)</target>
-      </segment>
-    </unit>
-    <unit id="IRKU5ij" name="message.form.label.message.fr">
-      <segment>
-        <source>message.form.label.message.fr</source>
-        <target>Message (en Français)</target>
-      </segment>
-    </unit>
-    <unit id="Auequkh" name="message.form.label.multilanguage">
-      <segment>
-        <source>message.form.label.multilanguage</source>
-        <target>multi-langue</target>
-      </segment>
-    </unit>
     <unit id="idjV1ct" name="Your message must be at least {{ limit }} characters long">
       <segment>
         <source>Your message must be at least {{ limit }} characters long</source>
         <target>Votre message doit contenir au moins {{ limit }} caractères</target>
-      </segment>
-    </unit>
-    <unit id="OxGojTV" name="message.log.all.title">
-      <segment>
-        <source>message.log.all.title</source>
-        <target>Log: Tout les messages</target>
-      </segment>
-    </unit>
-    <unit id="rLyIqF2" name="message.create.title">
-      <segment>
-        <source>message.create.title</source>
-        <target>Créer un nouveau message</target>
-      </segment>
-    </unit>
-    <unit id="NFe6fk0" name="btn.message.label.send">
-      <segment>
-        <source>btn.message.label.send</source>
-        <target>Envoyer</target>
-      </segment>
-    </unit>
-    <unit id="B5gpuMt" name="message.form.label.sender">
-      <segment>
-        <source>message.form.label.sender</source>
-        <target>Expéditeur</target>
       </segment>
     </unit>
     <unit id="Ww8J0Mi" name="main.menu.admin.message.label">
@@ -521,128 +365,10 @@
         <target>Envoyer un message [Personne]</target>
       </segment>
     </unit>
-    <unit id="1Ak3tnW" name="Enabel Staff">
-      <segment>
-        <source>Enabel Staff</source>
-        <target>Personnel Enabel</target>
-      </segment>
-    </unit>
-    <unit id="zaZ1gP9" name="AllEnabel">
-      <segment>
-        <source>AllEnabel</source>
-        <target>Tout Enabel</target>
-      </segment>
-    </unit>
-    <unit id="ERQWffZ" name="EnabelHQ">
-      <segment>
-        <source>EnabelHQ</source>
-        <target>Enabel Siège</target>
-      </segment>
-    </unit>
-    <unit id="6r_3ySR" name="EnabelField">
-      <segment>
-        <source>EnabelField</source>
-        <target>Enabel Terrain</target>
-      </segment>
-    </unit>
     <unit id="yFFCrOm" name="main.menu.admin.account.createExternal.label">
       <segment>
         <source>main.menu.admin.account.createExternal.label</source>
         <target>Ajout d'externe</target>
-      </segment>
-    </unit>
-    <unit id="xFi8FEX" name="external.title.create">
-      <segment>
-        <source>external.title.create</source>
-        <target>Ajouter un utilisateur externe [AD-ONLY]</target>
-      </segment>
-    </unit>
-    <unit id="s5xY0dp" name="external.form.label.firstname">
-      <segment>
-        <source>external.form.label.firstname</source>
-        <target>Prénom</target>
-      </segment>
-    </unit>
-    <unit id="o0STQVx" name="external.form.label.lastname">
-      <segment>
-        <source>external.form.label.lastname</source>
-        <target>Nom</target>
-      </segment>
-    </unit>
-    <unit id="EuGPE2U" name="external.form.label.login">
-      <segment>
-        <source>external.form.label.login</source>
-        <target>Login</target>
-      </segment>
-    </unit>
-    <unit id="XQnU69P" name="external.form.label.phone">
-      <segment>
-        <source>external.form.label.phone</source>
-        <target>Téléphone</target>
-      </segment>
-    </unit>
-    <unit id="x2d7.Ij" name="external.form.label.jobTitle">
-      <segment>
-        <source>external.form.label.jobTitle</source>
-        <target>Poste</target>
-      </segment>
-    </unit>
-    <unit id="2EtfNNr" name="external.form.label.company">
-      <segment>
-        <source>external.form.label.company</source>
-        <target>Entreprise</target>
-      </segment>
-    </unit>
-    <unit id="cUv9K1r" name="external.form.label.expirationDate">
-      <segment>
-        <source>external.form.label.expirationDate</source>
-        <target>Date d'expiration</target>
-      </segment>
-    </unit>
-    <unit id="X5U1FqQ" name="external.form.btn.create">
-      <segment>
-        <source>external.form.btn.create</source>
-        <target>Ajouter</target>
-      </segment>
-    </unit>
-    <unit id="_OxVcBQ" name="external.form.help.phone">
-      <segment>
-        <source>external.form.help.phone</source>
-        <target>Sera utilisé pour la réinitialisation</target>
-      </segment>
-    </unit>
-    <unit id="toMXlfx" name="external.form.help.login">
-      <segment>
-        <source>external.form.help.login</source>
-        <target>prénom.nom@enabel.be</target>
-      </segment>
-    </unit>
-    <unit id="YU9y_GR" name="external.form.label.personalInformation">
-      <segment>
-        <source>external.form.label.personalInformation</source>
-        <target>Informations personnelle</target>
-      </segment>
-    </unit>
-    <unit id="dNIjK2i" name="external.form.label.companyInformation">
-      <segment>
-        <source>external.form.label.companyInformation</source>
-        <target>Informations d'entreprise</target>
-      </segment>
-    </unit>
-    <unit id="1F4pbou" name="external.form.label.accountInformation">
-      <segment>
-        <source>external.form.label.accountInformation</source>
-        <target>Informations du compte</target>
-      </segment>
-    </unit>
-    <unit id="MXmMXZT" name="external.p.notice">
-      <segment>
-        <source>external.p.notice</source>
-        <target>En utilisant ce formulaire, vous pouvez ajouter un utilisateur externe qui aura accès comme n'importe quel utilisateur Enabel.
-Un mot de passe sera généré automatiquement.
-Vous pouvez utiliser la fonction reset pour envoyé le mot de passe par SMS à l’utilisateur.
-Cet utilisateur sera placé dans l'unité organisationnel "/Enabel-Brussels/Users/AD-ONLY"  il peut être déplacé après création.
-La date d'expiration est obligatoire pour des raison de sécurité, car cette utilisateur ne passe pas par les scripts de désactivation automatique.</target>
       </segment>
     </unit>
     <unit id="yBDsB27" name="main.menu.admin.account.forceSync.label">
@@ -697,24 +423,6 @@ La date d'expiration est obligatoire pour des raison de sécurité, car cette ut
       <segment>
         <source>btn.change.language.label</source>
         <target>Changer la langue préférée</target>
-      </segment>
-    </unit>
-    <unit id="Y44kn0o" name="Filter">
-      <segment>
-        <source>Filter</source>
-        <target>Filtrer</target>
-      </segment>
-    </unit>
-    <unit id="cXCGmaz" name="Criteria">
-      <segment>
-        <source>Criteria</source>
-        <target>Critère</target>
-      </segment>
-    </unit>
-    <unit id="NS7hMw7" name="filter.criteria">
-      <segment>
-        <source>filter.criteria</source>
-        <target>Critères</target>
       </segment>
     </unit>
     <unit id="X0owthj" name="change.language.title.h1">
