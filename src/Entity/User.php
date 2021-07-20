@@ -127,6 +127,11 @@ class User implements EntityInterface, UserInterface, EquatableInterface
      */
     private $messageLogs;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Officer::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $officer;
+
     public function __construct()
     {
         $this->messageLogs = new ArrayCollection();
@@ -143,12 +148,9 @@ class User implements EntityInterface, UserInterface, EquatableInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        if (!in_array('ROLE_USER', $roles)) {
-            $roles[] = 'ROLE_USER';
-        }
+        $this->addRole('ROLE_USER');
 
-        return $roles;
+        return $this->roles;
     }
 
     /**
@@ -360,9 +362,9 @@ class User implements EntityInterface, UserInterface, EquatableInterface
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getExpiredAt(): \DateTime
+    public function getExpiredAt(): ?\DateTime
     {
         return $this->expiredAt;
     }
@@ -384,9 +386,9 @@ class User implements EntityInterface, UserInterface, EquatableInterface
      */
     public function __toArray(): array
     {
-        return array(
+        return [
             'email' => $this->getEmail(),
-        );
+        ];
     }
 
     public function createFromAD(AdUser $adUser)
@@ -397,13 +399,12 @@ class User implements EntityInterface, UserInterface, EquatableInterface
             ->setAccountName($adUser->getAccountName())
             ->setRoles(['ROLE_USER'])
             ->setActive($adUser->isActive())
-            ->setCreatedAt(new \DateTime())
-        ;
+            ->setCreatedAt(new \DateTime());
     }
 
     public function getIdentity()
     {
-        return $this->getFirstname() . ' ' . $this->getLastname();
+        return $this->getFirstname().' '.$this->getLastname();
     }
 
     /**
@@ -476,5 +477,40 @@ class User implements EntityInterface, UserInterface, EquatableInterface
     public function __call($name, $arguments)
     {
         // TODO: Implement @method string getUserIdentifier()
+    }
+
+    public function getOfficer(): ?Officer
+    {
+        return $this->officer;
+    }
+
+    public function setOfficer(Officer $officer): self
+    {
+        // set the owning side of the relation if necessary
+        if ($officer->getUser() !== $this) {
+            $officer->setUser($this);
+        }
+
+        $this->officer = $officer;
+
+        return $this;
+    }
+
+    public function hasRole(string $role): bool
+    {
+        if (in_array($role, $this->roles)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function addRole(string $role): self
+    {
+        if (!$this->hasRole($role)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
     }
 }

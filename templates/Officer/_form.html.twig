@@ -1,0 +1,18 @@
+{% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+{{ form_start(form) }}
+<div class="row">
+    <div class="offset-md-3 col-md-6">
+        <fieldset class="form-block-well">
+            {{ form_row(form.user) }}
+            {{ form_row(form.countries) }}
+        </fieldset>
+    </div>
+</div>
+<div class="row" style="padding-top: 1rem">
+    <div class="col-md-12 text-center">
+        <hr>
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-save"></i> {{ 'form.btn.save'|trans }}</button>
+    </div>
+</div>
+{{ form_rest(form) }}
+{{ form_end(form) }}

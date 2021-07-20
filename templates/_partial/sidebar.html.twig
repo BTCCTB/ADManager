@@ -12,6 +12,7 @@
             <a class="nav-link {% if app.request.get('_route') == 'account_password_changed_ago' %}active{% endif %}" href="{{ path('account_password_changed_ago') }}"><i class="fas fa-user-secret"></i> {{ 'main.menu.admin.account.passwordAgo.label'|trans }}</a>
             <a class="nav-link {% if app.request.get('_route') == 'account_create_external' %}active{% endif %}" href="{{ path('account_create_external') }}"><i class="fas fa-user-plus"></i> {{ 'main.menu.admin.account.createExternal.label'|trans }}</a>
             <a class="nav-link {% if (app.request.get('_route') == 'account_force_sync') %}active{% endif %}" href="{{ path('account_force_sync') }}"><i class="fas fa-user-cog"></i> {{ 'main.menu.admin.account.forceSync.label'|trans }}</a>
+            <a class="nav-link {% if (app.request.get('_route') == 'officer_index') %}active{% endif %}" href="{{ path('officer_index') }}"><i class="fas fa-user-shield"></i> {{ 'main.menu.admin.officer.label'|trans }}</a>
         </li>
     </ul>
 

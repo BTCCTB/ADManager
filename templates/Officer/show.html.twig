@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{ 'officer.title.show'|trans }}</h2>
+            <div>
+                <a href="{{ path('officer_index') }}" class="btn btn-outline-secondary"><i class="fas fa-chevron-left"></i> {{ 'Back'|trans }}</a>
+                <div class="btn-group float-right">
+                    {{ include('Officer/_delete.html.twig') }}
+                    <a href="{{ path('officer_edit', {'id': officer.id}) }}" class="btn btn-outline-warning"><i class="fas fa-edit"></i> {{ 'form.btn.edit'|trans }}</a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    {% include '_partial/flash.html.twig' %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <fieldset class="form-block-well">
+                <legend class="form-block-legend">
+                    {{ 'officer.show.label.personalInformation'|trans }}
+                </legend>
+                <ul>
+                    <li>{{ 'officer.user.label.firstname'|trans }}: {{ officer.user.firstname }}</li>
+                    <li>{{ 'officer.user.label.lastname'|trans }}: {{ officer.user.lastname }}</li>
+                </ul>
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <fieldset class="form-block-well">
+                <legend class="form-block-legend">
+                    {{ 'officer.show.label.countryDelegation'|trans }}
+                </legend>
+                <ul>
+                    {% for key, country in officer.countriesName %}
+                        <li>{{ country }} [{{ key }}]</li>
+                    {% endfor %}
+                </ul>
+            </fieldset>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block title %}
+    {{ 'main.menu.officer.show.label'|trans }} - {{ parent() }}
+{% endblock %}
